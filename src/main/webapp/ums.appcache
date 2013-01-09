@@ -1,0 +1,29 @@
+CACHE MANIFEST
+#VERSION 1.0.0  
+
+NETWORK:
+*
+CACHE:
+/UMS/css/style.css
+/UMS/css/mobile.css
+/UMS/css/top.css
+/UMS/css/reset.css
+/UMS/css/home.css
+/UMS/css/nav/nav.min.css
+/UMS/static/bootstrap/2.1.1/css/bootstrap.min.css
+/UMS/static/bootstrap/2.1.1/js/bootstrap-collapse.js
+/UMS/static/jquery/1.7.2/jquery.min.js
+/UMS/js/jquery/jquery.lazyload.min.js
+/UMS/js/jquery/jquery.masonry.min.js
+/UMS/js/jquery/jquery.infinitescroll.min.js
+/UMS/static/images/default.png
+/UMS/static/images/home.png
+/UMS/static/images/en/home.png
+/UMS/static/images/more.png
+/UMS/static/images/dt.png
+/UMS/static/images/dhome.png
+/UMS/static/images/en/dhome.png
+/UMS/static/images/en/dt.png
+/UMS/static/images/en/more.png
+/UMS/static/images/nav/close.png
+/UMS/static/images/jian2.png
