@@ -32,7 +32,7 @@ public class Search implements ISearch<LogInHome> {
 	@Override
 	public void createIndex(List<LogInHome> logs) throws Exception {
 
-		File indexDir = new File(Constants.INDEX_STORAGE);
+		File indexDir = new File(Constants.INDEX_LOG_STORE);
 		FSDirectory dir = FSDirectory.open(indexDir);
 		IndexWriterConfig iwc = new IndexWriterConfig(Version.LUCENE_36, new IKAnalyzer());
 		iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);

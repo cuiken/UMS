@@ -28,7 +28,7 @@ public class ReportCreateJob {
 		List<LogInHome> logs = logService.queryLogInHomeByDate(perDate, currDate);
 		search.createIndex(logs);
 
-		Directory dir = FSDirectory.open(new File(Constants.INDEX_STORAGE));
+		Directory dir = FSDirectory.open(new File(Constants.INDEX_LOG_STORE));
 		IndexReader reader = IndexReader.open(dir);
 		IndexSearcher searcher = new IndexSearcher(reader);
 

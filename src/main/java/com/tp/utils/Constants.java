@@ -8,12 +8,17 @@ import org.apache.struts2.ServletActionContext;
 
 public class Constants {
 
-	public final static String LOCKER_STORAGE = Config.getProperty("locker.storage");
-	public final static String NAV_STORAGE = Config.getProperty("nav.storage");
-	public final static String CLIENT_STORAGE = Config.getProperty("client.storeage");
-	public final static String INDEX_STORAGE = Config.getProperty("index.log");
-	public final static String POLL_STORAGE = Config.getProperty("poll.storeage");
-	public final static String CATEGROY_STORAGE = Config.getProperty("category.storage");
+	private static PropertiesLoader propertiesLoader = new PropertiesLoader("classpath:/mopita.properties");
+
+	public final static String LOCKER_STORAGE = propertiesLoader.getProperty("locker.storage");
+	public final static String NAV_STORAGE = propertiesLoader.getProperty("nav.storage");
+	public final static String CLIENT_STORAGE = propertiesLoader.getProperty("client.storeage");
+	public final static String INDEX_LOG_STORE = propertiesLoader.getProperty("index.log.store");
+	public final static String INDEX_LOG_CONTENT = propertiesLoader.getProperty("index.log.content");
+	public final static String POLL_STORAGE = propertiesLoader.getProperty("poll.storeage");
+	public final static String CATEGROY_STORAGE = propertiesLoader.getProperty("category.storage");
+	public final static String CMCC_LOG_COMMIT_DURATION=propertiesLoader.getProperty("cmcc.log.commit.duration");
+	public final static String CMCC_LOG_COMMIT_BATCHSIZE=propertiesLoader.getProperty("cmcc.log.commit.batchSize");
 
 	public final static String[] IMG_EXTENSION = { "jpg", "jpeg", "gif", "bmp", "png" };
 

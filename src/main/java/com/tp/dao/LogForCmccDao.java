@@ -10,15 +10,13 @@ import org.springframework.stereotype.Component;
 
 import com.tp.entity.LogForCmcc;
 import com.tp.orm.hibernate.HibernateDao;
-import com.tp.utils.Config;
+import com.tp.utils.Constants;
 import com.tp.utils.WriteSychronziedListCache;
 
 @Component
-public class LogForCmccDao extends HibernateDao<LogForCmcc, Long> implements
-		ICacheSaver<LogForCmcc> {
+public class LogForCmccDao extends HibernateDao<LogForCmcc, Long> implements ICacheSaver<LogForCmcc> {
 
-	int batchSize=20;
-	
+	int batchSize = 20;
 
 	WriteSychronziedListCache<LogForCmcc> cache;
 
@@ -27,11 +25,10 @@ public class LogForCmccDao extends HibernateDao<LogForCmcc, Long> implements
 	 */
 	@PostConstruct
 	void init() {
-		cache=new WriteSychronziedListCache<LogForCmcc>();
-		cache.setCommitDuration(Long.parseLong(Config
-				.getProperty("cmcc.log.commit.duration")));
+		cache = new WriteSychronziedListCache<LogForCmcc>();
+		cache.setCommitDuration(Long.parseLong(Constants.CMCC_LOG_COMMIT_DURATION));
 		cache.setSaver(this);
-		batchSize=Integer.parseInt(Config.getProperty("cmcc.log.commit.batchSize"));
+		batchSize = Integer.parseInt(Constants.CMCC_LOG_COMMIT_BATCHSIZE);
 	}
 
 	/*
@@ -64,7 +61,7 @@ public class LogForCmccDao extends HibernateDao<LogForCmcc, Long> implements
 		try {
 			tx.begin();
 			int i = 0;
-			
+
 			// 为防止爆内存，一次性只提交最多batchSize条insert
 			for (; i < e.size(); i++) {
 				session.save(e.get(i));
