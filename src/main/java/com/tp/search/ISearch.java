@@ -7,7 +7,7 @@ import org.apache.lucene.search.IndexSearcher;
 
 public interface ISearch<E> {
 
-	public void createIndex(List<E> list) throws Exception;
+	public void createLogStoreIndex(List<E> list) throws Exception;
 
 	public Long countByMethod(IndexSearcher searcher, String method, String sdate, String edate) throws IOException;
 

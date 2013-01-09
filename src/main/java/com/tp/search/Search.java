@@ -30,7 +30,7 @@ import com.tp.utils.Constants;
 public class Search implements ISearch<LogInHome> {
 
 	@Override
-	public void createIndex(List<LogInHome> logs) throws Exception {
+	public void createLogStoreIndex(List<LogInHome> logs) throws Exception {
 
 		File indexDir = new File(Constants.INDEX_LOG_STORE);
 		FSDirectory dir = FSDirectory.open(indexDir);
