@@ -258,11 +258,11 @@ create table log_f_store2(
 );
 **/
 create table lock_user(
-	id bigint not null auto_increment,
-	imei varchar(35),
-	imsi varchar(35),
-	model varchar(35),
-	resolution varchar(20),
+	id bigint auto_increment,
+	imei varchar(35) not null unique,
+	imsi varchar(35) not null default 0,
+	model varchar(35) not null default '',
+	resolution varchar(20) not null default '',
 	register_time timestamp not null default 0,
 	active_time timestamp not null default 0,
 	index rt_index (register_time),

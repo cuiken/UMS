@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class LogDTO {
 
+	private String isNew;
 	private String imei;
 	private String imsi;
 	private String language;
@@ -24,6 +25,14 @@ public class LogDTO {
 	private String from;
 	private String bcid;
 	private String url;
+
+	public String getIsNew() {
+		return isNew;
+	}
+
+	public void setIsNew(String isNew) {
+		this.isNew = isNew;
+	}
 
 	public String getImei() {
 		return imei;
