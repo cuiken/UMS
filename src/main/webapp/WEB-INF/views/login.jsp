@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>登录页</title>
+	<title>UMS2.0:登录页</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<meta http-equiv="Cache-Control" content="no-store" />
@@ -17,6 +17,7 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <link type="image/x-icon" href="${ctx}/static/images/favicon.ico" rel="shortcut icon">
 	<link href="${ctx}/static/bootstrap/2.1.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 	<link href="${ctx}/static/bootstrap/2.1.1/css/bootstrap-responsive.min.css" type="text/css" rel="stylesheet" />
 	<link href="${ctx}/css/mini-web.css" type="text/css" rel="stylesheet" />
@@ -25,9 +26,36 @@
 	<script src="${ctx}/static/jquery-validation/1.10.0/jquery.validate.min.js"></script>
 	<script src="${ctx}/static/jquery-validation/1.10.0/messages_bs_zh.js"></script>
 	<style>
-	body {
-	  background-image: url(${ctx}/static/images/grid-18px-masked.png);
-	}
+	 body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
 	</style>
 	<script>
 		$(document).ready(function() {
@@ -38,6 +66,7 @@
 </head>
 
 <body data-spy="scroll" data-target=".subnav" data-offset="50">
+	<!-- 
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -56,15 +85,15 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<div class="container">
-		<header class="jumbotron masthead">
+		  <header class="jumbotron masthead">
 		 	<div class="inner">
 		    	<p></p>
 			</div>
 		</header>
 	<div id="content" class="span12">
-		<form id="loginForm" action="${ctx}/login.action" method="post" class="form-horizontal">
+		<form id="loginForm" action="${ctx}/login.action" method="post" class="form-signin">
 			<%
 			String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
 			if(error != null){
@@ -91,6 +120,7 @@
 			<%
 			}}
 			%>
+				<h2 class="form-signin-heading">登录</h2>
 				<div class="control-group">
 					
 					<div class="controls">
@@ -103,18 +133,15 @@
 						<input type="password" id="password" placeholder="密码" name="password" size="50"  class="required span3"/>
 					</div>
 				</div>
+				<label class="checkbox" for="rememberMe"> <input type="checkbox" id="rememberMe" name="rememberMe" checked="checked"/> 记住我</label>
 				<div class="control-group">
 					<div class="controls">
-					<input id="submit_btn" class="btn btn-primary" type="submit" value="登录"/>
-					
-					<span style="padding-left:10px;">
-						<label class="checkbox inline" for="rememberMe"> <input type="checkbox" id="rememberMe" name="rememberMe" checked="checked"/> 记住我</label>
-					</span>
+					<input id="submit_btn" class="btn btn-large btn-primary" type="submit" value="登录"/>
 				</div>
 			</div>		
 		</form>
 		<footer class="footer">
-		<p align="center">Copyright &copy; 2012 <a href="http://www.tpadsz.com/">tpadsz.com</a></p>
+		<p align="center">&copy; 2012-2013 <a href="http://www.tpadsz.com/">tpadsz.com</a></p>
 		</footer>
 	</div>
 	</div>

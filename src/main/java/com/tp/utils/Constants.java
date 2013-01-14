@@ -61,6 +61,7 @@ public class Constants {
 	public static final String METHOD_AD_XML = "adXml";
 	public static final String METHOD_GET_CLIENT = "getClient";
 	public static final String METHOD_EXECUTE = "execute";
+	public static final String METHOD_DETAILS = "details";
 
 	public static final String LOCKER_STANDARD = "lock";
 	public static final String LOCKER_JP = "jplocker";

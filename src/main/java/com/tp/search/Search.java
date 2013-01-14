@@ -12,10 +12,14 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.LogByteSizeMergePolicy;
 import org.apache.lucene.index.LogMergePolicy;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
+import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.store.FSDirectory;
@@ -122,4 +126,27 @@ public class Search implements ISearch<LogInHome> {
 		return 0L;
 	}
 
+	@Override
+	public Long countByMethodAndParamsIK(IndexSearcher searcher, String method, String sdate, String edate,
+			String... params) throws Exception {
+		if (params == null || params.length == 0) {
+			return countByMethod(searcher, method, sdate, edate);
+		}
+		BooleanQuery bq1 = new BooleanQuery();
+		Query w1 = new TermQuery(new Term("method", method));
+		bq1.add(w1, BooleanClause.Occur.MUST);
+
+		QueryParser qp = new QueryParser(Version.LUCENE_36, "params", new IKAnalyzer());
+		qp.setDefaultOperator(QueryParser.AND_OPERATOR);
+		Query query = qp.parse(params[0]);
+		bq1.add(query,BooleanClause.Occur.MUST);
+		
+
+		bq1.add(new TermRangeQuery("time", sdate, edate, false, false), BooleanClause.Occur.MUST);
+
+		TopDocs topDocs = searcher.search(bq1, 100000);
+
+		return(long) topDocs.totalHits;
+
+	}
 }

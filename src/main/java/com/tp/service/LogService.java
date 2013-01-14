@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.tp.cache.MemcachedObjectType;
 import com.tp.cache.SpyMemcachedClient;
 import com.tp.dao.MarketDao;
@@ -21,6 +22,7 @@ import com.tp.dao.log.LogCmccResultDao;
 import com.tp.dao.log.LogCountClientDao;
 import com.tp.dao.log.LogCountContentDao;
 import com.tp.dao.log.LogCountContentMarketDao;
+import com.tp.dao.log.LogCountUnzipDao;
 import com.tp.dao.log.LogForCmccDao;
 import com.tp.dao.log.LogForContentDao;
 import com.tp.dao.log.LogForPollDao;
@@ -33,6 +35,7 @@ import com.tp.entity.log.LogCmccResult;
 import com.tp.entity.log.LogContentMarket;
 import com.tp.entity.log.LogCountClient;
 import com.tp.entity.log.LogCountContent;
+import com.tp.entity.log.LogCountUnzip;
 import com.tp.entity.log.LogForCmcc;
 import com.tp.entity.log.LogForContent;
 import com.tp.entity.log.LogForPoll;
@@ -73,6 +76,8 @@ public class LogService {
 	private LogForRedirectDao redirectDao;
 	private LogForPollDao pollDao;
 	private LogContentJdbcDao logContentJdbcDao;
+
+	private LogCountUnzipDao logCountUnzipDao;
 
 	private ThemeFileDao themeDao;
 	private MarketDao marketDao;
@@ -242,12 +247,47 @@ public class LogService {
 	public LogCountClient getLogCountClient(Long id) {
 		return countClientDao.get(id);
 	}
-	
-	public void countContentUnzip(String sdate,String edate){
-		List<Map<String,Object>> unzips=logContentJdbcDao.countContentUnzip(sdate, edate);
-		for(Map<String,Object> content:unzips){
-			
+
+	public void saveCountContentUnzip(String sdate, String edate) {
+		List<Map<String, Object>> unzips = logContentJdbcDao.countContentUnzip(sdate, edate);
+		int i = 0;
+		for (Map<String, Object> content : unzips) {
+			LogCountUnzip unzip = new LogCountUnzip();
+			unzip.setAppName((String) content.get("app_name"));
+			unzip.setUnzip((Long) content.get("unzip"));
+			unzip.setMarketName((String) content.get("market"));
+			unzip.setCreateTime(sdate);
+			try {
+				logCountUnzipDao.save(unzip);
+			} catch (Exception e) {
+				logger.error("错误记录为：" + mapper.toJson(unzip));
+			}
+			if (++i % 20 == 0) {
+				logCountUnzipDao.flush();
+			}
 		}
+	}
+
+	private Map<String, Object> getClientInstall(String sdate, String edate) {
+		List<Map<String, Object>> installs = logContentJdbcDao.countClientInstall(sdate, edate);
+		Map<String, Object> results = Maps.newHashMap();
+		long fm = 0;
+		long nofm = 0;
+		long all = 0;
+		for (Map<String, Object> content : installs) {
+			String fromMarket = (String) content.get("from_market");
+			Long installed = (Long) content.get("installed");
+			all += installed;
+			if (fromMarket != null && !fromMarket.isEmpty()) {
+				fm += installed;
+			} else {
+				nofm += installed;
+			}
+		}
+		results.put("all", all);
+		results.put("fm", fm);
+		results.put("nofm", nofm);
+		return results;
 	}
 
 	public void createClientReport(IndexSearcher searcher, String sdate, String edate) throws Exception {
@@ -263,6 +303,8 @@ public class LogService {
 		if (perCount != null) {
 			perTotalUser = perCount.getTotalUser();
 		}
+
+		Map<String, Object> install = getClientInstall(sdate, edate);
 		client.setCreateTime(sdate);
 		client.setDownByContent(downByContent);
 		client.setDownByShare(downByShare);
@@ -274,6 +316,9 @@ public class LogService {
 		client.setTotalUser(totalUser);
 		client.setIncrementUser(totalUser - perTotalUser);
 		client.setOpenUser(countOpenUser(sdate, edate));
+		client.setTotalInstall((Long) install.get("all"));
+		client.setInstallNonfm((Long) install.get("nofm"));
+		client.setInstallWithfm((Long) install.get("fm"));
 		long end = System.currentTimeMillis();
 		client.setTakeTimes(end - start);
 		countClientDao.save(client);
@@ -330,6 +375,10 @@ public class LogService {
 			countContentDao.save(lcct);
 			perMarketDown(searcher, theme, lcct, markets, sdate, edate);
 		}
+	}
+	
+	public void createGetClientByContentReport(IndexSearcher search,String sdate,String edate){
+		
 	}
 
 	private void perMarketDown(IndexSearcher searcher, ThemeFile theme, LogCountContent lcc, List<Market> markets,
@@ -434,9 +483,14 @@ public class LogService {
 	public void setMemcachedClient(SpyMemcachedClient memcachedClient) {
 		this.memcachedClient = memcachedClient;
 	}
-	
+
 	@Autowired
 	public void setLogContentJdbcDao(LogContentJdbcDao logContentJdbcDao) {
 		this.logContentJdbcDao = logContentJdbcDao;
+	}
+
+	@Autowired
+	public void setLogCountUnzipDao(LogCountUnzipDao logCountUnzipDao) {
+		this.logCountUnzipDao = logCountUnzipDao;
 	}
 }

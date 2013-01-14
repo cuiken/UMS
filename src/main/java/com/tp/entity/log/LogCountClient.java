@@ -20,6 +20,9 @@ public class LogCountClient extends IdEntity {
 	private long downByOther;
 	private long visitStoreCount;
 	private long visitStoreUser;
+	private long totalInstall;
+	private long installWithfm;
+	private long installNonfm;
 	private long takeTimes;
 
 	public String getCreateTime() {
@@ -108,6 +111,30 @@ public class LogCountClient extends IdEntity {
 
 	public void setVisitStoreUser(long visitStoreUser) {
 		this.visitStoreUser = visitStoreUser;
+	}
+
+	public long getTotalInstall() {
+		return totalInstall;
+	}
+
+	public void setTotalInstall(long totalInstall) {
+		this.totalInstall = totalInstall;
+	}
+
+	public long getInstallWithfm() {
+		return installWithfm;
+	}
+
+	public void setInstallWithfm(long installWithfm) {
+		this.installWithfm = installWithfm;
+	}
+
+	public long getInstallNonfm() {
+		return installNonfm;
+	}
+
+	public void setInstallNonfm(long installNonfm) {
+		this.installNonfm = installNonfm;
 	}
 
 	public long getTakeTimes() {

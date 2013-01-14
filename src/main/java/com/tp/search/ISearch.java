@@ -16,4 +16,6 @@ public interface ISearch<E> {
 
 	public Long countByParam(IndexSearcher searcher, String sdate, String edate, String... params) throws IOException;
 
+	public Long countByMethodAndParamsIK(IndexSearcher searcher, String method, String sdate, String edate,
+			String... params) throws Exception;
 }

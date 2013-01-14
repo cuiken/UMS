@@ -11,6 +11,7 @@ public class LogCountUnzip extends IdEntity {
 
 	private String appName;
 	private Long unzip;
+	private String marketName;
 	private String createTime;
 
 	public String getAppName() {
@@ -27,6 +28,14 @@ public class LogCountUnzip extends IdEntity {
 
 	public void setUnzip(Long unzip) {
 		this.unzip = unzip;
+	}
+
+	public String getMarketName() {
+		return marketName;
+	}
+
+	public void setMarketName(String marketName) {
+		this.marketName = marketName;
 	}
 
 	public String getCreateTime() {

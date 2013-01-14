@@ -1,15 +1,15 @@
 package com.tp.search;
 
+import static com.tp.utils.Constants.METHOD_DETAILS;
+import static com.tp.utils.Constants.METHOD_EXECUTE;
+import static com.tp.utils.Constants.METHOD_GET_CLIENT;
+
 import org.apache.lucene.search.IndexSearcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LogSearch {
-
-	public static final String METHOD_EXECUTE = "execute";
-	public static final String METHOD_GETCLIENT = "getClient";
-	public static final String METHOD_DETAILS = "details";
 
 	private ISearch logSearch;
 
@@ -26,7 +26,7 @@ public class LogSearch {
 	 */
 	public Long downloadByShare(IndexSearcher searcher, String sdate, String edate) throws Exception {
 		String param = "f:share";
-		return logSearch.countByMethodAndParams(searcher, METHOD_GETCLIENT, sdate, edate, param);
+		return logSearch.countByMethodAndParams(searcher, METHOD_GET_CLIENT, sdate, edate, param);
 
 	}
 
@@ -35,7 +35,7 @@ public class LogSearch {
 	 */
 	public Long downloadByContent(IndexSearcher searcher, String sdate, String edate) throws Exception {
 		String param = "cv";
-		return logSearch.countByMethodAndParams(searcher, METHOD_GETCLIENT, sdate, edate, param);
+		return logSearch.countByMethodAndParams(searcher, METHOD_GET_CLIENT, sdate, edate, param);
 
 	}
 
@@ -79,11 +79,16 @@ public class LogSearch {
 	/**
 	 * 文件在每个市场的下载量
 	 */
-	public Long contentPerMarketDown(IndexSearcher searcher, String sdate, String edate, String...params)
+	public Long contentPerMarketDown(IndexSearcher searcher, String sdate, String edate, String... params)
 			throws Exception {
 
 		return logSearch.countByParam(searcher, sdate, edate, params);
 
+	}
+
+	public Long countGetClientByContent(IndexSearcher searcher, String sdate, String edate, String themeTitle)
+			throws Exception {
+		return logSearch.countByMethodAndParamsIK(searcher, METHOD_GET_CLIENT, sdate, edate, themeTitle);
 	}
 
 	@Autowired

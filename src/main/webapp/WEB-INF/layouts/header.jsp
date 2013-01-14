@@ -27,7 +27,6 @@
 						</div>
 
 					</shiro:user>
-
 				</div>
 			</div>
 		</div>
