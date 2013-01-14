@@ -1,4 +1,4 @@
-package com.tp.action;
+package com.tp.action.log;
 
 import java.util.List;
 import java.util.Map;
@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Lists;
 import com.opensymphony.xwork2.ActionSupport;
-import com.tp.entity.LogContentMarket;
-import com.tp.entity.LogCountContent;
+import com.tp.entity.log.LogContentMarket;
+import com.tp.entity.log.LogCountContent;
 import com.tp.orm.Page;
 import com.tp.orm.PageRequest.Sort;
 import com.tp.orm.PropertyFilter;

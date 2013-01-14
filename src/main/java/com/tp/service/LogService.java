@@ -15,33 +15,34 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.tp.cache.MemcachedObjectType;
 import com.tp.cache.SpyMemcachedClient;
-import com.tp.dao.LogCmccResultDao;
-import com.tp.dao.LogCountClientDao;
-import com.tp.dao.LogCountContentDao;
-import com.tp.dao.LogCountContentMarketDao;
-import com.tp.dao.LogForCmccDao;
-import com.tp.dao.LogForContentDao;
-import com.tp.dao.LogForPollDao;
-import com.tp.dao.LogForRedirectDao;
-import com.tp.dao.LogFromClientDao;
-import com.tp.dao.LogInHomeDao;
 import com.tp.dao.MarketDao;
 import com.tp.dao.ThemeFileDao;
-import com.tp.entity.LogCmccResult;
-import com.tp.entity.LogContentMarket;
-import com.tp.entity.LogCountClient;
-import com.tp.entity.LogCountContent;
-import com.tp.entity.LogForCmcc;
-import com.tp.entity.LogForContent;
-import com.tp.entity.LogForPoll;
-import com.tp.entity.LogForRedirect;
-import com.tp.entity.LogFromClient;
-import com.tp.entity.LogInHome;
+import com.tp.dao.log.LogCmccResultDao;
+import com.tp.dao.log.LogCountClientDao;
+import com.tp.dao.log.LogCountContentDao;
+import com.tp.dao.log.LogCountContentMarketDao;
+import com.tp.dao.log.LogForCmccDao;
+import com.tp.dao.log.LogForContentDao;
+import com.tp.dao.log.LogForPollDao;
+import com.tp.dao.log.LogForRedirectDao;
+import com.tp.dao.log.LogFromClientDao;
+import com.tp.dao.log.LogInHomeDao;
 import com.tp.entity.Market;
 import com.tp.entity.ThemeFile;
+import com.tp.entity.log.LogCmccResult;
+import com.tp.entity.log.LogContentMarket;
+import com.tp.entity.log.LogCountClient;
+import com.tp.entity.log.LogCountContent;
+import com.tp.entity.log.LogForCmcc;
+import com.tp.entity.log.LogForContent;
+import com.tp.entity.log.LogForPoll;
+import com.tp.entity.log.LogForRedirect;
+import com.tp.entity.log.LogFromClient;
+import com.tp.entity.log.LogInHome;
 import com.tp.mapper.JsonMapper;
 import com.tp.orm.Page;
 import com.tp.orm.PropertyFilter;
+import com.tp.repository.jdbctemplate.LogContentJdbcDao;
 import com.tp.search.LogSearch;
 import com.tp.utils.Constants;
 import com.tp.utils.DateFormatUtils;
@@ -71,6 +72,7 @@ public class LogService {
 	private LogForCmccDao cmccDao;
 	private LogForRedirectDao redirectDao;
 	private LogForPollDao pollDao;
+	private LogContentJdbcDao logContentJdbcDao;
 
 	private ThemeFileDao themeDao;
 	private MarketDao marketDao;
@@ -239,6 +241,13 @@ public class LogService {
 
 	public LogCountClient getLogCountClient(Long id) {
 		return countClientDao.get(id);
+	}
+	
+	public void countContentUnzip(String sdate,String edate){
+		List<Map<String,Object>> unzips=logContentJdbcDao.countContentUnzip(sdate, edate);
+		for(Map<String,Object> content:unzips){
+			
+		}
 	}
 
 	public void createClientReport(IndexSearcher searcher, String sdate, String edate) throws Exception {
@@ -424,5 +433,10 @@ public class LogService {
 	@Autowired
 	public void setMemcachedClient(SpyMemcachedClient memcachedClient) {
 		this.memcachedClient = memcachedClient;
+	}
+	
+	@Autowired
+	public void setLogContentJdbcDao(LogContentJdbcDao logContentJdbcDao) {
+		this.logContentJdbcDao = logContentJdbcDao;
 	}
 }

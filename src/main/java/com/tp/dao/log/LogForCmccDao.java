@@ -1,4 +1,4 @@
-package com.tp.dao;
+package com.tp.dao.log;
 
 import java.util.List;
 
@@ -8,7 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
-import com.tp.entity.LogForCmcc;
+import com.tp.dao.ICacheSaver;
+import com.tp.entity.log.LogForCmcc;
 import com.tp.orm.hibernate.HibernateDao;
 import com.tp.utils.Constants;
 import com.tp.utils.WriteSychronziedListCache;

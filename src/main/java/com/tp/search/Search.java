@@ -23,7 +23,7 @@ import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Component;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
-import com.tp.entity.LogInHome;
+import com.tp.entity.log.LogInHome;
 import com.tp.utils.Constants;
 
 @Component

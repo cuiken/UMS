@@ -1,10 +1,10 @@
-package com.tp.action;
+package com.tp.action.log;
 
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.tp.entity.LogCmccResult;
+import com.tp.entity.log.LogCmccResult;
 import com.tp.service.LogService;
 import com.tp.utils.Encodes;
 import com.tp.utils.Struts2Utils;

@@ -557,12 +557,18 @@
 		<!-- GENERAL UTILS end -->
 
 		<!-- OTHER UTILS begin -->
-		<!-- pojo copy -->
+		<!-- pojo copy 
 		<dependency>
 			<groupId>net.sf.dozer</groupId>
 			<artifactId>dozer</artifactId>
 			<version>5.3.2</version>
-		</dependency>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-lang</groupId>
+					<artifactId>commons-lang</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>-->
 
 		<!-- excel -->
 		<dependency>

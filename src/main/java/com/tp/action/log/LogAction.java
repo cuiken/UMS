@@ -1,4 +1,4 @@
-package com.tp.action;
+package com.tp.action.log;
 
 import static com.tp.utils.Constants.ENCODE_UTF_8;
 import static com.tp.utils.Constants.PARA_APP_NAME;
@@ -32,11 +32,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tp.dto.LogDTO;
 import com.tp.entity.ClientFile;
-import com.tp.entity.LogForContent;
-import com.tp.entity.LogForPoll;
-import com.tp.entity.LogForRedirect;
-import com.tp.entity.LogFromClient;
-import com.tp.entity.LogInHome;
+import com.tp.entity.log.LogForContent;
+import com.tp.entity.log.LogForPoll;
+import com.tp.entity.log.LogForRedirect;
+import com.tp.entity.log.LogFromClient;
+import com.tp.entity.log.LogInHome;
 import com.tp.service.ClientFileManager;
 import com.tp.service.LogService;
 import com.tp.utils.Constants;

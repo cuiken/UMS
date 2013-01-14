@@ -10,7 +10,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.tp.entity.LogInHome;
+import com.tp.entity.log.LogInHome;
 import com.tp.search.Search;
 import com.tp.service.LogService;
 import com.tp.utils.Constants;

@@ -1,10 +1,10 @@
-package com.tp.dao;
+package com.tp.dao.log;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.tp.entity.LogCountContent;
+import com.tp.entity.log.LogCountContent;
 import com.tp.orm.hibernate.HibernateDao;
 
 @Component

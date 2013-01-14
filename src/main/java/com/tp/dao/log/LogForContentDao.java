@@ -1,8 +1,8 @@
-package com.tp.dao;
+package com.tp.dao.log;
 
 import org.springframework.stereotype.Component;
 
-import com.tp.entity.LogForContent;
+import com.tp.entity.log.LogForContent;
 import com.tp.orm.hibernate.HibernateDao;
 
 @Component
