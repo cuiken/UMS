@@ -281,6 +281,15 @@ create table log_count_unzip(
 	primary key(id)
 );
 
+create table log_count_get_client(
+	id bigint auto_increment,
+	app_name varchar(35),
+	download int,
+	create_time timestamp not null default 0,
+	index ct_index(create_time),
+	primary key(id)
+);
+
 create table log_f_content(
 	id bigint not null auto_increment,
 	imei varchar(50),

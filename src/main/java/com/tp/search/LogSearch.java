@@ -86,9 +86,9 @@ public class LogSearch {
 
 	}
 
-	public Long countGetClientByContent(IndexSearcher searcher, String sdate, String edate, String themeTitle)
+	public Long countGetClientByContent(IndexSearcher searcher, String sdate, String edate, String ...params)
 			throws Exception {
-		return logSearch.countByMethodAndParamsIK(searcher, METHOD_GET_CLIENT, sdate, edate, themeTitle);
+		return logSearch.countByMethodAndParamsIK(searcher, METHOD_GET_CLIENT, sdate, edate, params);
 	}
 
 	@Autowired

@@ -13,7 +13,7 @@ public class LogContentJdbcDao {
 
 	private static final String QUERY_CONTENT_UNZIP = "SELECT count(*) as unzip,app_name,m.name as market FROM log_f_content l"
 			+ " LEFT JOIN f_market m ON m.pk_name=l.from_market  WHERE l.create_time BETWEEN"
-			+ " ? AND ? AND l.do_type='unzip'  GROUP BY app_name,from_market ORDER BY NULL";
+			+ " ? AND ? AND l.do_type='unzip'  GROUP BY app_name,from_market ORDER BY app_name";
 
 	private static final String QEURY_CLIENT_INSTALL = "SELECT count(*) as installed ,from_market FROM log_f_content l"
 			+ "  WHERE l.create_time BETWEEN ? AND ? AND l.do_type='client'  GROUP BY from_market ORDER BY NULL;";

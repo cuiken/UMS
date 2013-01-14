@@ -43,7 +43,9 @@
 		<h1>报表管理</h1>
 		<div class="submenu">	
 			<a id="reportc-tab" href="${ctx}/report/report-client.action">客户端日报</a>
-			<a id="reportcn-tab" href="${ctx}/report/report-content.action">内容日报</a>		
+			<a id="reportcn-tab" href="${ctx}/report/report-content.action">内容日报</a>	
+			<a id="report-getClient-tab" href="${ctx}/report/report-get-client.action">内容引导客户端日报</a>
+			<a id="report-contentUnzip-tab" href="${ctx}/report/report-content-unzip.action">内容安装日报</a>	
 			<shiro:hasPermission name="feedback:view">		
 				<a id="feedback-tab" href="${ctx}/report/feedback.action">用户意见反馈</a>
 			</shiro:hasPermission>

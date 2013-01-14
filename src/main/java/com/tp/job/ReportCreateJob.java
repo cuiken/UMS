@@ -35,6 +35,7 @@ public class ReportCreateJob {
 		logService.createClientReport(searcher, perDate, currDate);
 		logService.createContentReport(searcher, perDate, currDate);
 		logService.saveCountContentUnzip(perDate, currDate);
+		logService.createGetClientByContentReport(searcher, perDate, currDate);
 	}
 
 	@Autowired

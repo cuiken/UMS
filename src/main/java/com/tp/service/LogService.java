@@ -22,6 +22,7 @@ import com.tp.dao.log.LogCmccResultDao;
 import com.tp.dao.log.LogCountClientDao;
 import com.tp.dao.log.LogCountContentDao;
 import com.tp.dao.log.LogCountContentMarketDao;
+import com.tp.dao.log.LogCountGetClientDao;
 import com.tp.dao.log.LogCountUnzipDao;
 import com.tp.dao.log.LogForCmccDao;
 import com.tp.dao.log.LogForContentDao;
@@ -35,6 +36,7 @@ import com.tp.entity.log.LogCmccResult;
 import com.tp.entity.log.LogContentMarket;
 import com.tp.entity.log.LogCountClient;
 import com.tp.entity.log.LogCountContent;
+import com.tp.entity.log.LogCountGetClient;
 import com.tp.entity.log.LogCountUnzip;
 import com.tp.entity.log.LogForCmcc;
 import com.tp.entity.log.LogForContent;
@@ -78,6 +80,7 @@ public class LogService {
 	private LogContentJdbcDao logContentJdbcDao;
 
 	private LogCountUnzipDao logCountUnzipDao;
+	private LogCountGetClientDao logCountGetClientDao;
 
 	private ThemeFileDao themeDao;
 	private MarketDao marketDao;
@@ -106,6 +109,15 @@ public class LogService {
 
 	public List<LogInHome> queryLogInHomeByDate(String sdate, String edate) {
 		return logHomeDao.queryByDate(sdate, edate);
+	}
+
+	public Page<LogCountUnzip> searchContentUnzip(final Page<LogCountUnzip> page, final List<PropertyFilter> filters) {
+		return logCountUnzipDao.findPage(page, filters);
+	}
+
+	public Page<LogCountGetClient> searchGetClient(final Page<LogCountGetClient> page,
+			final List<PropertyFilter> filters) {
+		return logCountGetClientDao.findPage(page, filters);
 	}
 
 	public void saveLogFromClient(LogFromClient entity) {
@@ -376,9 +388,26 @@ public class LogService {
 			perMarketDown(searcher, theme, lcct, markets, sdate, edate);
 		}
 	}
-	
-	public void createGetClientByContentReport(IndexSearcher search,String sdate,String edate){
-		
+
+	public void createGetClientByContentReport(IndexSearcher searcher, String sdate, String edate) throws Exception {
+		List<ThemeFile> themes = themeDao.getAll();
+		int i = 0;
+		for (ThemeFile theme : themes) {
+
+			long count = logSearch.countGetClientByContent(searcher, sdate, edate, theme.getTitle());
+			LogCountGetClient entity = new LogCountGetClient();
+			entity.setAppName(theme.getTitle());
+			entity.setDownload(count);
+			entity.setCreateTime(sdate);
+			try {
+				logCountGetClientDao.save(entity);
+				if (++i % 20 == 0) {
+					logCountGetClientDao.flush();
+				}
+			} catch (Exception e) {
+				logger.error("error:" + e.getMessage() + mapper.toJson(entity));
+			}
+		}
 	}
 
 	private void perMarketDown(IndexSearcher searcher, ThemeFile theme, LogCountContent lcc, List<Market> markets,
@@ -492,5 +521,10 @@ public class LogService {
 	@Autowired
 	public void setLogCountUnzipDao(LogCountUnzipDao logCountUnzipDao) {
 		this.logCountUnzipDao = logCountUnzipDao;
+	}
+
+	@Autowired
+	public void setLogCountGetClientDao(LogCountGetClientDao logCountGetClientDao) {
+		this.logCountGetClientDao = logCountGetClientDao;
 	}
 }

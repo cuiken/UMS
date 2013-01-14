@@ -141,6 +141,11 @@ public class Search implements ISearch<LogInHome> {
 		Query query = qp.parse(params[0]);
 		bq1.add(query,BooleanClause.Occur.MUST);
 		
+//		QueryParser qp1 = new QueryParser(Version.LUCENE_36, "fm", new IKAnalyzer());
+//		qp1.setDefaultOperator(QueryParser.AND_OPERATOR);
+//		Query query1 = qp1.parse(params[1]);
+//		bq1.add(query1,BooleanClause.Occur.MUST);
+		
 
 		bq1.add(new TermRangeQuery("time", sdate, edate, false, false), BooleanClause.Occur.MUST);
 
