@@ -30,7 +30,7 @@ public class ConvertUtils {
 				list.add(PropertyUtils.getProperty(obj, propertyName));
 			}
 		} catch (Exception e) {
-			throw ReflectionUtils.convertReflectionExceptionToUnchecked(e);
+			throw Reflections.convertReflectionExceptionToUnchecked(e);
 		}
 
 		return list;
@@ -60,7 +60,7 @@ public class ConvertUtils {
 		try {
 			return org.apache.commons.beanutils.ConvertUtils.convert(value, toType);
 		} catch (Exception e) {
-			throw ReflectionUtils.convertReflectionExceptionToUnchecked(e);
+			throw Reflections.convertReflectionExceptionToUnchecked(e);
 		}
 	}
 

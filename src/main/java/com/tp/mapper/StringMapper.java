@@ -5,7 +5,7 @@ import java.util.Date;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
 
-import com.tp.utils.ReflectionUtils;
+import com.tp.utils.Reflections;
 
 /**
  * 简单封装Apache BeanUtils的ConvertUtils, 实现String<->Java Object的工具类.
@@ -27,7 +27,7 @@ public class StringMapper {
 		try {
 			return ConvertUtils.convert(value, toType);
 		} catch (Exception e) {
-			throw ReflectionUtils.convertReflectionExceptionToUnchecked(e);
+			throw Reflections.convertReflectionExceptionToUnchecked(e);
 		}
 	}
 
@@ -38,7 +38,7 @@ public class StringMapper {
 		try {
 			return ConvertUtils.convert(object);
 		} catch (Exception e) {
-			throw ReflectionUtils.convertReflectionExceptionToUnchecked(e);
+			throw Reflections.convertReflectionExceptionToUnchecked(e);
 		}
 	}
 

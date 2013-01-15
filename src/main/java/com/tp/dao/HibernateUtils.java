@@ -6,7 +6,7 @@ import java.util.Iterator;
 import org.springframework.util.Assert;
 
 import com.tp.entity.IdEntity;
-import com.tp.utils.ReflectionUtils;
+import com.tp.utils.Reflections;
 
 
 /**
@@ -62,7 +62,7 @@ public class HibernateUtils {
 				srcObjects.add(element);
 			}
 		} catch (Exception e) {
-			throw ReflectionUtils.convertReflectionExceptionToUnchecked(e);
+			throw Reflections.convertReflectionExceptionToUnchecked(e);
 		}
 	}
 }

@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.tp.utils.ReflectionUtils;
+import com.tp.utils.Reflections;
 
 /**
  * 封装Hibernate原生API的DAO泛型基类.
@@ -45,7 +45,7 @@ public class SimpleHibernateDao<T, ID extends Serializable> {
 	 * public class UserDao extends SimpleHibernateDao<User, Long>
 	 */
 	public SimpleHibernateDao() {
-		this.entityClass = ReflectionUtils.getSuperClassGenricType(getClass());
+		this.entityClass = Reflections.getSuperClassGenricType(getClass());
 	}
 
 	public SimpleHibernateDao(Class<T> entityClass) {

@@ -548,15 +548,15 @@
 		<dependency>
 			<groupId>net.sf.dozer</groupId>
 			<artifactId>dozer</artifactId>
-			<version>5.3.2</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-lang</groupId>
-					<artifactId>commons-lang</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>5.4.0</version>
 		</dependency>
 
+		<!-- 重新定义Java XPath Engine到最新版，避免旧版那些不必要的依赖 -->
+		<dependency>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<version>1.1.4</version>
+		</dependency>
 		<!-- excel -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>

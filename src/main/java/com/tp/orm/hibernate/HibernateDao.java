@@ -26,7 +26,7 @@ import com.tp.orm.PageRequest;
 import com.tp.orm.PropertyFilter;
 import com.tp.orm.PageRequest.Sort;
 import com.tp.orm.PropertyFilter.MatchType;
-import com.tp.utils.ReflectionUtils;
+import com.tp.utils.Reflections;
 
 /**
  * 扩展功能的Hibernat DAO泛型基类.
@@ -266,8 +266,8 @@ public class HibernateDao<T, ID extends Serializable> extends SimpleHibernateDao
 
 		List<CriteriaImpl.OrderEntry> orderEntries = null;
 		try {
-			orderEntries = (List) ReflectionUtils.getFieldValue(impl, "orderEntries");
-			ReflectionUtils.setFieldValue(impl, "orderEntries", new ArrayList());
+			orderEntries = (List) Reflections.getFieldValue(impl, "orderEntries");
+			Reflections.setFieldValue(impl, "orderEntries", new ArrayList());
 		} catch (Exception e) {
 			logger.error("不可能抛出的异常:{}", e.getMessage());
 		}
@@ -286,7 +286,7 @@ public class HibernateDao<T, ID extends Serializable> extends SimpleHibernateDao
 			c.setResultTransformer(transformer);
 		}
 		try {
-			ReflectionUtils.setFieldValue(impl, "orderEntries", orderEntries);
+			Reflections.setFieldValue(impl, "orderEntries", orderEntries);
 		} catch (Exception e) {
 			logger.error("不可能抛出的异常:{}", e.getMessage());
 		}
