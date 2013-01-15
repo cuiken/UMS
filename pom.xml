@@ -12,7 +12,6 @@
 		<struts.version>2.3.4.1</struts.version>
 		<guava.version>13.0.1</guava.version>
 		<hibernate.version>3.6.10.Final</hibernate.version>
-		<mybatis.version>3.1.1</mybatis.version>
 		<shiro.version>1.2.1</shiro.version>
 		<quartz.version>1.8.6</quartz.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
@@ -359,18 +358,6 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-
-		<!-- mybatis -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>${mybatis.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-			<version>1.1.1</version>
-		</dependency>
 		
 		<!-- optional datasource pool -->
 		<dependency>
@@ -557,7 +544,7 @@
 		<!-- GENERAL UTILS end -->
 
 		<!-- OTHER UTILS begin -->
-		<!-- pojo copy 
+		<!-- pojo copy -->
 		<dependency>
 			<groupId>net.sf.dozer</groupId>
 			<artifactId>dozer</artifactId>
@@ -568,7 +555,7 @@
 					<artifactId>commons-lang</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>-->
+		</dependency>
 
 		<!-- excel -->
 		<dependency>
