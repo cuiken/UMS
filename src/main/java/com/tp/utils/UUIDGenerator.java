@@ -21,4 +21,11 @@ public class UUIDGenerator {
 	public static long randomLong() {
 		return Math.abs(random.nextLong());
 	}
+
+	public static String randomBase62(int length) {
+		byte[] randomBytes = new byte[length];
+		random.nextBytes(randomBytes);
+		return Encodes.encodeBase62(randomBytes);
+	}
+
 }

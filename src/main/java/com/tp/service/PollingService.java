@@ -2,9 +2,11 @@ package com.tp.service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,9 +70,15 @@ public class PollingService {
 				for (PollingPreview preview : poll.getPreviews()) {
 					String ext = FileUtils.getExtension(preview.getName());
 					File image = new File(Constants.LOCKER_STORAGE, preview.getAddr());
-
-					byte[] input = Digests.md5(new FileInputStream(image));
-					String fname = Encodes.encodeHex(input);
+					String fname = "default";
+					InputStream fileStream = null;
+					try {
+						fileStream = new FileInputStream(image);
+						byte[] input = Digests.md5(fileStream);
+						fname = Encodes.encodeHex(input);
+					} finally {
+						IOUtils.closeQuietly(fileStream);
+					}
 					buffer.append("<preview>");
 					buffer.append("<name>" + fname + "." + ext + "</name>");
 					buffer.append("<spec>" + preview.getSpec() + "</spec>");
@@ -99,9 +107,9 @@ public class PollingService {
 	public void deletePollPreview(PollingPreview entity) {
 		pollingPreviewDao.delete(entity);
 	}
-	
-	public void deletePollPreviews(List<PollingPreview> previews){
-		for(PollingPreview  entity :previews){
+
+	public void deletePollPreviews(List<PollingPreview> previews) {
+		for (PollingPreview entity : previews) {
 			pollingPreviewDao.delete(entity);
 		}
 	}

@@ -233,30 +233,46 @@ create table log_f_store(
 	create_time varchar(32),
 	primary key(id)
 );
-/**
+
 create table log_f_store2(
-	id bigint not null auto_increment,
-	imei varchar(50),
-	imsi varchar(50),
-	store_type varchar(20),
+	id bigint auto_increment,
+	imei varchar(50) not null default '',
+	imsi varchar(50) not null default '',
+	store_type varchar(20) not null default '',
 	down_type varchar(20),
-	language varchar(10),
-	client_version varchar(20),
-	resolution varchar(20),
-	from_market varchar(255),
+	language varchar(10) not null default '',
+	client_version varchar(20) not null default '',
+	resolution varchar(20) not null default '',
+	from_market varchar(255) not null default '',
 	request_method varchar(255),
 	request_params varchar(255),
-	operator varchar(10),
-	app_name varchar(50),
+	operator varchar(10) not null default '',
+	app_name varchar(50) not null default '',
 	client_type varchar(20),
 	model varchar(35),
 	net_env varchar(10),
 	come_from varchar(35),
 	content_version varchar(20),
-	create_time varchar(32),
+	create_time timestamp not null default 0,
+	index ctime_index(create_time),
 	primary key(id)
 );
-**/
+
+create table log_f_download(
+	id bigint auto_increment,
+	imei varchar(50) not null default '',
+	imsi varchar(50) not null default '',
+	app_name varchar(50) not null default '',
+	from_market varchar(255) not null default '',
+	request_method varchar(35),
+	client_type varchar(20),
+	create_time timestamp not null default 0,
+	index imei_index(imei),
+	index method_index(request_method),
+	index ctime_index(create_time),
+	primary key(id)
+);
+
 create table lock_user(
 	id bigint auto_increment,
 	imei varchar(35) not null unique,

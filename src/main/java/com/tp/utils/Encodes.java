@@ -22,6 +22,7 @@ import org.apache.commons.lang3.Validate;
  */
 public class Encodes {
 	private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	private static final char[] BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
 	private static final String DEFAULT_URL_ENCODING = "UTF-8";
 
@@ -74,10 +75,22 @@ public class Encodes {
 	}
 
 	/**
-	 * Base62(0_9A_Za_z)编码数字, long->String.
+	 * Base62编码。
 	 */
+	public static String encodeBase62(byte[] input) {
+		char[] chars = new char[input.length];
+		for (int i = 0; i < input.length; i++) {
+			chars[i] = BASE62[((input[i] & 0xFF) % BASE62.length)];
+		}
+		return new String(chars);
+	}
+
+	/**
+	 * Base62(0_9A_Za_z)编码数字, long->String.
+	*/
 	public static String encodeBase62(long num) {
 		return alphabetEncode(num, 62);
+
 	}
 
 	/**

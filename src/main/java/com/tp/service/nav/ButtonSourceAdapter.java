@@ -461,7 +461,7 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	@Override
 	public Button getMostRecentButtonOfCategory(String uuid, String uuidException) {
 		Button news = getButton("news");
-		if (uuid.equals(news.getId())) {
+		if (uuid.equals(news.getId().toString())) {
 			Button entertainment = getButton("entertainment");
 			Button sports = getButton("sports");
 			Button military = getButton("military");
