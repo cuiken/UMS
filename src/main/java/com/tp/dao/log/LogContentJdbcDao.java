@@ -1,4 +1,4 @@
-package com.tp.repository.jdbctemplate;
+package com.tp.dao.log;
 
 import java.util.*;
 
