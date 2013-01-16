@@ -44,10 +44,12 @@
 		</c:if>
 		<div id="filter" style="margin-bottom:5px;">
 				商店: <s:select list="stores" id="f_store" name="filter_EQS_store" listKey="value" listValue="name" cssClass="span2"></s:select>
+			<div class="pull-right"><a href="xml/${param['filter_EQS_store']}">输出XML</a></div>
 		</div>
 		<table class="table table-striped table-bordered table-condensed">
 			<thead>
 				<tr>
+					<th>广告图片</th>
 					<th>广播名称</th>
 					<th>广播类型</th>
 					<th>状态</th>
@@ -60,6 +62,7 @@
 			<tbody>
 				<s:iterator value="page.result">
 					<tr>
+						<td><img alt="广告图片" src="${ctx}/image.action?path=${previews[0].addr}" style="height: 30px;width: 50px;"></td>
 						<td><a href="polling!input.action?id=${id}&pageNo=${page.pageNo}">${name}</a></td>
 						<td>
 							<s:if test="serType==0">
