@@ -54,7 +54,7 @@ public class PollingService {
 		pollingDao.delete(id);
 	}
 
-	public String findPollXmlByStore(String store) {
+	private String findPollXmlByStore(String store) {
 		List<Polling> polls = pollingDao.findBy("store", store);
 		List<PollDTO> dtos = Lists.newArrayList();
 		for (Polling poll : polls) {
