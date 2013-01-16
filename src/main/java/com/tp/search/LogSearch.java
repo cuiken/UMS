@@ -25,7 +25,7 @@ public class LogSearch {
 	 * 分享下载客户端量
 	 */
 	public Long downloadByShare(IndexSearcher searcher, String sdate, String edate) throws Exception {
-		String param = "f:share";
+		String param = "share";
 		return logSearch.countByMethodAndParams(searcher, METHOD_GET_CLIENT, sdate, edate, param);
 
 	}
@@ -53,7 +53,7 @@ public class LogSearch {
 
 	public Long contentVisitByAD(IndexSearcher searcher, String fid, String sdate, String edate) throws Exception {
 
-		String p1 = "f:ad";
+		String p1 = "ad";
 		String p2 = fid;
 		return logSearch.countByMethodAndParams(searcher, METHOD_DETAILS, sdate, edate, p1, p2);
 	}
