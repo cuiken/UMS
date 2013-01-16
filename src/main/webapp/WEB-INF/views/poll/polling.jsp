@@ -48,7 +48,7 @@
 		</c:if>
 		<div id="filter" style="margin-bottom:5px;">
 				商店: <s:select list="stores" id="f_store" name="filter_EQS_store" listKey="value" listValue="name" cssClass="span2"></s:select>
-			<div class="pull-right"><a href="#" onclick="goXml()">XML接口</a></div>
+			<div class="pull-right"><a href="#" onclick="goXml()">查看XML</a></div>
 		</div>
 		<table class="table table-striped table-bordered table-condensed">
 			<thead>
