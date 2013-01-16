@@ -68,8 +68,9 @@ public class PollingAction extends CRUDActionSupport<Polling> {
 
 	public String toXml() throws Exception {
 		String filter = Struts2Utils.getParameter("store");
-		List<Polling> polls = pollingService.findByStore(filter);
-		String xml = pollingService.toXml(polls);
+//		List<Polling> polls = pollingService.findByStore(filter);
+//		String xml = pollingService.toXml(polls);
+		String xml=pollingService.toXml(filter);
 		ServletUtils.setEtag(Struts2Utils.getResponse(), "W/\"" + Encodes.encodeMd5(xml) + "\"");
 		Struts2Utils.renderXml(xml);
 		return null;

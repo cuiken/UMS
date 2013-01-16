@@ -19,6 +19,8 @@ public enum MemcachedObjectType {
 
 	LOG_IMEI("log_imei:", 60 * 3),
 
+	POLL_XML("poll_xml:", 60 * 3),
+
 	//=====================计数器key================================
 
 	COUNTER_CLIENT("counter_client", 60 * 60 * 12),
