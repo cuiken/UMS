@@ -113,11 +113,11 @@ public class LockerAction extends ActionSupport {
 	}
 
 	private String renderToThird(String st, String op) throws Exception {
-		String referer=Struts2Utils.getRequest().getHeader("Referer");
+		String referer = Struts2Utils.getRequest().getHeader("Referer");
 		System.out.println(referer);
 		Struts2Utils.getSession().setAttribute("home", referer);
-		if(referer!=null&&referer.contains("wap.dm.10086.cn")){
-			
+		if (referer != null && referer.contains("wap.dm.10086.cn")) {
+
 		}
 		String imei = Struts2Utils.getParameter(Constants.PARA_IMEI);
 		String r = Struts2Utils.getParameter(Constants.PARA_RESOLUTION);
@@ -207,7 +207,12 @@ public class LockerAction extends ActionSupport {
 	 */
 	public String adXml() throws Exception {
 		String st = Struts2Utils.getParameter(Constants.PARA_STORE_TYPE);
-		Long storeId = categoryManager.getStoreByValue(st).getId();
+		Store store = categoryManager.getStoreByValue(st);
+		if (store == null) {
+			logger.warn("商店{}不存在", st);
+			return null;
+		}
+		Long storeId = store.getId();
 		Page<ThemeFile> adPage = new Page<ThemeFile>();
 		adPage = fileManager.searchFileByShelf(adPage, Shelf.Type.RECOMMEND, storeId);
 		String domain = Constants.getDomain();

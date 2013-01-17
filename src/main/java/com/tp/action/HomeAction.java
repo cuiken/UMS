@@ -96,12 +96,12 @@ public class HomeAction extends ActionSupport {
 
 		language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
 		Long storeId = chooseStoreId(session);
-		newestPage=fileManager.searchByStore(newestPage, storeId, language);
+		newestPage = fileManager.searchByStore(newestPage, storeId, language);
 		return "newest";
 	}
 
 	public String category() throws Exception {
-		categories=categoryManager.getCategories();
+		categories = categoryManager.getCategories();
 		return "category";
 	}
 
@@ -233,8 +233,14 @@ public class HomeAction extends ActionSupport {
 		Long storeId = chooseStoreId(session);
 		categoryId = Long.valueOf(Struts2Utils.getParameter("cid"));
 
-//		cateInfos = categoryInfoManager.getInfosBylanguage(language);
-		categoryName=categoryManager.getCategory(categoryId).getName();
+		//		cateInfos = categoryInfoManager.getInfosBylanguage(language);
+		try {
+			categoryName = categoryManager.getCategory(categoryId).getName();
+		} catch (Exception e) {
+			logger.warn("com.tp.entity.Category:#{}不存在", categoryId);
+			Struts2Utils.renderText("请求错误");
+			return null;
+		}
 		catePage = fileManager.searchInfoByCategoryAndStore(catePage, categoryId, storeId, language);
 
 		return "more";
@@ -307,7 +313,7 @@ public class HomeAction extends ActionSupport {
 	public String getLanguage() {
 		return language;
 	}
-	
+
 	public List<Category> getCategories() {
 		return categories;
 	}
