@@ -174,11 +174,11 @@ public class LogService {
 			LogInHome entity = mapper.fromJson(value, LogInHome.class);
 			try {
 				logHomeDao.save(entity);
+				if (++i % 20 == 0) {
+					logHomeDao.flush();
+				}
 			} catch (Exception e) {
-				logger.error("异常记录为：" + mapper.toJson(entity));
-			}
-			if (++i % 20 == 0) {
-				logHomeDao.flush();
+				logger.error(e.getMessage() + " 异常记录为：" + mapper.toJson(entity));
 			}
 
 		}
@@ -195,12 +195,13 @@ public class LogService {
 			LogFromClient entity = mapper.fromJson(value, LogFromClient.class);
 			try {
 				logClientDao.save(entity);
+				if (++i % 20 == 0) {
+					logClientDao.flush();
+				}
 			} catch (Exception e) {
-				logger.error("异常记录为：" + mapper.toJson(entity));
+				logger.error(e.getMessage() + " 异常记录为：" + mapper.toJson(entity));
 			}
-			if (++i % 20 == 0) {
-				logClientDao.flush();
-			}
+
 		}
 		key_log_client.clear();
 	}
@@ -214,12 +215,13 @@ public class LogService {
 			LogForContent entity = mapper.fromJson(value, LogForContent.class);
 			try {
 				logContentDao.save(entity);
+				if (++i % 20 == 0) {
+					logContentDao.flush();
+				}
 			} catch (Exception e) {
-				logger.error("异常记录为：" + mapper.toJson(entity));
+				logger.error(e.getMessage() + " 异常记录为：" + mapper.toJson(entity));
 			}
-			if (++i % 20 == 0) {
-				logContentDao.flush();
-			}
+
 		}
 		key_log_content.clear();
 	}
@@ -271,11 +273,11 @@ public class LogService {
 			unzip.setCreateTime(sdate);
 			try {
 				logCountUnzipDao.save(unzip);
+				if (++i % 20 == 0) {
+					logCountUnzipDao.flush();
+				}
 			} catch (Exception e) {
-				logger.error("错误记录为：" + mapper.toJson(unzip));
-			}
-			if (++i % 20 == 0) {
-				logCountUnzipDao.flush();
+				logger.error(e.getMessage() + " 错误记录为：" + mapper.toJson(unzip));
 			}
 		}
 	}
@@ -527,4 +529,5 @@ public class LogService {
 	public void setLogCountGetClientDao(LogCountGetClientDao logCountGetClientDao) {
 		this.logCountGetClientDao = logCountGetClientDao;
 	}
+
 }

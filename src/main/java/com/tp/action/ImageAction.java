@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.tp.utils.Constants;
@@ -23,6 +25,7 @@ import com.tp.utils.Struts2Utils;
 public class ImageAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
+	private static Logger logger = LoggerFactory.getLogger(ImageAction.class);
 
 	private static final String[] GZIP_MIME_TYPES = { "text/html", "text/xml", "text/plain", "text/css",
 			"text/javascript", "application/xml", "application/xhtml+xml", "application/x-javascript" };
@@ -83,8 +86,11 @@ public class ImageAction extends ActionSupport {
 
 		//高效读取文件内容并输出,然后关闭input file
 
-		FileUtils.copyFile(contentInfo.file, output);
-
+		try {
+			FileUtils.copyFile(contentInfo.file, output);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 		output.flush();
 
 	}

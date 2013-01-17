@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -29,7 +30,12 @@ public class FileDownloadAction extends ActionSupport {
 
 	@Override
 	public String execute() throws Exception {
-
+		HttpServletResponse response = Struts2Utils.getResponse();
+		HttpServletRequest request = Struts2Utils.getRequest();
+		if (StringUtils.isBlank(inputPath)) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "path parametter is required.");
+			return null;
+		}
 		inputPath = Constants.LOCKER_STORAGE + new String(inputPath.getBytes("iso-8859-1"), Constants.ENCODE_UTF_8);
 		File file = new File(inputPath);
 		if (file.exists()) {
@@ -38,8 +44,7 @@ public class FileDownloadAction extends ActionSupport {
 			downloadFileName = new String(file.getName().getBytes(), "ISO-8859-1");
 
 			InputStream inputStream = new FileInputStream(file);
-			HttpServletResponse response = Struts2Utils.getResponse();
-			HttpServletRequest request = Struts2Utils.getRequest();
+
 			response.reset();
 			response.setHeader("Accept-Ranges", "bytes");
 			String range = request.getHeader("Range");
@@ -67,7 +72,7 @@ public class FileDownloadAction extends ActionSupport {
 			OutputStream output = response.getOutputStream();
 			try {
 				IOUtils.copy(inputStream, output);
-//				output.flush();
+				output.flush();
 			} catch (Exception e) {
 				//忽略通过android浏览器下载带来的异常
 			} finally {
