@@ -27,6 +27,7 @@ import com.tp.cache.MemcachedObjectType;
 import com.tp.cache.SpyMemcachedClient;
 import com.tp.entity.DownloadType;
 import com.tp.entity.log.LogInHome;
+import com.tp.mapper.JsonMapper;
 import com.tp.service.LogService;
 import com.tp.utils.Constants;
 import com.tp.utils.Constants.Language;
@@ -41,6 +42,8 @@ public class HomeInterceptor extends AbstractInterceptor {
 	private LogService logService;
 
 	private SpyMemcachedClient memcachedClient;
+
+	private JsonMapper mapper = JsonMapper.buildNormalMapper();
 
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
@@ -148,12 +151,12 @@ public class HomeInterceptor extends AbstractInterceptor {
 			}
 		}
 		String params = removeLastChara(buffer.toString());
-		if (params.length() > 255) {
-			logger.error("参数过长: " + params);
-			return;
-		}
 		log.setRequestParams(params);
 		log.setCreateTime(DateFormatUtils.convert(new Date()));
+		if (params.length() > 255) {
+			logger.error("参数过长: " + mapper.toJson(log));
+			return;
+		}
 		logService.saveLogInHome(log);
 
 	}

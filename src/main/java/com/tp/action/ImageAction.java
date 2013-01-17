@@ -90,7 +90,9 @@ public class ImageAction extends ActionSupport {
 			FileUtils.copyFile(contentInfo.file, output);
 			output.flush();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			String ip = ServletUtils.getIpAddr(request);
+			String userAgent=request.getHeader("User-Agent");
+			logger.error(e.getMessage() + " ip:" + ip+",User-Agent:"+userAgent);
 		}
 
 	}
