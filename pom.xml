@@ -20,6 +20,7 @@
 		<hibernate-validator.version>4.2.0.Final</hibernate-validator.version>
 		<jackson.version>2.1.0</jackson.version>
 		<slf4j.version>1.7.2</slf4j.version>
+		<logback.version>1.0.9</logback.version>
 		<commons-lang3.version>3.1</commons-lang3.version>
 
 		<junit.version>4.11</junit.version>
@@ -448,12 +449,11 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-
-		<!-- slf4j-log4j绑定 -->
+		
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		
@@ -476,6 +476,13 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
 			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.lazyluke</groupId>
+			<artifactId>log4jdbc-remix</artifactId>
+			<version>0.2.7</version>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -549,6 +556,12 @@
 			<groupId>net.sf.dozer</groupId>
 			<artifactId>dozer</artifactId>
 			<version>5.4.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- 重新定义Java XPath Engine到最新版，避免旧版那些不必要的依赖 -->

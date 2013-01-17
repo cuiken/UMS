@@ -32,13 +32,13 @@
 	<cache name="com.tp.entity.FileInfo.theme" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"
 		maxEntriesLocalDisk="1000"></cache>
 
-	<cache name="com.tp.entity.LogCountContent" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"
+	<cache name="com.tp.entity.log.LogCountContent" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"
 		maxEntriesLocalDisk="1000"></cache>
-	<cache name="com.tp.entity.LogCountContent.downByPerMarket" maxEntriesLocalHeap="100" eternal="true"
+	<cache name="com.tp.entity.log.LogCountContent.downByPerMarket" maxEntriesLocalHeap="100" eternal="true"
 		overflowToDisk="true" maxEntriesLocalDisk="1000"></cache>
-	<cache name="com.tp.entity.LogContentMarket" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"
+	<cache name="com.tp.entity.log.LogContentMarket" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"
 		maxEntriesLocalDisk="1000"></cache>
-	<cache name="com.tp.entity.LogContentMarket.logContent" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"
+	<cache name="com.tp.entity.log.LogContentMarket.logContent" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"
 		maxEntriesLocalDisk="1000"></cache>
 		
 	<cache name="com.tp.entity.nav.Navigator" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true" 
