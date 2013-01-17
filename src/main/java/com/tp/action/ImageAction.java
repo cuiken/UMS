@@ -88,10 +88,10 @@ public class ImageAction extends ActionSupport {
 
 		try {
 			FileUtils.copyFile(contentInfo.file, output);
+			output.flush();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		output.flush();
 
 	}
 
