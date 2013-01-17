@@ -31,11 +31,26 @@ public class ReportCreateJob {
 		Directory dir = FSDirectory.open(new File(Constants.INDEX_LOG_STORE));
 		IndexReader reader = IndexReader.open(dir);
 		IndexSearcher searcher = new IndexSearcher(reader);
-
+		try{
 		logService.createClientReport(searcher, perDate, currDate);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try{
 		logService.createContentReport(searcher, perDate, currDate);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try{
 		logService.saveCountContentUnzip(perDate, currDate);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		try{
 		logService.createGetClientByContentReport(searcher, perDate, currDate);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	@Autowired
