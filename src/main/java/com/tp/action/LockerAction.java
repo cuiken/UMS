@@ -212,9 +212,8 @@ public class LockerAction extends ActionSupport {
 			logger.warn("商店{}不存在", st);
 			return null;
 		}
-		Long storeId = store.getId();
 		Page<ThemeFile> adPage = new Page<ThemeFile>();
-		adPage = fileManager.searchFileByShelf(adPage, Shelf.Type.RECOMMEND, storeId);
+		adPage = fileManager.searchFileByShelf(adPage, Shelf.Type.RECOMMEND, store.getId());
 		String domain = Constants.getDomain();
 		String detailsURL = "/store/locker!details.action?st=" + st + "&amp;id=";
 		String xml = fileManager.adXml(adPage.getResult(), domain, detailsURL);
