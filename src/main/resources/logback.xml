@@ -17,7 +17,7 @@
 	</appender>
 
 	<!-- project default level -->
-	<logger name="ums" level="INFO" />
+	<logger name="com.tp" level="INFO" />
 
 	<!--log4jdbc -->
 	<logger name="jdbc.sqltiming" level="INFO"/>
