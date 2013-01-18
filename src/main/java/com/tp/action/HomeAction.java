@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -29,6 +30,7 @@ import com.tp.service.CategoryManager;
 import com.tp.service.FileManager;
 import com.tp.service.MarketManager;
 import com.tp.utils.Constants;
+import com.tp.utils.ServletUtils;
 import com.tp.utils.Struts2Utils;
 
 @Results({ @Result(name = "reload", location = "home.action", type = "redirect") })
@@ -228,7 +230,7 @@ public class HomeAction extends ActionSupport {
 	public String more() throws Exception {
 
 		HttpSession session = Struts2Utils.getSession();
-
+		HttpServletRequest request = Struts2Utils.getRequest();
 		language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
 
 		Long storeId = chooseStoreId(session);
@@ -238,7 +240,9 @@ public class HomeAction extends ActionSupport {
 		try {
 			categoryName = categoryManager.getCategory(categoryId).getName();
 		} catch (Exception e) {
-			logger.warn("com.tp.entity.Category:#{}不存在", categoryId);
+			String userAgent = request.getHeader("User-Agent");
+			String ip = ServletUtils.getIpAddr(request);
+			logger.warn("com.tp.entity.Category:#{}不存在,ip" + ip + ",User-Agent:" + userAgent, categoryId);
 			Struts2Utils.getResponse().sendError(HttpServletResponse.SC_BAD_REQUEST, "parametter is incorrect.");
 			return null;
 		}

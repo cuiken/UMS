@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +33,7 @@ import com.tp.service.LogService;
 import com.tp.utils.Constants;
 import com.tp.utils.Constants.Language;
 import com.tp.utils.DateFormatUtils;
+import com.tp.utils.ServletUtils;
 import com.tp.utils.Struts2Utils;
 
 public class HomeInterceptor extends AbstractInterceptor {
@@ -153,12 +155,49 @@ public class HomeInterceptor extends AbstractInterceptor {
 		String params = removeLastChara(buffer.toString());
 		log.setRequestParams(params);
 		log.setCreateTime(DateFormatUtils.convert(new Date()));
-		if (params.length() > 255) {
-			logger.error("参数过长: " + mapper.toJson(log));
+		if (!isAvailable(log)) {
+			HttpServletRequest request = Struts2Utils.getRequest();
+			String userAgent = request.getHeader("User-Agent");
+			logger.warn("参数过长: " + mapper.toJson(log) + ",ip:" + ServletUtils.getIpAddr(request) + ",User-Agent:"
+					+ userAgent);
 			return;
 		}
 		logService.saveLogInHome(log);
 
+	}
+
+	private boolean isAvailable(LogInHome log) {
+		if (StringUtils.length(log.getImei()) > 50) {
+			return false;
+		}
+		if (StringUtils.length(log.getImei()) > 50) {
+			return false;
+		}
+		if (StringUtils.length(log.getClientVersion()) > 20) {
+			return false;
+		}
+		if (StringUtils.length(log.getDownType()) > 10) {
+			return false;
+		}
+		if (StringUtils.length(log.getFromMarket()) > 255) {
+			return false;
+		}
+		if (StringUtils.length(log.getLanguage()) > 20) {
+			return false;
+		}
+		if (StringUtils.length(log.getRequestMethod()) > 255) {
+			return false;
+		}
+		if (StringUtils.length(log.getRequestParams()) > 255) {
+			return false;
+		}
+		if (StringUtils.length(log.getResolution()) > 20) {
+			return false;
+		}
+		if (StringUtils.length(log.getStoreType()) > 20) {
+			return false;
+		}
+		return true;
 	}
 
 	private String removeLastChara(String str) {
