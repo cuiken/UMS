@@ -91,8 +91,13 @@ public class ImageAction extends ActionSupport {
 			output.flush();
 		} catch (Exception e) {
 			String ip = ServletUtils.getIpAddr(request);
-			String userAgent=request.getHeader("User-Agent");
-			logger.error(e.getMessage() + " ip:" + ip+",User-Agent:"+userAgent);
+			String userAgent = request.getHeader("User-Agent");
+			String eMsg = e.getMessage();
+			if (StringUtils.isBlank(eMsg)) {
+				eMsg = contentPath;
+			}
+			String msg = eMsg + ",ip:" + ip + ",User-Agent:" + userAgent;
+			logger.warn(msg);
 		}
 
 	}
