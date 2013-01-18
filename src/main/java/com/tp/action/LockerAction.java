@@ -209,7 +209,7 @@ public class LockerAction extends ActionSupport {
 		String st = Struts2Utils.getParameter(Constants.PARA_STORE_TYPE);
 		Store store = categoryManager.getStoreByValue(st);
 		if (store == null) {
-			logger.warn("商店{}不存在", st);
+			logger.warn("adXml:商店{}不存在", st);
 			return null;
 		}
 		Page<ThemeFile> adPage = new Page<ThemeFile>();
