@@ -94,10 +94,9 @@ public class ImageAction extends ActionSupport {
 			String userAgent = request.getHeader("User-Agent");
 			String eMsg = e.getMessage();
 			if (StringUtils.isBlank(eMsg)) {
-				eMsg = contentPath;
+				eMsg = contentInfo.contentPath;
 			}
-			String msg = eMsg + ",ip:" + ip + ",User-Agent:" + userAgent;
-			logger.warn(msg);
+			logger.warn(eMsg + ",ip:" + ip + ",User-Agent:" + userAgent);
 		}
 
 	}
