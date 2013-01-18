@@ -36,20 +36,21 @@ public class ViewSourceAction extends ActionSupport {
 			HttpServletResponse response = Struts2Utils.getResponse();
 			HttpServletRequest request = Struts2Utils.getRequest();
 			String userDir = System.getProperty("user.dir");
+			String download = request.getParameter("download");
+			String fname = request.getParameter("fname");
 
-			if (StringUtils.isBlank(path)) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "path parametter is required.");
+			if (StringUtils.isBlank(fname)) {
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "fname parametter is required.");
 				return null;
 			}
-			String download = request.getParameter("download");
-			String autoPath = request.getParameter("auto");
+			path = StringUtils.strip(path, null);
 
 			File file;
-			if (autoPath != null && userDir != null) {
+			if (StringUtils.isBlank(path) && userDir != null) {
 
-				file = new File(userDir + "/bin", path);
+				file = new File(userDir + "/logs", fname);
 			} else {
-				file = new File(path);
+				file = new File(path, fname);
 			}
 			OutputStream output = response.getOutputStream();
 
