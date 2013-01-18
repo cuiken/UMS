@@ -7,9 +7,9 @@
 	</appender>
 
 	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>logs/mopita.log</file>
+		<file>${user.dir}/logs/mopita.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>logs/mopita.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${user.dir}/logs/mopita.%d{yyyy-MM-dd}.log</fileNamePattern>
 		</rollingPolicy>
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>

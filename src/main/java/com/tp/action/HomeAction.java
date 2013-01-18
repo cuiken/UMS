@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.convention.annotation.Result;
@@ -238,7 +239,7 @@ public class HomeAction extends ActionSupport {
 			categoryName = categoryManager.getCategory(categoryId).getName();
 		} catch (Exception e) {
 			logger.warn("com.tp.entity.Category:#{}不存在", categoryId);
-			Struts2Utils.renderText("请求错误");
+			Struts2Utils.getResponse().sendError(HttpServletResponse.SC_BAD_REQUEST, "parametter is incorrect.");
 			return null;
 		}
 		catePage = fileManager.searchInfoByCategoryAndStore(catePage, categoryId, storeId, language);
