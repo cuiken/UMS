@@ -69,7 +69,7 @@ public class ViewSourceAction extends ActionSupport {
 			FileUtils.copyFile(file, output);
 			output.flush();
 		} catch (Exception e) {
-			logger.error(e.getMessage() + "下载日志文件时非正常中断");
+			logger.warn(e.getMessage() + "下载日志文件时非正常中断");
 		}
 		return null;
 	}
