@@ -80,7 +80,7 @@ public class HomeInterceptor extends AbstractInterceptor {
 				String imei = Struts2Utils.getParameter(PARA_IMEI);
 				String id = Struts2Utils.getParameter("id");
 				if (imei != null && !imei.isEmpty()) {
-					boolean save = !isInMemcached(MemcachedObjectType.LOG_IMEI + imei + id);
+					boolean save = !isInMemcached(MemcachedObjectType.LOG_IMEI.getPrefix() + imei + id);
 					if (!save) {
 						Struts2Utils.renderText("do nothing");
 						return null;
