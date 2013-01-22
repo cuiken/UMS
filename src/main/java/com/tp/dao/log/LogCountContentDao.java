@@ -10,6 +10,8 @@ import com.tp.orm.hibernate.HibernateDao;
 @Component
 public class LogCountContentDao extends HibernateDao<LogCountContent, Long> {
 
+	private static final String SUM_EACH_DOWNLOAD = "select sum(c.totalDown) from LogCountContent c where c.themeName=?";
+
 	@SuppressWarnings("unchecked")
 	public List<LogCountContent> getByContentOrDate(String theme, String date) {
 		String hql = "select c from LogCountContent  c ";
@@ -26,5 +28,9 @@ public class LogCountContentDao extends HibernateDao<LogCountContent, Long> {
 		} else {
 			return createQuery(hql).list();
 		}
+	}
+
+	public long queryTotalDownload(String fname) {
+		return (Long) createQuery(SUM_EACH_DOWNLOAD, fname).uniqueResult();
 	}
 }

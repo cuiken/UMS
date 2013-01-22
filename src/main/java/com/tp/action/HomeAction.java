@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.tp.dao.log.LogCountContentDao;
 import com.tp.entity.Category;
 import com.tp.entity.CategoryInfo;
 import com.tp.entity.DownloadType;
@@ -44,6 +46,8 @@ public class HomeAction extends ActionSupport {
 	private FileManager fileManager;
 	private MarketManager marketManager;
 
+	private LogCountContentDao countContentDao;
+
 	private Page<FileStoreInfo> hottestPage = new Page<FileStoreInfo>();
 	private Page<FileStoreInfo> recommendPage = new Page<FileStoreInfo>();
 
@@ -51,6 +55,7 @@ public class HomeAction extends ActionSupport {
 	private Page<FileStoreInfo> catePage = new Page<FileStoreInfo>();
 
 	private Long id;
+	private String totalDown;
 	private FileStoreInfo info;
 
 	private List<CategoryInfo> cateInfos;
@@ -161,7 +166,8 @@ public class HomeAction extends ActionSupport {
 					break;
 				}
 			}
-
+			long count = countContentDao.queryTotalDownload(info.getTheme().getTitle());
+			totalDown = convert(count);
 			catePage = fileManager.searchInfoByCategoryAndStore(catePage, cate.getId(), storeId, language);
 			List<FileStoreInfo> fileinfos = catePage.getResult();
 			fileinfos.remove(info);
@@ -175,6 +181,35 @@ public class HomeAction extends ActionSupport {
 			return "reload";
 		}
 		return "details";
+	}
+
+	private String convert(long count) {
+		count = count * 10;
+
+		if (count < 10000) {
+			if (count < 1000) {
+				return "1000以下";
+			} else {
+				String number = StringUtils.substring(String.valueOf(count), 0, 1);
+				for (int i = 1; i < 10; i++) {
+					if (Integer.valueOf(number).equals(i)) {
+						return i + "000+";
+					}
+				}
+			}
+		} else {
+			String number = StringUtils.substring(String.valueOf(count), 0, 1);
+			String tenThousandPosition=StringUtils.substring(String.valueOf(count), 0, String.valueOf(count).length()-4);
+			
+			for (int i = 1; i < 10; i++) {
+				if (Integer.valueOf(number).equals(i)) {
+					
+					return tenThousandPosition + "万+";
+				}
+			}
+
+		}
+		return "";
 	}
 
 	private void setDownloadType(HttpSession session) throws UnsupportedEncodingException {
@@ -321,5 +356,14 @@ public class HomeAction extends ActionSupport {
 
 	public List<Category> getCategories() {
 		return categories;
+	}
+
+	public String getTotalDown() {
+		return totalDown;
+	}
+
+	@Autowired
+	public void setCountContentDao(LogCountContentDao countContentDao) {
+		this.countContentDao = countContentDao;
 	}
 }

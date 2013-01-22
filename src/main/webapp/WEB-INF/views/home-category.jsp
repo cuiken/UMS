@@ -26,7 +26,7 @@
  </head>
  <body>
  	<div class="slide_list_dot">
-		<a href="home.action?${queryString}">精品</a><a href="home!newest.action?${queryString}">最新</a><a class="selected">分类</a>
+		<a href="home.action?${queryString}"><s:text name="nav.hot"/></a><a href="home!newest.action?${queryString}"><s:text name="nav.newest"/></a><a class="selected"><s:text name="nav.category"/></a>
 	</div>
 	
 	<div class="preview">

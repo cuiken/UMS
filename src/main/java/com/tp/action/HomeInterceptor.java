@@ -66,7 +66,7 @@ public class HomeInterceptor extends AbstractInterceptor {
 			if (method.equals(METHOD_GET_CLIENT)) {
 				String imei = Struts2Utils.getParameter(PARA_IMEI);
 				boolean save = true;
-				if (imei == null || imei.isEmpty()) {
+				if (StringUtils.isBlank(imei)) {
 					save = isFirstDownload();
 				} else {
 					save = !isInMemcached(MemcachedObjectType.LOG_IMEI.getPrefix() + imei);
@@ -80,13 +80,14 @@ public class HomeInterceptor extends AbstractInterceptor {
 			if (method.equals("saveDownload")) {
 				String imei = Struts2Utils.getParameter(PARA_IMEI);
 				String id = Struts2Utils.getParameter("id");
-				if (imei != null && !imei.isEmpty()) {
-					boolean save = !isInMemcached(MemcachedObjectType.LOG_IMEI.getPrefix() + imei + id);
-					if (!save) {
+				if (StringUtils.isNotBlank(imei)) {
+					boolean saved = isInMemcached(MemcachedObjectType.LOG_IMEI.getPrefix() + imei + id);
+					if (saved) {
 						Struts2Utils.renderText("do nothing");
 						return null;
 					}
 				}
+
 			}
 		}
 		return invocation.invoke();

@@ -13,8 +13,13 @@
 		</script>
 	</head>
 	<body>
-		<form id="mainForm" action="report-content-unzip.action" method="get">
+		<form id="mainForm" action="report-content-unzip.action" method="post" class="form-horizontal">
 			<h1>内容安装日报</h1>
+			<div id="filter" style="margin-bottom: 5px;">
+				内容: <input class="input-medium" type="text" id="theme" name="filter_LIKES_appName" value="${param['filter_LIKES_appName']}" />
+				&nbsp;日期: <input class="input-medium" type="date" id="sdate" autocomplete="on" name="filter_EQS_createTime" value="${param['filter_EQS_createTime']}" />
+				<input class="btn" type="button" value="搜索" onclick="search();"/>&nbsp;
+			</div>
 			<table class="table table-striped table-bordered table-condensed">
 				<thead>
 				<tr>

@@ -44,15 +44,15 @@
 				</div>
 				<div  class="contents_txt">
 					<div style="float: left; width: 50%; margin-bottom: 15px;margin-top: 15px;">
-						<s:text name="home.author"/> : ${info.author}
+						<s:text name="home.author"/>: ${info.author}
 					</div>				
 					<div style="float:right;  width: 50%;margin-bottom: 15px;margin-top: 15px;">
-						<s:text name="home.size"/> : ${fn:substring(info.theme.apkSize/1024/1024, 0, 4)}M
+						<s:text name="total.down"/>: ${totalDown}
 						
 					</div>
 				</div>
 				<div class="contents_txt" id="desc" style="line-height: 130%;">
-					<s:text name="home.desc"/> : ${info.longDescription}					
+					<s:text name="home.desc"/>: ${info.longDescription}					
 				</div>		
 				<div style="float: right;margin: 15px;">
 					<a href="home.action?${queryString}"><img id="gohome" alt="gohome" src="${ctx}/static/images/dhome.png"></a>

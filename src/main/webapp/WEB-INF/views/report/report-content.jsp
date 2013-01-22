@@ -23,7 +23,7 @@
 			<h1>内容日报</h1>
 			<div id="filter" style="margin-bottom: 5px;">
 				内容: <input class="input-medium" type="text" id="theme" name="filter_LIKES_themeName" value="${param['filter_LIKES_themeName']}" />
-				&nbsp;日期<input class="input-medium" type="date" id="sdate" autocomplete="on" name="filter_EQS_logDate" value="${param['filter_EQS_logDate']}" />
+				&nbsp;日期: <input class="input-medium" type="date" id="sdate" autocomplete="on" name="filter_EQS_logDate" value="${param['filter_EQS_logDate']}" />
 				<input class="btn" type="button" value="搜索" onclick="search();"/>&nbsp;
 				<div style="float:right"><a href="#" class="btn" onclick="exportExcel();"><i class=" icon-download-alt"></i>Excel</a></div>
 			</div>

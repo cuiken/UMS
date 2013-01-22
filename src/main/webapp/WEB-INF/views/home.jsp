@@ -19,7 +19,7 @@
 	
 		<form action="home.action" method="get">
 			<div class="slide_list_dot">
-				<a class="selected">精品</a><a href="home!newest.action?${queryString}">最新</a><a href="home!category.action?${queryString}">分类</a>
+				<a class="selected"><s:text name="nav.hot"/></a><a href="home!newest.action?${queryString}"><s:text name="nav.newest"/></a><a href="home!category.action?${queryString}"><s:text name="nav.category"/></a>
 			</div>
 			<div id="container"> 		
 				<s:if test="adFile!=null">		

@@ -18,7 +18,7 @@
  <body>
  	<form action="home!newest.action" method="get">
  		<div class="slide_list_dot">
-			<a href="home.action?${queryString}">精品</a><a class="selected">最新</a><a href="home!category.action?${queryString}">分类</a>
+			<a href="home.action?${queryString}"><s:text name="nav.hot"/></a><a class="selected"><s:text name="nav.newest"/></a><a href="home!category.action?${queryString}"><s:text name="nav.category"/></a>
 		</div>
  		<div id="container" class="transitions-enabled infinite-scroll clearfix"> 
 				<s:iterator value="newestPage.result">
