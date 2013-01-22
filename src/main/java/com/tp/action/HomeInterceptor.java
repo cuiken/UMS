@@ -53,19 +53,15 @@ public class HomeInterceptor extends AbstractInterceptor {
 		String method = invocation.getProxy().getMethod();
 		Map<String, Object> paramMap = invocation.getInvocationContext().getParameters();
 
-		if (action instanceof HomeAction || action instanceof LockerAction) {
+		if (action instanceof HomeAction || action instanceof LockerAction || action instanceof JplockerAction) {
 			saveLog(method, paramMap);
-			setParamInSession(method);		
-		}
-		if(action instanceof JplockerAction){
 			setParamInSession(method);
+			String language = (String) Struts2Utils.getSessionAttribute(Constants.PARA_LANGUAGE);
+			if (language.equalsIgnoreCase("ja")) {
+				Struts2Utils.getSession().setAttribute(Constants.PARA_LANGUAGE, Language.JP.getValue());
+			}
 		}
-		
-		String language = (String) Struts2Utils.getSessionAttribute(Constants.PARA_LANGUAGE);
-		if (language.equalsIgnoreCase("ja")) {
-			Struts2Utils.getSession().setAttribute(Constants.PARA_LANGUAGE, Language.JP.getValue());
-		}
-		
+
 		if (action instanceof FileDownloadAction) {
 			if (method.equals(METHOD_GET_CLIENT)) {
 				String imei = Struts2Utils.getParameter(PARA_IMEI);
