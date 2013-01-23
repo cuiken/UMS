@@ -157,7 +157,7 @@ public class HomeAction extends ActionSupport {
 			info = fileManager.getStoreInfoBy(storeId, id, language);
 			if (info == null)
 				return "reload";
-			setDownloadType(session);
+
 			Category cate = info.getTheme().getCategories().get(0);
 			List<CategoryInfo> cateInfos = cate.getInfos();
 			for (CategoryInfo ci : cateInfos) {
@@ -166,6 +166,7 @@ public class HomeAction extends ActionSupport {
 					break;
 				}
 			}
+			setDownloadType(session, cate.getDescription());
 			long count = countContentDao.queryTotalDownload(info.getTheme().getTitle());
 			totalDown = convert(count);
 			catePage = fileManager.searchInfoByCategoryAndStore(catePage, cate.getId(), storeId, language);
@@ -199,11 +200,12 @@ public class HomeAction extends ActionSupport {
 			}
 		} else {
 			String number = StringUtils.substring(String.valueOf(count), 0, 1);
-			String tenThousandPosition=StringUtils.substring(String.valueOf(count), 0, String.valueOf(count).length()-4);
-			
+			String tenThousandPosition = StringUtils.substring(String.valueOf(count), 0,
+					String.valueOf(count).length() - 4);
+
 			for (int i = 1; i < 10; i++) {
 				if (Integer.valueOf(number).equals(i)) {
-					
+
 					return tenThousandPosition + "万+";
 				}
 			}
@@ -212,11 +214,14 @@ public class HomeAction extends ActionSupport {
 		return "";
 	}
 
-	private void setDownloadType(HttpSession session) throws UnsupportedEncodingException {
+	private void setDownloadType(HttpSession session, String category) throws UnsupportedEncodingException {
 
 		String fromMarket = (String) session.getAttribute(Constants.PARA_FROM_MARKET);
 		String downType = (String) session.getAttribute(Constants.PARA_DOWNLOAD_METHOD);
 		StringBuilder httpBuffer = new StringBuilder();
+		if (category.equalsIgnoreCase("other")) {
+			httpBuffer.append("browerhttp://");
+		}
 		httpBuffer.append("file-download.action?id=");
 		httpBuffer.append(info.getTheme().getId());
 		httpBuffer.append("&inputPath=");

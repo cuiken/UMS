@@ -31,6 +31,11 @@ public class LogCountContentDao extends HibernateDao<LogCountContent, Long> {
 	}
 
 	public long queryTotalDownload(String fname) {
-		return (Long) createQuery(SUM_EACH_DOWNLOAD, fname).uniqueResult();
+		Object count = createQuery(SUM_EACH_DOWNLOAD, fname).uniqueResult();
+		if (count == null) {
+			return 0L;
+		} else {
+			return (Long) count;
+		}
 	}
 }
