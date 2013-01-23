@@ -52,7 +52,7 @@
 	<body>
 		<h1>文件管理</h1>
 		<form id="inputForm" action="file-upload!upload.action" method="post" enctype="multipart/form-data" class="form-horizontal">
-
+			<input type="hidden" name="dtype" value="${dtype}"/>
 			<c:if test="${not empty actionMessages}">
 				<div id="message" class="notice">${actionMessages}</div>	
 			</c:if>
@@ -123,18 +123,7 @@
 						<input type="text" id="price" name="price" value="${price}" maxlength="4" class="number" />						
 					</div>	
 				</div>
-				<div class="control-group">
-					<label for="availMachine" class="control-label">可用机型:</label>
-					<div class="controls">
-						<input type="text" id="availMachine" name="availMachine" value="${availMachine}" maxlength="255"/>
-					</div>	
-				</div>
-				<div class="control-group">
-					<label for="unavailMachine" class="control-label">不可用机型:</label>
-					<div class="controls">
-						<input type="text" id="unavailMachine" name="unavailMachine" value="${unavailMachine}" maxlength="255"/>
-					</div>	
-				</div>
+
 			</fieldset>
 			<div class="form-actions">
 				<input type="submit" class="btn btn-primary" value="上传">&nbsp;

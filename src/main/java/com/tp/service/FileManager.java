@@ -130,8 +130,10 @@ public class FileManager {
 			} else if (FileUtils.isUx(extension)) {
 				if (FileUtils.isHUx(fname)) {
 					theme.setUxHvga(file.getPath());
-				} else {
+				} else if(FileUtils.isWUx(fname)){
 					theme.setUxWvga(file.getPath());
+				}else {
+					theme.setUxPath(file.getPath());
 				}
 
 				theme.setUxSize(FileUtils.getFileSize(file.getPath()));

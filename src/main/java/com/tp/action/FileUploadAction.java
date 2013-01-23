@@ -43,12 +43,11 @@ public class FileUploadAction extends ActionSupport {
 	private File upload;
 	private String uploadFileName;
 
-	private String availMachine;
-	private String unavailMachine;
 	private String marketURL;
 
 	private String title;
 	private String version;
+	private String dtype;
 	private Long price;
 	private String shortDescription;
 	private String longDescription;
@@ -121,8 +120,7 @@ public class FileUploadAction extends ActionSupport {
 		theme.setTitle(title);
 		theme.setVersion(version);
 		theme.setPrice(new BigDecimal(price));
-		theme.setAvailMachine(availMachine);
-		theme.setUnavailMachine(unavailMachine);
+		theme.setDtype(dtype);
 		theme.setMarketURL(marketURL);
 		theme.setCreateTime(DateFormatUtils.convert(new Date()));
 		HibernateUtils.mergeByCheckedIds(theme.getCategories(), checkedCategoryIds, Category.class);
@@ -181,6 +179,14 @@ public class FileUploadAction extends ActionSupport {
 		this.title = title;
 	}
 
+	public String getDtype() {
+		return dtype;
+	}
+
+	public void setDtype(String dtype) {
+		this.dtype = dtype;
+	}
+
 	public void setVersion(String version) {
 		this.version = version;
 	}
@@ -193,14 +199,6 @@ public class FileUploadAction extends ActionSupport {
 		if (price == null)
 			price = 0L;
 		this.price = price;
-	}
-
-	public void setAvailMachine(String availMachine) {
-		this.availMachine = availMachine;
-	}
-
-	public void setUnavailMachine(String unavailMachine) {
-		this.unavailMachine = unavailMachine;
 	}
 
 	public void setCheckedCategoryIds(List<Long> checkedCategoryIds) {

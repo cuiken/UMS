@@ -42,8 +42,8 @@ public class ThemeFile extends IdEntity {
 	private String uxHvga;
 	private String uxWvga;
 	private String apkPath;
-	private String availMachine;
-	private String unavailMachine;
+	private String uxPath;
+	private String dtype;
 	private String marketURL;
 	private String version;
 	private String iconPath;
@@ -129,20 +129,20 @@ public class ThemeFile extends IdEntity {
 		this.apkPath = apkPath;
 	}
 
-	public String getAvailMachine() {
-		return availMachine;
+	public String getUxPath() {
+		return uxPath;
 	}
 
-	public void setAvailMachine(String availMachine) {
-		this.availMachine = availMachine;
+	public void setUxPath(String uxPath) {
+		this.uxPath = uxPath;
 	}
 
-	public String getUnavailMachine() {
-		return unavailMachine;
+	public String getDtype() {
+		return dtype;
 	}
 
-	public void setUnavailMachine(String unavailMachine) {
-		this.unavailMachine = unavailMachine;
+	public void setDtype(String dtype) {
+		this.dtype = dtype;
 	}
 
 	public String getIconPath() {

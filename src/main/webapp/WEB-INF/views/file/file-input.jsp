@@ -99,18 +99,6 @@
 								<input type="text" id="price" name="price" value="${price}" maxlength="4" class="number" />																				
 							</div>
 						</div>
-						<div class="control-group">
-							<label for="availMachine" class="control-label">可用机型:</label>
-							<div class="controls">
-								<input type="text" id="availMachine" name="availMachine" value="${availMachine}" maxlength="255"/>
-							</div>	
-						</div>
-						<div class="control-group">
-							<label for="unavailMachine" class="control-label">不可用机型:</label>
-							<div class="controls">
-								<input type="text" id="unavailMachine" name="unavailMachine" value="${unavailMachine}" maxlength="255"/>
-							</div>	
-						</div>
 
 					</div>
 					<div id="third" class="tab-pane">

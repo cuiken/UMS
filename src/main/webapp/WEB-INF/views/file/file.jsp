@@ -10,11 +10,20 @@
 			$(document).ready(function(){
 				$("#message").fadeOut(3000);
 				$("#lock-tab").addClass("active");
+				$("#f_dtype").change(function(){
+					search();			
+				});
+				$("#f_dtype").val(${param['filter_EQS_dtype']});
 			});
 			function deleteThis(id){
 				if(confirm("确定要删除吗?")){
 					window.location="file!delete.action?id="+id;
 				}
+			}
+			
+			function doupload(){
+				var t=$("#f_dtype").val();
+				window.location="file-upload.action?dtype="+t;
 			}
 		</script>
 </head>
@@ -27,12 +36,13 @@
 			<div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${actionMessages}</div>
 		</c:if>
 		<div id="filter" style="margin-bottom:5px;">
-				标题: <input type="text" class="input-medium" name="filter_LIKES_title"
+				文件类型:<s:select list="#{'0':'标准解锁','1':'模板解锁'}" id="f_dtype" name="filter_EQS_dtype" listKey="key" listValue="value" cssClass="span2"></s:select>
+				&nbsp;标题: <input type="text" class="input-medium" name="filter_LIKES_title"
 				value="${param['filter_LIKES_title']}" size="20" /> <input
 				type="button" id="submit_btn" class="btn" value="搜索"
 				onclick="search();" />
 			<div class="pull-right">
-				<a class="btn" href="file-upload.action">
+				<a class="btn" href="#" onclick="doupload();">
 				<i class="icon-upload"></i>
 				上传</a>
 			</div>		

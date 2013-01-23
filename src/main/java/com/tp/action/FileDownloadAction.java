@@ -64,7 +64,7 @@ public class FileDownloadAction extends ActionSupport {
 				inputStream.skip(p);
 			}
 			response.addHeader("Content-Disposition", "attachment; filename=" + "\"" + downloadFileName + "\"");
-			response.setContentType("application/vnd.android.package-archive");
+//			response.setContentType("application/vnd.android.package-archive");
 			Cookie c = new Cookie("downloadFlag", "on");
 			c.setMaxAge(180);
 			response.addCookie(c);
