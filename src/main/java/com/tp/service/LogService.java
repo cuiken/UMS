@@ -368,7 +368,7 @@ public class LogService {
 	}
 
 	public void createContentReport(IndexSearcher searcher, String sdate, String edate) throws Exception {
-		List<ThemeFile> themes = themeDao.getAll();
+		List<ThemeFile> themes = themeDao.getByStore("lock");
 		List<Market> markets = marketDao.getAll();
 		for (ThemeFile theme : themes) {
 			LogCountContent lcct = new LogCountContent();
@@ -392,7 +392,7 @@ public class LogService {
 	}
 
 	public void createGetClientByContentReport(IndexSearcher searcher, String sdate, String edate) throws Exception {
-		List<ThemeFile> themes = themeDao.getAll();
+		List<ThemeFile> themes = themeDao.getByStore("lock");
 		int i = 0;
 		for (ThemeFile theme : themes) {
 
