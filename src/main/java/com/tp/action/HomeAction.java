@@ -220,7 +220,7 @@ public class HomeAction extends ActionSupport {
 		String downType = (String) session.getAttribute(Constants.PARA_DOWNLOAD_METHOD);
 		StringBuilder httpBuffer = new StringBuilder();
 		if (category.equalsIgnoreCase("other")) {
-			httpBuffer.append("browerhttp://");
+			httpBuffer.append("browerhttp://"+StringUtils.remove(Constants.getDomain(),"http://")+"/");
 		}
 		httpBuffer.append("file-download.action?id=");
 		httpBuffer.append(info.getTheme().getId());
