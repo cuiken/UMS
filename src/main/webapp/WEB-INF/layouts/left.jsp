@@ -10,7 +10,7 @@
 			<shiro:hasPermission name="group:view">	
 				<a id="group-tab" href="${ctx}/account/group.action">角色管理</a>
 			</shiro:hasPermission>	
-			<a id="viewsource-tab" href="${ctx}/report/view-source.action">日志工具</a> 
+			<a id="viewsource-tab" href="${ctx}/report/view-source.action">系统工具</a> 
 	</div>
 	</shiro:hasPermission>
 	

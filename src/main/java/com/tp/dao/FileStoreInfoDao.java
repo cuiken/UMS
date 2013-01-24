@@ -25,6 +25,8 @@ public class FileStoreInfoDao extends HibernateDao<FileStoreInfo, Long> {
 
 	private static final String Q_NEWEST = "select fsi from FileStoreInfo fsi where fsi.store.id=? and fsi.language=? order by fsi.theme.createTime desc";
 
+	private static final String Q_DIY_TEMPLATE = "select fsi from FileStoreInfo fsi where fsi.store.id=? and fsi.language=? and fsi.theme.dtype='1' order by fsi.theme.createTime desc";
+
 	public void deleteByThemeAndStore(Long fid, Long sid) {
 		createQuery(DELETE_BY_THEME_AND_STORE, fid, sid).executeUpdate();
 	}
@@ -63,5 +65,9 @@ public class FileStoreInfoDao extends HibernateDao<FileStoreInfo, Long> {
 
 	public Page<FileStoreInfo> searchNewestByStore(final Page<FileStoreInfo> page, Long sid, String language) {
 		return findPage(page, Q_NEWEST, sid, language);
+	}
+
+	public Page<FileStoreInfo> searchDiyTemplate(final Page<FileStoreInfo> page, Long sid, String language) {
+		return findPage(page, Q_DIY_TEMPLATE, sid, language);
 	}
 }

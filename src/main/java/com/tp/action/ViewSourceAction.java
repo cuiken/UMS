@@ -2,6 +2,9 @@ package com.tp.action;
 
 import java.io.File;
 import java.io.OutputStream;
+import java.net.SocketAddress;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,8 +14,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.collect.Lists;
 import com.opensymphony.xwork2.ActionSupport;
+import com.tp.cache.SpyMemcachedClient;
 import com.tp.utils.ServletUtils;
 import com.tp.utils.Struts2Utils;
 
@@ -24,9 +30,26 @@ public class ViewSourceAction extends ActionSupport {
 	private String path;
 	private long MAX_FILE_SIZE = 30000000;
 	private String userDir = System.getProperty("user.dir");
+	private SpyMemcachedClient memcachedClient;
+	private List<MemcachedStatus> status=Lists.newArrayList();
 
 	@Override
 	public String execute() throws Exception {
+		Map<SocketAddress, Map<String, String>> allStatus = memcachedClient.getMemcachedClient().getStats();
+		for (Map.Entry<SocketAddress, Map<String, String>> entry : allStatus.entrySet()) {
+			MemcachedStatus memstatus = new MemcachedStatus();
+			memstatus.setAddress(entry.getKey().toString());
+			Map<String, String> values = entry.getValue();
+			List<Status> ss = Lists.newArrayList();
+			for (Map.Entry<String, String> perStatus : values.entrySet()) {
+				Status s = new Status();
+				s.setKey(perStatus.getKey());
+				s.setValue(perStatus.getValue());
+				ss.add(s);
+			}
+			memstatus.setStatus(ss);
+			status.add(memstatus);
+		}
 
 		return SUCCESS;
 	}
@@ -80,5 +103,57 @@ public class ViewSourceAction extends ActionSupport {
 
 	public String getUserDir() {
 		return userDir;
+	}
+
+	public List<MemcachedStatus> getStatus() {
+		return status;
+	}
+
+	@Autowired
+	public void setMemcachedClient(SpyMemcachedClient memcachedClient) {
+		this.memcachedClient = memcachedClient;
+	}
+
+	class MemcachedStatus {
+		String address;
+		List<Status> status;
+
+		public String getAddress() {
+			return address;
+		}
+
+		public void setAddress(String address) {
+			this.address = address;
+		}
+
+		public List<Status> getStatus() {
+			return status;
+		}
+
+		public void setStatus(List<Status> status) {
+			this.status = status;
+		}
+
+	}
+
+	class Status {
+		String key;
+		String value;
+
+		public String getKey() {
+			return key;
+		}
+
+		public void setKey(String key) {
+			this.key = key;
+		}
+
+		public String getValue() {
+			return value;
+		}
+
+		public void setValue(String value) {
+			this.value = value;
+		}
 	}
 }

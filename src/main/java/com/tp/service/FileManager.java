@@ -62,6 +62,10 @@ public class FileManager {
 		return storeInfoDao.searchNewestByStore(page, sid, language);
 	}
 
+	public Page<FileStoreInfo> searchDiyTemplate(final Page<FileStoreInfo> page, Long sid, String language) {
+		return storeInfoDao.searchDiyTemplate(page, sid, language);
+	}
+
 	/**
 	 * 判断该条语言信息是否存在于商店中
 	 * @param fiId 
@@ -130,9 +134,9 @@ public class FileManager {
 			} else if (FileUtils.isUx(extension)) {
 				if (FileUtils.isHUx(fname)) {
 					theme.setUxHvga(file.getPath());
-				} else if(FileUtils.isWUx(fname)){
+				} else if (FileUtils.isWUx(fname)) {
 					theme.setUxWvga(file.getPath());
-				}else {
+				} else {
 					theme.setUxPath(file.getPath());
 				}
 

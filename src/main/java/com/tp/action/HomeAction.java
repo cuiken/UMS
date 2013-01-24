@@ -99,6 +99,7 @@ public class HomeAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	@Deprecated
 	public String newest() throws Exception {
 		HttpSession session = Struts2Utils.getSession();
 
@@ -106,6 +107,15 @@ public class HomeAction extends ActionSupport {
 		Long storeId = chooseStoreId(session);
 		newestPage = fileManager.searchByStore(newestPage, storeId, language);
 		return "newest";
+	}
+	
+	public String diy()throws Exception{
+		HttpSession session = Struts2Utils.getSession();
+
+		language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+		Long storeId = chooseStoreId(session);
+		newestPage = fileManager.searchDiyTemplate(newestPage, storeId, language);
+		return "diy";
 	}
 
 	public String category() throws Exception {
@@ -225,7 +235,12 @@ public class HomeAction extends ActionSupport {
 		httpBuffer.append("file-download.action?id=");
 		httpBuffer.append(info.getTheme().getId());
 		httpBuffer.append("&inputPath=");
-		httpBuffer.append(URLEncoder.encode(info.getTheme().getApkPath(), "utf-8"));
+		if(StringUtils.isNotBlank(info.getTheme().getUxPath())){
+			httpBuffer.append(URLEncoder.encode(info.getTheme().getUxPath(), "utf-8"));
+		}else{
+			httpBuffer.append(URLEncoder.encode(info.getTheme().getApkPath(), "utf-8"));
+		}
+	
 		httpBuffer.append("&title=" + URLEncoder.encode(info.getTitle(), "utf-8"));
 		httpBuffer.append(URLEncoder.encode("|", "utf-8")).append(
 				URLEncoder.encode(info.getTheme().getTitle(), "utf-8"));
