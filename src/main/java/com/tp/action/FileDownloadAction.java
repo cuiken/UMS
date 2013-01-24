@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.activation.MimetypesFileTypeMap;
+import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +29,7 @@ public class FileDownloadAction extends ActionSupport {
 	private String downloadFileName;
 	private long contentLength;
 	private ClientFileManager clientFileManager;
+	private MimetypesFileTypeMap mimetypesFileTypeMap;
 
 	@Override
 	public String execute() throws Exception {
@@ -64,7 +67,8 @@ public class FileDownloadAction extends ActionSupport {
 				inputStream.skip(p);
 			}
 			response.addHeader("Content-Disposition", "attachment; filename=" + "\"" + downloadFileName + "\"");
-//			response.setContentType("application/vnd.android.package-archive");
+			
+			response.setContentType(mimetypesFileTypeMap.getContentType(file.getName()));
 			Cookie c = new Cookie("downloadFlag", "on");
 			c.setMaxAge(180);
 			response.addCookie(c);
@@ -81,6 +85,12 @@ public class FileDownloadAction extends ActionSupport {
 		}
 
 		return null;
+	}
+	
+	@PostConstruct
+	public void init() {
+		mimetypesFileTypeMap = new MimetypesFileTypeMap();
+		mimetypesFileTypeMap.addMimeTypes("application/vnd.android.package-archive apk");
 	}
 
 	public String getClient() throws Exception {

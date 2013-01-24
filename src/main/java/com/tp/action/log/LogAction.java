@@ -26,6 +26,7 @@ import java.net.URLDecoder;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -116,6 +117,7 @@ public class LogAction extends ActionSupport {
 	}
 
 	private void splitClientStr(String requetParam, LogInHome log) {
+		Validate.notNull(requetParam,"param not null");
 		String[] params = StringUtils.split(requetParam, "&");
 		for (int i = 0; i < params.length; i++) {
 			String param = params[i];
