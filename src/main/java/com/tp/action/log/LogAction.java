@@ -94,6 +94,7 @@ public class LogAction extends ActionSupport {
 	public String saveDownload() throws Exception {
 		LogInHome log = new LogInHome();
 		String queryStr = Struts2Utils.getParameter(Constants.QUERY_STRING);
+		queryStr=StringUtils.substringAfterLast(queryStr, "UMS/");
 		String clientStr = Struts2Utils.getParameter("cs");
 		splitClientStr(clientStr, log);
 		int index = StringUtils.indexOf(queryStr, "&inputPath");
