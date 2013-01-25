@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -48,6 +49,7 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	private File file;
 
 	@Override
+	@RequiresAuthentication
 	@RequiresPermissions("file:edit")
 	public String delete() throws Exception {
 		fileManager.deleteThemeFile(id);
@@ -56,6 +58,7 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	}
 
 	@Override
+	@RequiresAuthentication
 	@RequiresPermissions("file:edit")
 	public String input() throws Exception {
 		checkedCategoryIds = entity.getCheckedCategoryIds();
@@ -93,6 +96,7 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	}
 
 	@Override
+	@RequiresAuthentication
 	@RequiresPermissions("file:edit")
 	public String save() throws Exception {
 		HibernateUtils.mergeByCheckedIds(entity.getCategories(), checkedCategoryIds, Category.class);

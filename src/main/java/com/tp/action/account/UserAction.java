@@ -2,6 +2,7 @@ package com.tp.action.account;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -42,6 +43,7 @@ public class UserAction extends CRUDActionSupport<User> {
 	}
 
 	@Override
+	@RequiresAuthentication
 	@RequiresPermissions("user:edit")
 	public String input() throws Exception {
 		checkedGroupIds = entity.getCheckedGroupIds();
@@ -49,6 +51,7 @@ public class UserAction extends CRUDActionSupport<User> {
 	}
 
 	@Override
+	@RequiresAuthentication
 	@RequiresPermissions("user:edit")
 	public String save() throws Exception {
 		HibernateUtils.mergeByCheckedIds(entity.getGroupList(), checkedGroupIds, Group.class);

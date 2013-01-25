@@ -28,10 +28,12 @@
 		
 		<global-results>
 			<result name="notAuthorized">/WEB-INF/views/error/403.jsp</result>
+			<result type="redirect" name="auth">/logout.action</result>
 		</global-results>
 		
 		<global-exception-mappings>
 			<exception-mapping result="notAuthorized" exception="org.apache.shiro.authz.UnauthorizedException"></exception-mapping>
+			<exception-mapping result="auth" exception="org.apache.shiro.authz.AuthorizationException" />
 		</global-exception-mappings>
 		
 		

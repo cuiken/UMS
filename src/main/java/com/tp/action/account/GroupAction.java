@@ -3,6 +3,7 @@ package com.tp.action.account;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -40,6 +41,7 @@ public class GroupAction extends CRUDActionSupport<Group> {
 	}
 
 	@Override
+	@RequiresAuthentication
 	@RequiresPermissions("group:edit")
 	public String input() throws Exception {
 
@@ -47,6 +49,7 @@ public class GroupAction extends CRUDActionSupport<Group> {
 	}
 
 	@Override
+	@RequiresAuthentication
 	@RequiresPermissions("group:edit")
 	public String save() throws Exception {
 		accountManager.saveGroup(entity);
@@ -54,6 +57,7 @@ public class GroupAction extends CRUDActionSupport<Group> {
 	}
 
 	@Override
+	@RequiresAuthentication
 	@RequiresPermissions("group:edit")
 	public String delete() throws Exception {
 		accountManager.deleteGroup(id);

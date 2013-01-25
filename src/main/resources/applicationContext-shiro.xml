@@ -9,6 +9,7 @@
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="shiroDbRealm" />
 		<property name="cacheManager" ref="cacheManager" />
+		<property name="rememberMeManager" ref="rememberMeManager" />
 	</bean>
 
 	<!-- 項目自定义的Realm -->
@@ -55,4 +56,6 @@
 	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
     	<property name="securityManager" ref="securityManager"/>
 	</bean>
+	
+	<bean id="rememberMeManager" class="com.tp.service.account.RememberMeManager" />
 </beans>
