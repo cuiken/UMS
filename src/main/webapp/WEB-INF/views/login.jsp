@@ -133,7 +133,7 @@
 						<input type="password" id="password" placeholder="密码" name="password" size="50"  class="required span3"/>
 					</div>
 				</div>
-				<label class="checkbox" for="rememberMe"> <input type="checkbox" id="rememberMe" name="rememberMe" checked="checked"/> 记住我</label>
+				<label class="checkbox" for="rememberMe"> <input type="checkbox" id="rememberMe" name="rememberMe" checked="checked"/> 下次自动登录</label>
 				<div class="control-group">
 					<div class="controls">
 					<input id="submit_btn" class="btn btn-large btn-primary" type="submit" value="登录"/>
