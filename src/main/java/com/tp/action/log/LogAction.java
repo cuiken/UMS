@@ -94,7 +94,8 @@ public class LogAction extends ActionSupport {
 	public String saveDownload() throws Exception {
 		LogInHome log = new LogInHome();
 		String queryStr = Struts2Utils.getParameter(Constants.QUERY_STRING);
-		queryStr=StringUtils.substringAfterLast(queryStr, "UMS/");
+		if (queryStr.contains("UMS"))
+			queryStr = StringUtils.substringAfterLast(queryStr, "UMS/");
 		String clientStr = Struts2Utils.getParameter("cs");
 		splitClientStr(clientStr, log);
 		int index = StringUtils.indexOf(queryStr, "&inputPath");
@@ -118,7 +119,7 @@ public class LogAction extends ActionSupport {
 	}
 
 	private void splitClientStr(String requetParam, LogInHome log) {
-		Validate.notNull(requetParam,"param not null");
+		Validate.notNull(requetParam, "param not null");
 		String[] params = StringUtils.split(requetParam, "&");
 		for (int i = 0; i < params.length; i++) {
 			String param = params[i];
