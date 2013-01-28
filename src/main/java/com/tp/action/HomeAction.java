@@ -297,7 +297,7 @@ public class HomeAction extends ActionSupport {
 		} catch (Exception e) {
 			String userAgent = request.getHeader("User-Agent");
 			String ip = ServletUtils.getIpAddr(request);
-			logger.warn("com.tp.entity.Category:#{}不存在,ip:" + ip + ",User-Agent:" + userAgent, categoryId);
+			logger.warn("com.tp.entity.Category:#{}不存在,ip:" + ip + ",User-Agent:" + userAgent+" param:"+ session.getAttribute(Constants.QUERY_STRING), categoryId);
 			Struts2Utils.getResponse().sendError(HttpServletResponse.SC_BAD_REQUEST, "parametter is incorrect.");
 			return null;
 		}
