@@ -30,12 +30,19 @@
         padding-top: 40px;
         padding-bottom: 40px;
         background-color: #f5f5f5;
+        background: url('static/images/login-bg.jpg') no-repeat center center fixed;
+        -webkit-background-size: cover;
+   		-moz-background-size: cover;
+    	-o-background-size: cover;
+   		background-size: cover; 
+        
       }
 
       .form-signin {
         max-width: 300px;
         padding: 19px 29px 29px;
         margin: 0 auto 20px;
+        margin-right:10%;
         background-color: #fff;
         border: 1px solid #e5e5e5;
         -webkit-border-radius: 5px;
