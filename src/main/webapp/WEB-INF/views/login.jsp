@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>UMS2.0:登录页</title>
+	<title>登录 UMS</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<meta http-equiv="Cache-Control" content="no-store" />
@@ -65,9 +65,9 @@
 	</script>
 </head>
 
-<body data-spy="scroll" data-target=".subnav" data-offset="50">
-	<!-- 
-	<div class="navbar navbar-fixed-top">
+<body>
+	
+	<div class="navbar navbar-fixed-top navbar-inverse" style="opacity:0.9">
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -76,16 +76,9 @@
 		            <span class="icon-bar"></span>
 				</a>
 				<a class="brand" href="${ctx}/login.action">UMS2.0</a>
-				<div class="nav-collapse">
-					<ul class="nav">
-						<li class="active">
-							<a href="${ctx}/login.action">登录</a>
-						</li>
-					</ul>
-				</div>
 			</div>
 		</div>
-	</div> -->
+	</div>
 	<div class="container">
 		  <header class="jumbotron masthead">
 		 	<div class="inner">
@@ -140,9 +133,7 @@
 				</div>
 			</div>		
 		</form>
-		<footer class="footer">
-		<p align="center">&copy; 2012-2013 <a href="http://www.tpadsz.com/">tpadsz.com</a></p>
-		</footer>
+		<%@ include file="/WEB-INF/layouts/footer.jsp"%>
 	</div>
 	</div>
 	<script src="${ctx}/static/bootstrap/2.1.1/js/bootstrap.min.js" type="text/javascript"></script>

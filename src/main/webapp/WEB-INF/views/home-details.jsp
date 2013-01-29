@@ -11,6 +11,7 @@
   		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 		<title>商店详细</title>
   		<link rel="stylesheet" href="${ctx}/css/details.css" media="screen"/>
+  		<link rel="stylesheet" href="${ctx}/css/style.css" media="screen"/>
   		<style>
   			img{
 				border: 0;
@@ -18,6 +19,7 @@
 			body{
 				margin: 0;
 				padding: 0;
+				font-size: 100%;
 			}
 			a{
 				text-decoration: none;
