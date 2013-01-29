@@ -30,7 +30,7 @@
         padding-top: 40px;
         padding-bottom: 40px;
         background-color: #f5f5f5;
-        background: url('static/images/login-bg.jpg') no-repeat center center fixed;
+        background: url('static/images/login-bg.jpg') no-repeat;
         -webkit-background-size: cover;
    		-moz-background-size: cover;
     	-o-background-size: cover;
@@ -41,8 +41,7 @@
       .form-signin {
         max-width: 300px;
         padding: 19px 29px 29px;
-        margin: 0 auto 20px;
-        margin-right:10%;
+        margin: 72px 20% 20px auto;
         background-color: #fff;
         border: 1px solid #e5e5e5;
         -webkit-border-radius: 5px;
@@ -87,11 +86,7 @@
 		</div>
 	</div>
 	<div class="container">
-		  <header class="jumbotron masthead">
-		 	<div class="inner">
-		    	<p></p>
-			</div>
-		</header>
+
 	<div id="content" class="span12">
 		<form id="loginForm" action="${ctx}/login.action" method="post" class="form-signin">
 			<%
@@ -140,9 +135,9 @@
 				</div>
 			</div>		
 		</form>
-		<%@ include file="/WEB-INF/layouts/footer.jsp"%>
 	</div>
 	</div>
+	<%@ include file="/WEB-INF/layouts/footer.jsp"%>
 	<script src="${ctx}/static/bootstrap/2.1.1/js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 </html>
