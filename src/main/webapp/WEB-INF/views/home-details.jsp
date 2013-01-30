@@ -9,7 +9,7 @@
 	  	<meta name="apple-mobile-web-app-status-bar-style" content="black">  
 	  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-		<title>商店详细</title>
+		<title>Fun主题-商店详细</title>
   		<link rel="stylesheet" href="${ctx}/css/details.css" media="screen"/>
   		<link rel="stylesheet" href="${ctx}/css/style.css" media="screen"/>
   		<style>

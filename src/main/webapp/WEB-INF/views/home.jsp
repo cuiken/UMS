@@ -9,7 +9,7 @@
 	  	<meta name="apple-mobile-web-app-status-bar-style" content="black">  
 	  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-		<title>商店首页</title>
+		<title>Fun主题-商店首页</title>
 		
 		<link rel="stylesheet" href="${ctx}/css/style.css" media="screen"/>
   		<link rel="stylesheet" href="${ctx}/css/top.css" media="screen"/>
@@ -21,7 +21,8 @@
 			<div class="slide_list_dot">
 				<a class="selected"><s:text name="nav.hot"/></a><a href="home!newest.action?${queryString}"><s:text name="nav.newest"/></a><a href="home!category.action?${queryString}"><s:text name="nav.category"/></a>
 			</div>
-			<div id="container"> 		
+			<div id="container"> 	
+			<!--  	
 				<s:if test="adFile!=null">		
 				 <div class="imgCenter">
 					<s:if test="adFile!=null">
@@ -31,6 +32,12 @@
 					</s:if><s:else>商店无内容</s:else>
 				</div>
 			 	</s:if>
+			--> 	
+				<div class="imgCenter">
+					<a href="${ctx}/home!love.action?${queryString}">
+						<img alt="love" src="${ctx}/static/images/love/temp-love.jpg" class="max-width_100">
+					</a>
+				</div>
 				<s:iterator value="newestPage.result">
 					<div class="contents_info" id="content1" onclick="location.href='${ctx}/home!details.action?id=${theme.id}&${queryString}';">			
 						<div class="contents_txt">

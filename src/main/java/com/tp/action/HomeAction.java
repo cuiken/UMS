@@ -88,17 +88,22 @@ public class HomeAction extends ActionSupport {
 		hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST, storeId, language);
 
 		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST, storeId, language);
-		if (visitByBrowse(session)) {
-			recommendPage = fileManager.searchStoreInfoInShelf(recommendPage, Shelf.Type.RECOMMEND, storeId, language);
-			List<FileStoreInfo> recommendFiles = recommendPage.getResult();
-			if (recommendFiles.size() > 0) {
-				Collections.shuffle(recommendFiles);
-				adFile = recommendFiles.get(0).getTheme();
-			}
-		}
+//		if (visitByBrowse(session)) {
+//			recommendPage = fileManager.searchStoreInfoInShelf(recommendPage, Shelf.Type.RECOMMEND, storeId, language);
+//			List<FileStoreInfo> recommendFiles = recommendPage.getResult();
+//			if (recommendFiles.size() > 0) {
+//				Collections.shuffle(recommendFiles);
+//				adFile = recommendFiles.get(0).getTheme();
+//			}
+//		}
 		return SUCCESS;
 	}
 
+	public String love() throws Exception{
+		
+		return "love";
+	}
+	
 	@Deprecated
 	public String newest() throws Exception {
 		HttpSession session = Struts2Utils.getSession();
