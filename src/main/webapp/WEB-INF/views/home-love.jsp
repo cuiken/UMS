@@ -50,22 +50,22 @@
 	<div class="content">
 		<ul>
 			<li>
-				<a href="${ctx}/home!details.action?id=208&${queryString}">
+				<a href="${ctx}/home!details.action?id=208&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/love1.png">
 				</a>
 			</li>	
 			<li>
-				<a href="${ctx}/home!details.action?id=211&${queryString}">
+				<a href="${ctx}/home!details.action?id=211&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/love2.png">
 				</a>	
 			</li>
 			<li>
-				<a href="${ctx}/home!details.action?id=209&${queryString}">
+				<a href="${ctx}/home!details.action?id=209&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/love3.png">
 				</a>	
 			</li>
 			<li>
-				<a href="${ctx}/home!details.action?id=210&${queryString}">
+				<a href="${ctx}/home!details.action?id=210&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/love4.png">
 				</a>
 			</li>
@@ -74,47 +74,47 @@
 	<div class="icon_set">
 		<ul>
 			<li>
-				<a href="${ctx}/home!details.action?id=206&${queryString}">
+				<a href="${ctx}/home!details.action?id=206&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/icon_1.png">
 				</a>
 			</li>
 			<li>
-				<a href="${ctx}/home!details.action?id=207&${queryString}">
+				<a href="${ctx}/home!details.action?id=207&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/icon_2.png">
 				</a>
 			</li>
 			<li>
-				<a href="${ctx}/home!details.action?id=179&${queryString}">
+				<a href="${ctx}/home!details.action?id=179&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/icon_3.png">
 				</a>	
 			</li>
 			<li>
-				<a href="${ctx}/home!details.action?id=183&${queryString}">
+				<a href="${ctx}/home!details.action?id=183&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/icon_4.png">
 				</a>	
 			</li>
 			<li>
-				<a href="${ctx}/home!details.action?id=109&${queryString}">
+				<a href="${ctx}/home!details.action?id=109&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/icon_5.png">
 				</a>	
 			</li>
 			<li>
-				<a href="${ctx}/home!details.action?id=204&${queryString}">
+				<a href="${ctx}/home!details.action?id=204&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/icon_6.png">
 				</a>	
 			</li>
 			<li>
-				<a href="${ctx}/home!details.action?id=205&${queryString}">
+				<a href="${ctx}/home!details.action?id=205&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/icon_7.png">
 				</a>	
 			</li>
 			<li>
-				<a href="${ctx}/home!details.action?id=54&${queryString}">
+				<a href="${ctx}/home!details.action?id=54&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/icon_8.png">
 				</a>	
 			</li>
 			<li>
-				<a href="${ctx}/home!details.action?id=52&${queryString}">
+				<a href="${ctx}/home!details.action?id=52&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/icon_9.png">
 				</a>	
 			</li>
