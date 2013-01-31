@@ -42,7 +42,13 @@
         max-width: 300px;
         padding: 19px 29px 29px;
         margin: 15% 20% 20px auto;
-        background-color: #fff;
+        background: #fff;
+        background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fff),color-stop(100%,#ddd));
+		background: -webkit-linear-gradient(top,#fff 0,#ddd 100%);
+		background: -moz-linear-gradient(top,#fff 0,#ddd 100%);
+		background: -ms-linear-gradient(top,#fff 0,#ddd 100%);
+		background: -o-linear-gradient(top,#fff 0,#ddd 100%);
+		background: linear-gradient(top,#fff 0,#ddd 100%);
         border: 1px solid #e5e5e5;
         -webkit-border-radius: 5px;
            -moz-border-radius: 5px;
