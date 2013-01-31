@@ -94,7 +94,7 @@
 				</a>	
 			</li>
 			<li>
-				<a href="${ctx}/home!details.action?id=109&f=love&${queryString}">
+				<a href="${ctx}/home!details.action?id=89&f=love&${queryString}">
 					<img src="${ctx}/static/images/love/icon_5.png">
 				</a>	
 			</li>
