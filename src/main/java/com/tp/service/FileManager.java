@@ -253,7 +253,7 @@ public class FileManager {
 	private String loveXml(String domain){
 		StringBuilder buffer=new StringBuilder();
 		buffer.append("<ad id='1111' fileName='love_ad.jpg' format='jpg' version='1'>");
-		buffer.append("<linkUrl>"+domain+"/home!love.action"+"</linkUrl>");
+		buffer.append("<linkUrl>"+domain+"/home!love.action?f=ad"+"</linkUrl>");
 		buffer.append("<downloadUrl>"+domain+"/static/images/love/love_ad.jpg"+"</downloadUrl>");
 		buffer.append("</ad>");
 		return buffer.toString();
