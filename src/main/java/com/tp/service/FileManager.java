@@ -225,6 +225,8 @@ public class FileManager {
 		}
 
 		buffer.append("<ads>");
+		buffer.append(loveXml(domain));
+		
 		for (ThemeFile theme : themes) {
 			Long id = theme.getId();
 			String ad = theme.getAdPath();
@@ -245,6 +247,15 @@ public class FileManager {
 			buffer.append("</ad>");
 		}
 		buffer.append("</ads>");
+		return buffer.toString();
+	}
+	
+	private String loveXml(String domain){
+		StringBuilder buffer=new StringBuilder();
+		buffer.append("<ad id='1111' fileName='love_ad.jpg' format='jpg' version='1'>");
+		buffer.append("<linkUrl>"+domain+"/home!love.action"+"</linkUrl>");
+		buffer.append("<downloadUrl>"+domain+"/static/images/love/love_ad.jpg"+"</downloadUrl>");
+		buffer.append("</ad>");
 		return buffer.toString();
 	}
 
