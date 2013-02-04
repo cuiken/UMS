@@ -7,21 +7,27 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.tp.entity.IdEntity;
 
-@Entity
-@Table(name = "log_f_store")
-public class LogInHome extends IdEntity {
+//@Entity
+//@Table(name = "log_f_store2")
+public class LogForStore extends IdEntity {
 
 	private String imei;
 	private String imsi;
 	private String storeType;
 	private String downType;
-	private String appName;
 	private String language;
 	private String clientVersion;
 	private String resolution;
 	private String fromMarket;
 	private String requestMethod;
 	private String requestParams;
+	private String operator;
+	private String appName;
+	private String clientType;
+	private String model;
+	private String netEnv;
+	private String comeFrom;
+	private String contentVersion;
 	private String createTime;
 
 	public String getImei() {
@@ -54,14 +60,6 @@ public class LogInHome extends IdEntity {
 
 	public void setDownType(String downType) {
 		this.downType = downType;
-	}
-
-	public String getAppName() {
-		return appName;
-	}
-
-	public void setAppName(String appName) {
-		this.appName = appName;
 	}
 
 	public String getLanguage() {
@@ -110,6 +108,62 @@ public class LogInHome extends IdEntity {
 
 	public void setRequestParams(String requestParams) {
 		this.requestParams = requestParams;
+	}
+
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
+
+	public String getClientType() {
+		return clientType;
+	}
+
+	public void setClientType(String clientType) {
+		this.clientType = clientType;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public String getNetEnv() {
+		return netEnv;
+	}
+
+	public void setNetEnv(String netEnv) {
+		this.netEnv = netEnv;
+	}
+
+	public String getComeFrom() {
+		return comeFrom;
+	}
+
+	public void setComeFrom(String comeFrom) {
+		this.comeFrom = comeFrom;
+	}
+
+	public String getContentVersion() {
+		return contentVersion;
+	}
+
+	public void setContentVersion(String contentVersion) {
+		this.contentVersion = contentVersion;
 	}
 
 	public String getCreateTime() {

@@ -164,6 +164,10 @@ public class HomeInterceptor extends AbstractInterceptor {
 					+ userAgent);
 			return;
 		}
+		String appName=Struts2Utils.getParameter(PARA_APP_NAME);
+		if(appName==null)		
+			appName="";
+		log.setAppName(appName);
 		logService.saveLogInHome(log);
 
 	}
@@ -220,9 +224,13 @@ public class HomeInterceptor extends AbstractInterceptor {
 		String fromClient = Struts2Utils.getParameter(PARA_FROM);
 		String op = Struts2Utils.getParameter(PARA_OPERATORS);
 		String ct = Struts2Utils.getParameter(PARA_CLIENT_TYPE);
+		String app=Struts2Utils.getParameter(PARA_APP_NAME);
 		Map<String, Object> requestParams = Maps.newHashMap();
 		if (fromClient != null) {
 			requestParams.put(PARA_FROM, fromClient);
+		}
+		if(app!=null){
+			requestParams.put(PARA_APP_NAME, app);
 		}
 		if (op != null) {
 			requestParams.put(PARA_OPERATORS, op);

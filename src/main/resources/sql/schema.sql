@@ -222,6 +222,7 @@ create table log_f_store(
 	id bigint not null auto_increment,
 	imei varchar(50),
 	imsi varchar(50),
+	app_name varchar(50) not null default '',
 	store_type varchar(20),
 	down_type varchar(20),
 	language varchar(20),
@@ -254,7 +255,9 @@ create table log_f_store2(
 	come_from varchar(35),
 	content_version varchar(20),
 	create_time timestamp not null default 0,
-	index ctime_index(create_time),
+	index index_createTime(create_time),
+	index index_appName(app_name),
+	index index_requestMethod(request_method),
 	primary key(id)
 );
 
