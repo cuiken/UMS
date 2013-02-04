@@ -167,6 +167,8 @@ public class HomeInterceptor extends AbstractInterceptor {
 		String appName=Struts2Utils.getParameter(PARA_APP_NAME);
 		if(appName==null)		
 			appName="";
+		else
+			appName=new String(appName.getBytes("iso-8859-1"), Constants.ENCODE_UTF_8);
 		log.setAppName(appName);
 		logService.saveLogInHome(log);
 
@@ -211,7 +213,7 @@ public class HomeInterceptor extends AbstractInterceptor {
 		return StringUtils.substring(str, 0, str.length() - 1);
 	}
 
-	private void setParamInSession(String method) {
+	private void setParamInSession(String method) throws Exception{
 		HttpSession session = Struts2Utils.getSession();
 		String language = Struts2Utils.getParameter(PARA_LANGUAGE);
 		String fromMarket = Struts2Utils.getParameter(PARA_FROM_MARKET);
@@ -230,7 +232,7 @@ public class HomeInterceptor extends AbstractInterceptor {
 			requestParams.put(PARA_FROM, fromClient);
 		}
 		if(app!=null){
-			requestParams.put(PARA_APP_NAME, app);
+			requestParams.put(PARA_APP_NAME, new String(app.getBytes("iso-8859-1"), Constants.ENCODE_UTF_8));
 		}
 		if (op != null) {
 			requestParams.put(PARA_OPERATORS, op);
