@@ -303,6 +303,7 @@ create table log_count_unzip(
 create table log_count_get_client(
 	id bigint auto_increment,
 	app_name varchar(35),
+	market_name varchar(35),
 	download int,
 	create_time timestamp not null default 0,
 	index ct_index(create_time),

@@ -10,6 +10,7 @@ import com.tp.entity.IdEntity;
 public class LogCountGetClient extends IdEntity {
 
 	private String appName;
+	private String marketName;
 	private Long download;
 	private String createTime;
 
@@ -19,6 +20,14 @@ public class LogCountGetClient extends IdEntity {
 
 	public void setAppName(String appName) {
 		this.appName = appName;
+	}
+
+	public String getMarketName() {
+		return marketName;
+	}
+
+	public void setMarketName(String marketName) {
+		this.marketName = marketName;
 	}
 
 	public Long getDownload() {

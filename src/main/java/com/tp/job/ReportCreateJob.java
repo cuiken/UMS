@@ -47,7 +47,8 @@ public class ReportCreateJob {
 			// TODO: handle exception
 		}
 		try{
-		logService.createGetClientByContentReport(searcher, perDate, currDate);
+//		logService.createGetClientByContentReport(searcher, perDate, currDate);
+			logService.createGetClientPerMarketReport(perDate, currDate);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

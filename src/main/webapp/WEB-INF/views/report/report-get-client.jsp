@@ -25,6 +25,7 @@
 				<tr>
 					<th><a href="javascript:sort('createTime','desc')">日期</a></th>
 					<th><a href="javascript:sort('appName','desc')">解锁名称</a></th>
+					<th><a href="javascript:sort('marketName','desc')">市场名称</a></th>
 					<th><a href="javascript:sort('download','desc')">引导下载量</a></th>
 				</tr>
 				</thead>
@@ -33,6 +34,7 @@
 					<tr>
 						<td>${createTime}</td>
 						<td>${appName}</td>
+						<td>${marketName}</td>
 						<td>${download}</td>
 					</tr>
 				</s:iterator>

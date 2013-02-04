@@ -282,6 +282,17 @@ public class LogService {
 		}
 	}
 
+	public void createGetClientPerMarketReport(String sdate, String edate) {
+		List<Map<String, Object>> getClients = logJdbcDao.countGetClientPerMarket(sdate, edate);
+		for (Map<String, Object> content : getClients) {
+			LogCountGetClient entity = new LogCountGetClient();
+			entity.setAppName((String) content.get("app_name"));
+			entity.setMarketName((String) content.get("market"));
+			entity.setDownload((Long) content.get("get_client"));
+			logCountGetClientDao.save(entity);
+		}
+	}
+
 	private Map<String, Object> getClientInstall(String sdate, String edate) {
 		List<Map<String, Object>> installs = logJdbcDao.countClientInstall(sdate, edate);
 		Map<String, Object> results = Maps.newHashMap();
@@ -391,6 +402,7 @@ public class LogService {
 		}
 	}
 
+	@Deprecated
 	public void createGetClientByContentReport(IndexSearcher searcher, String sdate, String edate) throws Exception {
 		List<ThemeFile> themes = themeDao.getByStore("lock");
 		int i = 0;

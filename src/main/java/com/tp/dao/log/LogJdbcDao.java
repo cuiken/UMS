@@ -18,6 +18,10 @@ public class LogJdbcDao {
 	private static final String QEURY_CLIENT_INSTALL = "SELECT count(*) as installed ,from_market FROM log_f_content l"
 			+ "  WHERE l.create_time BETWEEN ? AND ? AND l.do_type='client'  GROUP BY from_market ORDER BY NULL;";
 
+	private static final String QUERY_GETCLIENT_PERMARKET = "select l.app_name,m.name as market,count(*) as get_client"
+			+ " from log_f_store l left join f_market m on l.from_market=m.pk_name"
+			+ " where l.create_time between ? and ? and l.request_method='getClient' group by l.app_name,m.id order by l.app_name";
+
 	private JdbcTemplate jdbcTemplate;
 
 	public List<Map<String, Object>> countContentUnzip(String sdate, String edate) {
@@ -26,6 +30,10 @@ public class LogJdbcDao {
 
 	public List<Map<String, Object>> countClientInstall(String sdate, String edate) {
 		return jdbcTemplate.queryForList(QEURY_CLIENT_INSTALL, sdate, edate);
+	}
+
+	public List<Map<String, Object>> countGetClientPerMarket(String sdate, String edate) {
+		return jdbcTemplate.queryForList(QUERY_GETCLIENT_PERMARKET, sdate, edate);
 	}
 
 	@Resource
