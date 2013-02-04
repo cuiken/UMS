@@ -19,7 +19,7 @@ import com.tp.cache.SpyMemcachedClient;
 import com.tp.dao.MarketDao;
 import com.tp.dao.ThemeFileDao;
 import com.tp.dao.log.LogCmccResultDao;
-import com.tp.dao.log.LogContentJdbcDao;
+import com.tp.dao.log.LogJdbcDao;
 import com.tp.dao.log.LogCountClientDao;
 import com.tp.dao.log.LogCountContentDao;
 import com.tp.dao.log.LogCountContentMarketDao;
@@ -77,7 +77,7 @@ public class LogService {
 	private LogForCmccDao cmccDao;
 	private LogForRedirectDao redirectDao;
 	private LogForPollDao pollDao;
-	private LogContentJdbcDao logContentJdbcDao;
+	private LogJdbcDao logJdbcDao;
 
 	private LogCountUnzipDao logCountUnzipDao;
 	private LogCountGetClientDao logCountGetClientDao;
@@ -263,7 +263,7 @@ public class LogService {
 	}
 
 	public void saveCountContentUnzip(String sdate, String edate) {
-		List<Map<String, Object>> unzips = logContentJdbcDao.countContentUnzip(sdate, edate);
+		List<Map<String, Object>> unzips = logJdbcDao.countContentUnzip(sdate, edate);
 		int i = 0;
 		for (Map<String, Object> content : unzips) {
 			LogCountUnzip unzip = new LogCountUnzip();
@@ -283,7 +283,7 @@ public class LogService {
 	}
 
 	private Map<String, Object> getClientInstall(String sdate, String edate) {
-		List<Map<String, Object>> installs = logContentJdbcDao.countClientInstall(sdate, edate);
+		List<Map<String, Object>> installs = logJdbcDao.countClientInstall(sdate, edate);
 		Map<String, Object> results = Maps.newHashMap();
 		long fm = 0;
 		long nofm = 0;
@@ -516,8 +516,8 @@ public class LogService {
 	}
 
 	@Autowired
-	public void setLogContentJdbcDao(LogContentJdbcDao logContentJdbcDao) {
-		this.logContentJdbcDao = logContentJdbcDao;
+	public void setLogJdbcDao(LogJdbcDao logJdbcDao) {
+		this.logJdbcDao = logJdbcDao;
 	}
 
 	@Autowired
