@@ -88,22 +88,22 @@ public class HomeAction extends ActionSupport {
 		hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST, storeId, language);
 
 		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST, storeId, language);
-//		if (visitByBrowse(session)) {
-//			recommendPage = fileManager.searchStoreInfoInShelf(recommendPage, Shelf.Type.RECOMMEND, storeId, language);
-//			List<FileStoreInfo> recommendFiles = recommendPage.getResult();
-//			if (recommendFiles.size() > 0) {
-//				Collections.shuffle(recommendFiles);
-//				adFile = recommendFiles.get(0).getTheme();
-//			}
-//		}
+		//		if (visitByBrowse(session)) {
+		//			recommendPage = fileManager.searchStoreInfoInShelf(recommendPage, Shelf.Type.RECOMMEND, storeId, language);
+		//			List<FileStoreInfo> recommendFiles = recommendPage.getResult();
+		//			if (recommendFiles.size() > 0) {
+		//				Collections.shuffle(recommendFiles);
+		//				adFile = recommendFiles.get(0).getTheme();
+		//			}
+		//		}
 		return SUCCESS;
 	}
 
-	public String love() throws Exception{
-		
+	public String love() throws Exception {
+
 		return "love";
 	}
-	
+
 	@Deprecated
 	public String newest() throws Exception {
 		HttpSession session = Struts2Utils.getSession();
@@ -113,8 +113,8 @@ public class HomeAction extends ActionSupport {
 		newestPage = fileManager.searchByStore(newestPage, storeId, language);
 		return "newest";
 	}
-	
-	public String diy()throws Exception{
+
+	public String diy() throws Exception {
 		HttpSession session = Struts2Utils.getSession();
 
 		language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
@@ -136,10 +136,13 @@ public class HomeAction extends ActionSupport {
 	private Long chooseStoreId(HttpSession session) {
 		String storeType = (String) session.getAttribute(Constants.PARA_STORE_TYPE);
 		Long storeId = (Long) session.getAttribute(Constants.ID_LOCK);
-		if (storeType != null && storeId != null && storeType.equals(Constants.ST_LOCK)) {
+		if (StringUtils.isBlank(storeType)) {
+			storeType = Constants.ST_LOCK;
+		}
+		if (storeId != null) {
 			return storeId;
 		} else {
-			storeId = categoryManager.getStoreByValue(Constants.ST_LOCK).getId();
+			storeId = categoryManager.getStoreByValue(storeType).getId();
 			session.setAttribute(Constants.ID_LOCK, storeId);
 			return storeId;
 		}
@@ -235,17 +238,17 @@ public class HomeAction extends ActionSupport {
 		String downType = (String) session.getAttribute(Constants.PARA_DOWNLOAD_METHOD);
 		StringBuilder httpBuffer = new StringBuilder();
 		if (category.equalsIgnoreCase("other")) {
-			httpBuffer.append("browerhttp://"+StringUtils.remove(Constants.getDomain(),"http://")+"/");
+			httpBuffer.append("browerhttp://" + StringUtils.remove(Constants.getDomain(), "http://") + "/");
 		}
 		httpBuffer.append("file-download.action?id=");
 		httpBuffer.append(info.getTheme().getId());
 		httpBuffer.append("&inputPath=");
-		if(StringUtils.isNotBlank(info.getTheme().getUxPath())){
+		if (StringUtils.isNotBlank(info.getTheme().getUxPath())) {
 			httpBuffer.append(URLEncoder.encode(info.getTheme().getUxPath(), "utf-8"));
-		}else{
+		} else {
 			httpBuffer.append(URLEncoder.encode(info.getTheme().getApkPath(), "utf-8"));
 		}
-	
+
 		httpBuffer.append("&title=" + URLEncoder.encode(info.getTitle(), "utf-8"));
 		httpBuffer.append(URLEncoder.encode("|", "utf-8")).append(
 				URLEncoder.encode(info.getTheme().getTitle(), "utf-8"));
@@ -302,7 +305,9 @@ public class HomeAction extends ActionSupport {
 		} catch (Exception e) {
 			String userAgent = request.getHeader("User-Agent");
 			String ip = ServletUtils.getIpAddr(request);
-			logger.warn("com.tp.entity.Category:#{}不存在,ip:" + ip + ",User-Agent:" + userAgent+" param:"+ session.getAttribute(Constants.QUERY_STRING), categoryId);
+			logger.warn(
+					"com.tp.entity.Category:#{}不存在,ip:" + ip + ",User-Agent:" + userAgent + " param:"
+							+ session.getAttribute(Constants.QUERY_STRING), categoryId);
 			Struts2Utils.getResponse().sendError(HttpServletResponse.SC_BAD_REQUEST, "parametter is incorrect.");
 			return null;
 		}
