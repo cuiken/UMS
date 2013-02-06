@@ -289,6 +289,7 @@ public class LogService {
 			entity.setAppName((String) content.get("app_name"));
 			entity.setMarketName((String) content.get("market"));
 			entity.setDownload((Long) content.get("get_client"));
+			entity.setCreateTime(sdate);
 			logCountGetClientDao.save(entity);
 		}
 	}
