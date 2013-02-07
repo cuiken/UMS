@@ -133,7 +133,7 @@ public class HomeAction extends ActionSupport {
 		return (String) session.getAttribute(Constants.PARA_RESOLUTION) == null;
 	}
 
-	private Long chooseStoreId(HttpSession session) {
+	private Long chooseStoreId(HttpSession session) throws Exception {
 		String storeType = (String) session.getAttribute(Constants.PARA_STORE_TYPE);
 		Long storeId = (Long) session.getAttribute(Constants.ID_LOCK);
 		if (StringUtils.isBlank(storeType)) {
@@ -142,7 +142,12 @@ public class HomeAction extends ActionSupport {
 		if (storeId != null) {
 			return storeId;
 		} else {
-			storeId = categoryManager.getStoreByValue(storeType).getId();
+			try {
+				storeId = categoryManager.getStoreByValue(storeType).getId();
+			} catch (Exception e) {
+				logger.warn("商店{}不存在，请求错误～", storeType);
+				Struts2Utils.getResponse().sendError(HttpServletResponse.SC_NOT_FOUND, "parametter is incorrect.");
+			}
 			session.setAttribute(Constants.ID_LOCK, storeId);
 			return storeId;
 		}
@@ -308,7 +313,7 @@ public class HomeAction extends ActionSupport {
 			logger.warn(
 					"com.tp.entity.Category:#{}不存在,ip:" + ip + ",User-Agent:" + userAgent + " param:"
 							+ session.getAttribute(Constants.QUERY_STRING), categoryId);
-			Struts2Utils.getResponse().sendError(HttpServletResponse.SC_BAD_REQUEST, "parametter is incorrect.");
+			Struts2Utils.getResponse().sendError(HttpServletResponse.SC_NOT_FOUND, "parametter is incorrect.");
 			return null;
 		}
 		catePage = fileManager.searchInfoByCategoryAndStore(catePage, categoryId, storeId, language);
