@@ -36,7 +36,7 @@
 				</s:iterator>
 			</div>
 			<nav id="page-nav">
-  				<a href="?newestPage.pageNo=${newestPage.nextPage}"></a>
+  				<a href="?newestPage.pageNo=${newestPage.next}"></a>
 			</nav>	
  	
  	</form>

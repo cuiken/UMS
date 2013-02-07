@@ -97,6 +97,10 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 		}
 	}
 
+	public int getNext() {
+		return getPageNo() + 1;
+	}
+
 	/**
 	 * 是否还有上一页.
 	 */

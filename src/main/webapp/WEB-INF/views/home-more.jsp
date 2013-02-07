@@ -37,7 +37,7 @@
 				</s:iterator>
 			</div>
 			<nav id="page-nav">
-  				<a href="?catePage.pageNo=${catePage.nextPage}&cid=${categoryId}"></a>
+  				<a href="?catePage.pageNo=${catePage.next}&cid=${categoryId}"></a>
 			</nav>
 		</form>
 		<script src="${ctx}/static/jquery/1.7.2/jquery.min.js"></script>
