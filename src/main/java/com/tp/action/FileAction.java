@@ -58,7 +58,7 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	}
 
 	@Override
-	@RequiresAuthentication
+//	@RequiresAuthentication
 	@RequiresPermissions("file:edit")
 	public String input() throws Exception {
 		checkedCategoryIds = entity.getCheckedCategoryIds();
@@ -96,7 +96,7 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	}
 
 	@Override
-	@RequiresAuthentication
+//	@RequiresAuthentication
 	@RequiresPermissions("file:edit")
 	public String save() throws Exception {
 		HibernateUtils.mergeByCheckedIds(entity.getCategories(), checkedCategoryIds, Category.class);

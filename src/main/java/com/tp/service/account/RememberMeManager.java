@@ -34,7 +34,7 @@ public class RememberMeManager extends AbstractRememberMeManager {
 	 */
 	public static final String DEFAULT_REMEMBER_ME_COOKIE_NAME = "rememberMe";
 
-	private static final int ONE_WEEK = 60 * 60 * 24 * 7;
+	private static final int ONE_WEEK = 60 * 60 * 24 * 3;
 
 	private Cookie cookie;
 
