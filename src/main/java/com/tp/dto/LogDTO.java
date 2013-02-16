@@ -1,5 +1,6 @@
 package com.tp.dto;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class LogDTO {
@@ -12,13 +13,13 @@ public class LogDTO {
 	private String clientVersion;
 	private String contentVersion;
 	private String resolution;
-	private String net;
-	private String op;
-	private String app;
-	private String fm;
-	private String dm;
-	private String st;
-	private String ct;
+	private String netEnv;
+	private String operators;
+	private String appName;
+	private String fromMarket;
+	private String downType;
+	private String storeType;
+	private String clientType;
 	private String model;
 	private String autoSwitch;
 	private String safetyLock;
@@ -35,7 +36,7 @@ public class LogDTO {
 	}
 
 	public String getImei() {
-		return imei;
+		return StringUtils.substring(imei, 0, 20);
 	}
 
 	public void setImei(String imei) {
@@ -43,7 +44,7 @@ public class LogDTO {
 	}
 
 	public String getImsi() {
-		return imsi;
+		return StringUtils.substring(imsi, 0, 20);
 	}
 
 	public void setImsi(String imsi) {
@@ -51,7 +52,7 @@ public class LogDTO {
 	}
 
 	public String getLanguage() {
-		return language;
+		return StringUtils.substring(language, 0, 10);
 	}
 
 	public void setLanguage(String language) {
@@ -59,7 +60,7 @@ public class LogDTO {
 	}
 
 	public String getDoType() {
-		return doType;
+		return StringUtils.substring(doType, 0, 35);
 	}
 
 	public void setDoType(String doType) {
@@ -67,7 +68,7 @@ public class LogDTO {
 	}
 
 	public String getClientVersion() {
-		return clientVersion;
+		return StringUtils.substring(clientVersion, 0, 35);
 	}
 
 	public void setClientVersion(String clientVersion) {
@@ -75,7 +76,7 @@ public class LogDTO {
 	}
 
 	public String getContentVersion() {
-		return contentVersion;
+		return StringUtils.substring(contentVersion, 0, 35);
 	}
 
 	public void setContentVersion(String contentVersion) {
@@ -83,71 +84,71 @@ public class LogDTO {
 	}
 
 	public String getResolution() {
-		return resolution;
+		return StringUtils.substring(resolution, 0, 35);
 	}
 
 	public void setResolution(String resolution) {
 		this.resolution = resolution;
 	}
 
-	public String getNet() {
-		return net;
+	public String getNetEnv() {
+		return StringUtils.substring(netEnv, 0, 35);
 	}
 
-	public void setNet(String net) {
-		this.net = net;
+	public void setNetEnv(String netEnv) {
+		this.netEnv = netEnv;
 	}
 
-	public String getOp() {
-		return op;
+	public String getOperators() {
+		return StringUtils.substring(operators, 0, 35);
 	}
 
-	public void setOp(String op) {
-		this.op = op;
+	public void setOperators(String operators) {
+		this.operators = operators;
 	}
 
-	public String getApp() {
-		return app;
+	public String getAppName() {
+		return StringUtils.substring(appName, 0, 35);
 	}
 
-	public void setApp(String app) {
-		this.app = app;
+	public void setAppName(String appName) {
+		this.appName = appName;
 	}
 
-	public String getFm() {
-		return fm;
+	public String getFromMarket() {
+		return StringUtils.substring(fromMarket, 0, 255);
 	}
 
-	public void setFm(String fm) {
-		this.fm = fm;
+	public void setFromMarket(String fromMarket) {
+		this.fromMarket = fromMarket;
 	}
 
-	public String getDm() {
-		return dm;
+	public String getDownType() {
+		return downType;
 	}
 
-	public void setDm(String dm) {
-		this.dm = dm;
+	public void setDownType(String downType) {
+		this.downType = downType;
 	}
 
-	public String getSt() {
-		return st;
+	public String getStoreType() {
+		return storeType;
 	}
 
-	public void setSt(String st) {
-		this.st = st;
+	public void setStoreType(String storeType) {
+		this.storeType = storeType;
 	}
 
-	public String getCt() {
-		return ct;
+	public String getClientType() {
+		return clientType;
 	}
 
-	public void setCt(String ct) {
-		this.ct = ct;
+	public void setClientType(String clientType) {
+		this.clientType = clientType;
 	}
 
 	public String getModel() {
-		return model;
+		return StringUtils.substring(model, 0, 35);
 	}
 
 	public void setModel(String model) {
@@ -187,7 +188,7 @@ public class LogDTO {
 	}
 
 	public String getUrl() {
-		return url;
+		return StringUtils.substring(url, 0, 255);
 	}
 
 	public void setUrl(String url) {

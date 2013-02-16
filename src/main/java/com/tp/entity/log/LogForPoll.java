@@ -2,6 +2,7 @@ package com.tp.entity.log;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -14,16 +15,16 @@ import com.tp.entity.IdEntity;
 public class LogForPoll extends IdEntity {
 
 	private String bcid;
-	private String app;
+	private String appName;
 	private String url;
 	private String imei;
 	private String imsi;
 	private String language;
-	private String version;
+	private String clientVersion;
 	private String fromMarket;
 	private String resolution;
 	private String netEnv;
-	private String operator;
+	private String operators;
 	private String doType;
 	private Date createTime;
 
@@ -35,12 +36,13 @@ public class LogForPoll extends IdEntity {
 		this.bcid = bcid;
 	}
 
-	public String getApp() {
-		return app;
+	@Column(name = "app")
+	public String getAppName() {
+		return appName;
 	}
 
-	public void setApp(String app) {
-		this.app = app;
+	public void setAppName(String appName) {
+		this.appName = appName;
 	}
 
 	public String getUrl() {
@@ -75,12 +77,13 @@ public class LogForPoll extends IdEntity {
 		this.language = language;
 	}
 
-	public String getVersion() {
-		return version;
+	@Column(name = "version")
+	public String getClientVersion() {
+		return clientVersion;
 	}
 
-	public void setVersion(String version) {
-		this.version = version;
+	public void setClientVersion(String clientVersion) {
+		this.clientVersion = clientVersion;
 	}
 
 	public String getFromMarket() {
@@ -107,12 +110,13 @@ public class LogForPoll extends IdEntity {
 		this.netEnv = netEnv;
 	}
 
-	public String getOperator() {
-		return operator;
+	@Column(name = "operator")
+	public String getOperators() {
+		return operators;
 	}
 
-	public void setOperator(String operator) {
-		this.operator = operator;
+	public void setOperators(String operators) {
+		this.operators = operators;
 	}
 
 	public String getDoType() {

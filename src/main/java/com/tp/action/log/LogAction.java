@@ -1,26 +1,6 @@
 package com.tp.action.log;
 
-import static com.tp.utils.Constants.ENCODE_UTF_8;
-import static com.tp.utils.Constants.PARA_APP_NAME;
-import static com.tp.utils.Constants.PARA_AUTO_SWITCH;
-import static com.tp.utils.Constants.PARA_BCID;
-import static com.tp.utils.Constants.PARA_CLIENT_TYPE;
-import static com.tp.utils.Constants.PARA_CLIENT_VERSION;
-import static com.tp.utils.Constants.PARA_CONTENT_VERSION;
-import static com.tp.utils.Constants.PARA_DOWNLOAD_METHOD;
-import static com.tp.utils.Constants.PARA_DO_TYPE;
-import static com.tp.utils.Constants.PARA_FROM;
-import static com.tp.utils.Constants.PARA_FROM_MARKET;
-import static com.tp.utils.Constants.PARA_IMEI;
-import static com.tp.utils.Constants.PARA_IMSI;
-import static com.tp.utils.Constants.PARA_LANGUAGE;
-import static com.tp.utils.Constants.PARA_MACHINE_MODEL;
-import static com.tp.utils.Constants.PARA_NET_ENVIRONMENT;
-import static com.tp.utils.Constants.PARA_OPERATORS;
-import static com.tp.utils.Constants.PARA_RESOLUTION;
-import static com.tp.utils.Constants.PARA_SAFETYLOCK;
-import static com.tp.utils.Constants.PARA_STORE_TYPE;
-import static com.tp.utils.Constants.PARA_URL;
+import static com.tp.utils.Constants.*;
 
 import java.net.URLDecoder;
 import java.util.Date;
@@ -38,6 +18,7 @@ import com.tp.entity.log.LogForPoll;
 import com.tp.entity.log.LogForRedirect;
 import com.tp.entity.log.LogFromClient;
 import com.tp.entity.log.LogInHome;
+import com.tp.mapper.BeanMapper;
 import com.tp.service.ClientFileManager;
 import com.tp.service.LogService;
 import com.tp.utils.Constants;
@@ -60,26 +41,12 @@ public class LogAction extends ActionSupport {
 
 	public String save() throws Exception {
 
-		LogDTO log = getLog();
-		LogFromClient entity = new LogFromClient();
-		entity.setImei(log.getImei());
-		entity.setImsi(log.getImsi());
-		entity.setStoreType(log.getSt());
-		entity.setDownType(log.getDm());
-		entity.setLanguage(log.getLanguage());
-		entity.setClientVersion(log.getClientVersion());
-		entity.setResolution(log.getResolution());
-		entity.setFromMarket(log.getFm());
-		entity.setAutoSwitch(log.getAutoSwitch());
-		entity.setSafetyLock(log.getSafetyLock());
-		entity.setNetEnv(log.getNet());
-		entity.setOperators(log.getOp());
-		entity.setModel(log.getModel());
-		entity.setClientType(log.getCt());
+		LogDTO logDTO = getLog();
+		LogFromClient entity = BeanMapper.map(logDTO, LogFromClient.class);
 		entity.setCreateTime(DateFormatUtils.convert(new Date()));
 		logService.saveLogFromClient(entity);
 
-		String clientVersion = log.getClientVersion();
+		String clientVersion = entity.getClientVersion();
 		ClientFile client = clientFileManager.getByVersion(clientVersion);
 		if (client == null || clientVersion.equals("2.6.0")) { //兼容客户端无法升级的bug
 			Struts2Utils.renderText("");
@@ -94,7 +61,7 @@ public class LogAction extends ActionSupport {
 	public String saveDownload() throws Exception {
 		LogInHome log = new LogInHome();
 		String queryStr = Struts2Utils.getParameter(Constants.QUERY_STRING);
-		if (StringUtils.isNotBlank(queryStr)&&queryStr.contains("UMS"))
+		if (StringUtils.isNotBlank(queryStr) && queryStr.contains("UMS"))
 			queryStr = StringUtils.substringAfterLast(queryStr, "UMS/");
 		String clientStr = Struts2Utils.getParameter("cs");
 		splitClientStr(clientStr, log);
@@ -163,20 +130,8 @@ public class LogAction extends ActionSupport {
 	}
 
 	public String content() throws Exception {
-		LogDTO log = getLog();
-		LogForContent entity = new LogForContent();
-		entity.setImei(log.getImei());
-		entity.setImsi(log.getImsi());
-		entity.setDoType(log.getDoType());
-		entity.setLanguage(log.getLanguage());
-		entity.setResolution(log.getResolution());
-		entity.setNetEnv(log.getNet());
-		entity.setAppName(log.getApp());
-		entity.setOperators(log.getOp());
-		entity.setClientVersion(log.getClientVersion());
-		entity.setContentVersion(log.getContentVersion());
-		entity.setFromMarket(log.getFm());
-		entity.setClientType(log.getCt());
+		LogDTO logDTO = getLog();
+		LogForContent entity = BeanMapper.map(logDTO, LogForContent.class);
 		entity.setCreateTime(DateFormatUtils.convert(new Date()));
 		logService.saveLogContent(entity);
 		return null;
@@ -185,8 +140,8 @@ public class LogAction extends ActionSupport {
 	public String redirect() throws Exception {
 		LogDTO log = getLog();
 		String url = log.getUrl();
-		String app = log.getApp();
-		if (app != null && !app.isEmpty()) {
+		String app = log.getAppName();
+		if (StringUtils.isNotBlank(app)) {
 			app = URLDecoder.decode(app, ENCODE_UTF_8);
 		}
 		LogForRedirect redire = new LogForRedirect();
@@ -199,23 +154,11 @@ public class LogAction extends ActionSupport {
 
 	public String poll() throws Exception {
 
-		LogDTO log = getLog();
+		LogDTO logDTO = getLog();
 
-		LogForPoll entity = new LogForPoll();
-		entity.setDoType(log.getDoType());
-		entity.setBcid(log.getBcid());
-		entity.setApp(log.getApp());
-		entity.setUrl(log.getUrl());
-		entity.setImei(log.getImei());
-		entity.setImsi(log.getImsi());
-		entity.setLanguage(log.getLanguage());
-		entity.setVersion(log.getClientVersion());
-		entity.setFromMarket(log.getFm());
-		entity.setResolution(log.getResolution());
-		entity.setNetEnv(log.getNet());
-		entity.setOperator(log.getOp());
+		LogForPoll entity = BeanMapper.map(logDTO, LogForPoll.class);
 		logService.savePoll(entity);
-		Struts2Utils.renderText("success => " + log.getDoType());
+		Struts2Utils.renderText("success");
 		return null;
 	}
 
@@ -242,25 +185,25 @@ public class LogAction extends ActionSupport {
 		String from = Struts2Utils.getParameter(PARA_FROM);
 
 		LogDTO dto = new LogDTO();
-		dto.setApp(app);
+		dto.setAppName(app);
 		dto.setAutoSwitch(autoSwitch);
 		dto.setBcid(bcid);
 		dto.setClientVersion(clientVersion);
 		dto.setContentVersion(contentVersion);
-		dto.setCt(ct);
-		dto.setDm(downType);
+		dto.setClientType(ct);
+		dto.setDownType(downType);
 		dto.setDoType(doType);
-		dto.setFm(fromMarket);
+		dto.setFromMarket(fromMarket);
 		dto.setFrom(from);
 		dto.setImei(imei);
 		dto.setImsi(imsi);
 		dto.setLanguage(language);
 		dto.setModel(model);
-		dto.setNet(netEnv);
-		dto.setOp(op);
+		dto.setNetEnv(netEnv);
+		dto.setOperators(op);
 		dto.setResolution(resolution);
 		dto.setSafetyLock(safetyLock);
-		dto.setSt(storeType);
+		dto.setStoreType(storeType);
 		dto.setUrl(url);
 		return dto;
 	}

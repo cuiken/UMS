@@ -3,6 +3,7 @@ package com.tp.action;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -100,9 +101,9 @@ public class FeedbackAction extends CRUDActionSupport<UserFeedback> {
 			String contacts = Struts2Utils.getParameter("contact");
 			String params = Struts2Utils.getParameter("params");
 
-			entity.setContact(contacts);
-			entity.setContent(content);
-			entity.setParams(params);
+			entity.setContact(StringUtils.substring(contacts, 0, 50));
+			entity.setContent(StringUtils.substring(content, 0, 140));
+			entity.setParams(StringUtils.substring(params, 0, 255));
 			entity.setCreateTime(new Date());
 			entity.setStatus("0");
 		} else {
