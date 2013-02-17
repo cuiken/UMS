@@ -96,7 +96,7 @@ public class ImageAction extends ActionSupport {
 			if (StringUtils.isBlank(eMsg)) {
 				eMsg = contentInfo.contentPath;
 			}
-			logger.warn(eMsg + ",ip:" + ip + ",User-Agent:" + userAgent);
+			logger.warn(eMsg + ",ip:" + ip + ",User-Agent:" + userAgent+",param: "+request.getSession().getAttribute(Constants.QUERY_STRING));
 		}
 
 	}
