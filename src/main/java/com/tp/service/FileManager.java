@@ -256,6 +256,11 @@ public class FileManager {
 		buffer.append("<linkUrl>"+domain+"/home!more.action?cid=120&amp;f=ad"+"</linkUrl>");
 		buffer.append("<downloadUrl>"+domain+"/static/images/ad_diy.jpg"+"</downloadUrl>");
 		buffer.append("</ad>");
+		
+		buffer.append("<ad id='2222' fileName='ad_app.jpg' format='jpg' version='1'>");
+		buffer.append("<linkUrl>"+domain+"/home!more.action?cid=108&amp;f=ad"+"</linkUrl>");
+		buffer.append("<downloadUrl>"+domain+"/static/images/ad_app.jpg"+"</downloadUrl>");
+		buffer.append("</ad>");
 		return buffer.toString();
 	}
 
