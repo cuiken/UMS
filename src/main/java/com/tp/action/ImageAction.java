@@ -49,7 +49,7 @@ public class ImageAction extends ActionSupport {
 	private void responseImage(String contentPath) throws Exception {
 		HttpServletResponse response = Struts2Utils.getResponse();
 		HttpServletRequest request = Struts2Utils.getRequest();
-		String queryString=(String)request.getSession().getAttribute(Constants.QUERY_STRING);
+		String queryString=(String)Struts2Utils.getSessionAttribute(Constants.QUERY_STRING);
 		if (StringUtils.isBlank(contentPath)) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "path parametter is required.");
 			return;
