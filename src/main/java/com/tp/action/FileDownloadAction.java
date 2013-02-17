@@ -69,9 +69,12 @@ public class FileDownloadAction extends ActionSupport {
 			response.addHeader("Content-Disposition", "attachment; filename=" + "\"" + downloadFileName + "\"");
 			
 			response.setContentType(mimetypesFileTypeMap.getContentType(file.getName()));
-			Cookie c = new Cookie("downloadFlag", "on");
-			c.setMaxAge(180);
-			response.addCookie(c);
+			
+			if(file.getPath().contains(Constants.CLIENT_STORAGE)){
+				Cookie c = new Cookie("downloadFlag", "on");
+				c.setMaxAge(180);
+				response.addCookie(c);
+			}		
 
 			OutputStream output = response.getOutputStream();
 			try {

@@ -6,7 +6,6 @@ import java.net.URLDecoder;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -59,12 +58,12 @@ public class LogAction extends ActionSupport {
 	}
 
 	public String saveDownload() throws Exception {
-		LogInHome log = new LogInHome();
+
 		String queryStr = Struts2Utils.getParameter(Constants.QUERY_STRING);
 		if (StringUtils.isNotBlank(queryStr) && queryStr.contains("UMS"))
 			queryStr = StringUtils.substringAfterLast(queryStr, "UMS/");
 		String clientStr = Struts2Utils.getParameter("cs");
-		splitClientStr(clientStr, log);
+		LogInHome log = splitClientStr(clientStr);
 		int index = StringUtils.indexOf(queryStr, "&inputPath");
 		int ques = StringUtils.indexOf(queryStr, "?");
 		if (ques != -1) {
@@ -85,41 +84,46 @@ public class LogAction extends ActionSupport {
 		return null;
 	}
 
-	private void splitClientStr(String requetParam, LogInHome log) {
-		Validate.notNull(requetParam, "param not null");
-		String[] params = StringUtils.split(requetParam, "&");
-		for (int i = 0; i < params.length; i++) {
-			String param = params[i];
-			String[] keyValue = StringUtils.split(param, "=");
-			if (keyValue.length > 1) {
-				String key = keyValue[0];
-				String value = keyValue[1];
-				if (key.equals(Constants.PARA_CLIENT_VERSION)) {
-					log.setClientVersion(value);
-				}
-				if (key.equals(Constants.PARA_DOWNLOAD_METHOD)) {
-					log.setDownType(value);
-				}
-				if (key.equals(Constants.PARA_FROM_MARKET)) {
-					log.setFromMarket(value);
-				}
-				if (key.equals(Constants.PARA_IMEI)) {
-					log.setImei(value);
-				}
-				if (key.equals(Constants.PARA_IMSI)) {
-					log.setImsi(value);
-				}
-				if (key.equals(Constants.PARA_LANGUAGE)) {
-					log.setLanguage(value);
-				}
-				if (key.equals(Constants.PARA_RESOLUTION)) {
-					log.setResolution(value);
-				}
-				if (key.equals(Constants.PARA_STORE_TYPE)) {
-					log.setStoreType(value);
+	private LogInHome splitClientStr(String requetParam) {
+		LogInHome log = new LogInHome();
+		if (StringUtils.isNotBlank(requetParam)) {
+
+			String[] params = StringUtils.split(requetParam, "&");
+
+			for (int i = 0; i < params.length; i++) {
+				String param = params[i];
+				String[] keyValue = StringUtils.split(param, "=");
+				if (keyValue.length > 1) {
+					String key = keyValue[0];
+					String value = keyValue[1];
+					if (key.equals(Constants.PARA_CLIENT_VERSION)) {
+						log.setClientVersion(value);
+					}
+					if (key.equals(Constants.PARA_DOWNLOAD_METHOD)) {
+						log.setDownType(value);
+					}
+					if (key.equals(Constants.PARA_FROM_MARKET)) {
+						log.setFromMarket(value);
+					}
+					if (key.equals(Constants.PARA_IMEI)) {
+						log.setImei(value);
+					}
+					if (key.equals(Constants.PARA_IMSI)) {
+						log.setImsi(value);
+					}
+					if (key.equals(Constants.PARA_LANGUAGE)) {
+						log.setLanguage(value);
+					}
+					if (key.equals(Constants.PARA_RESOLUTION)) {
+						log.setResolution(value);
+					}
+					if (key.equals(Constants.PARA_STORE_TYPE)) {
+						log.setStoreType(value);
+					}
 				}
 			}
 		}
+		return log;
 
 	}
 
