@@ -53,6 +53,7 @@ public class GroupAction extends CRUDActionSupport<Group> {
 	@RequiresPermissions("group:edit")
 	public String save() throws Exception {
 		accountManager.saveGroup(entity);
+		addActionMessage("保存成功");
 		return RELOAD;
 	}
 

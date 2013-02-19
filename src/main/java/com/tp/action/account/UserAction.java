@@ -56,6 +56,7 @@ public class UserAction extends CRUDActionSupport<User> {
 	public String save() throws Exception {
 		HibernateUtils.mergeByCheckedIds(entity.getGroupList(), checkedGroupIds, Group.class);
 		accountManager.saveUser(entity);
+		addActionMessage("保存成功");
 		return RELOAD;
 	}
 
