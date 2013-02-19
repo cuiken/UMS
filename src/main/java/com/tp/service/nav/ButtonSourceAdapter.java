@@ -194,24 +194,19 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	@Override
 	public void logClick(Map<String, String> userIds, Long btnId) {
 
+		String imei = "00000000";
 		if (userIds != null && !userIds.isEmpty()) {
-			String imei = userIds.get("imei");
+			imei = userIds.get("imei");
 			if (imei == null || imei.isEmpty()) {
 				imei = userIds.get("imsi");
 			}
 
-			ClickLog log = new ClickLog();
-			log.setButtonId(btnId.longValue());
-			log.setUserId(imei);
-			log.setDate(new Date());
-			clickLogDao.save(log);
-		} else {
-			ClickLog log = new ClickLog();
-			log.setButtonId(btnId.longValue());
-			log.setUserId("00000000");
-			log.setDate(new Date());
-			clickLogDao.save(log);
 		}
+		ClickLog log = new ClickLog();
+		log.setButtonId(btnId.longValue());
+		log.setUserId(imei);
+		log.setDate(new Date());
+		clickLogDao.save(log);
 	}
 
 	@Override

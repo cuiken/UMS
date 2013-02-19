@@ -513,3 +513,11 @@ create table nav_hotlink(
 	tag_id int,
 	primary key(id)
 )ENGINE=InnoDB;
+
+CREATE TABLE `click_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(255) NOT NULL,
+  `button_id` varchar(100) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8
