@@ -403,28 +403,6 @@ public class LogService {
 		}
 	}
 
-	@Deprecated
-	public void createGetClientByContentReport(IndexSearcher searcher, String sdate, String edate) throws Exception {
-		List<ThemeFile> themes = themeDao.getByStore("lock");
-		int i = 0;
-		for (ThemeFile theme : themes) {
-
-			long count = logSearch.countGetClientByContent(searcher, sdate, edate, theme.getTitle());
-			LogCountGetClient entity = new LogCountGetClient();
-			entity.setAppName(theme.getTitle());
-			entity.setDownload(count);
-			entity.setCreateTime(sdate);
-			try {
-				logCountGetClientDao.save(entity);
-				if (++i % 20 == 0) {
-					logCountGetClientDao.flush();
-				}
-			} catch (Exception e) {
-				logger.error("error:" + e.getMessage() + mapper.toJson(entity));
-			}
-		}
-	}
-
 	private void perMarketDown(IndexSearcher searcher, ThemeFile theme, LogCountContent lcc, List<Market> markets,
 			String sdate, String edate) throws Exception {
 

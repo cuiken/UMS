@@ -235,61 +235,6 @@ create table log_f_store(
 	primary key(id)
 );
 
-create table log_f_store2(
-	id bigint auto_increment,
-	imei varchar(50) not null default '',
-	imsi varchar(50) not null default '',
-	store_type varchar(20) not null default '',
-	down_type varchar(20),
-	language varchar(10) not null default '',
-	client_version varchar(20) not null default '',
-	resolution varchar(20) not null default '',
-	from_market varchar(255) not null default '',
-	request_method varchar(255),
-	request_params varchar(255),
-	operator varchar(10) not null default '',
-	app_name varchar(50) not null default '',
-	client_type varchar(20),
-	model varchar(35),
-	net_env varchar(10),
-	come_from varchar(35),
-	content_version varchar(20),
-	create_time timestamp not null default 0,
-	index index_createTime(create_time),
-	index index_appName(app_name),
-	index index_requestMethod(request_method),
-	primary key(id)
-);
-
-create table log_f_download(
-	id bigint auto_increment,
-	imei varchar(50) not null default '',
-	imsi varchar(50) not null default '',
-	app_name varchar(50) not null default '',
-	from_market varchar(255) not null default '',
-	request_method varchar(35),
-	client_type varchar(20),
-	create_time timestamp not null default 0,
-	index imei_index(imei),
-	index method_index(request_method),
-	index ctime_index(create_time),
-	primary key(id)
-);
-
-create table lock_user(
-	id bigint auto_increment,
-	imei varchar(35) not null unique,
-	imsi varchar(35) not null default 0,
-	model varchar(35) not null default '',
-	resolution varchar(20) not null default '',
-	register_time timestamp not null default 0,
-	active_time timestamp not null default 0,
-	index rt_index (register_time),
-	index at_index (active_time),
-	index imei_index (imei),
-	primary key(id)
-);
-
 create table log_count_unzip(
 	id bigint auto_increment,
 	app_name varchar(35),

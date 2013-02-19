@@ -28,6 +28,7 @@ public class LogForStore extends IdEntity {
 	private String netEnv;
 	private String comeFrom;
 	private String contentVersion;
+	private String fileId;
 	private String createTime;
 
 	public String getImei() {
@@ -164,6 +165,14 @@ public class LogForStore extends IdEntity {
 
 	public void setContentVersion(String contentVersion) {
 		this.contentVersion = contentVersion;
+	}
+	
+	public String getFileId() {
+		return fileId;
+	}
+	
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 
 	public String getCreateTime() {

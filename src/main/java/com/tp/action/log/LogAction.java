@@ -1,6 +1,26 @@
 package com.tp.action.log;
 
-import static com.tp.utils.Constants.*;
+import static com.tp.utils.Constants.ENCODE_UTF_8;
+import static com.tp.utils.Constants.PARA_APP_NAME;
+import static com.tp.utils.Constants.PARA_AUTO_SWITCH;
+import static com.tp.utils.Constants.PARA_BCID;
+import static com.tp.utils.Constants.PARA_CLIENT_TYPE;
+import static com.tp.utils.Constants.PARA_CLIENT_VERSION;
+import static com.tp.utils.Constants.PARA_CONTENT_VERSION;
+import static com.tp.utils.Constants.PARA_DOWNLOAD_METHOD;
+import static com.tp.utils.Constants.PARA_DO_TYPE;
+import static com.tp.utils.Constants.PARA_FROM;
+import static com.tp.utils.Constants.PARA_FROM_MARKET;
+import static com.tp.utils.Constants.PARA_IMEI;
+import static com.tp.utils.Constants.PARA_IMSI;
+import static com.tp.utils.Constants.PARA_LANGUAGE;
+import static com.tp.utils.Constants.PARA_MACHINE_MODEL;
+import static com.tp.utils.Constants.PARA_NET_ENVIRONMENT;
+import static com.tp.utils.Constants.PARA_OPERATORS;
+import static com.tp.utils.Constants.PARA_RESOLUTION;
+import static com.tp.utils.Constants.PARA_SAFETYLOCK;
+import static com.tp.utils.Constants.PARA_STORE_TYPE;
+import static com.tp.utils.Constants.PARA_URL;
 
 import java.net.URLDecoder;
 import java.util.Date;
