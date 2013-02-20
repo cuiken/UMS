@@ -425,10 +425,33 @@ create table log_f_poll(
 	operator varchar(25),
 	do_type varchar(10),
 	create_time timestamp not null default 0,
+	
 	primary key(id)
 );
 
 create index poll_time on log_f_poll (create_time);
+
+/**=========================================新增统计表=============================================*/
+/*date:2013-02-20 */
+
+create table log_count_c_install_per_market(
+	id bigint auto_increment,
+	date varchar(35),
+	market_name varchar(35),
+	installed int,
+	create_time timestamp not null default 0,
+	primary key(id)
+);
+
+create table log_count_c_install_with_content(
+	id bigint auto_increment,
+	date varchar(35),
+	app_name varchar(35),
+	market_name varchar(35),
+	installed int,
+	create_time timestamp not null default 0,
+	primary key(id)
+);
 
 
 /**===========================================================================================*/

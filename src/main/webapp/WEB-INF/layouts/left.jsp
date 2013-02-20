@@ -47,6 +47,8 @@
 			<a id="reportcn-tab" href="${ctx}/report/report-content.action">内容日报</a>	
 			<a id="report-getClient-tab" href="${ctx}/report/report-get-client.action">内容引导客户端日报</a>
 			<a id="report-contentUnzip-tab" href="${ctx}/report/report-content-unzip.action">内容安装日报</a>	
+			<a id="report-client-install-tab" href="${ctx}/report/report-client-install.action">客户端安装日报</a>	
+			<a id="report-client-install-wc-tab" href="${ctx}/report/report-client-install-with-content.action">客户端通过内容安装日报</a>	
 			<shiro:hasPermission name="feedback:view">		
 				<a id="feedback-tab" href="${ctx}/report/feedback.action">用户意见反馈</a>
 			</shiro:hasPermission>

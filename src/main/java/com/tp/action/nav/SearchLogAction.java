@@ -13,8 +13,8 @@ import com.tp.utils.Struts2Utils;
 public class SearchLogAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
-	private static final String BAIDU = "http://www.baidu.com/s?wd=";
-	private static final String ZHIDAO = "http://wapiknow.baidu.com/index?word=";
+	private static final String BAIDU = "http://m.baidu.com/s?from=1000660a&word=";
+	private static final String ZHIDAO = "http://wapiknow.baidu.com/index?from=1000660a&word=";
 	private String type;
 	private String word;
 	private SearchLogService searchLogService;

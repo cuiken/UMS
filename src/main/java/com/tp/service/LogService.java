@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.lucene.search.IndexSearcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +11,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.tp.cache.MemcachedObjectType;
 import com.tp.cache.SpyMemcachedClient;
-import com.tp.dao.MarketDao;
-import com.tp.dao.ThemeFileDao;
+import com.tp.dao.log.LogCCInstallPerMarketDao;
+import com.tp.dao.log.LogCCInstallWithContentDao;
 import com.tp.dao.log.LogCmccResultDao;
-import com.tp.dao.log.LogJdbcDao;
 import com.tp.dao.log.LogCountClientDao;
 import com.tp.dao.log.LogCountContentDao;
 import com.tp.dao.log.LogCountContentMarketDao;
@@ -31,11 +27,11 @@ import com.tp.dao.log.LogForPollDao;
 import com.tp.dao.log.LogForRedirectDao;
 import com.tp.dao.log.LogFromClientDao;
 import com.tp.dao.log.LogInHomeDao;
-import com.tp.entity.Market;
-import com.tp.entity.ThemeFile;
 import com.tp.entity.log.LogCmccResult;
 import com.tp.entity.log.LogContentMarket;
 import com.tp.entity.log.LogCountClient;
+import com.tp.entity.log.LogCountClientInstallPerMarket;
+import com.tp.entity.log.LogCountClientInstallWithContent;
 import com.tp.entity.log.LogCountContent;
 import com.tp.entity.log.LogCountGetClient;
 import com.tp.entity.log.LogCountUnzip;
@@ -48,9 +44,7 @@ import com.tp.entity.log.LogInHome;
 import com.tp.mapper.JsonMapper;
 import com.tp.orm.Page;
 import com.tp.orm.PropertyFilter;
-import com.tp.search.LogSearch;
 import com.tp.utils.Constants;
-import com.tp.utils.DateFormatUtils;
 
 @Component
 @Transactional
@@ -71,40 +65,65 @@ public class LogService {
 	private LogFromClientDao logClientDao;
 	private LogInHomeDao logHomeDao;
 	private LogForContentDao logContentDao;
+	private LogForCmccDao logCmccDao;
+	private LogForRedirectDao logRedirectDao;
+	private LogForPollDao logPollDao;
+	private LogCmccResultDao logCmccResultDao;
+
+	private LogCountUnzipDao countUnzipDao;
+	private LogCountGetClientDao countGetClientDao;
 	private LogCountClientDao countClientDao;
 	private LogCountContentDao countContentDao;
-	private LogCountContentMarketDao ccMarketDao;
-	private LogForCmccDao cmccDao;
-	private LogForRedirectDao redirectDao;
-	private LogForPollDao pollDao;
-	private LogJdbcDao logJdbcDao;
 
-	private LogCountUnzipDao logCountUnzipDao;
-	private LogCountGetClientDao logCountGetClientDao;
+	private LogCCInstallPerMarketDao countClientInstallDao;
+	private LogCCInstallWithContentDao countClientInstallWithContentDao;
+	private LogCountContentMarketDao countContentPerMarketDao;
 
-	private ThemeFileDao themeDao;
-	private MarketDao marketDao;
-
-	private LogCmccResultDao cmccResultDao;
-
-	private LogSearch logSearch;
 	private SpyMemcachedClient memcachedClient;
 	private JsonMapper mapper = JsonMapper.buildNormalMapper();
 
 	public void saveCmcc(LogForCmcc entity) {
-		cmccDao.save(entity);
+		logCmccDao.save(entity);
 	}
 
 	public void saveRedirect(LogForRedirect entity) {
-		redirectDao.save(entity);
+		logRedirectDao.save(entity);
 	}
 
 	public void savePoll(LogForPoll entity) {
-		pollDao.save(entity);
+		logPollDao.save(entity);
 	}
 
 	public void saveCmccResult(LogCmccResult entity) {
-		cmccResultDao.save(entity);
+		logCmccResultDao.save(entity);
+	}
+
+	public void saveClientInstall(LogCountClientInstallPerMarket entity) {
+		countClientInstallDao.save(entity);
+	}
+
+	public void saveClientInstallWithContent(LogCountClientInstallWithContent entity) {
+		countClientInstallWithContentDao.save(entity);
+	}
+
+	public void saveContentPerMarket(LogContentMarket entity) {
+		countContentPerMarketDao.save(entity);
+	}
+
+	public void saveCountGetClient(LogCountGetClient entity) {
+		countGetClientDao.save(entity);
+	}
+
+	public void saveCountClient(LogCountClient entity) {
+		countClientDao.save(entity);
+	}
+
+	public void saveCountContent(LogCountContent entity) {
+		countContentDao.save(entity);
+	}
+
+	public void saveCountContentUnzip(LogCountUnzip entity) {
+		countUnzipDao.save(entity);
 	}
 
 	public List<LogInHome> queryLogInHomeByDate(String sdate, String edate) {
@@ -112,12 +131,22 @@ public class LogService {
 	}
 
 	public Page<LogCountUnzip> searchContentUnzip(final Page<LogCountUnzip> page, final List<PropertyFilter> filters) {
-		return logCountUnzipDao.findPage(page, filters);
+		return countUnzipDao.findPage(page, filters);
+	}
+
+	public Page<LogCountClientInstallPerMarket> searchCountClientInstall(
+			final Page<LogCountClientInstallPerMarket> page, final List<PropertyFilter> filters) {
+		return countClientInstallDao.findPage(page, filters);
+	}
+
+	public Page<LogCountClientInstallWithContent> searchCountClientInstallWithContent(
+			final Page<LogCountClientInstallWithContent> page, final List<PropertyFilter> filters) {
+		return countClientInstallWithContentDao.findPage(page, filters);
 	}
 
 	public Page<LogCountGetClient> searchGetClient(final Page<LogCountGetClient> page,
 			final List<PropertyFilter> filters) {
-		return logCountGetClientDao.findPage(page, filters);
+		return countGetClientDao.findPage(page, filters);
 	}
 
 	public void saveLogFromClient(LogFromClient entity) {
@@ -233,14 +262,6 @@ public class LogService {
 		return memcachedClient.getBulk(keys);
 	}
 
-	public void saveLogCountClient(LogCountClient entity) {
-		countClientDao.save(entity);
-	}
-
-	public List<LogCountContent> getAllContents() {
-		return countContentDao.getAll();
-	}
-
 	public List<LogCountContent> getContentByThemeOrDate(String theme, String date) {
 		return countContentDao.getByContentOrDate(theme, date);
 	}
@@ -258,102 +279,10 @@ public class LogService {
 		return countContentDao.findPage(page, filters);
 	}
 
-	public LogCountClient getLogCountClient(Long id) {
-		return countClientDao.get(id);
-	}
-
-	public void saveCountContentUnzip(String sdate, String edate) {
-		List<Map<String, Object>> unzips = logJdbcDao.countContentUnzip(sdate, edate);
-		int i = 0;
-		for (Map<String, Object> content : unzips) {
-			LogCountUnzip unzip = new LogCountUnzip();
-			unzip.setAppName((String) content.get("app_name"));
-			unzip.setUnzip((Long) content.get("unzip"));
-			unzip.setMarketName((String) content.get("market"));
-			unzip.setCreateTime(sdate);
-			try {
-				logCountUnzipDao.save(unzip);
-				if (++i % 20 == 0) {
-					logCountUnzipDao.flush();
-				}
-			} catch (Exception e) {
-				logger.error(e.getMessage() + " 错误记录为：" + mapper.toJson(unzip));
-			}
-		}
-	}
-
-	public void createGetClientPerMarketReport(String sdate, String edate) {
-		List<Map<String, Object>> getClients = logJdbcDao.countGetClientPerMarket(sdate, edate);
-		for (Map<String, Object> content : getClients) {
-			LogCountGetClient entity = new LogCountGetClient();
-			entity.setAppName((String) content.get("app_name"));
-			entity.setMarketName((String) content.get("market"));
-			entity.setDownload((Long) content.get("get_client"));
-			entity.setCreateTime(sdate);
-			logCountGetClientDao.save(entity);
-		}
-	}
-
-	private Map<String, Object> getClientInstall(String sdate, String edate) {
-		List<Map<String, Object>> installs = logJdbcDao.countClientInstall(sdate, edate);
-		Map<String, Object> results = Maps.newHashMap();
-		long fm = 0;
-		long nofm = 0;
-		long all = 0;
-		for (Map<String, Object> content : installs) {
-			String fromMarket = (String) content.get("from_market");
-			Long installed = (Long) content.get("installed");
-			all += installed;
-			if (fromMarket != null && !fromMarket.isEmpty()) {
-				fm += installed;
-			} else {
-				nofm += installed;
-			}
-		}
-		results.put("all", all);
-		results.put("fm", fm);
-		results.put("nofm", nofm);
-		return results;
-	}
-
-	public void createClientReport(IndexSearcher searcher, String sdate, String edate) throws Exception {
-		LogCountClient client = new LogCountClient();
-		long start = System.currentTimeMillis();
-		long downTotal = logHomeDao.countClientDownload(Constants.METHOD_GET_CLIENT, sdate, edate);
-		long downByContent = logHomeDao.countClientDownByContent(Constants.METHOD_GET_CLIENT, "%cv:%", sdate, edate);
-		long downByShare = logSearch.downloadByShare(searcher, sdate, edate);
-		long totalUser = countTotalUser(edate);
-		long perTotalUser = 0L;
-
-		LogCountClient perCount = getLogClientCountByDate(DateFormatUtils.getPerDate(sdate));
-		if (perCount != null) {
-			perTotalUser = perCount.getTotalUser();
-		}
-
-		Map<String, Object> install = getClientInstall(sdate, edate);
-		client.setCreateTime(sdate);
-		client.setDownByContent(downByContent);
-		client.setDownByShare(downByShare);
-		client.setTotalDownload(downTotal);
-		client.setDownByOther(downTotal - downByContent - downByShare);
-		client.setVisitStoreCount(logSearch.storeVisits(searcher, sdate, edate));
-		client.setVisitStoreUser(countVisitUser(sdate, edate));
-		client.setOpenCount(countUse(sdate, edate));
-		client.setTotalUser(totalUser);
-		client.setIncrementUser(totalUser - perTotalUser);
-		client.setOpenUser(countOpenUser(sdate, edate));
-		client.setTotalInstall((Long) install.get("all"));
-		client.setInstallNonfm((Long) install.get("nofm"));
-		client.setInstallWithfm((Long) install.get("fm"));
-		long end = System.currentTimeMillis();
-		client.setTakeTimes(end - start);
-		countClientDao.save(client);
-	}
-
 	/**
 	 * 查询用户量
 	 */
-	private Long countOpenUser(String sdate, String edate) {
+	public Long countOpenUser(String sdate, String edate) {
 		return logClientDao.countUserByDate(sdate, edate);
 	}
 
@@ -361,101 +290,22 @@ public class LogService {
 	 * 查询总用户量
 	 */
 
-	private Long countTotalUser(String edate) {
+	public Long countTotalUser(String edate) {
 		return logClientDao.countTotalUser(edate);
 	}
 
 	/**
 	 * 查询客户端启用次数
 	 */
-	private Long countUse(String sdate, String edate) {
+	public Long countUse(String sdate, String edate) {
 		return logClientDao.countOpenUseByDate(sdate, edate);
 	}
 
 	/**
 	 * 查询商店访问用户量
 	 */
-	private Long countVisitUser(String sdate, String edate) {
+	public Long countVisitUser(String sdate, String edate) {
 		return logHomeDao.countUserInHome(Constants.METHOD_EXECUTE, sdate, edate);
-	}
-
-	public void createContentReport(IndexSearcher searcher, String sdate, String edate) throws Exception {
-		List<ThemeFile> themes = themeDao.getByStore("lock");
-		List<Market> markets = marketDao.getAll();
-		for (ThemeFile theme : themes) {
-			LogCountContent lcct = new LogCountContent();
-
-			String fid = String.valueOf(theme.getId());
-			long totalVisit = logSearch.contentVisits(searcher, fid, sdate, edate);
-			long visitByAD = logSearch.contentVisitByAD(searcher, fid, sdate, edate);
-			long marketDown = logSearch.contentDownFromMarket(searcher, theme.getMarketURL(), sdate, edate);
-			long selfDown = logSearch.contentDownFromStore(searcher, fid, sdate, edate);
-
-			lcct.setLogDate(sdate);
-			lcct.setThemeName(theme.getTitle());
-			lcct.setTotalVisit(totalVisit);
-			lcct.setTotalDown(marketDown + selfDown);
-			lcct.setVisitByAd(visitByAD);
-			lcct.setVisitByStore(totalVisit - visitByAD);
-			lcct.setDownByStore(selfDown);
-			countContentDao.save(lcct);
-			perMarketDown(searcher, theme, lcct, markets, sdate, edate);
-		}
-	}
-
-	@Deprecated
-	public void createGetClientByContentReport(IndexSearcher searcher, String sdate, String edate) throws Exception {
-		List<ThemeFile> themes = themeDao.getByStore("lock");
-		int i = 0;
-		for (ThemeFile theme : themes) {
-
-			long count = logSearch.countGetClientByContent(searcher, sdate, edate, theme.getTitle());
-			LogCountGetClient entity = new LogCountGetClient();
-			entity.setAppName(theme.getTitle());
-			entity.setDownload(count);
-			entity.setCreateTime(sdate);
-			try {
-				logCountGetClientDao.save(entity);
-				if (++i % 20 == 0) {
-					logCountGetClientDao.flush();
-				}
-			} catch (Exception e) {
-				logger.error("error:" + e.getMessage() + mapper.toJson(entity));
-			}
-		}
-	}
-
-	private void perMarketDown(IndexSearcher searcher, ThemeFile theme, LogCountContent lcc, List<Market> markets,
-			String sdate, String edate) throws Exception {
-
-		for (Market market : markets) {
-			if (market.getThemes().contains(theme)) {
-				LogContentMarket ccMarket = new LogContentMarket();
-
-				String marketKey = market.getMarketKey();
-				marketKey = escape(marketKey);
-				if (marketKey.equals("marketclient")) {
-					marketKey = market.getPkName();
-				}
-				String fpack = theme.getMarketURL();
-				long perMarketDown = logSearch.contentPerMarketDown(searcher, sdate, edate, marketKey, fpack);
-				ccMarket.setMarketName(market.getName());
-				ccMarket.setTotalDown(perMarketDown);
-				ccMarket.setLogContent(lcc);
-				ccMarketDao.save(ccMarket);
-			}
-		}
-	}
-
-	private String escape(String marketKey) {
-		if (marketKey != null && !marketKey.isEmpty()) {
-			String[] strs = StringUtils.split(marketKey, ":");
-			if (strs.length > 0) {
-				return strs[0];
-			}
-		}
-		return "";
-
 	}
 
 	@Autowired
@@ -469,23 +319,43 @@ public class LogService {
 	}
 
 	@Autowired
+	public void setLogContentDao(LogForContentDao logContentDao) {
+		this.logContentDao = logContentDao;
+	}
+
+	@Autowired
+	public void setLogCmccDao(LogForCmccDao logCmccDao) {
+		this.logCmccDao = logCmccDao;
+	}
+
+	@Autowired
+	public void setLogRedirectDao(LogForRedirectDao logRedirectDao) {
+		this.logRedirectDao = logRedirectDao;
+	}
+
+	@Autowired
+	public void setLogPollDao(LogForPollDao logPollDao) {
+		this.logPollDao = logPollDao;
+	}
+
+	@Autowired
+	public void setLogCmccResultDao(LogCmccResultDao logCmccResultDao) {
+		this.logCmccResultDao = logCmccResultDao;
+	}
+
+	@Autowired
+	public void setCountUnzipDao(LogCountUnzipDao countUnzipDao) {
+		this.countUnzipDao = countUnzipDao;
+	}
+
+	@Autowired
+	public void setCountGetClientDao(LogCountGetClientDao countGetClientDao) {
+		this.countGetClientDao = countGetClientDao;
+	}
+
+	@Autowired
 	public void setCountClientDao(LogCountClientDao countClientDao) {
 		this.countClientDao = countClientDao;
-	}
-
-	@Autowired
-	public void setThemeDao(ThemeFileDao themeDao) {
-		this.themeDao = themeDao;
-	}
-
-	@Autowired
-	public void setMarketDao(MarketDao marketDao) {
-		this.marketDao = marketDao;
-	}
-
-	@Autowired
-	public void setCcMarketDao(LogCountContentMarketDao ccMarketDao) {
-		this.ccMarketDao = ccMarketDao;
 	}
 
 	@Autowired
@@ -494,53 +364,22 @@ public class LogService {
 	}
 
 	@Autowired
-	public void setLogContentDao(LogForContentDao logContentDao) {
-		this.logContentDao = logContentDao;
-	}
-
-	@Autowired
-	public void setLogSearch(LogSearch logSearch) {
-		this.logSearch = logSearch;
-	}
-
-	@Autowired
-	public void setCmccResultDao(LogCmccResultDao cmccResultDao) {
-		this.cmccResultDao = cmccResultDao;
-	}
-
-	@Autowired
-	public void setCmccDao(LogForCmccDao cmccDao) {
-		this.cmccDao = cmccDao;
-	}
-
-	@Autowired
-	public void setPollDao(LogForPollDao pollDao) {
-		this.pollDao = pollDao;
-	}
-
-	@Autowired
-	public void setRedirectDao(LogForRedirectDao redirectDao) {
-		this.redirectDao = redirectDao;
-	}
-
-	@Autowired
 	public void setMemcachedClient(SpyMemcachedClient memcachedClient) {
 		this.memcachedClient = memcachedClient;
 	}
 
 	@Autowired
-	public void setLogJdbcDao(LogJdbcDao logJdbcDao) {
-		this.logJdbcDao = logJdbcDao;
+	public void setCountClientInstallDao(LogCCInstallPerMarketDao countClientInstallDao) {
+		this.countClientInstallDao = countClientInstallDao;
 	}
 
 	@Autowired
-	public void setLogCountUnzipDao(LogCountUnzipDao logCountUnzipDao) {
-		this.logCountUnzipDao = logCountUnzipDao;
+	public void setCountClientInstallWithContentDao(LogCCInstallWithContentDao countClientInstallWithContentDao) {
+		this.countClientInstallWithContentDao = countClientInstallWithContentDao;
 	}
 
 	@Autowired
-	public void setLogCountGetClientDao(LogCountGetClientDao logCountGetClientDao) {
-		this.logCountGetClientDao = logCountGetClientDao;
+	public void setCountContentPerMarketDao(LogCountContentMarketDao countContentPerMarketDao) {
+		this.countContentPerMarketDao = countContentPerMarketDao;
 	}
-
 }
