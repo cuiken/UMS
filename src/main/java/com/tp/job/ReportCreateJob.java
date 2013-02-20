@@ -54,6 +54,16 @@ public class ReportCreateJob {
 		} catch (Exception e) {
 
 		}
+		try {
+			reportService.createClientInstallPermarketReport(perDate, currDate);
+		} catch (Exception e) {
+
+		}
+		try {
+			reportService.createClientInstallWithContentReport(perDate, currDate);
+		} catch (Exception e) {
+
+		}
 	}
 
 	@Autowired
