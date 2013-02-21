@@ -38,7 +38,7 @@ public class LogJdbcDao {
 	 * 客户端安装统计（各个市场）
 	 */
 	public List<Map<String, Object>> countClientInstallPerMarket(String sdate, String edate) {
-		return jdbcTemplate.queryForList(QEURY_DOTYPE_GROUP_BY_MARKET, "client", sdate, edate);
+		return jdbcTemplate.queryForList(QEURY_DOTYPE_GROUP_BY_MARKET, sdate, edate, "client");
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class LogJdbcDao {
 	 * 内容客户端捆绑安装统计
 	 */
 	public List<Map<String, Object>> countInstallWithContentPerMarket(String sdate, String edate) {
-		return jdbcTemplate.queryForList(QEURY_DOTYPE_GROUP_BY_MARKET, "install", sdate, edate);
+		return jdbcTemplate.queryForList(QEURY_DOTYPE_GROUP_BY_MARKET, sdate, edate, "install");
 	}
 
 	/**
