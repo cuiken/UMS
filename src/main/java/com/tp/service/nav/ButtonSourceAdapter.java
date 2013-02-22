@@ -351,6 +351,11 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 		HashMap<String, String> picMaps = Maps.newHashMap();
 		Tag tag = navigatorService.getTagByValue(btnName);
 		Button button = new Button();
+		
+		if(tag==null){
+			System.out.println(btnName+": NULL!!!!!!!!!!");
+		}
+		
 		button.setId(tag.getUuid());
 		button.setTitle(btnName);
 		button.setAction(Constants.getDomain() + "/nav/homeDetails?t="
@@ -431,17 +436,17 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 		Button btnDate = getButton("friends");
 		Button btnFood = getTagButton("food");
 		Button btnMusic = getTagButton("music");
-		Button btnGame = getTagButton("game");
+		Button btnLife = getButton("life");
 
 		btnDate.setPicture(btnDate.getPictures().get("1x1"));
 		btnFood.setPicture(btnFood.getPictures().get("1x1"));
 		btnMusic.setPicture(btnDate.getPictures().get("1x1"));
-		btnGame.setPicture(btnDate.getPictures().get("1x1"));
+		btnLife.setPicture(btnDate.getPictures().get("1x1"));
 
 		ret.add(btnDate);
 		ret.add(btnFood);
 		ret.add(btnMusic);
-		ret.add(btnGame);
+		ret.add(btnLife);
 
 		return ret;
 	}
@@ -518,5 +523,10 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 		millis = ONE_WEEK_MILLI_SECONDS;
 		Board board = navigatorService.getBoardByValue("leisure");
 		return getAllClicksOfClass(board.getId().intValue(), userId, millis);
+	}
+
+	@Override
+	public Button getFriendsButton(String template) {
+		return getButton("friends");
 	}
 }

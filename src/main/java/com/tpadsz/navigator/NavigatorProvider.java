@@ -384,7 +384,7 @@ public class NavigatorProvider {
 			if (ret instanceof Top) {
 				switch (list.size()) {
 				case 1:
-					ret.setTemplate("1");
+					ret.setTemplate("2");
 					// TODO If there is only one button has clicks more than
 					// avg, a most recent clicked button should be add to fill
 					// template "1".
@@ -394,20 +394,20 @@ public class NavigatorProvider {
 					list.add(getRandomBottom().getButtons().get(0));
 					break;
 				case 2:
-					ret.setTemplate("1");
-					break;
-				case 3:
-					ret.setTemplate("2");
-					break;
-				case 4:
 					ret.setTemplate("3");
 					break;
+				case 3:
+					ret.setTemplate("4");
+					break;
+//				case 4:
+//					ret.setTemplate("3");
+//					break;
 				default:
-					return getRandomTop();
+					return getDefaultTop();
 				}
 			} else if (ret instanceof CenterRight || ret instanceof CenterLeft) {
 				if (list.size() >= 1 && list.size() <= 4) {
-					ret.setTemplate(Integer.toString(list.size()));
+					ret.setTemplate(Integer.toString(list.size())+1);
 				} else {
 					if (ret instanceof CenterLeft) {
 						return getRandomCenterLeft();
@@ -504,8 +504,19 @@ public class NavigatorProvider {
 				.getShoppingButton("1");
 
 		List<ButtonClick> bcList = new LinkedList<ButtonClick>();
-		bcList.addAll(getButtonClicksFromMap(buttonClickSource
-				.getAllFriendsButtonClicks(userId, staticsTimeLimit)));
+//		bcList.addAll(getButtonClicksFromMap(buttonClickSource
+//				.getAllFriendsButtonClicks(userId, staticsTimeLimit)));
+
+		Button friends = buttonClickSource.getFriendsButton("friends");
+		Map<Button, Integer> friendsClicks = buttonClickSource
+				.getAllFriendsButtonClicks(userId, staticsTimeLimit);
+		int friendsTotalClick=0;
+		for(Integer i:friendsClicks.values()){
+			friendsTotalClick+=i;
+		}
+		
+		bcList.add(new ButtonClick(friends, friendsTotalClick));
+
 		bcList.addAll(getButtonClicksFromMap(buttonClickSource
 				.getAllLeisureButtonClicks(userId, staticsTimeLimit)));
 		bcList
@@ -515,6 +526,8 @@ public class NavigatorProvider {
 								staticsTimeLimit)));
 		ButtonClick[] bc = new ButtonClick[bcList.size()];
 		bc = bcList.toArray(bc);
+		
+		Arrays.sort(bc);
 
 		ArrayList<Button> list = new ArrayList<Button>(bc.length);
 		int count = 0;
@@ -529,17 +542,22 @@ public class NavigatorProvider {
 		// .getBottom(userId, staticsTimeLimit));
 
 		list.add(0, first);
+		
+		if(list.size()<4){
+			return getDefaultBottom();
+		}
+		
 		ret.setButtons(list);
-//		int position = 1;
-//		for (Button btn : ret.getButtons()) {
-//			setPicture(ret, btn, position++);
-//		}
+		// int position = 1;
+		// for (Button btn : ret.getButtons()) {
+		// setPicture(ret, btn, position++);
+		// }
 		ret.setTemplate("1");
-		for(Button btn:ret.getButtons()){
+		for (Button btn : ret.getButtons()) {
 			System.out.println(btn.getTitle());
 			btn.setPicture(btn.getPictures().get("1x1"));
 		}
-		
+
 		return ret;
 
 	}
@@ -554,6 +572,7 @@ public class NavigatorProvider {
 		for (Button btn : list) {
 			setPicture(ret, btn, count++);
 		}
+		ret.setButtons(list);
 		return ret;
 	}
 

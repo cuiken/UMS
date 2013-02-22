@@ -14,6 +14,8 @@ public interface IButtonSourceAdapter {
 	abstract public Button getTravelingButton(String template);
 
 	abstract public Button getReadingButton(String template);
+	
+	abstract public Button getFriendsButton(String template);
 
 	abstract public Map<Button, Integer> getAllNewsButtonClicks(String userId,
 			Long timeLimit);
