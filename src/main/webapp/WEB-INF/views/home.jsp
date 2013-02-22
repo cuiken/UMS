@@ -34,8 +34,8 @@
 			 	</s:if>
 			--> 	
 				<div class="imgCenter">
-					<a href="${ctx}/home!love.action?${queryString}">
-						<img alt="love" src="${ctx}/static/images/love/temp-love.jpg" class="max-width_100">
+					<a href="${ctx}/home!more.action?cid=120&${queryString}">
+						<img alt="love" src="${ctx}/static/images/diy_home.gif" class="max-width_100">
 					</a>
 				</div>
 				<s:iterator value="newestPage.result">
