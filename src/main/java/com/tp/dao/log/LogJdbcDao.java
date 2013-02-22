@@ -17,7 +17,11 @@ public class LogJdbcDao {
 
 	private static final String QEURY_DOTYPE_GROUP_BY_MARKET = "SELECT count(*) as installed ,m.name as from_market,app_name"
 			+ " FROM log_f_content l LEFT JOIN f_market m ON m.pk_name=l.from_market"
-			+ " WHERE l.create_time BETWEEN ? AND ? AND l.do_type=?  GROUP BY m.name ORDER BY NULL;";
+			+ " WHERE l.create_time BETWEEN ? AND ? AND l.do_type=?  GROUP BY m.name ORDER BY NULL";
+	
+	private static final String QEURY_INSTALL_GROUP_BY_MARKET = "SELECT count(*) as installed ,m.name as from_market,app_name"
+			+ " FROM log_f_content l LEFT JOIN f_market m ON m.pk_name=l.from_market"
+			+ " WHERE l.create_time BETWEEN ? AND ? AND l.do_type=?  GROUP BY m.name,app_name ORDER BY app_name";
 
 	private static final String QUERY_GETCLIENT_PERMARKET = "select l.app_name,m.name as market,count(*) as get_client"
 			+ " from log_f_store l left join f_market m on l.from_market=m.pk_name"
@@ -46,7 +50,7 @@ public class LogJdbcDao {
 	 * 内容客户端捆绑安装统计
 	 */
 	public List<Map<String, Object>> countInstallWithContentPerMarket(String sdate, String edate) {
-		return jdbcTemplate.queryForList(QEURY_DOTYPE_GROUP_BY_MARKET, sdate, edate, "install");
+		return jdbcTemplate.queryForList(QEURY_INSTALL_GROUP_BY_MARKET, sdate, edate, "install");
 	}
 
 	/**
