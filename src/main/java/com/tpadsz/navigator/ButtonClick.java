@@ -29,6 +29,8 @@ public class ButtonClick implements Comparable<ButtonClick> {
 	Integer clicks;
 
 	public int compareTo(ButtonClick o) {
-		return this.clicks.compareTo(o.clicks);
+		int numbericalCompare = o.clicks.compareTo(this.clicks);
+		return numbericalCompare == 0 ? o.getButton().getTitle().compareTo(
+				this.getButton().getTitle()) : numbericalCompare;
 	}
 }

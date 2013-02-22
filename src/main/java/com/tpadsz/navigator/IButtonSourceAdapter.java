@@ -3,11 +3,7 @@ package com.tpadsz.navigator;
 import java.util.List;
 import java.util.Map;
 
-import com.tpadsz.navigator.entity.Bottom;
 import com.tpadsz.navigator.entity.Button;
-import com.tpadsz.navigator.entity.CenterLeft;
-import com.tpadsz.navigator.entity.CenterRight;
-import com.tpadsz.navigator.entity.Top;
 
 public interface IButtonSourceAdapter {
 
@@ -51,6 +47,12 @@ public interface IButtonSourceAdapter {
 			String userId, Long timeLimit);
 
 	abstract public Map<Button, Integer> getAllReadingButtonClicks(
+			String userId, Long timeLimit);
+
+	abstract public Map<Button, Integer> getAllFriendsButtonClicks(
+			String userId, Long timeLimit);
+
+	abstract public Map<Button, Integer> getAllLeisureButtonClicks(
 			String userId, Long timeLimit);
 
 	abstract public Map<Button, Integer> getAllClicksOfClass(Integer classId,

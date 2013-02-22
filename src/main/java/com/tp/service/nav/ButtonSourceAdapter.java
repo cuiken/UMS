@@ -33,7 +33,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	private ClickLogDao clickLogDao;
 
 	@Override
-	public Map<Button, Integer> getAllClicksOfClass(Integer cid, String userId, Long millis) {
+	public Map<Button, Integer> getAllClicksOfClass(Integer cid, String userId,
+			Long millis) {
 
 		Board board = navigatorService.getBoard(cid.longValue());
 		Map<Button, Integer> maps = Maps.newHashMap();
@@ -50,7 +51,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 
 	private Map<Long, Integer> getTagClicks(String userId) {
 		Map<Long, Integer> tagMap = Maps.newHashMap();
-		List<Map<String, Object>> tagClicks = clickLogDao.countTagClicks(userId);
+		List<Map<String, Object>> tagClicks = clickLogDao
+				.countTagClicks(userId);
 		for (Map<String, Object> tag : tagClicks) {
 			String uuid = (String) tag.get("uuid");
 			Long clicks = (Long) tag.get("clicks");
@@ -60,7 +62,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	}
 
 	private Map<Long, Integer> getNavigatorClicks(String userId) {
-		List<Map<String, Object>> navClicks = clickLogDao.countNavClicks(userId);
+		List<Map<String, Object>> navClicks = clickLogDao
+				.countNavClicks(userId);
 		Map<Long, Integer> navMap = Maps.newHashMap();
 		for (Map<String, Object> nav : navClicks) {
 			String uuid = (String) nav.get("uuid");
@@ -74,7 +77,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 		return navMap;
 	}
 
-	private void setPicSize(HashMap<String, String> picMaps, String key, String value) {
+	private void setPicSize(HashMap<String, String> picMaps, String key,
+			String value) {
 
 		if (key.equals("1")) {
 			picMaps.put("1x1", value);
@@ -88,7 +92,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 
 	}
 
-	private Map<Button, Integer> getTag(List<Tag> tags, Map<Long, Integer> navMap) {
+	private Map<Button, Integer> getTag(List<Tag> tags,
+			Map<Long, Integer> navMap) {
 		Map<Button, Integer> btns = Maps.newHashMap();
 
 		for (Tag tag : tags) {
@@ -96,7 +101,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 			Button btn = new Button();
 			btn.setId(tag.getUuid());
 			btn.setTitle(tag.getName());
-			btn.setAction(Constants.getDomain() + "/nav/homeDetails?t=" + tag.getId() + "&bid=" + tag.getUuid());
+			btn.setAction(Constants.getDomain() + "/nav/homeDetails?t="
+					+ tag.getId() + "&bid=" + tag.getUuid());
 			btn.setValue(tag.getValue());
 			for (TagIcon icon : tag.getIcons()) {
 				setPicSize(picMaps, icon.getLevel(), icon.getValue());
@@ -126,7 +132,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 		return clicks;
 	}
 
-	private Map<Button, Integer> getNavigator(List<Navigator> navis, Map<Long, Integer> clickMap) {
+	private Map<Button, Integer> getNavigator(List<Navigator> navis,
+			Map<Long, Integer> clickMap) {
 		Map<Button, Integer> btns = Maps.newHashMap();
 
 		for (Navigator nav : navis) {
@@ -150,7 +157,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	}
 
 	@Override
-	public Map<Button, Integer> getAllNewsButtonClicks(String userId, Long millis) {
+	public Map<Button, Integer> getAllNewsButtonClicks(String userId,
+			Long millis) {
 		millis = ONE_WEEK_MILLI_SECONDS;
 		Map<Long, Integer> navClicks = getNavigatorClicks(userId);
 		Map<Button, Integer> newsClick = Maps.newHashMap();
@@ -164,9 +172,11 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 		return newsClick;
 	}
 
-	private Map<Button, Integer> getClicks(String name, Map<Long, Integer> navClicks) {
+	private Map<Button, Integer> getClicks(String name,
+			Map<Long, Integer> navClicks) {
 		Board news = navigatorService.getBoardByValue(name);
-		Map<Button, Integer> newButtons = getNavigator(news.getNavigators(), navClicks);
+		Map<Button, Integer> newButtons = getNavigator(news.getNavigators(),
+				navClicks);
 		Integer clicks = 0;
 		for (Button btn : newButtons.keySet()) {
 			clicks += newButtons.get(btn);
@@ -178,14 +188,16 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	}
 
 	@Override
-	public Map<Button, Integer> getAllShoppingButtonClicks(String userId, Long millis) {
+	public Map<Button, Integer> getAllShoppingButtonClicks(String userId,
+			Long millis) {
 		millis = ONE_WEEK_MILLI_SECONDS;
 		Board board = navigatorService.getBoardByValue("shop");
 		return getAllClicksOfClass(board.getId().intValue(), userId, millis);
 	}
 
 	@Override
-	public Map<Button, Integer> getAllTravelingButtonClicks(String userId, Long millis) {
+	public Map<Button, Integer> getAllTravelingButtonClicks(String userId,
+			Long millis) {
 		millis = ONE_WEEK_MILLI_SECONDS;
 		Board board = navigatorService.getBoardByValue("life");
 		return getAllClicksOfClass(board.getId().intValue(), userId, millis);
@@ -194,25 +206,30 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	@Override
 	public void logClick(Map<String, String> userIds, Long btnId) {
 
-		String imei = "00000000";
 		if (userIds != null && !userIds.isEmpty()) {
-			imei = userIds.get("imei");
+			String imei = userIds.get("imei");
 			if (imei == null || imei.isEmpty()) {
 				imei = userIds.get("imsi");
 			}
 
+			ClickLog log = new ClickLog();
+			log.setButtonId(btnId.longValue());
+			log.setUserId(imei);
+			log.setDate(new Date());
+			clickLogDao.save(log);
+		} else {
+			ClickLog log = new ClickLog();
+			log.setButtonId(btnId.longValue());
+			log.setUserId("00000000");
+			log.setDate(new Date());
+			clickLogDao.save(log);
 		}
-		ClickLog log = new ClickLog();
-		log.setButtonId(btnId.longValue());
-		log.setUserId(imei);
-		log.setDate(new Date());
-		clickLogDao.save(log);
 	}
 
 	@Override
 	public List<Button> getRandom4News() {
-		//		Board board = navigatorService.getBoardByValue("news");
-		//		return random(board);
+		// Board board = navigatorService.getBoardByValue("news");
+		// return random(board);
 		Button news = getButton("news");
 		Button entertainment = getButton("entertainment");
 		Button sports = getButton("sports");
@@ -278,8 +295,10 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	public boolean isShoppingHotterThanTraveling(String userId) {
 		if (userId == null || userId.equals(""))
 			return true;
-		Map<Button, Integer> shop = getAllShoppingButtonClicks(userId, ONE_WEEK_MILLI_SECONDS);
-		Map<Button, Integer> trave = getAllTravelingButtonClicks(userId, ONE_WEEK_MILLI_SECONDS);
+		Map<Button, Integer> shop = getAllShoppingButtonClicks(userId,
+				ONE_WEEK_MILLI_SECONDS);
+		Map<Button, Integer> trave = getAllTravelingButtonClicks(userId,
+				ONE_WEEK_MILLI_SECONDS);
 		int shopClicks = 0;
 		int traveClicks = 0;
 		for (Entry<Button, Integer> e : shop.entrySet()) {
@@ -305,7 +324,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	}
 
 	@Override
-	public Map<Button, Integer> getAllReadingButtonClicks(String userId, Long millis) {
+	public Map<Button, Integer> getAllReadingButtonClicks(String userId,
+			Long millis) {
 		millis = ONE_WEEK_MILLI_SECONDS;
 		Board board = navigatorService.getBoardByValue("read");
 		return getAllClicksOfClass(board.getId().intValue(), userId, millis);
@@ -317,7 +337,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 		Button button = new Button();
 		button.setId(board.getUuid());
 		button.setTitle(btnName);
-		button.setAction(Constants.getDomain() + "/nav/homeDetails?b=" + board.getId() + "&bid=" + board.getUuid());
+		button.setAction(Constants.getDomain() + "/nav/homeDetails?b="
+				+ board.getId() + "&bid=" + board.getUuid());
 		button.setValue(board.getValue());
 		for (BoardIcon icon : board.getIcons()) {
 			setPicSize(picMaps, icon.getLevel(), icon.getValue());
@@ -332,7 +353,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 		Button button = new Button();
 		button.setId(tag.getUuid());
 		button.setTitle(btnName);
-		button.setAction(Constants.getDomain() + "/nav/homeDetails?t=" + tag.getId() + "&bid=" + tag.getUuid());
+		button.setAction(Constants.getDomain() + "/nav/homeDetails?t="
+				+ tag.getId() + "&bid=" + tag.getUuid());
 		button.setValue(tag.getValue());
 		for (TagIcon icon : tag.getIcons()) {
 			setPicSize(picMaps, icon.getLevel(), icon.getValue());
@@ -351,7 +373,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 			Button button = new Button();
 			button.setId(tag.getUuid());
 			button.setTitle(tag.getName());
-			button.setAction(Constants.getDomain() + "/nav/homeDetails?t=" + tag.getId() + "&bid=" + tag.getUuid());
+			button.setAction(Constants.getDomain() + "/nav/homeDetails?t="
+					+ tag.getId() + "&bid=" + tag.getUuid());
 			button.setValue(tag.getValue());
 			for (TagIcon icon : tag.getIcons()) {
 				setPicSize(picMaps, icon.getLevel(), icon.getValue());
@@ -454,7 +477,8 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	}
 
 	@Override
-	public Button getMostRecentButtonOfCategory(String uuid, String uuidException) {
+	public Button getMostRecentButtonOfCategory(String uuid,
+			String uuidException) {
 		Button news = getButton("news");
 		if (uuid.equals(news.getId().toString())) {
 			Button entertainment = getButton("entertainment");
@@ -463,10 +487,12 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 			Button cars = getButton("cars");
 			Button tech = getButton("tech");
 			Button finance = getButton("finance");
-			List<Map<String, Object>> clicks = clickLogDao.getNewsNewestClickButton(
-					String.valueOf(entertainment.getId()), String.valueOf(sports.getId()),
-					String.valueOf(military.getId()), String.valueOf(cars.getId()), String.valueOf(tech.getId()),
-					String.valueOf(finance.getId()));
+			List<Map<String, Object>> clicks = clickLogDao
+					.getNewsNewestClickButton(String.valueOf(entertainment
+							.getId()), String.valueOf(sports.getId()), String
+							.valueOf(military.getId()), String.valueOf(cars
+							.getId()), String.valueOf(tech.getId()), String
+							.valueOf(finance.getId()));
 			String btnId = null;
 			for (Map<String, Object> button : clicks) {
 				btnId = (String) button.get("button_id");
@@ -476,5 +502,21 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 		}
 		return null;
 
+	}
+
+	@Override
+	public Map<Button, Integer> getAllFriendsButtonClicks(String userId,
+			Long millis) {
+		millis = ONE_WEEK_MILLI_SECONDS;
+		Board board = navigatorService.getBoardByValue("friends");
+		return getAllClicksOfClass(board.getId().intValue(), userId, millis);
+	}
+
+	@Override
+	public Map<Button, Integer> getAllLeisureButtonClicks(String userId,
+			Long millis) {
+		millis = ONE_WEEK_MILLI_SECONDS;
+		Board board = navigatorService.getBoardByValue("leisure");
+		return getAllClicksOfClass(board.getId().intValue(), userId, millis);
 	}
 }

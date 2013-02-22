@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.tp.service.nav.ButtonSourceAdapter;
 import com.tpadsz.navigator.entity.Bottom;
 import com.tpadsz.navigator.entity.Button;
 import com.tpadsz.navigator.entity.CenterLeft;
@@ -272,8 +274,23 @@ public class NavigatorProvider {
 			bc[count++] = new ButtonClick(btn, clicks.get(btn));
 		}
 		Arrays.sort(bc);
+		int iBcIsZero = 0;
+		for (ButtonClick febc : bc) {
+			System.out.println(febc.getButton().getTitle() + ":"
+					+ febc.getClicks());
+			if (febc.getClicks() == 0) {
+				++iBcIsZero;
+			}
+		}
 
-		switch (clicks.keySet().size()) {
+		bc = Arrays.copyOfRange(bc, 0, bc.length - iBcIsZero);
+		// for(int i=0;i<bc.length/2;i++){
+		// ButtonClick temp=bc[i];
+		// bc[i]=bc[bc.length-1-i];
+		// bc[bc.length-1-i]=temp;
+		// }
+
+		switch (bc.length) {
 		case 0: {
 			if (ret instanceof Top) {
 				return getDefaultTop();
@@ -371,8 +388,9 @@ public class NavigatorProvider {
 					// TODO If there is only one button has clicks more than
 					// avg, a most recent clicked button should be add to fill
 					// template "1".
-					// For example, the line below will find a button most recently click which is under the category "news".
-//					list.add(buttonClickSource.getMostRecentButtonOfCategory(Long.toString(buttonClickSource.getNewsButton("new").getId()),Long.toString(list.get(0).getId())));
+					// For example, the line below will find a button most
+					// recently click which is under the category "news".
+					// list.add(buttonClickSource.getMostRecentButtonOfCategory(Long.toString(buttonClickSource.getNewsButton("new").getId()),Long.toString(list.get(0).getId())));
 					list.add(getRandomBottom().getButtons().get(0));
 					break;
 				case 2:
@@ -468,20 +486,60 @@ public class NavigatorProvider {
 		return ret;
 	}
 
+	private List<ButtonClick> getButtonClicksFromMap(Map<Button, Integer> map) {
+		List<ButtonClick> ret = new LinkedList<ButtonClick>();
+		for (Button btn : map.keySet()) {
+			ret.add(new ButtonClick(btn, map.get(btn)));
+		}
+		return ret;
+	}
+
 	protected Bottom getPreferredBottom(String userId) {
 		Bottom ret = new Bottom();
 		ret.setTemplate("1");
-		Button first = buttonClickSource.isShoppingHotterThanTraveling(userId) ? buttonClickSource
-				.getTravelingButton("1")
-				: buttonClickSource.getShoppingButton("1");
-		ArrayList<Button> list = new ArrayList<Button>(buttonClickSource
-				.getBottom(userId, staticsTimeLimit));
+		boolean isShoppingHotterThanTraveling = buttonClickSource
+				.isShoppingHotterThanTraveling(userId);
+		Button first = isShoppingHotterThanTraveling ? buttonClickSource
+				.getTravelingButton("1") : buttonClickSource
+				.getShoppingButton("1");
+
+		List<ButtonClick> bcList = new LinkedList<ButtonClick>();
+		bcList.addAll(getButtonClicksFromMap(buttonClickSource
+				.getAllFriendsButtonClicks(userId, staticsTimeLimit)));
+		bcList.addAll(getButtonClicksFromMap(buttonClickSource
+				.getAllLeisureButtonClicks(userId, staticsTimeLimit)));
+		bcList
+				.addAll(getButtonClicksFromMap(isShoppingHotterThanTraveling ? buttonClickSource
+						.getAllTravelingButtonClicks(userId, staticsTimeLimit)
+						: buttonClickSource.getAllShoppingButtonClicks(userId,
+								staticsTimeLimit)));
+		ButtonClick[] bc = new ButtonClick[bcList.size()];
+		bc = bcList.toArray(bc);
+
+		ArrayList<Button> list = new ArrayList<Button>(bc.length);
+		int count = 0;
+		for (ButtonClick btnClk : bc) {
+			if (count++ < 3) {
+				list.add(btnClk.getButton());
+			} else {
+				break;
+			}
+		}
+		// ArrayList<Button> list = new ArrayList<Button>(buttonClickSource
+		// .getBottom(userId, staticsTimeLimit));
+
 		list.add(0, first);
 		ret.setButtons(list);
-		int position = 1;
-		for (Button btn : ret.getButtons()) {
-			setPicture(ret, btn, position++);
+//		int position = 1;
+//		for (Button btn : ret.getButtons()) {
+//			setPicture(ret, btn, position++);
+//		}
+		ret.setTemplate("1");
+		for(Button btn:ret.getButtons()){
+			System.out.println(btn.getTitle());
+			btn.setPicture(btn.getPictures().get("1x1"));
 		}
+		
 		return ret;
 
 	}
