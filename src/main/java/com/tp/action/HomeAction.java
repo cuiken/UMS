@@ -124,7 +124,7 @@ public class HomeAction extends ActionSupport {
 	}
 
 	public String category() throws Exception {
-		categories = categoryManager.getCategories();
+		categories = categoryManager.getCategoriesInStore();
 		return "category";
 	}
 

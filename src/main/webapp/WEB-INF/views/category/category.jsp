@@ -26,6 +26,7 @@
 		<table class="table table-striped table-bordered table-condensed">
 			<thead>
 				<tr>
+					<th>序号</th>
 					<th>预览图</th>
 					<th>分类名称</th>
 					<th>分类描述</th>
@@ -35,6 +36,7 @@
 			<tbody>
 				<s:iterator value="categories">
 					<tr>
+						<td>${value}</td>
 						<td><img alt="${name}" src="${ctx}/image.action?path=${icon}" style="height: 30px;width: 50px;"></td>
 						<td>${name}</td>
 						<td>${description}</td>

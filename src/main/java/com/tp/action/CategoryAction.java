@@ -74,9 +74,8 @@ public class CategoryAction extends CRUDActionSupport<Category> {
 	}
 
 	public String checkCategoryName() throws Exception {
-		String newCategoryName = new String(Struts2Utils.getParameter("name").getBytes("iso-8859-1"), "utf-8");
-		String oldCategoryName = new String(Struts2Utils.getParameter("oldCategoryName").getBytes("iso-8859-1"),
-				"utf-8");
+		String newCategoryName = Struts2Utils.getParameter("name");
+		String oldCategoryName = Struts2Utils.getParameter("oldCategoryName");
 		if (categoryManager.isCategoryUnique(newCategoryName, oldCategoryName)) {
 			Struts2Utils.renderText("true");
 		} else {
