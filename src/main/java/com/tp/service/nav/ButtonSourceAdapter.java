@@ -196,7 +196,7 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	}
 
 	@Override
-	public Map<Button, Integer> getAllTravelingButtonClicks(String userId,
+	public Map<Button, Integer> getAllLifeButtonClicks(String userId,
 			Long millis) {
 		millis = ONE_WEEK_MILLI_SECONDS;
 		Board board = navigatorService.getBoardByValue("life");
@@ -274,7 +274,7 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	}
 
 	@Override
-	public Button getTravelingButton(String temp) {
+	public Button getLifeButton(String temp) {
 
 		return getButton("life");
 	}
@@ -297,7 +297,7 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 			return true;
 		Map<Button, Integer> shop = getAllShoppingButtonClicks(userId,
 				ONE_WEEK_MILLI_SECONDS);
-		Map<Button, Integer> trave = getAllTravelingButtonClicks(userId,
+		Map<Button, Integer> trave = getAllLifeButtonClicks(userId,
 				ONE_WEEK_MILLI_SECONDS);
 		int shopClicks = 0;
 		int traveClicks = 0;
@@ -351,11 +351,11 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 		HashMap<String, String> picMaps = Maps.newHashMap();
 		Tag tag = navigatorService.getTagByValue(btnName);
 		Button button = new Button();
-		
-		if(tag==null){
-			System.out.println(btnName+": NULL!!!!!!!!!!");
+
+		if (tag == null) {
+			System.out.println(btnName + ": NULL!!!!!!!!!!");
 		}
-		
+
 		button.setId(tag.getUuid());
 		button.setTitle(btnName);
 		button.setAction(Constants.getDomain() + "/nav/homeDetails?t="
@@ -431,12 +431,17 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	}
 
 	@Override
-	public List<Button> getDefaultBottom() {
+	public List<Button> getDefaultBottom(String userId) {
 		List<Button> ret = new ArrayList<Button>(4);
 		Button btnDate = getButton("friends");
 		Button btnFood = getTagButton("food");
 		Button btnMusic = getTagButton("music");
-		Button btnLife = getButton("life");
+		Button btnLife = null;
+		if (isShoppingHotterThanTraveling(userId)) {
+			btnLife = getButton("life");
+		} else {
+			btnLife = getButton("shop");
+		}
 
 		btnDate.setPicture(btnDate.getPictures().get("1x1"));
 		btnFood.setPicture(btnFood.getPictures().get("1x1"));

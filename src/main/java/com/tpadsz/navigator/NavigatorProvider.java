@@ -263,7 +263,7 @@ public class NavigatorProvider {
 	}
 
 	private IPageArea getSuperAverageButtons(Map<Button, Integer> clicks,
-			IPageArea ret) {
+			IPageArea ret, String userId) {
 		ArrayList<Button> list = new ArrayList<Button>();
 		Iterator<Button> it = clicks.keySet().iterator();
 		ButtonClick[] bc = new ButtonClick[clicks.keySet().size()];
@@ -299,7 +299,7 @@ public class NavigatorProvider {
 			} else if (ret instanceof CenterRight) {
 				return getDefaultCenterRight();
 			} else if (ret instanceof Bottom) {
-				return getDefaultBottom();
+				return getDefaultBottom(userId);
 			}
 		}
 		case 1: {
@@ -310,7 +310,7 @@ public class NavigatorProvider {
 			} else if (ret instanceof CenterRight) {
 				return getDefaultCenterRight();
 			} else if (ret instanceof Bottom) {
-				return getDefaultBottom();
+				return getDefaultBottom(userId);
 			}
 		}
 		case 2:
@@ -399,20 +399,23 @@ public class NavigatorProvider {
 				case 3:
 					ret.setTemplate("4");
 					break;
-//				case 4:
-//					ret.setTemplate("3");
-//					break;
+				// case 4:
+				// ret.setTemplate("3");
+				// break;
 				default:
 					return getDefaultTop();
 				}
 			} else if (ret instanceof CenterRight || ret instanceof CenterLeft) {
 				if (list.size() >= 1 && list.size() <= 4) {
-					ret.setTemplate(Integer.toString(list.size())+1);
+					ret.setTemplate(Integer.toString(list.size() + 1));
+					if (list.size() + 1 > 4) {
+						ret.setTemplate("4");
+					}
 				} else {
 					if (ret instanceof CenterLeft) {
-						return getRandomCenterLeft();
+						return getDefaultCenterLeft();
 					} else {
-						return getRandomCenterRight();
+						return getDefaultCenterRight();
 					}
 				}
 			}
@@ -425,7 +428,7 @@ public class NavigatorProvider {
 	protected IPageArea getPreferredTop(String userId) {
 		IPageArea ret = new Top();
 		ret = getSuperAverageButtons(buttonClickSource.getAllNewsButtonClicks(
-				userId, staticsTimeLimit), ret);
+				userId, staticsTimeLimit), ret, userId);
 
 		ret.getButtons().add(0,
 				buttonClickSource.getNewsButton(ret.getTemplate()));
@@ -444,18 +447,18 @@ public class NavigatorProvider {
 			clicks = buttonClickSource.getAllShoppingButtonClicks(userId,
 					staticsTimeLimit);
 		} else {
-			clicks = buttonClickSource.getAllTravelingButtonClicks(userId,
+			clicks = buttonClickSource.getAllLifeButtonClicks(userId,
 					staticsTimeLimit);
 		}
 
-		ret = getSuperAverageButtons(clicks, ret);
+		ret = getSuperAverageButtons(clicks, ret, userId);
 		ret
 				.getButtons()
 				.add(
 						0,
 						buttonClickSource.isShoppingHotterThanTraveling(userId) ? buttonClickSource
 								.getShoppingButton(ret.getTemplate())
-								: buttonClickSource.getTravelingButton(ret
+								: buttonClickSource.getLifeButton(ret
 										.getTemplate()));
 		int position = 1;
 		for (Button btn : ret.getButtons()) {
@@ -476,7 +479,7 @@ public class NavigatorProvider {
 		// ret = getSuperAverageButtons(clicks, ret);
 		// System.err.println("-----------------" + ret.getClass().getName()
 		// + "----------------------");
-		ret = getSuperAverageButtons(clicks, ret);
+		ret = getSuperAverageButtons(clicks, ret, userId);
 		ret.getButtons().add(0,
 				buttonClickSource.getReadingButton(ret.getTemplate()));
 		int position = 1;
@@ -497,42 +500,74 @@ public class NavigatorProvider {
 	protected Bottom getPreferredBottom(String userId) {
 		Bottom ret = new Bottom();
 		ret.setTemplate("1");
-		boolean isShoppingHotterThanTraveling = buttonClickSource
+		boolean isShoppingHotterThanLife = buttonClickSource
 				.isShoppingHotterThanTraveling(userId);
-		Button first = isShoppingHotterThanTraveling ? buttonClickSource
-				.getTravelingButton("1") : buttonClickSource
-				.getShoppingButton("1");
+		Button first = isShoppingHotterThanLife ? buttonClickSource
+				.getLifeButton("1") : buttonClickSource.getShoppingButton("1");
 
 		List<ButtonClick> bcList = new LinkedList<ButtonClick>();
-//		bcList.addAll(getButtonClicksFromMap(buttonClickSource
-//				.getAllFriendsButtonClicks(userId, staticsTimeLimit)));
+		// bcList.addAll(getButtonClicksFromMap(buttonClickSource
+		// .getAllFriendsButtonClicks(userId, staticsTimeLimit)));
 
 		Button friends = buttonClickSource.getFriendsButton("friends");
+//		Button shop = buttonClickSource.getShoppingButton("shop");
+//		Button life = buttonClickSource.getLifeButton("life");
+
 		Map<Button, Integer> friendsClicks = buttonClickSource
 				.getAllFriendsButtonClicks(userId, staticsTimeLimit);
-		int friendsTotalClick=0;
-		for(Integer i:friendsClicks.values()){
-			friendsTotalClick+=i;
-		}
-		
-		bcList.add(new ButtonClick(friends, friendsTotalClick));
+//		Map<Button, Integer> shopClicks = buttonClickSource
+//				.getAllShoppingButtonClicks(userId, staticsTimeLimit);
+//		Map<Button, Integer> lifeClicks = buttonClickSource
+//				.getAllLifeButtonClicks(userId, staticsTimeLimit);
 
+		int friendsTotalClick = 0;
+		for (Integer i : friendsClicks.values()) {
+			friendsTotalClick += i;
+		}
+
+//		int shopTotalClick = 0;
+//		for (Integer i : shopClicks.values()) {
+//			shopTotalClick += i;
+//		}
+//
+//		int lifeTotalClick = 0;
+//		for (Integer i : lifeClicks.values()) {
+//			lifeTotalClick += i;
+//		}
+
+		// Adding life/shop (depending on which one is hotter), friend, all
+		// subclasses of leisure
+		// to the competing list.
+
+		// bcList.add(new ButtonClick(friends, friendsTotalClick));
+		// bcList.add(isShoppingHotterThanLife ? new ButtonClick(life,
+		// lifeTotalClick) : new ButtonClick(shop, shopTotalClick));
 		bcList.addAll(getButtonClicksFromMap(buttonClickSource
 				.getAllLeisureButtonClicks(userId, staticsTimeLimit)));
-		bcList
-				.addAll(getButtonClicksFromMap(isShoppingHotterThanTraveling ? buttonClickSource
-						.getAllTravelingButtonClicks(userId, staticsTimeLimit)
-						: buttonClickSource.getAllShoppingButtonClicks(userId,
-								staticsTimeLimit)));
+
+		// for (ButtonClick bc : bcList) {
+		// if (isShoppingHotterThanLife) {
+		// if (bc.getButton().getTitle().equals("life")) {
+		// bcList.remove(bc);
+		// }
+		// } else {
+		// if (bc.getButton().getTitle().equals("shop")) {
+		// bcList.remove(bc);
+		// }
+		// }
+		// }
+
 		ButtonClick[] bc = new ButtonClick[bcList.size()];
 		bc = bcList.toArray(bc);
-		
+
+		// Sort the competing list by descend order.
 		Arrays.sort(bc);
 
+		// 
 		ArrayList<Button> list = new ArrayList<Button>(bc.length);
 		int count = 0;
 		for (ButtonClick btnClk : bc) {
-			if (count++ < 3) {
+			if (count++ < 2) {
 				list.add(btnClk.getButton());
 			} else {
 				break;
@@ -542,11 +577,12 @@ public class NavigatorProvider {
 		// .getBottom(userId, staticsTimeLimit));
 
 		list.add(0, first);
-		
-		if(list.size()<4){
-			return getDefaultBottom();
+		list.add(0, friends);
+
+		if (list.size() < 4) {
+			return getDefaultBottom(userId);
 		}
-		
+
 		ret.setButtons(list);
 		// int position = 1;
 		// for (Button btn : ret.getButtons()) {
@@ -562,12 +598,12 @@ public class NavigatorProvider {
 
 	}
 
-	protected Bottom getDefaultBottom() {
+	protected Bottom getDefaultBottom(String userId) {
 		Bottom ret = new Bottom();
 		ret.setTemplate("1");
 		ArrayList<Button> list = new ArrayList<Button>(5);
 		// list.add(buttonClickSource.getTravelingButton("1"));
-		list.addAll(buttonClickSource.getDefaultBottom());
+		list.addAll(buttonClickSource.getDefaultBottom(userId));
 		int count = 1;
 		for (Button btn : list) {
 			setPicture(ret, btn, count++);

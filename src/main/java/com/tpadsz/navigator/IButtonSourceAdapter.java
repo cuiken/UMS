@@ -11,7 +11,7 @@ public interface IButtonSourceAdapter {
 
 	abstract public Button getShoppingButton(String template);
 
-	abstract public Button getTravelingButton(String template);
+	abstract public Button getLifeButton(String template);
 
 	abstract public Button getReadingButton(String template);
 	
@@ -19,7 +19,7 @@ public interface IButtonSourceAdapter {
 
 	abstract public Map<Button, Integer> getAllNewsButtonClicks(String userId,
 			Long timeLimit);
-
+	
 	abstract public List<Button> getRandom4News();
 
 	abstract public List<Button> getRandom4Shopping();
@@ -32,7 +32,7 @@ public interface IButtonSourceAdapter {
 
 	abstract public List<Button> getDefaultShopping();
 
-	abstract public List<Button> getDefaultBottom();
+	abstract public List<Button> getDefaultBottom(String userId);
 
 	abstract public List<Button> getDefaultReading();
 
@@ -45,7 +45,7 @@ public interface IButtonSourceAdapter {
 	abstract public Map<Button, Integer> getAllShoppingButtonClicks(
 			String userId, Long timeLimit);
 
-	abstract public Map<Button, Integer> getAllTravelingButtonClicks(
+	abstract public Map<Button, Integer> getAllLifeButtonClicks(
 			String userId, Long timeLimit);
 
 	abstract public Map<Button, Integer> getAllReadingButtonClicks(
