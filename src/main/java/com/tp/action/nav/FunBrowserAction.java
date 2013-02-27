@@ -24,7 +24,7 @@ public class FunBrowserAction extends ActionSupport {
 	public String getClient() throws Exception {
 		HttpServletRequest request=Struts2Utils.getRequest();
 		HttpServletResponse response=Struts2Utils.getResponse();
-		Struts2Utils.getRequest().getRequestDispatcher("/download.html?inputPath=client/nav/funbrowser.apk").forward(request, response);
+		Struts2Utils.getRequest().getRequestDispatcher("/file-download.action?inputPath=client/nav/funbrowser.apk").forward(request, response);
 		return null;
 	}
 
