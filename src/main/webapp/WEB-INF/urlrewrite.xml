@@ -80,4 +80,13 @@
 		<to type="forward">/poll/polling!toXml.action?store=$1</to>	
 	</rule>
 	
+	<rule>
+		<from>^/nav/client$</from>
+		<to type="forward">/nav/fun-browser.action</to>
+	</rule>	
+	
+	<rule>
+		<from>^/nav/download$</from>
+		<to type="forward">/nav/fun-browser!getClient.action</to>
+	</rule>	
 </urlrewrite>
