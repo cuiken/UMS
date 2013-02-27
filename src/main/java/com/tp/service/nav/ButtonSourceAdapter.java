@@ -534,4 +534,14 @@ public class ButtonSourceAdapter implements IButtonSourceAdapter {
 	public Button getFriendsButton(String template) {
 		return getButton("friends");
 	}
+
+	@Override
+	public Button getEntertainmentButton() {
+		return getButton("entertainment");
+	}
+
+	@Override
+	public Button getFinaceButton() {
+		return getButton("finance");
+	}
 }

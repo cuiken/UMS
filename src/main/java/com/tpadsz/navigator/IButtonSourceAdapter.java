@@ -14,12 +14,16 @@ public interface IButtonSourceAdapter {
 	abstract public Button getLifeButton(String template);
 
 	abstract public Button getReadingButton(String template);
-	
+
 	abstract public Button getFriendsButton(String template);
+
+	abstract public Button getEntertainmentButton();
+
+	abstract public Button getFinaceButton();
 
 	abstract public Map<Button, Integer> getAllNewsButtonClicks(String userId,
 			Long timeLimit);
-	
+
 	abstract public List<Button> getRandom4News();
 
 	abstract public List<Button> getRandom4Shopping();
@@ -45,8 +49,8 @@ public interface IButtonSourceAdapter {
 	abstract public Map<Button, Integer> getAllShoppingButtonClicks(
 			String userId, Long timeLimit);
 
-	abstract public Map<Button, Integer> getAllLifeButtonClicks(
-			String userId, Long timeLimit);
+	abstract public Map<Button, Integer> getAllLifeButtonClicks(String userId,
+			Long timeLimit);
 
 	abstract public Map<Button, Integer> getAllReadingButtonClicks(
 			String userId, Long timeLimit);

@@ -391,17 +391,31 @@ public class NavigatorProvider {
 					// For example, the line below will find a button most
 					// recently click which is under the category "news".
 					// list.add(buttonClickSource.getMostRecentButtonOfCategory(Long.toString(buttonClickSource.getNewsButton("new").getId()),Long.toString(list.get(0).getId())));
-					list.add(getRandomBottom().getButtons().get(0));
+					// list.add(getRandomBottom().getButtons().get(0));
+					Button finace = buttonClickSource.getFinaceButton();
+					Button entertainment = buttonClickSource
+							.getEntertainmentButton();
+
+					if (list.get(0).getId() == finace.getId()) {
+						list.add(entertainment);
+					} else {
+						list.add(finace);
+					}
+
 					break;
 				case 2:
-					ret.setTemplate("3");
+					if (newbc[0].getClicks() + newbc[1].getClicks() > 20) {
+						ret.setTemplate("2");
+					} else {
+						ret.setTemplate("1");
+					}
 					break;
 				case 3:
+					ret.setTemplate("3");
+					break;
+				case 4:
 					ret.setTemplate("4");
 					break;
-				// case 4:
-				// ret.setTemplate("3");
-				// break;
 				default:
 					return getDefaultTop();
 				}
@@ -502,46 +516,46 @@ public class NavigatorProvider {
 		ret.setTemplate("1");
 		boolean isShoppingHotterThanLife = buttonClickSource
 				.isShoppingHotterThanTraveling(userId);
-		Button first = isShoppingHotterThanLife ? buttonClickSource
-				.getLifeButton("1") : buttonClickSource.getShoppingButton("1");
+		// Button first = isShoppingHotterThanLife ? buttonClickSource
+		// .getLifeButton("1") : buttonClickSource.getShoppingButton("1");
 
 		List<ButtonClick> bcList = new LinkedList<ButtonClick>();
 		// bcList.addAll(getButtonClicksFromMap(buttonClickSource
 		// .getAllFriendsButtonClicks(userId, staticsTimeLimit)));
 
 		Button friends = buttonClickSource.getFriendsButton("friends");
-//		Button shop = buttonClickSource.getShoppingButton("shop");
-//		Button life = buttonClickSource.getLifeButton("life");
+		Button shop = buttonClickSource.getShoppingButton("shop");
+		Button life = buttonClickSource.getLifeButton("life");
 
 		Map<Button, Integer> friendsClicks = buttonClickSource
 				.getAllFriendsButtonClicks(userId, staticsTimeLimit);
-//		Map<Button, Integer> shopClicks = buttonClickSource
-//				.getAllShoppingButtonClicks(userId, staticsTimeLimit);
-//		Map<Button, Integer> lifeClicks = buttonClickSource
-//				.getAllLifeButtonClicks(userId, staticsTimeLimit);
+		Map<Button, Integer> shopClicks = buttonClickSource
+				.getAllShoppingButtonClicks(userId, staticsTimeLimit);
+		Map<Button, Integer> lifeClicks = buttonClickSource
+				.getAllLifeButtonClicks(userId, staticsTimeLimit);
 
 		int friendsTotalClick = 0;
 		for (Integer i : friendsClicks.values()) {
 			friendsTotalClick += i;
 		}
 
-//		int shopTotalClick = 0;
-//		for (Integer i : shopClicks.values()) {
-//			shopTotalClick += i;
-//		}
-//
-//		int lifeTotalClick = 0;
-//		for (Integer i : lifeClicks.values()) {
-//			lifeTotalClick += i;
-//		}
+		int shopTotalClick = 0;
+		for (Integer i : shopClicks.values()) {
+			shopTotalClick += i;
+		}
+
+		int lifeTotalClick = 0;
+		for (Integer i : lifeClicks.values()) {
+			lifeTotalClick += i;
+		}
 
 		// Adding life/shop (depending on which one is hotter), friend, all
 		// subclasses of leisure
 		// to the competing list.
 
-		// bcList.add(new ButtonClick(friends, friendsTotalClick));
-		// bcList.add(isShoppingHotterThanLife ? new ButtonClick(life,
-		// lifeTotalClick) : new ButtonClick(shop, shopTotalClick));
+		bcList.add(isShoppingHotterThanLife ? new ButtonClick(life,
+				lifeTotalClick) : new ButtonClick(shop, shopTotalClick));
+		bcList.add(new ButtonClick(friends, friendsTotalClick));
 		bcList.addAll(getButtonClicksFromMap(buttonClickSource
 				.getAllLeisureButtonClicks(userId, staticsTimeLimit)));
 
@@ -567,7 +581,7 @@ public class NavigatorProvider {
 		ArrayList<Button> list = new ArrayList<Button>(bc.length);
 		int count = 0;
 		for (ButtonClick btnClk : bc) {
-			if (count++ < 2) {
+			if (count++ < 4) {
 				list.add(btnClk.getButton());
 			} else {
 				break;
@@ -576,8 +590,8 @@ public class NavigatorProvider {
 		// ArrayList<Button> list = new ArrayList<Button>(buttonClickSource
 		// .getBottom(userId, staticsTimeLimit));
 
-		list.add(0, first);
-		list.add(0, friends);
+		// list.add(0, first);
+		// list.add(0, friends);
 
 		if (list.size() < 4) {
 			return getDefaultBottom(userId);
