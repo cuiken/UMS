@@ -86,6 +86,11 @@
 	</rule>	
 	
 	<rule>
+		<from>^/nav/launch$</from>
+		<to type="forward">/nav/fun-browser!launchLog.action</to>
+	</rule>	
+	
+	<rule>
 		<from>^/nav/download$</from>
 		<to type="forward">/nav/fun-browser!getClient.action</to>
 	</rule>	

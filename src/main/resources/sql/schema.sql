@@ -544,3 +544,17 @@ CREATE TABLE `click_log` (
   `date` timestamp NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8
+
+create table log_funbrowser_launch(
+	id int not null auto_increment,
+	imei varchar(35) not null default '',
+	imsi varchar(35),
+	language varchar(10),
+	resolution varchar(35),
+	op varchar(35),
+	model varchar(35),
+	net varchar(35),
+	launcher varchar(35) not null default 'default',
+	version varchar(35),
+	primary key(id)
+);

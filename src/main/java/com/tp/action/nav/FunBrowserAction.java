@@ -5,8 +5,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.tp.dto.FunBrowserLaunchDTO;
+import com.tp.entity.nav.LaunchLog;
+import com.tp.mapper.BeanMapper;
+import com.tp.mapper.JsonMapper;
+import com.tp.service.nav.FunBrowserLaunchService;
 import com.tp.utils.Constants;
 import com.tp.utils.Struts2Utils;
 
@@ -15,6 +21,8 @@ public class FunBrowserAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
 
+	private FunBrowserLaunchService launcherService;
+
 	@Override
 	public String execute() throws Exception {
 
@@ -22,18 +30,33 @@ public class FunBrowserAction extends ActionSupport {
 	}
 
 	public String getClient() throws Exception {
-		HttpServletRequest request=Struts2Utils.getRequest();
-		HttpServletResponse response=Struts2Utils.getResponse();
-		Struts2Utils.getRequest().getRequestDispatcher("/file-download.action?inputPath=client/nav/funbrowser.apk").forward(request, response);
+		HttpServletRequest request = Struts2Utils.getRequest();
+		HttpServletResponse response = Struts2Utils.getResponse();
+		Struts2Utils.getRequest().getRequestDispatcher("/file-download.action?inputPath=client/nav/funbrowser.apk")
+				.forward(request, response);
 		return null;
 	}
 
 	public String compare() throws Exception {
 		String version = Struts2Utils.getParameter(Constants.PARA_CLIENT_VERSION);
-		if (StringUtils.isNotBlank(version)&&version.equals("1.0.0")) {
+		if (StringUtils.isNotBlank(version) && version.equals("1.0.0")) {
 			Struts2Utils.renderText("FUNBROWSER_V:2.0.0");
 		}
 
 		return null;
+	}
+
+	public String launchLog() throws Exception {
+		String json = Struts2Utils.getParameter("param");
+		JsonMapper mapper = JsonMapper.buildNonDefaultMapper();
+		FunBrowserLaunchDTO dto = mapper.fromJson(json, FunBrowserLaunchDTO.class);
+		LaunchLog log = BeanMapper.map(dto, LaunchLog.class);
+		launcherService.save(log);
+		return null;
+	}
+
+	@Autowired
+	public void setLauncherService(FunBrowserLaunchService launcherService) {
+		this.launcherService = launcherService;
 	}
 }
