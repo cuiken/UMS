@@ -1,4 +1,4 @@
-package com.tp.service.account;
+package com.tp.service;
 
 import static org.junit.Assert.*;
 
