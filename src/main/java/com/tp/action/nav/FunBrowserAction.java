@@ -32,7 +32,7 @@ public class FunBrowserAction extends ActionSupport {
 	public String getClient() throws Exception {
 		HttpServletRequest request = Struts2Utils.getRequest();
 		HttpServletResponse response = Struts2Utils.getResponse();
-		Struts2Utils.getRequest().getRequestDispatcher("/file-download.action?inputPath=client/nav/funbrowser.apk")
+		request.getRequestDispatcher("/file-download.action?inputPath=client/nav/funbrowser.apk")
 				.forward(request, response);
 		return null;
 	}
@@ -46,7 +46,7 @@ public class FunBrowserAction extends ActionSupport {
 		return null;
 	}
 
-	public String launchLog() throws Exception {
+	public String saveLog() throws Exception {
 		String json = Struts2Utils.getParameter("param");
 		JsonMapper mapper = JsonMapper.buildNonDefaultMapper();
 		FunBrowserLaunchDTO dto = mapper.fromJson(json, FunBrowserLaunchDTO.class);

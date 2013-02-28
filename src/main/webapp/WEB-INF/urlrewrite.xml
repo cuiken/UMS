@@ -87,7 +87,7 @@
 	
 	<rule>
 		<from>^/nav/launch$</from>
-		<to type="forward">/nav/fun-browser!launchLog.action</to>
+		<to type="forward">/nav/fun-browser!saveLog.action</to>
 	</rule>	
 	
 	<rule>
