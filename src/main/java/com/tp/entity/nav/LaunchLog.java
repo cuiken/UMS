@@ -1,5 +1,7 @@
 package com.tp.entity.nav;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -20,6 +22,7 @@ public class LaunchLog extends IdEntity {
 	private String language;
 	private String version;
 	private String launcher;
+	private Date createTime;
 
 	public String getImei() {
 		return imei;
@@ -91,6 +94,14 @@ public class LaunchLog extends IdEntity {
 
 	public void setLauncher(String launcher) {
 		this.launcher = launcher;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
 	@Override

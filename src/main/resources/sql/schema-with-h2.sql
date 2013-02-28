@@ -536,5 +536,6 @@ create table log_funbrowser_launch(
 	net varchar(35),
 	launcher varchar(35) not null default 'default',
 	version varchar(35),
+	create_time timestamp not null default 0,
 	primary key(id)
 );
