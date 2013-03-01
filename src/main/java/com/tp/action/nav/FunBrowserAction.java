@@ -39,8 +39,8 @@ public class FunBrowserAction extends ActionSupport {
 
 	public String compare() throws Exception {
 		String version = Struts2Utils.getParameter(Constants.PARA_CLIENT_VERSION);
-		if (StringUtils.isNotBlank(version) && version.equals("1.0.0")) {
-			Struts2Utils.renderText("FUNBROWSER_V:2.0.0");
+		if(StringUtils.isNotBlank(version)){
+			
 		}
 
 		return null;
