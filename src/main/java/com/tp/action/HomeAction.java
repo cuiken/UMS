@@ -99,6 +99,15 @@ public class HomeAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	public String game() throws Exception {
+		HttpSession session = Struts2Utils.getSession();
+
+		language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+		Long storeId = chooseStoreId(session);
+		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.GAME, storeId, language);
+		return "game";
+	}
+
 	public String love() throws Exception {
 
 		return "love";

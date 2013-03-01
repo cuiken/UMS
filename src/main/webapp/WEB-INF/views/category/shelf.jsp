@@ -37,7 +37,12 @@
 				$("#store").change(function(){
 					$("#content tr:not(:first)").remove();
 					getData($(this).children('option:selected').val());
+					sid=$("#store").val();
 				});
+				
+				$("#createShelf").click(function(){
+					location.href="shelf!input.action?sid="+sid;
+				})
 			});
 		</script>
 	</head>
@@ -45,7 +50,7 @@
 		<form action="shelf.action" method="get" class="form-horizontal">
 			<h1>货架列表</h1>
 			<c:if test="${not empty actionMessages}">
-				<div id="message" class="success">${actionMessages}</div>	
+				<div id="message" class="alert alert-success">${actionMessages}</div>	
 			</c:if>
 			<div id="filter" style="margin-bottom: 5px;">
 				商店:<s:select list="allStores" listKey="id" listValue="name" name="" id="store" cssClass="span2" />
@@ -73,7 +78,7 @@
 				</tr>
 				-->
 			</table>		
-			<!-- <a href="shelf!input.action">创建货架</a>	 -->		
+			<a class="btn" href="#" id="createShelf">创建货架</a>	
 
 		</form>
 		

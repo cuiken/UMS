@@ -47,7 +47,7 @@ public class ShelfAction extends CRUDActionSupport<Shelf> {
 	@Override
 	@RequiresPermissions("store:edit")
 	public String input() throws Exception {
-		sid = entity.getCheckedId();
+
 		return INPUT;
 	}
 

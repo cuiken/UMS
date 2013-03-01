@@ -1,5 +1,5 @@
 <li style="width: 50%;">
-	<a href="http://uichange.com/UMS/home!details.action?id=223" data-id="2222222" class="thumbnail fx">
+	<a href="http://uichange.com/UMS/home!game.action" data-id="2222222" class="thumbnail fx">
 		<img alt="game" src="${ctx}/static/images/nav/game_1x.gif">
 	</a>
 	<a href="http://uichange.com/UMS/home!more.action?cid=108" class="thumbnail fx" data-id="11111111">
