@@ -24,7 +24,7 @@ public class LogJdbcDao {
 			+ " WHERE l.create_time BETWEEN ? AND ? AND l.do_type=?  GROUP BY m.name,app_name ORDER BY app_name";
 
 	private static final String QUERY_GETCLIENT_PERMARKET = "select l.app_name,m.name as market,count(*) as get_client"
-			+ " from log_f_store l left join f_market m on l.from_market=m.pk_name"
+			+ " from log_f_store2 l left join f_market m on l.from_market=m.pk_name"
 			+ " where l.create_time between ? and ? and l.request_method='getClient' group by l.app_name,l.from_market order by l.app_name";
 
 	private JdbcTemplate jdbcTemplate;

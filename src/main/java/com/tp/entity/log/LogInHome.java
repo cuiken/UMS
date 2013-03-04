@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import com.tp.entity.IdEntity;
 
 @Entity
-@Table(name = "log_f_store")
+@Table(name = "log_f_store2")
 public class LogInHome extends IdEntity {
 
 	private String imei;
