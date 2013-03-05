@@ -34,11 +34,12 @@ public class NavHomepageAction extends ActionSupport {
 	private ButtonSourceAdapter buttonAdapter;
 	private Board board;
 	private Tag tag;
+	private String imei;
 
 	@Override
 	public String execute() throws Exception {
 
-		String imei = Struts2Utils.getParameter("imei");
+		imei = Struts2Utils.getParameter("imei");
 		String imsi = Struts2Utils.getParameter("imsi");
 
 		Map<String, String> users = Maps.newHashMap();
@@ -105,6 +106,8 @@ public class NavHomepageAction extends ActionSupport {
 		@SuppressWarnings("unchecked")
 		Map<String, String> users = (Map<String, String>) Struts2Utils.getSessionAttribute("users");
 		String btnId = Struts2Utils.getParameter("id");
+		imei=Struts2Utils.getParameter("imei");
+		users.put("imei", imei);
 		if (btnId == null || btnId.isEmpty())
 			btnId = "10000000";
 		buttonAdapter.logClick(users, Long.valueOf(btnId));
@@ -138,6 +141,14 @@ public class NavHomepageAction extends ActionSupport {
 
 	public Tag getTag() {
 		return tag;
+	}
+	
+	public String getImei() {
+		return imei;
+	}
+	
+	public void setImei(String imei) {
+		this.imei = imei;
 	}
 
 	@Autowired

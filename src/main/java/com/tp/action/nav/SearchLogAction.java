@@ -3,6 +3,7 @@ package com.tp.action.nav;
 import java.net.URLEncoder;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -23,8 +24,9 @@ public class SearchLogAction extends ActionSupport {
 		@SuppressWarnings("unchecked")
 		Map<String, String> users = (Map<String, String>) Struts2Utils.getSessionAttribute("users");
 		String imei = users.get("imei");
-		if (imei == null || imei.isEmpty())
-			imei = "0";
+		if (StringUtils.isBlank(imei)){
+			imei=Struts2Utils.getParameter("imei");
+		}
 
 		SearchLog entity = new SearchLog();
 		entity.setImei(imei);
