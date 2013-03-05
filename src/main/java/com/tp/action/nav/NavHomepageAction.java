@@ -111,6 +111,7 @@ public class NavHomepageAction extends ActionSupport {
 			imei = Struts2Utils.getParameter("imei");
 			if (StringUtils.isNotBlank(imei)) {
 				users.put("imei", imei);
+				Struts2Utils.getSession().setAttribute("users", users);
 			}
 		}
 
