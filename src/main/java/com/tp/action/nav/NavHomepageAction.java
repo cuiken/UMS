@@ -51,10 +51,14 @@ public class NavHomepageAction extends ActionSupport {
 		np.setStaticsTimeLimit(ONE_WEEK_MILLI_SECONDS);
 		Navigator nav = np.getNavigator(users);
 		Struts2Utils.getSession().setAttribute("users", users);
-		tops = (Top) nav.getTop();
+		tops = nav.getTop();
 		bottom = nav.getBottom();
 		centerLeft = nav.getLeft();
 		centerRight = nav.getRight();
+		navigatorService.getButton(tops.getButtons());
+		navigatorService.getButton(bottom.getButtons());
+		navigatorService.getButton(centerLeft.getButtons());
+		navigatorService.getButton(centerRight.getButtons());
 		return SUCCESS;
 	}
 
