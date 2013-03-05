@@ -3,6 +3,7 @@ package com.tp.action.nav;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -105,9 +106,16 @@ public class NavHomepageAction extends ActionSupport {
 	public String logClick() throws Exception {
 		@SuppressWarnings("unchecked")
 		Map<String, String> users = (Map<String, String>) Struts2Utils.getSessionAttribute("users");
+		if (users == null) {
+			users = Maps.newHashMap();
+			imei = Struts2Utils.getParameter("imei");
+			if (StringUtils.isNotBlank(imei)) {
+				users.put("imei", imei);
+			}
+		}
+
 		String btnId = Struts2Utils.getParameter("id");
-		imei=Struts2Utils.getParameter("imei");
-		users.put("imei", imei);
+
 		if (btnId == null || btnId.isEmpty())
 			btnId = "10000000";
 		buttonAdapter.logClick(users, Long.valueOf(btnId));
@@ -142,11 +150,13 @@ public class NavHomepageAction extends ActionSupport {
 	public Tag getTag() {
 		return tag;
 	}
-	
+
 	public String getImei() {
+		if (StringUtils.isBlank(imei))
+			imei = "0";
 		return imei;
 	}
-	
+
 	public void setImei(String imei) {
 		this.imei = imei;
 	}
