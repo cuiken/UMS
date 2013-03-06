@@ -43,10 +43,9 @@ public class UserFT extends BaseSeleniumTestCase {
 		s.open("/account/user!input.action?id=2");
 		s.type(By.id("name"), "Kevin");
 		s.type(By.id("plainPassword"), "user2");
-		s.type(By.id("confirmPassword"), "user2");
 		s.click(By.id("submit_btn"));
 
-		assertTrue("没有成功消息", s.isTextPresent("更新用户user成功"));
+		assertTrue("没有成功消息", s.isTextPresent("保存用户成功"));
 		WebElement table = s.findElement(By.id("contentTable"));
 		assertEquals("Kevin", s.getTable(table, 1, 1));
 	}
@@ -54,6 +53,6 @@ public class UserFT extends BaseSeleniumTestCase {
 	@Test
 	public void deleteUser() {
 		s.open("/account/user!delete.action?id=2");
-		assertTrue("没有成功消息", s.isTextPresent("删除用户user成功"));
+		assertTrue("没有成功消息", s.isTextPresent("删除用户成功"));
 	}
 }

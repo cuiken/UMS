@@ -56,14 +56,14 @@ public class UserAction extends CRUDActionSupport<User> {
 	public String save() throws Exception {
 		HibernateUtils.mergeByCheckedIds(entity.getGroupList(), checkedGroupIds, Group.class);
 		accountManager.saveUser(entity);
-		addActionMessage("保存成功");
+		addActionMessage("保存用户成功");
 		return RELOAD;
 	}
 
 	@Override
 	@RequiresPermissions("user:edit")
 	public String delete() throws Exception {
-		
+		addActionMessage("删除用户成功");
 		return RELOAD;
 	}
 
