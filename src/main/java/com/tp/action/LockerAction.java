@@ -6,6 +6,8 @@ import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -206,7 +208,7 @@ public class LockerAction extends ActionSupport {
 	 * @throws Exception
 	 */
 	public String adXml() throws Exception {
-		String st = Struts2Utils.getParameter(Constants.PARA_STORE_TYPE);
+		/*String st = Struts2Utils.getParameter(Constants.PARA_STORE_TYPE);
 		Store store = categoryManager.getStoreByValue(st);
 		if (store == null) {
 			logger.warn("adXml:商店{}不存在", st);
@@ -217,7 +219,10 @@ public class LockerAction extends ActionSupport {
 		String domain = Constants.getDomain();
 		String detailsURL = "/store/locker!details.action?st=" + st + "&amp;id=";
 		String xml = fileManager.adXml(adPage.getResult(), domain, detailsURL);
-		Struts2Utils.renderXml(xml);
+		Struts2Utils.renderXml(xml);*/
+        HttpServletRequest request=Struts2Utils.getRequest();
+        HttpServletResponse response=Struts2Utils.getResponse();
+        request.getRequestDispatcher("/poll/advertisement!generateXml.action").forward(request,response);
 		return null;
 	}
 

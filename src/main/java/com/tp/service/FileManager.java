@@ -218,7 +218,7 @@ public class FileManager {
 		return themeFileDao.isPropertyUnique("title", newTitle, oldTitle);
 	}
 
-	public String adXml(List<ThemeFile> themes, String domain, String linkURL) throws Exception {
+	/*public String adXml(List<ThemeFile> themes, String domain, String linkURL) throws Exception {
 		StringBuilder buffer = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		if (themes.size() > 5) {
 			themes = themes.subList(0, 5);
@@ -248,9 +248,9 @@ public class FileManager {
 		}
 		buffer.append("</ads>");
 		return buffer.toString();
-	}
+	}*/
 	
-	private String diyXml(String domain){
+/*	private String diyXml(String domain){
 		StringBuilder buffer=new StringBuilder();
 		buffer.append("<ad id='1111' fileName='ad_diy.jpg' format='jpg' version='1'>");
 		buffer.append("<linkUrl>"+domain+"/home!more.action?cid=120&amp;f=ad"+"</linkUrl>");
@@ -262,7 +262,7 @@ public class FileManager {
 		buffer.append("<downloadUrl>"+domain+"/static/images/ad_app.jpg"+"</downloadUrl>");
 		buffer.append("</ad>");
 		return buffer.toString();
-	}
+	}*/
 
 	public String gadXml(List<ThemeFile> themes, String domain, Market market) throws Exception {
 		StringBuilder buffer = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");

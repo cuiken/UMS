@@ -559,3 +559,18 @@ create table log_funbrowser_launch(
 	create_time timestamp not null default 0,
 	primary key(id)
 );
+
+create table f_advertisement(
+	id int auto_increment,
+	name varchar(35) not null,
+	link varchar(255) not null,
+	img_link varchar(255) not null,
+	img_ext varchar(25) not null,
+	img_name varchar(35) not null,
+	sort varchar(25),
+	dtype varchar(35),
+	store varchar(35),
+	status tinyint not null default 1,
+	create_time timestamp not null default 0,
+	primary key(id)
+)ENGINE=InnoDB;

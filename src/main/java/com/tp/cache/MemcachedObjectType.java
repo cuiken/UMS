@@ -23,6 +23,8 @@ public enum MemcachedObjectType {
 
 	POLL_XML("poll_xml:", 0),
 
+    AD_XML("ad_xml:",0),
+
 	//=====================计数器key======================================
 
 	COUNTER_CLIENT("counter_client", 60 * 60 * 12),

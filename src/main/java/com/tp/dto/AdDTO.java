@@ -1,75 +1,81 @@
 package com.tp.dto;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.dozer.Mapping;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @XmlRootElement(name = "ad")
 public class AdDTO {
 
-	private String id;
-	private String fileName;
-	private String format;
-	private String version;
-	private String linkUrl;
-	private String downloadUrl;
+    private String id;
+    private String fileName;
+    private String format;
+    private String version;
+    private String linkUrl;
+    private String downloadUrl;
 
-	@XmlAttribute
-	public String getId() {
-		return id;
-	}
+    @XmlAttribute()
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	@XmlAttribute
-	public String getFileName() {
-		return fileName;
-	}
+    @XmlAttribute
+    @Mapping("imgName")
+    public String getFileName() {
+        return fileName;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	@XmlAttribute
-	public String getFormat() {
-		return format;
-	}
+    @XmlAttribute
+    @Mapping("imgExt")
+    public String getFormat() {
+        return format;
+    }
 
-	public void setFormat(String format) {
-		this.format = format;
-	}
+    public void setFormat(String format) {
+        this.format = format;
+    }
 
-	@XmlAttribute
-	public String getVersion() {
-		return version;
-	}
+    @XmlAttribute
+    public String getVersion() {
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+        return version;
+    }
 
-	public String getLinkUrl() {
-		return linkUrl;
-	}
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-	public void setLinkUrl(String linkUrl) {
-		this.linkUrl = linkUrl;
-	}
+    @Mapping("link")
+    public String getLinkUrl() {
+        return linkUrl;
+    }
 
-	public String getDownloadUrl() {
-		return downloadUrl;
-	}
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl;
+    }
 
-	public void setDownloadUrl(String downloadUrl) {
-		this.downloadUrl = downloadUrl;
-	}
+    @Mapping("imgLink")
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
 
-	@Override
-	public String toString() {
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
 
-		return ToStringBuilder.reflectionToString(this);
-	}
+    @Override
+    public String toString() {
+
+        return ToStringBuilder.reflectionToString(this);
+    }
 }
