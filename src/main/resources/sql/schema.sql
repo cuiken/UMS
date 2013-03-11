@@ -2,15 +2,6 @@ create database mopita DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 use mopita;
 
-
-    drop table if exists acct_group;
-
-    drop table if exists acct_group_permission;
-
-    drop table if exists acct_user;
-
-    drop table if exists acct_user_group;
-
     create table acct_group (
         id bigint not null auto_increment,
         name varchar(255) not null unique,
@@ -537,13 +528,13 @@ create table nav_hotlink(
 	primary key(id)
 )ENGINE=InnoDB;
 
-CREATE TABLE `click_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(255) NOT NULL,
-  `button_id` varchar(100) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8
+CREATE TABLE click_log (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  user_id varchar(255) NOT NULL,
+  button_id varchar(100) NOT NULL,
+  date timestamp NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM;
 
 create table log_funbrowser_launch(
 	id int not null auto_increment,
