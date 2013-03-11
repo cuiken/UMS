@@ -178,7 +178,7 @@ public class HomeAction extends ActionSupport {
 		Struts2Utils.renderXml(xml);*/
         HttpServletRequest request=Struts2Utils.getRequest();
         HttpServletResponse response=Struts2Utils.getResponse();
-        request.getRequestDispatcher("/poll/advertisement!generateXml.action").forward(request,response);
+        request.getRequestDispatcher("/poll/advertisement!generateXml.action?st=lock").forward(request,response);
 		return null;
 	}
 

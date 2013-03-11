@@ -32,7 +32,7 @@
         <div class="control-group">
             <label for="sort" class="control-label">编号:</label>
             <div class="controls">
-                <input type="text" id="sort"  name="sort" value="${sort}" maxlength="5" class="required">
+                <input type="text" id="sort"  name="sort" value="${sort}" maxlength="5" class="required number">
             </div>
         </div>
 

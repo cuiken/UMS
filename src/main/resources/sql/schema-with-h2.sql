@@ -557,3 +557,5 @@ create table f_advertisement(
 
 alter table log_count_client add column 	install_user int not null default 0;
 alter table log_count_c_install_per_market add column 	distinct_installed int not null default 0;
+
+alter table f_client add column description varchar(500) default '';
