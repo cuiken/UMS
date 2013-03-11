@@ -9,6 +9,7 @@ b<%@ page contentType="text/html;charset=UTF-8"%>
 		<script>
 			$(function(){
 				$("#report-client-install-tab").addClass("active");
+                $("#sdate").datepicker();
 			})
 		</script>
 	</head>
@@ -17,7 +18,7 @@ b<%@ page contentType="text/html;charset=UTF-8"%>
 			<h1>客户端安装日报</h1>
 			<div id="filter" style="margin-bottom: 5px;">
 				市场名称: <input class="input-medium" type="text" id="theme" name="filter_LIKES_marketName" value="${param['filter_LIKES_marketName']}" />
-				&nbsp;日期: <input class="input-medium" type="date" id="sdate" autocomplete="on" name="filter_EQS_date" value="${param['filter_EQS_date']}" />
+				&nbsp;日期: <input class="input-medium" type="text" data-date-format="yyyy-mm-dd" id="sdate" autocomplete="on" name="filter_EQS_date" value="${param['filter_EQS_date']}" />
 				<input class="btn" type="button" value="搜索" onclick="search();"/>&nbsp;
 			</div>
 			<table class="table table-striped table-bordered table-condensed">
@@ -26,6 +27,7 @@ b<%@ page contentType="text/html;charset=UTF-8"%>
 					<th><a href="javascript:sort('date','desc')">日期</a></th>
 					<th><a href="javascript:sort('marketName','desc')">市场名称</a></th>
 					<th><a href="javascript:sort('installed','desc')">安装量</a></th>
+                    <th><a href="javascript:sort('distinctInstalled','desc')">安装量(-)</a></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -34,6 +36,7 @@ b<%@ page contentType="text/html;charset=UTF-8"%>
 						<td>${date}</td>
 						<td>${marketName}</td>
 						<td>${installed}</td>
+                        <td>${distinctInstalled}</td>
 					</tr>
 				</s:iterator>
 				</tbody>

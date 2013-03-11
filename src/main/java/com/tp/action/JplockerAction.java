@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -101,10 +102,13 @@ public class JplockerAction extends ActionSupport {
 	private Long chooseStoreId(HttpSession session) {
 		String storeType = (String) session.getAttribute(Constants.PARA_STORE_TYPE);
 		Long storeId = (Long) session.getAttribute(Constants.ID_JPLOCKER);
-		if (storeType != null && storeId != null && storeType.equals(Constants.JP_LOCKER)) {
-			return storeId;
-		} else {
-			storeId = categoryManager.getStoreByValue(Constants.JP_LOCKER).getId();
+        if(StringUtils.isBlank(storeType)){
+            storeType=Constants.JP_LOCKER;
+        }
+        if(StringUtils.isNotBlank(storeType)){
+            return storeId;
+        } else {
+			storeId = categoryManager.getStoreByValue(storeType).getId();
 			session.setAttribute(Constants.ID_JPLOCKER, storeId);
 			return storeId;
 		}

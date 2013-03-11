@@ -9,6 +9,7 @@
 		<script>
 			$(function(){
 				$("#report-client-install-wc-tab").addClass("active");
+                $("#sdate").datepicker();
 			})
 		</script>
 	</head>
@@ -17,7 +18,8 @@
 			<h1>客户端通过内容安装日报</h1>
 			<div id="filter" style="margin-bottom: 5px;">
 				解锁名称: <input class="input-medium" type="text" id="theme" name="filter_LIKES_appName" value="${param['filter_LIKES_appName']}" />
-				&nbsp;日期: <input class="input-medium" type="date" id="sdate" autocomplete="on" name="filter_EQS_date" value="${param['filter_EQS_date']}" />
+                市场: <input class="input-medium" type="text"  name="filter_LIKES_marketName" value="${param['filter_LIKES_marketName']}" />
+				&nbsp;日期: <input class="input-medium" type="text" data-date-format="yyyy-mm-dd" id="sdate" autocomplete="on" name="filter_EQS_date" value="${param['filter_EQS_date']}" />
 				<input class="btn" type="button" value="搜索" onclick="search();"/>&nbsp;
 			</div>
 			<table class="table table-striped table-bordered table-condensed">

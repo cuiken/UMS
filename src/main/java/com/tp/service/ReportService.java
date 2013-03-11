@@ -46,6 +46,7 @@ public class ReportService {
 			entity.setDate(sdate);
 			entity.setInstalled((Long) result.get("installed"));
 			entity.setMarketName((String) result.get("from_market"));
+            entity.setDistinctInstalled((Long)result.get("discount"));
 			logService.saveClientInstall(entity);
 		}
 	}
@@ -130,6 +131,7 @@ public class ReportService {
 		client.setTotalInstall((Long) install.get("all"));
 		client.setInstallNonfm((Long) install.get("nofm"));
 		client.setInstallWithfm((Long) install.get("fm"));
+        client.setInstallUser((Long) install.get("installUser"));
 		long end = System.currentTimeMillis();
 		client.setTakeTimes(end - start);
 		logService.saveCountClient(client);
@@ -153,10 +155,13 @@ public class ReportService {
 		long fm = 0;
 		long nofm = 0;
 		long all = 0;
+        long installUser=0;
 		for (Map<String, Object> content : installs) {
 			String fromMarket = (String) content.get("from_market");
 			Long installed = (Long) content.get("installed");
+            Long discount=(Long)content.get("discount");
 			all += installed;
+            installUser+=discount;
 			if (fromMarket != null && !fromMarket.isEmpty()) {
 				fm += installed;
 			} else {
@@ -166,6 +171,7 @@ public class ReportService {
 		results.put("all", all);
 		results.put("fm", fm);
 		results.put("nofm", nofm);
+        results.put("installUser",installUser);
 		return results;
 	}
 
