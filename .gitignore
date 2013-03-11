@@ -5,3 +5,5 @@
 /.mymetadata
 /target
 /logs
+/.idea
+*.iml

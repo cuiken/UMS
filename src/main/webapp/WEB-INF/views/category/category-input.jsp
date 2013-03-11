@@ -48,6 +48,12 @@
 					</div>		
 				</div>	
 				<div class="control-group">
+					<label for="value" class="control-label">排序:</label>
+					<div class="controls">
+						<input type="number" id="value" name="value" maxlength="50" value="${value}" />
+					</div>		
+				</div>	
+				<div class="control-group">
 					<label for="icon" class="control-label">图标:</label>
 					<div class="controls">
 						<input type="file" id="icon" name="iicon" />

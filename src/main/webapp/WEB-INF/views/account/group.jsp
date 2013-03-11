@@ -18,10 +18,10 @@
 
 <body>
 	<h1>角色列表</h1>
-	<c:if test="${not empty message}">
+	<c:if test="${not empty actionMessages}">
 		<div id="message" class="alert alert-success">
 			<button data-dismiss="alert" class="close">×</button>
-			${message}
+			${actionMessages}
 		</div>
 	</c:if>
 

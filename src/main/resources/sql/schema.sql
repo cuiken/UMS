@@ -2,15 +2,6 @@ create database mopita DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 use mopita;
 
-
-    drop table if exists acct_group;
-
-    drop table if exists acct_group_permission;
-
-    drop table if exists acct_user;
-
-    drop table if exists acct_user_group;
-
     create table acct_group (
         id bigint not null auto_increment,
         name varchar(255) not null unique,
@@ -370,10 +361,33 @@ create table log_f_poll(
 	operator varchar(25),
 	do_type varchar(10),
 	create_time timestamp not null default 0,
+	
 	primary key(id)
 );
 
 create index poll_time on log_f_poll (create_time);
+
+/**=========================================新增统计表=============================================*/
+/*date:2013-02-20 */
+
+create table log_count_c_install_per_market(
+	id bigint auto_increment,
+	date varchar(35),
+	market_name varchar(35),
+	installed int,
+	create_time timestamp not null default 0,
+	primary key(id)
+);
+
+create table log_count_c_install_with_content(
+	id bigint auto_increment,
+	date varchar(35),
+	app_name varchar(35),
+	market_name varchar(35),
+	installed int,
+	create_time timestamp not null default 0,
+	primary key(id)
+);
 
 
 /**===========================================================================================*/
@@ -458,3 +472,47 @@ create table nav_hotlink(
 	tag_id int,
 	primary key(id)
 )ENGINE=InnoDB;
+
+CREATE TABLE click_log (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  user_id varchar(255) NOT NULL,
+  button_id varchar(100) NOT NULL,
+  date timestamp NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM;
+
+create table log_funbrowser_launch(
+	id int not null auto_increment,
+	imei varchar(35) not null default '',
+	imsi varchar(35),
+	language varchar(10),
+	resolution varchar(35),
+	op varchar(35),
+	model varchar(35),
+	net varchar(35),
+	launcher varchar(35) not null default 'default',
+	version varchar(35),
+	create_time timestamp not null default 0,
+	primary key(id)
+);
+
+create table f_advertisement(
+	id int auto_increment,
+	name varchar(35) not null,
+	link varchar(255) not null,
+	img_link varchar(255) not null,
+	img_ext varchar(25) not null,
+	img_name varchar(35) not null,
+	sort varchar(25),
+	dtype varchar(35),
+	store varchar(35),
+	status tinyint not null default 1,
+	create_time timestamp not null default 0,
+	primary key(id)
+)ENGINE=InnoDB;
+
+--2013-03-11--
+alter table log_count_client add column 	install_user int not null default 0;
+alter table log_count_c_install_per_market add column 	distinct_installed int not null default 0;
+
+alter table f_client add column description varchar(500) default '';

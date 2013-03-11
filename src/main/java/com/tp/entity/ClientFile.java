@@ -14,6 +14,7 @@ public class ClientFile extends IdEntity {
 	private String path;
 	private Long size;
 	private String version;
+    private String description;
 	private String createTime;
 	private String modifyTime;
 	private String dtype;
@@ -57,6 +58,14 @@ public class ClientFile extends IdEntity {
 	public void setVersion(String version) {
 		this.version = version;
 	}
+
+    public String getDescription(){
+        return description;
+    }
+
+    public void setDescription(String description){
+        this.description=description;
+    }
 
 	public String getCreateTime() {
 		return createTime;

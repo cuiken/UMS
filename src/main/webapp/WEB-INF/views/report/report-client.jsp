@@ -28,6 +28,7 @@
 					<th>↓(分享)</th>
 					<th>↓(其他)</th>
 					<th>总安装</th>
+                    <th>安装用户</th>
 					<th>安装(fm)</th>
 					<th>安装(nofm)</th>
 					<th>商店访问数</th>
@@ -47,6 +48,7 @@
 						<td>${downByShare}</td>
 						<td>${downByOther}</td>
 						<td>${totalInstall}</td>
+                        <td>${installUser}</td>
 						<td>${installWithfm}</td>
 						<td>${installNonfm}</td>
 						<td>${visitStoreCount}</td>

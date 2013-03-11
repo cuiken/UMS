@@ -46,6 +46,12 @@
 					<input type="text" id="pkName" name="pkName" value="${pkName}" />
 				</div>
 			</div>
+            <div>
+                <label for="description" class="control-label">描述:</label>
+                <div class="controls">
+                    <textarea class="input-xxlarge" rows="8" id="description" name="description" maxlength="500">${description}</textarea>
+                </div>
+            </div>
 			<div class="control-group">
 				<label for="dtype" class="control-label">客户端类型:</label>
 				<div class="controls">

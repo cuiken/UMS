@@ -23,6 +23,7 @@ public class LogCountClient extends IdEntity {
 	private long totalInstall;
 	private long installWithfm;
 	private long installNonfm;
+    private long installUser;
 	private long takeTimes;
 
 	public String getCreateTime() {
@@ -136,6 +137,14 @@ public class LogCountClient extends IdEntity {
 	public void setInstallNonfm(long installNonfm) {
 		this.installNonfm = installNonfm;
 	}
+
+    public  long getInstallUser(){
+        return installUser;
+    }
+
+    public void setInstallUser(long installUser){
+        this.installUser=installUser;
+    }
 
 	public long getTakeTimes() {
 		return takeTimes;

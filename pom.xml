@@ -25,7 +25,7 @@
 
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.9.5</mockito.version>
-		<selenium.version>2.28.0</selenium.version>
+		<selenium.version>2.31.0</selenium.version>
 		<jetty.version>7.6.8.v20121106</jetty.version>
 		<h2.version>1.3.170</h2.version>
 		<!-- Plugin的属性定义 -->
@@ -96,6 +96,24 @@
 					<warName>${project.artifactId}</warName>
 				</configuration>
 			</plugin>
+			
+			<!-- cobertura 测试覆盖率统计插件 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<instrumentation>
+						<excludes>
+							<exclude>**/entity/*.class</exclude>
+							<exclude>**/dto/*.class</exclude>
+							<exclude>**/*Action.class</exclude>
+							<exclude>**/*Demo.class</exclude>
+						</excludes>
+					</instrumentation>
+				</configuration>
+			</plugin>
+			
 			<!-- clean插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -737,6 +755,39 @@
 				</plugins>
 			</build>
 		</profile>
-		
+		<profile>  
+        <id>startdb</id>  
+        <build>  
+            <plugins>  
+                <plugin>  
+                    <groupId>org.apache.maven.plugins</groupId>  
+                    <artifactId>maven-antrun-plugin</artifactId>  
+                    <executions>  
+                        <execution>  
+                            <id>startdb</id>  
+                            <phase>initialize</phase>  
+                            <configuration>  
+                                <tasks>  
+                                    <java classname="org.h2.tools.Console" classpathref="maven.plugin.classpath" fork="true" spawn="true">  
+                                    </java>  
+                                </tasks>  
+                            </configuration>  
+                            <goals>  
+                                <goal>run</goal>  
+                            </goals>  
+                        </execution>  
+                    </executions>  
+  
+                    <dependencies>  
+                        <dependency>  
+                            <groupId>com.h2database</groupId>  
+                            <artifactId>h2</artifactId>  
+                            <version>${h2.version}</version>  
+                        </dependency>  
+                    </dependencies>  
+                </plugin>  
+            </plugins>  
+        </build>  
+    </profile>  
 	</profiles>
 </project>

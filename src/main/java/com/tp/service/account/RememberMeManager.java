@@ -34,7 +34,7 @@ public class RememberMeManager extends AbstractRememberMeManager {
 	 */
 	public static final String DEFAULT_REMEMBER_ME_COOKIE_NAME = "rememberMe";
 
-	private static final int ONE_WEEK = 60 * 60 * 24 * 3;
+	private static final int THREE_DAYS = 60 * 60 * 24 * 3;
 
 	private Cookie cookie;
 
@@ -46,7 +46,7 @@ public class RememberMeManager extends AbstractRememberMeManager {
 		cookie.setHttpOnly(true);
 		//One year should be long enough - most sites won't object to requiring a user to log in if they haven't visited
 		//in a year:
-		cookie.setMaxAge(ONE_WEEK);
+		cookie.setMaxAge(THREE_DAYS);
 		this.cookie = cookie;
 	}
 

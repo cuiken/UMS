@@ -1,7 +1,9 @@
 package com.tp.utils;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -155,5 +157,30 @@ public class FileUtils {
 
 		}
 		return "";
+	}
+
+	public static String encodeBase64Img(String path) throws Exception {
+
+		File image = new File(path);
+		if (!image.exists())
+			return "";
+		FileInputStream input = new FileInputStream(image);
+		return encodeBase64Img(input,getExtension(image.getName()));
+	}
+	
+	public static String encodeBase64Img(InputStream input,String ext) throws Exception{
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+		byte[] buffer = new byte[1024];
+		int n = 0;
+		try {
+			while (-1 != (n = input.read(buffer))) {
+				out.write(buffer, 0, n);
+			}
+			out.flush();
+		} finally {
+			input.close();
+		}
+		return "data:image/" + ext + ";base64," + Encodes.encodeBase64(out.toByteArray());
 	}
 }

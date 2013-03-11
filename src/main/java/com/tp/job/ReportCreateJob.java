@@ -13,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.tp.entity.log.LogInHome;
 import com.tp.search.Search;
 import com.tp.service.LogService;
+import com.tp.service.ReportService;
 import com.tp.utils.Constants;
 import com.tp.utils.DateFormatUtils;
 
 public class ReportCreateJob {
 
 	private LogService logService;
+	private ReportService reportService;
 	private Search search;
 
 	public void createReport() throws Exception {
@@ -31,32 +33,47 @@ public class ReportCreateJob {
 		Directory dir = FSDirectory.open(new File(Constants.INDEX_LOG_STORE));
 		IndexReader reader = IndexReader.open(dir);
 		IndexSearcher searcher = new IndexSearcher(reader);
-		try{
-		logService.createClientReport(searcher, perDate, currDate);
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
-		try{
-		logService.createContentReport(searcher, perDate, currDate);
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
-		try{
-		logService.saveCountContentUnzip(perDate, currDate);
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
-		try{
-//		logService.createGetClientByContentReport(searcher, perDate, currDate);
-			logService.createGetClientPerMarketReport(perDate, currDate);
+		try {
+			reportService.createClientReport(searcher, perDate, currDate);
 		} catch (Exception e) {
-			// TODO: handle exception
+
+		}
+		try {
+			reportService.createContentReport(searcher, perDate, currDate);
+		} catch (Exception e) {
+
+		}
+		try {
+			reportService.createCountContentUnzipReport(perDate, currDate);
+		} catch (Exception e) {
+
+		}
+		try {
+
+			reportService.createGetClientPerMarketReport(perDate, currDate);
+		} catch (Exception e) {
+
+		}
+		try {
+			reportService.createClientInstallPermarketReport(perDate, currDate);
+		} catch (Exception e) {
+
+		}
+		try {
+			reportService.createClientInstallWithContentReport(perDate, currDate);
+		} catch (Exception e) {
+
 		}
 	}
 
 	@Autowired
 	public void setLogService(LogService logService) {
 		this.logService = logService;
+	}
+
+	@Autowired
+	public void setReportService(ReportService reportService) {
+		this.reportService = reportService;
 	}
 
 	@Autowired

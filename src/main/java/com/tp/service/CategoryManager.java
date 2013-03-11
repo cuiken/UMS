@@ -52,6 +52,10 @@ public class CategoryManager {
 	public List<Category> getCategories() {
 		return categoryDao.getAll();
 	}
+	
+	public List<Category> getCategoriesInStore(){
+		return categoryDao.getAllInStore();
+	}
 
 	public List<Store> getAllStore() {
 		return storeDao.getAll();

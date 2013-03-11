@@ -39,7 +39,7 @@ public class Search implements ISearch<LogInHome> {
 		File indexDir = new File(Constants.INDEX_LOG_STORE);
 		FSDirectory dir = FSDirectory.open(indexDir);
 		IndexWriterConfig iwc = new IndexWriterConfig(Version.LUCENE_36, new IKAnalyzer());
-		iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+		iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
 		LogMergePolicy mergePolicy = new LogByteSizeMergePolicy();
 		mergePolicy.setMergeFactor(5);
 		iwc.setMergePolicy(mergePolicy);

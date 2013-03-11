@@ -3,6 +3,7 @@ package com.tp.action.nav;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,11 +35,12 @@ public class NavHomepageAction extends ActionSupport {
 	private ButtonSourceAdapter buttonAdapter;
 	private Board board;
 	private Tag tag;
+	private String imei;
 
 	@Override
 	public String execute() throws Exception {
 
-		String imei = Struts2Utils.getParameter("imei");
+		imei = Struts2Utils.getParameter("imei");
 		String imsi = Struts2Utils.getParameter("imsi");
 
 		Map<String, String> users = Maps.newHashMap();
@@ -51,10 +53,14 @@ public class NavHomepageAction extends ActionSupport {
 		np.setStaticsTimeLimit(ONE_WEEK_MILLI_SECONDS);
 		Navigator nav = np.getNavigator(users);
 		Struts2Utils.getSession().setAttribute("users", users);
-		tops = (Top) nav.getTop();
+		tops = nav.getTop();
 		bottom = nav.getBottom();
 		centerLeft = nav.getLeft();
 		centerRight = nav.getRight();
+		navigatorService.getButton(tops.getButtons());
+		navigatorService.getButton(bottom.getButtons());
+		navigatorService.getButton(centerLeft.getButtons());
+		navigatorService.getButton(centerRight.getButtons());
 		return SUCCESS;
 	}
 
@@ -100,7 +106,17 @@ public class NavHomepageAction extends ActionSupport {
 	public String logClick() throws Exception {
 		@SuppressWarnings("unchecked")
 		Map<String, String> users = (Map<String, String>) Struts2Utils.getSessionAttribute("users");
+		if (users == null) {
+			users = Maps.newHashMap();
+			imei = Struts2Utils.getParameter("imei");
+			if (StringUtils.isNotBlank(imei)) {
+				users.put("imei", imei);
+				Struts2Utils.getSession().setAttribute("users", users);
+			}
+		}
+
 		String btnId = Struts2Utils.getParameter("id");
+
 		if (btnId == null || btnId.isEmpty())
 			btnId = "10000000";
 		buttonAdapter.logClick(users, Long.valueOf(btnId));
@@ -134,6 +150,16 @@ public class NavHomepageAction extends ActionSupport {
 
 	public Tag getTag() {
 		return tag;
+	}
+
+	public String getImei() {
+		if (StringUtils.isBlank(imei))
+			imei = "0";
+		return imei;
+	}
+
+	public void setImei(String imei) {
+		this.imei = imei;
 	}
 
 	@Autowired

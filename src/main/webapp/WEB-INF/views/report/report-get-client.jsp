@@ -9,6 +9,7 @@
 		<script>
 			$(function(){
 				$("#report-getClient-tab").addClass("active");
+                $("#sdate").datepicker();
 			})
 		</script>
 	</head>
@@ -17,7 +18,7 @@
 			<h1>内容引导客户端日报</h1>
 			<div id="filter" style="margin-bottom: 5px;">
 				内容: <input class="input-medium" type="text" id="theme" name="filter_LIKES_appName" value="${param['filter_LIKES_appName']}" />
-				&nbsp;日期: <input class="input-medium" type="date" id="sdate" autocomplete="on" name="filter_EQS_createTime" value="${param['filter_EQS_createTime']}" />
+				&nbsp;日期: <input class="input-medium" type="text" data-date-format="yyyy-mm-dd" id="sdate" autocomplete="on" name="filter_EQS_createTime" value="${param['filter_EQS_createTime']}" />
 				<input class="btn" type="button" value="搜索" onclick="search();"/>&nbsp;
 			</div>
 			<table class="table table-striped table-bordered table-condensed">

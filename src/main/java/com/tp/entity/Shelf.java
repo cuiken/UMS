@@ -80,7 +80,15 @@ public class Shelf extends CateItem {
 	}
 
 	public static enum Type {
-		RECOMMEND("recommended", "推荐"), HOTTEST("hottest", "最热"), NEWEST("newest", "最新");
+		RECOMMEND("recommended", "推荐"),
+
+		HOTTEST("hottest", "最热"),
+
+		GAME("game", "游戏"),
+
+		STAR("star", "星座"),
+
+		NEWEST("newest", "最新");
 
 		public String value;
 		public String displayName;

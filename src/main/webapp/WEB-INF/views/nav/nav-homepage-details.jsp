@@ -217,7 +217,8 @@ ul.itemlist > li.image > a > .wrapper > .info > .detail {
 			</h3>
 			<div class="menu_list_wrapper_low">
 			<ul class="itemlist">
-				<s:iterator value="board.navigators">			
+				<s:iterator value="board.navigators">	
+				<s:if test="status=='enabled'">		
 				<li class="lpNormal image">
 					<a href="${navAddr}" data-id="${uuid}">
 						<span class="wrapper">
@@ -230,7 +231,8 @@ ul.itemlist > li.image > a > .wrapper > .info > .detail {
 							</span>
 						</span>
 					</a>
-				</li>				
+				</li>		
+				</s:if>		
 				</s:iterator>
 			</ul>
 			<s:iterator value="board.tags">
@@ -240,6 +242,7 @@ ul.itemlist > li.image > a > .wrapper > .info > .detail {
 				</div>
 				<ul class="itemlist">
 					<s:iterator value="navigators">
+					<s:if test="status=='enabled'">
 					<li class="lpNormal image">
 						<a href="${navAddr}" data-id="${uuid}">
 							<span class="wrapper">
@@ -253,6 +256,7 @@ ul.itemlist > li.image > a > .wrapper > .info > .detail {
 							</span>
 						</a>
 					</li>
+					</s:if>
 				</s:iterator>
 				</ul>
 			</s:iterator>
@@ -266,7 +270,8 @@ ul.itemlist > li.image > a > .wrapper > .info > .detail {
 			</h3>
 			<div class="menu_list_wrapper_low">
 			<ul class="itemlist">
-				<s:iterator value="tag.navigators">				
+				<s:iterator value="tag.navigators">		
+				<s:if test="status=='enabled'">		
 					<li class="lpNormal image">
 						<a href="${navAddr}" data-id="${uuid}">
 							<span class="wrapper">
@@ -279,7 +284,8 @@ ul.itemlist > li.image > a > .wrapper > .info > .detail {
 								</span>
 							</span>
 						</a>
-					</li>				
+					</li>		
+					</s:if>		
 				</s:iterator>
 			</ul>
 			</div>

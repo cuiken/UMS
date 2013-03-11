@@ -99,6 +99,15 @@ public class HomeAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	public String game() throws Exception {
+		HttpSession session = Struts2Utils.getSession();
+
+		language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+		Long storeId = chooseStoreId(session);
+		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.GAME, storeId, language);
+		return "game";
+	}
+
 	public String love() throws Exception {
 
 		return "love";
@@ -124,7 +133,7 @@ public class HomeAction extends ActionSupport {
 	}
 
 	public String category() throws Exception {
-		categories = categoryManager.getCategories();
+		categories = categoryManager.getCategoriesInStore();
 		return "category";
 	}
 
@@ -160,13 +169,16 @@ public class HomeAction extends ActionSupport {
 	 * @throws Exception
 	 */
 	public String adXml() throws Exception {
-		Long storeId = categoryManager.getStoreByValue(Constants.ST_LOCK).getId();
+		/*Long storeId = categoryManager.getStoreByValue(Constants.ST_LOCK).getId();
 		Page<ThemeFile> adPage = new Page<ThemeFile>();
 		adPage = fileManager.searchFileByShelf(adPage, Shelf.Type.RECOMMEND, storeId);
 		String domain = Constants.getDomain();
 		String detailsURL = "/home!details.action?id=";
 		String xml = fileManager.adXml(adPage.getResult(), domain, detailsURL);
-		Struts2Utils.renderXml(xml);
+		Struts2Utils.renderXml(xml);*/
+        HttpServletRequest request=Struts2Utils.getRequest();
+        HttpServletResponse response=Struts2Utils.getResponse();
+        request.getRequestDispatcher("/poll/advertisement!generateXml.action?st=lock").forward(request,response);
 		return null;
 	}
 

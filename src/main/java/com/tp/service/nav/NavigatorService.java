@@ -23,6 +23,9 @@ import com.tp.entity.nav.Tag;
 import com.tp.entity.nav.TagIcon;
 import com.tp.orm.Page;
 import com.tp.orm.PropertyFilter;
+import com.tp.utils.Constants;
+import com.tp.utils.FileUtils;
+import com.tpadsz.navigator.entity.Button;
 
 @Component
 @Transactional
@@ -150,6 +153,12 @@ public class NavigatorService {
 		}
 		buffer.append("</category>");
 		return buffer.toString();
+	}
+
+	public void getButton(List<Button> btns) throws Exception {
+		for (Button btn : btns) {
+			btn.setPicture(FileUtils.encodeBase64Img(Constants.LOCKER_STORAGE + btn.getPicture()));
+		}
 	}
 
 	@Autowired

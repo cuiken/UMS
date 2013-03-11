@@ -123,7 +123,7 @@
 				</div>
 			</div>
 			<div class="form-actions">
-				<input id="submit" class="btn btn-primary" type="submit" value="提交" />&nbsp;
+				<input id="submit_btn" class="btn btn-primary" type="submit" value="提交" />&nbsp;
 				<input id="cancel" class="btn" type="button" value="返回"
 					onclick="history.back()" />
 			</div>

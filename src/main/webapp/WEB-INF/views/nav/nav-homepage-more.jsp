@@ -127,7 +127,7 @@ h4 small {
 				data-toggle="collapse" data-parent="#accordion" style="background-color: ${color};">
 				<span class="rectangle"></span>
 				${name} / <small>${description}</small>
-				<span class="triangle-left"></span>
+				<span class="triangle-down"></span>
 			</h3>
 
 			<div id="${value}content" class="in">
@@ -188,7 +188,7 @@ h4 small {
 				});
 				return false;
 			});
-			
+			/*
 			$(".in").hide();
 			$(".app-title").toggle(function(){			
 				var $this=$(this);
@@ -211,7 +211,7 @@ h4 small {
 					$(content).hide();
 				}
 			});
-			
+			*/
 		//	var lh=location.hash;
 		
 			/*

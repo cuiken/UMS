@@ -3,11 +3,7 @@ package com.tpadsz.navigator;
 import java.util.List;
 import java.util.Map;
 
-import com.tpadsz.navigator.entity.Bottom;
 import com.tpadsz.navigator.entity.Button;
-import com.tpadsz.navigator.entity.CenterLeft;
-import com.tpadsz.navigator.entity.CenterRight;
-import com.tpadsz.navigator.entity.Top;
 
 public interface IButtonSourceAdapter {
 
@@ -15,9 +11,15 @@ public interface IButtonSourceAdapter {
 
 	abstract public Button getShoppingButton(String template);
 
-	abstract public Button getTravelingButton(String template);
+	abstract public Button getLifeButton(String template);
 
 	abstract public Button getReadingButton(String template);
+
+	abstract public Button getFriendsButton(String template);
+
+	abstract public Button getEntertainmentButton();
+
+	abstract public Button getFinaceButton();
 
 	abstract public Map<Button, Integer> getAllNewsButtonClicks(String userId,
 			Long timeLimit);
@@ -34,7 +36,7 @@ public interface IButtonSourceAdapter {
 
 	abstract public List<Button> getDefaultShopping();
 
-	abstract public List<Button> getDefaultBottom();
+	abstract public List<Button> getDefaultBottom(String userId);
 
 	abstract public List<Button> getDefaultReading();
 
@@ -47,10 +49,16 @@ public interface IButtonSourceAdapter {
 	abstract public Map<Button, Integer> getAllShoppingButtonClicks(
 			String userId, Long timeLimit);
 
-	abstract public Map<Button, Integer> getAllTravelingButtonClicks(
-			String userId, Long timeLimit);
+	abstract public Map<Button, Integer> getAllLifeButtonClicks(String userId,
+			Long timeLimit);
 
 	abstract public Map<Button, Integer> getAllReadingButtonClicks(
+			String userId, Long timeLimit);
+
+	abstract public Map<Button, Integer> getAllFriendsButtonClicks(
+			String userId, Long timeLimit);
+
+	abstract public Map<Button, Integer> getAllLeisureButtonClicks(
 			String userId, Long timeLimit);
 
 	abstract public Map<Button, Integer> getAllClicksOfClass(Integer classId,

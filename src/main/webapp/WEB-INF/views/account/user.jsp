@@ -14,14 +14,14 @@
 <body>
 	<form action="user.action" method="get">
 		<h1>用户列表</h1>
-		<c:if test="${not empty message}">
+		<c:if test="${not empty actionMessages}">
 			<div id="message" class="alert alert-success">
 				<button data-dismiss="alert" class="close">×</button>
-				${message}
+				${actionMessages}
 			</div>
 		</c:if>
 
-		<table class="table table-striped table-bordered table-condensed">
+		<table id="contentTable" class="table table-striped table-bordered table-condensed">
 			<thead>
 				<tr>
 					<th>登录名</th>
