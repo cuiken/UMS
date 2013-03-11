@@ -576,5 +576,5 @@ create table f_advertisement(
 )ENGINE=InnoDB;
 
 --2013-03-11--
-alter table log_count_client add column 	install_user int not null default 0,
+alter table log_count_client add column 	install_user int not null default 0;
 alter table log_count_c_install_per_market add column 	distinct_installed int not null default 0;

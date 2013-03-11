@@ -24,140 +24,142 @@ import com.tp.utils.Constants;
 import com.tp.utils.Struts2Utils;
 
 @Namespace("/store")
-@Results({ @Result(name = "reload", location = "jplocker.action", type = "redirect") })
+@Results({@Result(name = "reload", location = "jplocker.action", type = "redirect")})
 public class JplockerAction extends ActionSupport {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private CategoryManager categoryManager;
+    private CategoryManager categoryManager;
 
-	private FileManager fileManager;
-	private MarketManager marketManager;
+    private FileManager fileManager;
+    private MarketManager marketManager;
 
-	private Page<FileStoreInfo> hottestPage = new Page<FileStoreInfo>();
+    private Page<FileStoreInfo> hottestPage = new Page<FileStoreInfo>();
 
-	private Page<FileStoreInfo> newestPage = new Page<FileStoreInfo>();
-	private Page<FileStoreInfo> catePage = new Page<FileStoreInfo>();
+    private Page<FileStoreInfo> newestPage = new Page<FileStoreInfo>();
+    private Page<FileStoreInfo> catePage = new Page<FileStoreInfo>();
 
-	private FileStoreInfo info;
+    private FileStoreInfo info;
 
-	private String language;
+    private String language;
 
-	@Override
-	public String execute() throws Exception {
+    @Override
+    public String execute() throws Exception {
 
-		return list();
-	}
+        return list();
+    }
 
-	/**
-	 * 商店首页显示列表
-	 * @return
-	 * @throws Exception
-	 */
-	public String list() throws Exception {
+    /**
+     * 商店首页显示列表
+     *
+     * @return
+     * @throws Exception
+     */
+    public String list() throws Exception {
 
-		HttpSession session = Struts2Utils.getSession();
+        HttpSession session = Struts2Utils.getSession();
 
-		language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+        language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
 
-		Long storeId = chooseStoreId(session);
+        Long storeId = chooseStoreId(session);
 
-		hottestPage.setPageSize(100);
-		newestPage.setPageSize(100);
-		hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST, storeId, language);
+        hottestPage.setPageSize(100);
+        newestPage.setPageSize(100);
+        hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST, storeId, language);
 
-		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST, storeId, language);
+        newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST, storeId, language);
 
-		Market market = this.getMarket(session);
-		List<FileStoreInfo> allFile = Lists.newArrayList();
-		allFile.addAll(newestPage.getResult());
-		allFile.addAll(hottestPage.getResult());
+        Market market = this.getMarket(session);
+        List<FileStoreInfo> allFile = Lists.newArrayList();
+        allFile.addAll(newestPage.getResult());
+        allFile.addAll(hottestPage.getResult());
 
-		for (FileStoreInfo info : allFile) {
-			fileManager.setDownloadType(market, info.getTheme());
-		}
-		return SUCCESS;
-	}
-
-	/**
-	 * 输出5个广告xml
-	 * @return
-	 * @throws Exception
-	 */
-	public String adXml() throws Exception {
-		HttpSession session = Struts2Utils.getSession();
-		Long storeId = chooseStoreId(session);
-		;
-		Page<ThemeFile> adPage = new Page<ThemeFile>();
-		adPage = fileManager.searchFileByShelf(adPage, Shelf.Type.RECOMMEND, storeId);
-
-		Market market = this.getMarket(session);
-		String domain = Constants.getDomain();
-
-		String xml = fileManager.gadXml(adPage.getResult(), domain, market);
-		Struts2Utils.renderXml(xml);
-		return null;
-	}
-
-	private Long chooseStoreId(HttpSession session) {
-		String storeType = (String) session.getAttribute(Constants.PARA_STORE_TYPE);
-		Long storeId = (Long) session.getAttribute(Constants.ID_JPLOCKER);
-        if(StringUtils.isBlank(storeType)){
-            storeType=Constants.JP_LOCKER;
+        for (FileStoreInfo info : allFile) {
+            fileManager.setDownloadType(market, info.getTheme());
         }
-        if(StringUtils.isNotBlank(storeType)){
+        return SUCCESS;
+    }
+
+    /**
+     * 输出5个广告xml
+     *
+     * @return
+     * @throws Exception
+     */
+    public String adXml() throws Exception {
+        HttpSession session = Struts2Utils.getSession();
+        Long storeId = chooseStoreId(session);
+        ;
+        Page<ThemeFile> adPage = new Page<ThemeFile>();
+        adPage = fileManager.searchFileByShelf(adPage, Shelf.Type.RECOMMEND, storeId);
+
+        Market market = this.getMarket(session);
+        String domain = Constants.getDomain();
+
+        String xml = fileManager.gadXml(adPage.getResult(), domain, market);
+        Struts2Utils.renderXml(xml);
+        return null;
+    }
+
+    private Long chooseStoreId(HttpSession session) {
+        String storeType = (String) session.getAttribute(Constants.PARA_STORE_TYPE);
+        Long storeId = (Long) session.getAttribute(Constants.ID_JPLOCKER);
+        if (StringUtils.isBlank(storeType)) {
+            storeType = Constants.JP_LOCKER;
+        }
+        if (storeId != null) {
             return storeId;
         } else {
-			storeId = categoryManager.getStoreByValue(storeType).getId();
-			session.setAttribute(Constants.ID_JPLOCKER, storeId);
-			return storeId;
-		}
-	}
+            storeId = categoryManager.getStoreByValue(storeType).getId();
+            session.setAttribute(Constants.ID_JPLOCKER, storeId);
+            return storeId;
+        }
+    }
 
-	private Market getMarket(HttpSession session) {
-		String fromMarket = (String) session.getAttribute(Constants.PARA_FROM_MARKET);
-		if (fromMarket == null || fromMarket.isEmpty()) {
-			fromMarket = Constants.MARKET_GOOGLE;
-		}
-		return marketManager.findByPkName(fromMarket);
-	}
+    private Market getMarket(HttpSession session) {
+        String fromMarket = (String) session.getAttribute(Constants.PARA_FROM_MARKET);
+        if (fromMarket == null || fromMarket.isEmpty()) {
+            fromMarket = Constants.MARKET_GOOGLE;
+        }
+        return marketManager.findByPkName(fromMarket);
+    }
 
-	@Autowired
-	public void setFileManager(FileManager fileManager) {
-		this.fileManager = fileManager;
-	}
+    @Autowired
+    public void setFileManager(FileManager fileManager) {
+        this.fileManager = fileManager;
+    }
 
-	@Autowired
-	public void setCategoryManager(CategoryManager categoryManager) {
-		this.categoryManager = categoryManager;
-	}
+    @Autowired
+    public void setCategoryManager(CategoryManager categoryManager) {
+        this.categoryManager = categoryManager;
+    }
 
-	@Autowired
-	public void setMarketManager(MarketManager marketManager) {
-		this.marketManager = marketManager;
-	}
+    @Autowired
+    public void setMarketManager(MarketManager marketManager) {
+        this.marketManager = marketManager;
+    }
 
-	public Page<FileStoreInfo> getHottestPage() {
-		return hottestPage;
-	}
+    public Page<FileStoreInfo> getHottestPage() {
+        return hottestPage;
+    }
 
-	public Page<FileStoreInfo> getNewestPage() {
-		return newestPage;
-	}
+    public Page<FileStoreInfo> getNewestPage() {
+        return newestPage;
+    }
 
-	public Page<FileStoreInfo> getCatePage() {
-		return catePage;
-	}
+    public Page<FileStoreInfo> getCatePage() {
+        return catePage;
+    }
 
-	public FileStoreInfo getInfo() {
-		return info;
-	}
+    public FileStoreInfo getInfo() {
+        return info;
+    }
 
-	public void setInfo(FileStoreInfo info) {
-		this.info = info;
-	}
+    public void setInfo(FileStoreInfo info) {
+        this.info = info;
+    }
 
-	public String getLanguage() {
-		return language;
-	}
+    public String getLanguage() {
+        return language;
+    }
 }
