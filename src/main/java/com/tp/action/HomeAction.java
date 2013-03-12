@@ -88,14 +88,7 @@ public class HomeAction extends ActionSupport {
 		hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST, storeId, language);
 
 		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST, storeId, language);
-		//		if (visitByBrowse(session)) {
-		//			recommendPage = fileManager.searchStoreInfoInShelf(recommendPage, Shelf.Type.RECOMMEND, storeId, language);
-		//			List<FileStoreInfo> recommendFiles = recommendPage.getResult();
-		//			if (recommendFiles.size() > 0) {
-		//				Collections.shuffle(recommendFiles);
-		//				adFile = recommendFiles.get(0).getTheme();
-		//			}
-		//		}
+
 		return SUCCESS;
 	}
 
@@ -108,6 +101,20 @@ public class HomeAction extends ActionSupport {
 		return "game";
 	}
 
+    public String star() throws Exception{
+        HttpSession session = Struts2Utils.getSession();
+
+        language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+        Long storeId = chooseStoreId(session);
+        newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.STAR, storeId, language);
+        return "star";
+    }
+
+    public String gostar() throws Exception{
+        return "gostar";
+    }
+
+    @Deprecated
 	public String love() throws Exception {
 
 		return "love";
@@ -135,11 +142,6 @@ public class HomeAction extends ActionSupport {
 	public String category() throws Exception {
 		categories = categoryManager.getCategoriesInStore();
 		return "category";
-	}
-
-	private boolean visitByBrowse(HttpSession session) {
-
-		return (String) session.getAttribute(Constants.PARA_RESOLUTION) == null;
 	}
 
 	private Long chooseStoreId(HttpSession session) throws Exception {
