@@ -3,6 +3,8 @@ package com.tp.action.nav;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tp.entity.ClientFile;
+import com.tp.service.ClientFileManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,44 +21,56 @@ import com.tp.utils.Struts2Utils;
 @Namespace("/nav")
 public class FunBrowserAction extends ActionSupport {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private FunBrowserLaunchService launcherService;
+    private FunBrowserLaunchService launcherService;
+    private ClientFileManager clientFileManager;
 
-	@Override
-	public String execute() throws Exception {
+    private static  final String FUN_BROWSER="funbrowser";
 
-		return compare();
-	}
+    @Override
+    public String execute() throws Exception {
 
-	public String getClient() throws Exception {
-		HttpServletRequest request = Struts2Utils.getRequest();
-		HttpServletResponse response = Struts2Utils.getResponse();
-		request.getRequestDispatcher("/file-download.action?inputPath=client/nav/funbrowser.apk")
-				.forward(request, response);
-		return null;
-	}
+        return compare();
+    }
 
-	public String compare() throws Exception {
-		String version = Struts2Utils.getParameter(Constants.PARA_CLIENT_VERSION);
-		if(StringUtils.isNotBlank(version)){
-			
-		}
+    public String getClient() throws Exception {
+        HttpServletRequest request = Struts2Utils.getRequest();
+        HttpServletResponse response = Struts2Utils.getResponse();
+        String version = clientFileManager.getNewestVersionCode(FUN_BROWSER);
+        ClientFile newClient = clientFileManager.getClientByVersion(version);
+        request.getRequestDispatcher("/file-download.action?inputPath=" + newClient.getPath())
+                .forward(request, response);
+        return null;
+    }
 
-		return null;
-	}
+    public String compare() throws Exception {
+        String version = Struts2Utils.getParameter(Constants.PARA_CLIENT_VERSION);
+        if (StringUtils.isNotBlank(version)) {
+            String newestVersion = clientFileManager.getNewestClient(version, FUN_BROWSER);
+            if (StringUtils.isNotBlank(newestVersion))
+                Struts2Utils.renderText("FUNBROWSER_V:" + newestVersion);
+        }
 
-	public String saveLog() throws Exception {
-		String json = Struts2Utils.getParameter("param");
-		JsonMapper mapper = JsonMapper.buildNonDefaultMapper();
-		FunBrowserLaunchDTO dto = mapper.fromJson(json, FunBrowserLaunchDTO.class);
-		LaunchLog log = BeanMapper.map(dto, LaunchLog.class);
-		launcherService.save(log);
-		return null;
-	}
+        return null;
+    }
 
-	@Autowired
-	public void setLauncherService(FunBrowserLaunchService launcherService) {
-		this.launcherService = launcherService;
-	}
+    public String saveLog() throws Exception {
+        String json = Struts2Utils.getParameter("param");
+        JsonMapper mapper = JsonMapper.buildNonDefaultMapper();
+        FunBrowserLaunchDTO dto = mapper.fromJson(json, FunBrowserLaunchDTO.class);
+        LaunchLog log = BeanMapper.map(dto, LaunchLog.class);
+        launcherService.save(log);
+        return null;
+    }
+
+    @Autowired
+    public void setLauncherService(FunBrowserLaunchService launcherService) {
+        this.launcherService = launcherService;
+    }
+
+    @Autowired
+    public void setClientFileManager(ClientFileManager clientFileManager) {
+        this.clientFileManager = clientFileManager;
+    }
 }
