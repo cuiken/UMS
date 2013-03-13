@@ -49,7 +49,7 @@ public class ImageAction extends ActionSupport {
 	private void responseImage(String contentPath) throws Exception {
 		HttpServletResponse response = Struts2Utils.getResponse();
 		HttpServletRequest request = Struts2Utils.getRequest();
-		String queryString=(String)Struts2Utils.getSessionAttribute(Constants.QUERY_STRING);
+
 		if (StringUtils.isBlank(contentPath)) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "path parametter is required.");
 			return;
@@ -97,7 +97,7 @@ public class ImageAction extends ActionSupport {
 			if (StringUtils.isBlank(eMsg)) {
 				eMsg = contentInfo.contentPath;
 			}
-			logger.warn(eMsg + ",ip:" + ip + ",User-Agent:" + userAgent+",param: "+queryString);
+			logger.warn(eMsg + ",ip:" + ip + ",User-Agent:" + userAgent);
 		}
 
 	}

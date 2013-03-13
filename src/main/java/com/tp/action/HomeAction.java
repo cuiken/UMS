@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.tp.entity.*;
+import com.tp.orm.PropertyFilter;
+import com.tp.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -18,19 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.tp.dao.log.LogCountContentDao;
-import com.tp.entity.Category;
-import com.tp.entity.CategoryInfo;
-import com.tp.entity.DownloadType;
-import com.tp.entity.FileMarketValue;
-import com.tp.entity.FileStoreInfo;
-import com.tp.entity.Market;
-import com.tp.entity.Shelf;
-import com.tp.entity.ThemeFile;
 import com.tp.orm.Page;
-import com.tp.service.CategoryInfoManager;
-import com.tp.service.CategoryManager;
-import com.tp.service.FileManager;
-import com.tp.service.MarketManager;
 import com.tp.utils.Constants;
 import com.tp.utils.ServletUtils;
 import com.tp.utils.Struts2Utils;
@@ -45,11 +36,12 @@ public class HomeAction extends ActionSupport {
 	private CategoryInfoManager categoryInfoManager;
 	private FileManager fileManager;
 	private MarketManager marketManager;
+    private AdvertisementService advertisementService;
 
 	private LogCountContentDao countContentDao;
 
 	private Page<FileStoreInfo> hottestPage = new Page<FileStoreInfo>();
-	private Page<FileStoreInfo> recommendPage = new Page<FileStoreInfo>();
+    private Page<Advertisement> advertisementPage=new Page<Advertisement>();
 
 	private Page<FileStoreInfo> newestPage = new Page<FileStoreInfo>();
 	private Page<FileStoreInfo> catePage = new Page<FileStoreInfo>();
@@ -60,7 +52,6 @@ public class HomeAction extends ActionSupport {
 
 	private List<CategoryInfo> cateInfos;
 	private Long categoryId;
-	private ThemeFile adFile;
 
 	private String categoryName;
 	private String language;
@@ -88,6 +79,11 @@ public class HomeAction extends ActionSupport {
 		hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST, storeId, language);
 
 		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST, storeId, language);
+        List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
+        filters.add(new PropertyFilter("EQS_dtype", "store"));
+        filters.add(new PropertyFilter("EQS_store", Constants.ST_LOCK));
+        filters.add(new PropertyFilter("EQL_status","1"));
+        advertisementPage=advertisementService.searchAdvertisement(advertisementPage,filters);
 
 		return SUCCESS;
 	}
@@ -171,13 +167,7 @@ public class HomeAction extends ActionSupport {
 	 * @throws Exception
 	 */
 	public String adXml() throws Exception {
-		/*Long storeId = categoryManager.getStoreByValue(Constants.ST_LOCK).getId();
-		Page<ThemeFile> adPage = new Page<ThemeFile>();
-		adPage = fileManager.searchFileByShelf(adPage, Shelf.Type.RECOMMEND, storeId);
-		String domain = Constants.getDomain();
-		String detailsURL = "/home!details.action?id=";
-		String xml = fileManager.adXml(adPage.getResult(), domain, detailsURL);
-		Struts2Utils.renderXml(xml);*/
+
         HttpServletRequest request=Struts2Utils.getRequest();
         HttpServletResponse response=Struts2Utils.getResponse();
         request.getRequestDispatcher("/poll/advertisement!generateXml.action?st=lock").forward(request,response);
@@ -363,10 +353,6 @@ public class HomeAction extends ActionSupport {
 		return newestPage;
 	}
 
-	public Page<FileStoreInfo> getRecommendPage() {
-		return recommendPage;
-	}
-
 	public Page<FileStoreInfo> getCatePage() {
 		return catePage;
 	}
@@ -383,16 +369,16 @@ public class HomeAction extends ActionSupport {
 		this.info = info;
 	}
 
+    public Page<Advertisement> getAdvertisementPage(){
+        return  advertisementPage;
+    }
+
 	public List<CategoryInfo> getCateInfos() {
 		return cateInfos;
 	}
 
 	public Long getCategoryId() {
 		return categoryId;
-	}
-
-	public ThemeFile getAdFile() {
-		return adFile;
 	}
 
 	public String getCategoryName() {
@@ -415,4 +401,9 @@ public class HomeAction extends ActionSupport {
 	public void setCountContentDao(LogCountContentDao countContentDao) {
 		this.countContentDao = countContentDao;
 	}
+
+    @Autowired
+    public void setAdvertisementService(AdvertisementService advertisementService){
+        this.advertisementService=advertisementService;
+    }
 }

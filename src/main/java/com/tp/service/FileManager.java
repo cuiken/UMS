@@ -218,52 +218,6 @@ public class FileManager {
 		return themeFileDao.isPropertyUnique("title", newTitle, oldTitle);
 	}
 
-	/*public String adXml(List<ThemeFile> themes, String domain, String linkURL) throws Exception {
-		StringBuilder buffer = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		if (themes.size() > 5) {
-			themes = themes.subList(0, 5);
-		}
-
-		buffer.append("<ads>");
-		buffer.append(diyXml(domain));
-		
-		for (ThemeFile theme : themes) {
-			Long id = theme.getId();
-			String ad = theme.getAdPath();
-			if (ad == null || ad.isEmpty()) {
-				continue;
-			}
-			String[] items = StringUtils.split(ad, File.separator);
-			String adName = items[items.length - 1];
-			String[] exts = StringUtils.split(adName, Constants.DOT_SEPARATOR);
-			buffer.append("<ad id=\"" + id + "\"");
-			buffer.append(" fileName=\"" + adName + "\"");
-			buffer.append(" format=\"" + exts[exts.length - 1] + "\"");
-			buffer.append(" version=\"1\"");
-			buffer.append(">");
-			buffer.append("<linkUrl>" + domain + linkURL + id + "&amp;f=ad</linkUrl>");
-			buffer.append("<downloadUrl>" + domain + "/image.action?path=" + URLEncoder.encode(ad, "UTF-8")
-					+ "</downloadUrl>");
-			buffer.append("</ad>");
-		}
-		buffer.append("</ads>");
-		return buffer.toString();
-	}*/
-	
-/*	private String diyXml(String domain){
-		StringBuilder buffer=new StringBuilder();
-		buffer.append("<ad id='1111' fileName='ad_diy.jpg' format='jpg' version='1'>");
-		buffer.append("<linkUrl>"+domain+"/home!more.action?cid=120&amp;f=ad"+"</linkUrl>");
-		buffer.append("<downloadUrl>"+domain+"/static/images/ad_diy.jpg"+"</downloadUrl>");
-		buffer.append("</ad>");
-		
-		buffer.append("<ad id='2222' fileName='ad_app.jpg' format='jpg' version='1'>");
-		buffer.append("<linkUrl>"+domain+"/home!more.action?cid=108&amp;f=ad"+"</linkUrl>");
-		buffer.append("<downloadUrl>"+domain+"/static/images/ad_app.jpg"+"</downloadUrl>");
-		buffer.append("</ad>");
-		return buffer.toString();
-	}*/
-
 	public String gadXml(List<ThemeFile> themes, String domain, Market market) throws Exception {
 		StringBuilder buffer = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		if (themes.size() > 5) {

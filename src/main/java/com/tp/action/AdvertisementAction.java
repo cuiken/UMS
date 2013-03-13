@@ -108,6 +108,7 @@ public class AdvertisementAction extends CRUDActionSupport<Advertisement> {
         page.setPageSize(5);
         filters.add(new PropertyFilter("EQS_dtype", "client"));
         filters.add(new PropertyFilter("EQS_store", store));
+        filters.add(new PropertyFilter("EQL_status","1"));
         String xml = advertisementService.toXml(page, filters,store);
         Struts2Utils.renderXml(xml);
         return null;

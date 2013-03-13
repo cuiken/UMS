@@ -21,12 +21,14 @@
 			<div class="slide_list_dot">
 				<a class="selected"><s:text name="nav.hot"/></a><a href="home!newest.action?${queryString}"><s:text name="nav.newest"/></a><a href="home!category.action?${queryString}"><s:text name="nav.category"/></a>
 			</div>
-			<div id="container"> 	
-				<div class="imgCenter">
-					<a href="${ctx}/home!more.action?cid=120&${queryString}">
-						<img alt="love" src="${ctx}/static/images/diy_home.gif" class="max-width_100">
-					</a>
-				</div>
+			<div id="container">
+                <s:iterator value="advertisementPage.result">
+                    <div class="imgCenter">
+                        <a href="${link}">
+                            <img alt="${imgName}" src="image.action?path=${imgLink}" class="max-width_100">
+                        </a>
+                    </div>
+                </s:iterator>
 				<s:iterator value="newestPage.result">
 					<div class="contents_info" id="content1" onclick="location.href='${ctx}/home!details.action?id=${theme.id}&${queryString}';">			
 						<div class="contents_txt">
@@ -57,10 +59,10 @@
         <script src="${ctx}/static/zepto/zepto.min.js"></script>
 		<script>
 			$(document).ready(function(){
-				
-				$("#content1").live("click",function(){ 
-					$(this).css("backgroundColor","#e7e6c8");
-				});
+
+                $(".contents_info").click(function(){
+                    $(this).css("backgroundColor","#e7e6c8");
+                });
 			});
 		</script>
 	</body>

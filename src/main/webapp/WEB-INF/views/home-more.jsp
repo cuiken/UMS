@@ -45,10 +45,10 @@
 
   		<script>
 		  $(function(){
-			  
-			 $("#content1").live("click",function(){ 
-				$(this).css("backgroundColor","#e7e6c8");
-			});
+
+              $(".contents_info").click(function(){
+                  $(this).css("backgroundColor","#e7e6c8");
+              });
 		    var $container = $('#container');
 		    $container.infinitescroll({
 		      navSelector  : '#page-nav',    

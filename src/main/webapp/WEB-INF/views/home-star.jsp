@@ -41,7 +41,7 @@
 <script>
     $(function(){
 
-        $("#content1").live("click",function(){
+        $(".contents_info").click(function(){
             $(this).css("backgroundColor","#e7e6c8");
         });
 

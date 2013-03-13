@@ -55,12 +55,7 @@ public class AdvertisementService {
     }
 
     private String convertListToXml(List<Advertisement> ads) {
-        List<AdDTO> dtos = Lists.newArrayList();
-        for (Advertisement entity : ads) {
-            if (entity.getStatus() == 1L) {
-                dtos.add(BeanMapper.map(entity, AdDTO.class));
-            }
-        }
+       List<AdDTO> dtos= BeanMapper.mapList(ads,AdDTO.class);
 
         for (AdDTO dto : dtos) {
             dto.setVersion("1");
