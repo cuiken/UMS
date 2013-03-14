@@ -103,6 +103,7 @@ public class HomeAction extends ActionSupport {
         language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
         Long storeId = chooseStoreId(session);
         newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.STAR, storeId, language);
+        categoryName=Shelf.Type.STAR.getDisplayName();
         return "star";
     }
 

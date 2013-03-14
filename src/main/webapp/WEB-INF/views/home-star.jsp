@@ -18,10 +18,12 @@
 <body>
 
 <form action="home.action" method="get">
-
+    <div class="categoryback">
+        <h3><a href="home.action?${queryString}"><span style="margin-left: 30px;height: 53px;line-height: 53px;">${categoryName}</span></a></h3>
+    </div>
     <div id="container">
         <s:iterator value="newestPage.result">
-            <div class="contents_info" id="content1" onclick="location.href='home!details.action?id=${theme.id}&${queryString}';">
+            <div class="contents_info" id="content1" onclick="location.href='home!details.action?id=${theme.id}&f=star&${queryString}';">
                 <div class="contents_image">
                     <img alt="${title}" onerror="this.src='${ctx}/static/images/default.png'" src="${ctx}/image.action?path=${theme.iconPath}" width="72" height="72" style="margin: 3px;">
                 </div>

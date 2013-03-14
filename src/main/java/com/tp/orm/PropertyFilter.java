@@ -15,8 +15,7 @@ import com.tp.utils.ServletUtils;
 
 /**
  * 与具体ORM实现无关的属性过滤条件封装类, 主要记录页面中简单的搜索过滤条件.
- * 
- * @author calvin
+ *
  */
 public class PropertyFilter {
 
