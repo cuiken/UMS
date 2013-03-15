@@ -74,7 +74,10 @@ public class LogAction extends ActionSupport {
 
 		String version = clientFileManager.getNewestClient(clientVersion, client.getDtype());
         ClientFile clientFile= clientFileManager.getByVersion(version);
-		Struts2Utils.renderText(version+"{"+clientFile.getDescription()+"}");
+        if(StringUtils.isNotBlank(clientFile.getDescription())){
+            version=version+"{"+clientFile.getDescription()+"}";
+        }
+		Struts2Utils.renderText(version);
 		return null;
 	}
 
