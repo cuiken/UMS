@@ -4,11 +4,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.tp.dao.log.LogJdbcDao;
 import com.tp.entity.*;
 import com.tp.orm.PropertyFilter;
 import com.tp.service.*;
@@ -39,6 +41,7 @@ public class HomeAction extends ActionSupport {
     private AdvertisementService advertisementService;
 
 	private LogCountContentDao countContentDao;
+    private LogJdbcDao logJdbcDao;
 
 	private Page<FileStoreInfo> hottestPage = new Page<FileStoreInfo>();
     private Page<Advertisement> advertisementPage=new Page<Advertisement>();
@@ -47,6 +50,7 @@ public class HomeAction extends ActionSupport {
 	private Page<FileStoreInfo> catePage = new Page<FileStoreInfo>();
 
 	private Long id;
+    private Long pageNo=1L;
 	private String totalDown;
 	private FileStoreInfo info;
 
@@ -56,6 +60,10 @@ public class HomeAction extends ActionSupport {
 	private String categoryName;
 	private String language;
 	private List<Category> categories;
+
+    private String bars;
+
+    private List<Map<String,Object>> sorts;
 
 	@Override
 	public String execute() throws Exception {
@@ -84,9 +92,27 @@ public class HomeAction extends ActionSupport {
         filters.add(new PropertyFilter("EQS_store", Constants.ST_LOCK));
         filters.add(new PropertyFilter("EQL_status","1"));
         advertisementPage=advertisementService.searchAdvertisement(advertisementPage,filters);
-
+        bars=json(advertisementPage.getResult());
 		return SUCCESS;
 	}
+
+    private String json(List<Advertisement> ads){
+        StringBuilder buffer=new StringBuilder();
+        buffer.append("[");
+        for(Advertisement ad:ads){
+            buffer.append("{");
+            buffer.append("\"pic\":\""+Constants.getDomain()+"/image.action?path="+ad.getImgLink()+"\"");
+            buffer.append(",");
+            buffer.append("\"href\":\""+ad.getLink()+"\"");
+            buffer.append(",");
+            buffer.append("\"ext\":"+true);
+            buffer.append("}");
+            buffer.append(",");
+        }
+        String json=StringUtils.substringBeforeLast(buffer.toString(),",");
+        json+="]";
+        return json;
+    }
 
 	public String game() throws Exception {
 		HttpSession session = Struts2Utils.getSession();
@@ -117,7 +143,6 @@ public class HomeAction extends ActionSupport {
 		return "love";
 	}
 
-	@Deprecated
 	public String newest() throws Exception {
 		HttpSession session = Struts2Utils.getSession();
 
@@ -126,6 +151,14 @@ public class HomeAction extends ActionSupport {
 		newestPage = fileManager.searchByStore(newestPage, storeId, language);
 		return "newest";
 	}
+
+    public String hottest() throws Exception{
+        HttpSession session = Struts2Utils.getSession();
+
+        language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+        sorts = logJdbcDao.countThemeFileDownload(language,pageNo);
+        return "hottest";
+    }
 
 	public String diy() throws Exception {
 		HttpSession session = Struts2Utils.getSession();
@@ -398,6 +431,26 @@ public class HomeAction extends ActionSupport {
 		return totalDown;
 	}
 
+    public String getBars(){
+        return bars;
+    }
+
+    public List<Map<String,Object>> getSorts(){
+        return sorts;
+    }
+
+    public Long getPageNo(){
+        return pageNo;
+    }
+
+    public void setPageNo(Long pageNo){
+        this.pageNo=pageNo;
+    }
+
+    public Long getNextPage(){
+        return pageNo+1;
+    }
+
 	@Autowired
 	public void setCountContentDao(LogCountContentDao countContentDao) {
 		this.countContentDao = countContentDao;
@@ -406,5 +459,10 @@ public class HomeAction extends ActionSupport {
     @Autowired
     public void setAdvertisementService(AdvertisementService advertisementService){
         this.advertisementService=advertisementService;
+    }
+
+    @Autowired
+    public void setLogJdbcDao(LogJdbcDao logJdbcDao){
+        this.logJdbcDao=logJdbcDao;
     }
 }

@@ -12,23 +12,16 @@
 		<title>Fun主题-商店首页</title>
 		
 		<link rel="stylesheet" href="${ctx}/css/style.css" media="screen"/>
-  		<link rel="stylesheet" href="${ctx}/css/top.css" media="screen"/>
+  		<link rel="stylesheet" href="${ctx}/css/top.css?v=1.0.0" media="screen"/>
   		<link rel="stylesheet" href="${ctx}/css/reset.css" media="screen"/>
+        <link rel="stylesheet" href="${ctx}/css/home.css" media="screen"/>
 	</head>
 	<body>
 	
 		<form action="home.action" method="get">
-			<div class="slide_list_dot">
-				<a class="selected"><s:text name="nav.hot"/></a><a href="home!newest.action?${queryString}"><s:text name="nav.newest"/></a><a href="home!category.action?${queryString}"><s:text name="nav.category"/></a>
-			</div>
+		    <%@include file="home-nav.jsp"%>
 			<div id="container">
-                <s:iterator value="advertisementPage.result">
-                    <div class="imgCenter">
-                        <a href="${link}">
-                            <img alt="${imgName}" src="image.action?path=${imgLink}" class="max-width_100">
-                        </a>
-                    </div>
-                </s:iterator>
+                <div id="dk_game_slider"></div>
 				<s:iterator value="newestPage.result">
 					<div class="contents_info" id="content1" onclick="location.href='${ctx}/home!details.action?id=${theme.id}&${queryString}';">			
 						<div class="contents_txt">
@@ -57,11 +50,19 @@
 
 		</form>
         <script src="${ctx}/static/zepto/zepto.min.js"></script>
+        <script src="${ctx}/static/zepto/gameall.min.js"></script>
 		<script>
 			$(document).ready(function(){
-
+                $("#home").addClass("selected").attr("href","#");
                 $(".contents_info").click(function(){
                     $(this).css("backgroundColor","#e7e6c8");
+                });
+                var bars=${bars};
+                $.ui.slider('#dk_game_slider', {
+                    index: bars.rand(),
+                    showArr: false,
+                    autoPlayTime: 2500,
+                    content: bars
                 });
 			});
 		</script>

@@ -135,7 +135,7 @@
 
 <body>
 <div class="wrap">
-	<div><h1>Not Found</h1></div>
+	<h1>Not Found</h1>
     <div id="beastainer">
         <img id="beast404le" src="${ctx}/static/images/beast-404_LE.png" alt="">
         <img id="beast404re" src="${ctx}/static/images/beast-404_RE.png" alt="">

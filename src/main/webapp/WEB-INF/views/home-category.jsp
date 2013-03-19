@@ -25,16 +25,19 @@
   	</style>
  </head>
  <body>
- 	<div class="slide_list_dot">
-		<a href="home.action?${queryString}"><s:text name="nav.hot"/></a><a href="home!newest.action?${queryString}"><s:text name="nav.newest"/></a><a class="selected"><s:text name="nav.category"/></a>
-	</div>
-	
+    <%@include file="home-nav.jsp"%>
 	<div class="preview">
 		<s:iterator value="categories">
 			<a href="${ctx}/home!more.action?cid=${id}&${queryString}">
 				<img alt="${name}" src="${ctx}/image.action?path=${icon}">
 			</a>
 		</s:iterator>
-	</div>		
+	</div>
+    <script src="${ctx}/static/zepto/zepto.min.js"></script>
+     <script>
+         $(function(){
+             $("#category").addClass("selected").attr("href","#");
+         })
+     </script>
  </body>
  </html>

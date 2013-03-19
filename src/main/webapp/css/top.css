@@ -485,10 +485,11 @@ p.info_title{
 		    -webkit-box-sizing: border-box;	
 		    display: inline-block;
 		    height: 35px;
-		    width: 33.3%;
+		    width: 25%;
 		    font-size: 16px;
 		    text-align: center;
 		    border-bottom: 3px solid #D6D4D9;
+            float: left;
 		}
 
 		.slide_list_dot a:hover, a:active {

@@ -17,9 +17,7 @@
  </head>
  <body>
  	<form action="home!newest.action" method="get">
- 		<div class="slide_list_dot">
-			<a href="home.action?${queryString}"><s:text name="nav.hot"/></a><a class="selected"><s:text name="nav.newest"/></a><a href="home!category.action?${queryString}"><s:text name="nav.category"/></a>
-		</div>
+        <%@include file="home-nav.jsp"%>
  		<div id="container" class="transitions-enabled infinite-scroll clearfix"> 
 				<s:iterator value="newestPage.result">
 					<div class="contents_info" id="content1" onclick="location.href='home!details.action?id=${theme.id}&${queryString}';">
@@ -44,6 +42,7 @@
 	<script src="${ctx}/js/jquery/jquery.infinitescroll.min.js"></script>
 	<script>
 	 $(function(){
+         $("#newest").addClass("selected").attr("href","#");
 		 $(".contents_info").click(function(){ 
 				$(this).css("backgroundColor","#e7e6c8");				
 		});
