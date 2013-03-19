@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="${ctx}/css/style.css" media="screen"/>
   		<link rel="stylesheet" href="${ctx}/css/top.css?v=1.0.0" media="screen"/>
   		<link rel="stylesheet" href="${ctx}/css/reset.css" media="screen"/>
-        <link rel="stylesheet" href="${ctx}/css/home.css" media="screen"/>
+        <link rel="stylesheet" href="${ctx}/css/home.css?v=1.0.0" media="screen"/>
 	</head>
 	<body>
 	

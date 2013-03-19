@@ -75,9 +75,10 @@ a{
     overflow: hidden;
     -webkit-user-select: none;
 }
+/*
 #dk_game_slider img{
     width: 320px;
-}
+}*/
 .ui-slider {
     height: 100%;
     width: 100%;
