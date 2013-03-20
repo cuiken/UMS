@@ -5,7 +5,11 @@ import java.util.*;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import com.tp.cache.MemcachedObjectType;
+import com.tp.cache.SpyMemcachedClient;
+import com.tp.mapper.JsonMapper;
 import com.tp.utils.DateFormatUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -32,9 +36,11 @@ public class LogJdbcDao {
     private static final String QUERY_HOTTEST_DOWNLOAD = "SELECT ffi.f_id,ffi.title,ffi.short_description ,f.icon_path FROM f_file f right join"
             + " (select c.theme_name,sum(c.total_down) as download from log_count_content c"
             + " WHERE c.create_time BETWEEN ? AND ? GROUP BY c.theme_name) as l on f.title=l.theme_name"
-            + " JOIN f_file_info ffi ON f.id=ffi.f_id WHERE ffi.language=? ORDER BY l.download desc limit ?,20";
+            + " JOIN f_file_info ffi ON f.id=ffi.f_id JOIN f_file_store fs ON f.id=fs.f_id WHERE ffi.language=? AND fs.s_id=? ORDER BY l.download desc limit ?,20";
 
     private JdbcTemplate jdbcTemplate;
+    private SpyMemcachedClient memcachedClient;
+    private JsonMapper jsonMapper=JsonMapper.buildNormalMapper();
 
     /**
      * 内容解压安装统计
@@ -67,14 +73,25 @@ public class LogJdbcDao {
     /**
      * 下载排行
      */
-    public List<Map<String, Object>> countThemeFileDownload(String language, Long pageNo) {
-        String edate = DateFormatUtils.convertDate(new Date());
-        String sdate = DateFormatUtils.getPerMonthDate(edate);
-        return jdbcTemplate.queryForList(QUERY_HOTTEST_DOWNLOAD, sdate, edate, language, (pageNo-1L) * 20);
+    public List<Map<String, Object>> countThemeFileDownload(String language,Long sid, Long pageNo) {
+        String json=memcachedClient.get(MemcachedObjectType.THEME_SORT.getPrefix()+pageNo);
+        if(json==null){
+            String edate = DateFormatUtils.convertDate(new Date());
+            String sdate = DateFormatUtils.getPerMonthDate(edate);
+            List<Map<String,Object>>lists= jdbcTemplate.queryForList(QUERY_HOTTEST_DOWNLOAD, sdate, edate, language,sid, (pageNo-1L) * 20);
+            json=jsonMapper.toJson(lists);
+            memcachedClient.set(MemcachedObjectType.THEME_SORT.getPrefix()+pageNo,MemcachedObjectType.THEME_SORT.getExpiredTime(),json);
+        }
+        return jsonMapper.fromJson(json,List.class);
     }
 
     @Resource
     public void setDataSource(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+    @Autowired
+    public void setMemcachedClient(SpyMemcachedClient memcachedClient){
+        this.memcachedClient=memcachedClient;
     }
 }

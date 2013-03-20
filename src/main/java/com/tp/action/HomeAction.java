@@ -156,7 +156,8 @@ public class HomeAction extends ActionSupport {
         HttpSession session = Struts2Utils.getSession();
 
         language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
-        sorts = logJdbcDao.countThemeFileDownload(language,pageNo);
+        Long storeId = chooseStoreId(session);
+        sorts = logJdbcDao.countThemeFileDownload(language,storeId,pageNo);
         return "hottest";
     }
 
