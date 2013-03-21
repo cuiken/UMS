@@ -40,7 +40,7 @@ public class LogJdbcDao {
 
     private JdbcTemplate jdbcTemplate;
     private SpyMemcachedClient memcachedClient;
-    private JsonMapper jsonMapper=JsonMapper.buildNormalMapper();
+    private JsonMapper jsonMapper = JsonMapper.buildNormalMapper();
 
     /**
      * 内容解压安装统计
@@ -73,16 +73,17 @@ public class LogJdbcDao {
     /**
      * 下载排行
      */
-    public List<Map<String, Object>> countThemeFileDownload(String language,Long sid, Long pageNo) {
-        String json=memcachedClient.get(MemcachedObjectType.THEME_SORT.getPrefix()+pageNo);
-        if(json==null){
+    public List<Map<String, Object>> countThemeFileDownload(String language, Long sid, Long pageNo) {
+        String key = MemcachedObjectType.THEME_SORT.getPrefix() + pageNo + language;
+        String json = memcachedClient.get(key);
+        if (json == null) {
             String edate = DateFormatUtils.convertDate(new Date());
             String sdate = DateFormatUtils.getPerMonthDate(edate);
-            List<Map<String,Object>>lists= jdbcTemplate.queryForList(QUERY_HOTTEST_DOWNLOAD, sdate, edate, language,sid, (pageNo-1L) * 20);
-            json=jsonMapper.toJson(lists);
-            memcachedClient.set(MemcachedObjectType.THEME_SORT.getPrefix()+pageNo,MemcachedObjectType.THEME_SORT.getExpiredTime(),json);
+            List<Map<String, Object>> lists = jdbcTemplate.queryForList(QUERY_HOTTEST_DOWNLOAD, sdate, edate, language, sid, (pageNo - 1L) * 20);
+            json = jsonMapper.toJson(lists);
+            memcachedClient.set(key, MemcachedObjectType.THEME_SORT.getExpiredTime(), json);
         }
-        return jsonMapper.fromJson(json,List.class);
+        return jsonMapper.fromJson(json, List.class);
     }
 
     @Resource
@@ -91,7 +92,7 @@ public class LogJdbcDao {
     }
 
     @Autowired
-    public void setMemcachedClient(SpyMemcachedClient memcachedClient){
-        this.memcachedClient=memcachedClient;
+    public void setMemcachedClient(SpyMemcachedClient memcachedClient) {
+        this.memcachedClient = memcachedClient;
     }
 }
