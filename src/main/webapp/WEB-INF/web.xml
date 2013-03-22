@@ -23,9 +23,12 @@
 	</context-param>
 	
 	<!--Spring的ApplicationContext 载入 -->
-	<listener>
+	<!--<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+	</listener>-->
+    <listener>
+        <listener-class>com.tp.startup.UmsContext</listener-class>
+    </listener>
 
 	<!-- Filter 定义  -->
 	<!-- Character Encoding filter -->

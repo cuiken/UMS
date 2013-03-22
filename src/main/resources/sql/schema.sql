@@ -516,3 +516,9 @@ alter table log_count_client add column 	install_user int not null default 0;
 alter table log_count_c_install_per_market add column 	distinct_installed int not null default 0;
 
 alter table f_client add column description varchar(500) default '';
+
+CREATE TABLE ums_properties (
+  name varchar(255) NOT NULL,
+  value varchar(255) DEFAULT NULL,
+  PRIMARY KEY (name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
