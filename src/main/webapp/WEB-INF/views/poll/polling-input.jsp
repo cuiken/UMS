@@ -22,22 +22,23 @@
 					$("#pub-status").val('1');
 					$("#inputForm").submit();
 				});
-                $('#showBegin').slider();
-                $('#showEnd').slider();
-                $('#showTotal').slider();
-                $('#showPerday').slider();
+
                 if($("#showBegin").val()==''){
-                    $("#showBegin").val("5");
+                    $("#showBegin").val("0");
                 }
                 if($("#showEnd").val()==''){
-                   $("#showEnd").val("5");
+                   $("#showEnd").val("0");
                 }
                 if($("#showTotal").val()==''){
-                    $("#showTotal").val("5");
+                    $("#showTotal").val("0");
                 }
                 if($("#showPerday").val()==''){
-                    $("#showPerday").val("5");
+                    $("#showPerday").val("0");
                 }
+                $('#showBegin').slider("setValue",$("#showBegin").val());
+                $('#showEnd').slider("setValue",$("#showEnd").val());
+                $('#showTotal').slider("setValue",$("#showTotal").val());
+                $('#showPerday').slider("setValue",$("#showPerday").val());
 			});
 		</script>
 	</head>
