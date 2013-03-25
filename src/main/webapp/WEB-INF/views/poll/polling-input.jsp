@@ -73,7 +73,7 @@
 				<div class="control-group">
 					<label for="serDesc" class="control-label">广播文字:</label>
 					<div class="controls">
-						<textarea rows="6" style="width: 340px;" name="serDesc">${serDesc}</textarea>
+						<textarea rows="6" style="width: 340px;" id="serDesc" name="serDesc">${serDesc}</textarea>
 					</div>		
 				</div>		
 				<div class="control-group">

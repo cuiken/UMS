@@ -4,7 +4,6 @@ b<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 	<head>
 		<title>客户端安装日报</title>
-		<link href="${ctx}/css/home.css" type="text/css" rel="stylesheet">
 		<script src="${ctx}/js/table.js"></script>
 		<script>
 			$(function(){

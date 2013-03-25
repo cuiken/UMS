@@ -4,7 +4,6 @@
 <html>
 	<head>
 		<title>客户端统计</title>
-		<link href="${ctx}/css/home.css" type="text/css" rel="stylesheet">
 		<script src="${ctx}/js/table.js"></script>
 		<script>
 			$(function(){

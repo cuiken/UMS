@@ -4,7 +4,6 @@
 <html>
 <head>
 <title>文件列表</title>
-<link href="${ctx}/css/home.css" type="text/css" rel="stylesheet">
 <script src="${ctx}/js/table.js"></script>
 <script>
 			$(document).ready(function(){
