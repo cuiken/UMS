@@ -58,7 +58,8 @@
 					<th>广播类型</th>
 					<th>状态</th>
 					<th>显示时段</th>
-					<th>显示次数</th>
+                    <th>每天显示</th>
+					<th>显示总次数</th>
 					<th><a href="javascript:sort('createTime','asc')">更新时间</a></th>
 					<th>操作</th>
 				</tr>
@@ -84,6 +85,7 @@
 							</s:elseif>	
 						</td>
 						<td>${showBegin}-${showEnd}</td>
+                        <td>${showPerday}</td>
 						<td>${showTotal}</td>
 						<td>${createTime}</td>
 						<td><shiro:hasPermission name="store:edit">
