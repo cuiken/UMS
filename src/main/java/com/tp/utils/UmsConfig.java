@@ -15,14 +15,18 @@ public class UmsConfig {
 
     static {
         String contextProfiles = System.getProperty("spring.profiles.active");
-        if (contextProfiles.equals("development")){
-            propertiesLoader = new PropertiesLoader(jdbcConfig,develConfig);
-        }else if(contextProfiles.equals("functional")){
-            propertiesLoader = new PropertiesLoader(jdbcConfig,funConfig);
-        }else if(contextProfiles.equals("test")){
-            propertiesLoader = new PropertiesLoader(jdbcConfig,testConfig);
-        }else{
+        if (contextProfiles == null) {
             propertiesLoader = new PropertiesLoader(jdbcConfig);
+        } else {
+            if (contextProfiles.equals("development")) {
+                propertiesLoader = new PropertiesLoader(jdbcConfig, develConfig);
+            } else if (contextProfiles.equals("functional")) {
+                propertiesLoader = new PropertiesLoader(jdbcConfig, funConfig);
+            } else if (contextProfiles.equals("test")) {
+                propertiesLoader = new PropertiesLoader(jdbcConfig, testConfig);
+            } else {
+                propertiesLoader = new PropertiesLoader(jdbcConfig);
+            }
         }
     }
 
