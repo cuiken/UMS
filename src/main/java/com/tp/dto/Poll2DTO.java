@@ -13,13 +13,13 @@ import javax.xml.bind.annotation.XmlType;
  * Time: 上午11:22
  */
 @XmlRootElement(name = "poll")
-@XmlType(propOrder = { "type", "contentName", "fm", "appk", "appDownUrl", "imageName", "imageDownUrl", "percent"})
+@XmlType(propOrder = { "type", "contentName", "fm", "pkg", "appDownUrl", "imageName", "imageDownUrl", "percent"})
 public class Poll2DTO {
     private String uuid;
     private String type;
     private String contentName;
     private String fm;
-    private String appk;
+    private String pkg;
     private String appDownUrl;
     private String imageName;
     private String imageDownUrl;
@@ -59,12 +59,13 @@ public class Poll2DTO {
         this.fm = fm;
     }
 
-    public String getAppk() {
-        return appk;
+    @Mapping("appk")
+    public String getPkg() {
+        return pkg;
     }
 
-    public void setAppk(String appk) {
-        this.appk = appk;
+    public void setPkg(String pkg) {
+        this.pkg = pkg;
     }
 
     @Mapping("appUrl")
