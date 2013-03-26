@@ -37,6 +37,7 @@
 			<a id="shelf-tab" href="${ctx}/category/shelf.action">货架列表</a> 
 			<a id="market-tab" href="${ctx}/category/market.action">市场列表</a>
 			<a id="poll-tab" href="${ctx}/poll/polling.action">广播列表</a>
+            <a id="poll2-tab" href="${ctx}/poll/poll2.action">广播列表(enhancement)</a>
 			<a id="advertisement-tab" href="${ctx}/poll/advertisement.action">广告条管理</a>
 		</div>
 	</shiro:hasPermission>
