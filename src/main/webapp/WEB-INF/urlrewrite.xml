@@ -79,6 +79,11 @@
 		<from>^/poll/xml/([a-zA-Z0-9_]+)$</from>
 		<to type="forward">/poll/polling!toXml.action?store=$1</to>	
 	</rule>
+
+    <rule>
+        <from>^/poll2/xml/([a-zA-Z0-9_]+)$</from>
+        <to type="forward">/poll/poll2!generateXml.action</to>
+    </rule>
 	
 	<rule>
 		<from>^/nav/client$</from>

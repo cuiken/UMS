@@ -5,6 +5,7 @@ import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateUtil {
@@ -28,6 +29,11 @@ public class DateUtil {
     public static String convertDate(Date date) {
         DateTime dt = new DateTime(date);
         return dt.toString(getIso86010DateFormat());
+    }
+
+    public static Date format(String dateString) throws Exception{
+        SimpleDateFormat sft=new SimpleDateFormat(formatIso8601Day);
+        return sft.parse(dateString);
     }
 
     public static String getPerDate(String date) {
