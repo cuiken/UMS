@@ -13,6 +13,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.tp.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
@@ -32,7 +33,6 @@ import com.tp.mapper.JsonMapper;
 import com.tp.service.LogService;
 import com.tp.utils.Constants;
 import com.tp.utils.Constants.Language;
-import com.tp.utils.DateFormatUtils;
 import com.tp.utils.ServletUtils;
 import com.tp.utils.Struts2Utils;
 
@@ -156,7 +156,7 @@ public class HomeInterceptor extends AbstractInterceptor {
 		}
 		String params = removeLastChara(buffer.toString());
 		log.setRequestParams(params);
-		log.setCreateTime(DateFormatUtils.convert(new Date()));
+		log.setCreateTime(DateUtil.convert(new Date()));
 		if (!isAvailable(log)) {
 			HttpServletRequest request = Struts2Utils.getRequest();
 			String userAgent = request.getHeader("User-Agent");

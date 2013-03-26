@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import com.tp.cache.MemcachedObjectType;
 import com.tp.cache.SpyMemcachedClient;
 import com.tp.mapper.JsonMapper;
-import com.tp.utils.DateFormatUtils;
+import com.tp.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -77,8 +77,8 @@ public class LogJdbcDao {
         String key = MemcachedObjectType.THEME_SORT.getPrefix() + pageNo + language;
         String json = memcachedClient.get(key);
         if (json == null) {
-            String edate = DateFormatUtils.convertDate(new Date());
-            String sdate = DateFormatUtils.getPerMonthDate(edate);
+            String edate = DateUtil.convertDate(new Date());
+            String sdate = DateUtil.getPerMonthDate(edate);
             List<Map<String, Object>> lists = jdbcTemplate.queryForList(QUERY_HOTTEST_DOWNLOAD, sdate, edate, language, sid, (pageNo - 1L) * 20);
             json = jsonMapper.toJson(lists);
             memcachedClient.set(key, MemcachedObjectType.THEME_SORT.getExpiredTime(), json);

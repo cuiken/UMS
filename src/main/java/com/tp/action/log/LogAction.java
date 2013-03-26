@@ -25,6 +25,7 @@ import static com.tp.utils.Constants.PARA_URL;
 import java.net.URLDecoder;
 import java.util.Date;
 
+import com.tp.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,6 @@ import com.tp.mapper.BeanMapper;
 import com.tp.service.ClientFileManager;
 import com.tp.service.LogService;
 import com.tp.utils.Constants;
-import com.tp.utils.DateFormatUtils;
 import com.tp.utils.Struts2Utils;
 
 @Namespace("/log")
@@ -62,7 +62,7 @@ public class LogAction extends ActionSupport {
 
 		LogDTO logDTO = getLog();
 		LogFromClient entity = BeanMapper.map(logDTO, LogFromClient.class);
-		entity.setCreateTime(DateFormatUtils.convert(new Date()));
+		entity.setCreateTime(DateUtil.convert(new Date()));
 		logService.saveLogFromClient(entity);
 
 		String clientVersion = entity.getClientVersion();
@@ -102,7 +102,7 @@ public class LogAction extends ActionSupport {
 		} else {
 			log.setRequestParams(queryStr);
 		}
-		log.setCreateTime(DateFormatUtils.convert(new Date()));
+		log.setCreateTime(DateUtil.convert(new Date()));
 		logService.saveLogInHome(log);
 		Struts2Utils.renderText("success");
 		return null;
@@ -160,7 +160,7 @@ public class LogAction extends ActionSupport {
 	public String content() throws Exception {
 		LogDTO logDTO = getLog();
 		LogForContent entity = BeanMapper.map(logDTO, LogForContent.class);
-		entity.setCreateTime(DateFormatUtils.convert(new Date()));
+		entity.setCreateTime(DateUtil.convert(new Date()));
 		logService.saveLogContent(entity);
 		return null;
 	}

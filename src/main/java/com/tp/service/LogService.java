@@ -197,15 +197,11 @@ public class LogService {
 
 		Map<String, Object> results = getFromCached(MemcachedObjectType.LOG_PAGE.getPrefix(), contentSize,
 				key_log_homes);
-		int i = 0;
 		for (Entry<String, Object> entry : results.entrySet()) {
 			String value = (String) entry.getValue();
 			LogInHome entity = mapper.fromJson(value, LogInHome.class);
 			try {
 				logHomeDao.save(entity);
-				if (++i % 20 == 0) {
-					logHomeDao.flush();
-				}
 			} catch (Exception e) {
 				logger.error(e.getMessage() + " 异常记录为：" + mapper.toJson(entity));
 			}

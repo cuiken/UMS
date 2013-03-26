@@ -3,6 +3,7 @@ package com.tp.service;
 import java.util.List;
 import java.util.Map;
 
+import com.tp.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.search.IndexSearcher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,6 @@ import com.tp.entity.log.LogCountGetClient;
 import com.tp.entity.log.LogCountUnzip;
 import com.tp.search.LogSearch;
 import com.tp.utils.Constants;
-import com.tp.utils.DateFormatUtils;
 
 @Component
 @Transactional
@@ -111,7 +111,7 @@ public class ReportService {
 		long totalUser = logService.countTotalUser(edate);
 		long perTotalUser = 0L;
 
-		LogCountClient perCount = logService.getLogClientCountByDate(DateFormatUtils.getPerDate(sdate));
+		LogCountClient perCount = logService.getLogClientCountByDate(DateUtil.getPerDate(sdate));
 		if (perCount != null) {
 			perTotalUser = perCount.getTotalUser();
 		}

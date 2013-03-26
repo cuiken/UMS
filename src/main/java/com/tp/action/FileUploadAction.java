@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.tp.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -25,7 +26,6 @@ import com.tp.service.CategoryManager;
 import com.tp.service.ClientFileManager;
 import com.tp.service.FileManager;
 import com.tp.utils.Constants;
-import com.tp.utils.DateFormatUtils;
 import com.tp.utils.FileUtils;
 
 @Namespace("/file")
@@ -100,9 +100,9 @@ public class FileUploadAction extends ActionSupport {
 		ClientFile clientFile = clientFileManager.getClientByVersion(version);
 		if (clientFile == null) {
 			clientFile = new ClientFile();
-			clientFile.setCreateTime(DateFormatUtils.convert(new Date()));
+			clientFile.setCreateTime(DateUtil.convert(new Date()));
 		} else {
-			clientFile.setModifyTime(DateFormatUtils.convert(new Date()));
+			clientFile.setModifyTime(DateUtil.convert(new Date()));
 		}
 
 		clientFile.setName(fileName);
@@ -122,7 +122,7 @@ public class FileUploadAction extends ActionSupport {
 		theme.setPrice(new BigDecimal(price));
 		theme.setDtype(dtype);
 		theme.setMarketURL(marketURL);
-		theme.setCreateTime(DateFormatUtils.convert(new Date()));
+		theme.setCreateTime(DateUtil.convert(new Date()));
 		HibernateUtils.mergeByCheckedIds(theme.getCategories(), checkedCategoryIds, Category.class);
 		HibernateUtils.mergeByCheckedIds(theme.getStores(), checkedStoreIds, Store.class);
 		return theme;
