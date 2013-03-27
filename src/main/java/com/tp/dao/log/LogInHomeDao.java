@@ -144,6 +144,7 @@ public class LogInHomeDao {
             entity.setImei(rs.getString("imei"));
             entity.setImsi(rs.getString("imsi"));
             entity.setRequestParams(rs.getString("request_params"));
+            entity.setRequestMethod(rs.getString("request_method"));
             entity.setResolution(rs.getString("resolution"));
             entity.setDownType(rs.getString("down_type"));
             entity.setAppName(rs.getString("app_name"));
