@@ -12,6 +12,8 @@
 		<property name="triggers">
 			<list>
 				<ref bean="reportTrigger" />
+                <ref bean="createDBTrigger" />
+                <ref bean="createDBTriggerS"/>
 			</list>
 		</property>
 		<!-- Quartz配置 -->
@@ -29,6 +31,16 @@
 		<property name="jobDetail" ref="reportJobDetail" />		
 		<property name="cronExpression" value="0 0 01 * * ?" />
 	</bean>
+
+    <bean id="createDBTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="createDBJobDetail" />
+        <property name="cronExpression" value="0 15 10 L * ?" />
+    </bean>
+
+    <bean id="createDBTriggerS" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="createDBJobDetail" />
+        <property name="cronExpression" value="0 15 10 15 * ?" />
+    </bean>
 	
 	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
 	<bean id="reportJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -37,7 +49,13 @@
 		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
 		<property name="concurrent" value="true" />
 	</bean>
-	
+
+    <bean id="createDBJobDetail"  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="reportJob" />
+        <property name="targetMethod" value="createLogInHomeTable" />
+        <property name="concurrent" value="true" />
+    </bean>
+
 	<!-- 被Cron执行的普通Spring Bean -->
 	<bean id="reportJob" class="com.tp.job.ReportCreateJob" />
 </beans>

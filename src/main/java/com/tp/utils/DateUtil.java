@@ -51,6 +51,11 @@ public class DateUtil {
         return dt.plus(Period.months(-1)).toString(getIso86010DateFormat());
     }
 
+    public static String getNextMonthDate(String date) {
+        DateTime dt = new DateTime(date);
+        return dt.plus(Period.months(1)).toString(getIso86010DateFormat());
+    }
+
     public static String get6charDateString(String date) {
         DateTime dt = new DateTime(date);
         return dt.toString(getFormat6chars());

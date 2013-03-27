@@ -30,6 +30,7 @@ public class DateUtilTest {
         String nextDate = DateUtil.getNextDate(dateString);
         String perMonthDate = DateUtil.getPerMonthDate(dateString);
         String d6charDateString = DateUtil.get6charDateString(dateString);
+        String nextMonthDate = DateUtil.getNextMonthDate(dateString);
 
         assertEquals("2013-03-25 00:00:00", friendlyTimestamp);
         assertEquals("2013-03-25", iso86010DateFormat);
@@ -37,5 +38,6 @@ public class DateUtilTest {
         assertEquals("2013-03-26", nextDate);
         assertEquals("2013-02-25", perMonthDate);
         assertEquals("201303", d6charDateString);
+        assertEquals("2013-04-25", nextMonthDate);
     }
 }

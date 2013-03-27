@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import com.tp.dao.log.LogInHomeDao;
 import com.tp.utils.DateUtil;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.IndexSearcher;
@@ -22,6 +23,7 @@ public class ReportCreateJob {
 	private LogService logService;
 	private ReportService reportService;
 	private Search search;
+    private LogInHomeDao logInHomeDao;
 
 	public void createReport() throws Exception {
 		String currDate = DateUtil.convertDate(new Date());
@@ -66,6 +68,10 @@ public class ReportCreateJob {
 		}
 	}
 
+    public void createLogInHomeTable(){
+        logInHomeDao.createTable();
+    }
+
 	@Autowired
 	public void setLogService(LogService logService) {
 		this.logService = logService;
@@ -80,4 +86,9 @@ public class ReportCreateJob {
 	public void setSearch(Search search) {
 		this.search = search;
 	}
+
+    @Autowired
+    public void setLogInHomeDao(LogInHomeDao logInHomeDao) {
+        this.logInHomeDao = logInHomeDao;
+    }
 }
