@@ -45,6 +45,7 @@ public class LogInHomeDao {
             "request_method varchar(255),\n" +
             "request_params varchar(255),\n" +
             "create_time varchar(32),\n" +
+            "index ct_index(create_time),\n"+
             "primary key(id)\n" +
             ")ENGINE=MyISAM;";
 
