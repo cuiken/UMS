@@ -6,10 +6,7 @@ import com.tp.orm.Page;
 import com.tp.orm.PageRequest;
 import com.tp.orm.PropertyFilter;
 import com.tp.service.PollEnhancementService;
-import com.tp.utils.Constants;
-import com.tp.utils.FileUtils;
-import com.tp.utils.Struts2Utils;
-import com.tp.utils.UUIDGenerator;
+import com.tp.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -84,6 +81,7 @@ public class Poll2Action extends CRUDActionSupport<PollEnhancement> {
             page.setOrderDir(PageRequest.Sort.ASC+","+PageRequest.Sort.ASC);
         }
         String xml = pollEnhancementService.toXml(page, filters);
+        ServletUtils.setEtag(Struts2Utils.getResponse(), "W/\"" + Encodes.encodeMd5(xml) + "\"");
         Struts2Utils.renderXml(xml);
         return null;
     }
