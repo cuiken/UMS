@@ -27,10 +27,8 @@
 	<script src="${ctx}/static/jquery-validation/1.10.0/messages_bs_zh.js"></script>
 	<style>
 	 body {
-        padding-top: 40px;
-        padding-bottom: 40px;
         background-color: #f5f5f5;
-        background: url('static/images/login-bg.jpg') no-repeat;
+        background: url('static/images/login-bg.jpg') no-repeat fixed;
         -webkit-background-size: cover;
    		-moz-background-size: cover;
     	-o-background-size: cover;
@@ -40,9 +38,10 @@
 
       .form-signin {
         max-width: 300px;
-        padding: 19px 29px 29px;
+        padding: 19px 20px 29px;
         margin: 15% 20% 20px auto;
         background: #fff;
+        position: relative;
         background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#fff),color-stop(100%,#ddd));
 		background: -webkit-linear-gradient(top,#fff 0,#ddd 100%);
 		background: -moz-linear-gradient(top,#fff 0,#ddd 100%);
@@ -67,6 +66,9 @@
         height: auto;
         margin-bottom: 15px;
         padding: 7px 9px;
+      }
+     .nav_head{
+          height: 40px;
       }
 	</style>
 	<script>
@@ -94,6 +96,7 @@
 	<div class="container">
 
 	<div id="content" class="span12">
+        <div class="nav_head"></div>
 		<form id="loginForm" action="${ctx}/login.action" method="post" class="form-signin">
 			<%
 			String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
