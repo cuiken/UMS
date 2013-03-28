@@ -11,9 +11,7 @@
   		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
  
 		<title>Fun主题-商店游戏</title>
-		<link rel="stylesheet" href="${ctx}/css/style.css" media="screen"/>
-  		<link rel="stylesheet" href="${ctx}/css/top.css" media="screen"/>
-  		<link rel="stylesheet" href="${ctx}/css/reset.css" media="screen"/>	
+        <link rel="stylesheet" href="${ctx}/static/styles/site.min.css" media="screen"/>
 	</head>
 	<body>
 	
@@ -27,8 +25,8 @@
 						</div>
 						<div class="contents_txt">
 							<div style="margin-top: 10px;">
-								<font color="#666666">${title}</font>
-								<p><font color="#aeaea6">${shortDescription}</font></p>
+								<span class="title">${title}</span>
+								<p>${shortDescription}</p>
 							</div>
 						</div>
 					</div>

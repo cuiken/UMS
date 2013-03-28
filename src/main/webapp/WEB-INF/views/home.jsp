@@ -10,11 +10,7 @@
 	  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 		<title>Fun主题-商店首页</title>
-		
-		<link rel="stylesheet" href="${ctx}/css/style.css" media="screen"/>
-  		<link rel="stylesheet" href="${ctx}/css/top.css?v=1.0.1" media="screen"/>
-  		<link rel="stylesheet" href="${ctx}/css/reset.css" media="screen"/>
-        <link rel="stylesheet" href="${ctx}/css/home.css?v=1.0.0" media="screen"/>
+        <link rel="stylesheet" href="${ctx}/static/styles/site.min.css" media="screen"/>
 	</head>
 	<body>
 	
@@ -26,8 +22,8 @@
 					<div class="contents_info" id="content1" onclick="location.href='${ctx}/home!details.action?id=${theme.id}&${queryString}';">			
 						<div class="contents_txt">
 							<div style="margin-top: 10px;">
-								<font color="#666666">${title}</font>
-								<p><font color="#aeaea6">${shortDescription}</font></p>
+								<span class="title">${title}</span>
+								<p>${shortDescription}</p>
 							</div>
 						</div>
 						<div class="contents_image">						
@@ -43,9 +39,9 @@
 						</a>		
 					</s:iterator>
 				</div>
-				<div style="font-size: 85%;">
-					<%@include file="/common/footer.jsp" %>
-				 </div>
+
+				<%@include file="/common/footer.jsp" %>
+
 			</div>
 
 		</form>

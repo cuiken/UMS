@@ -10,10 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <title>Fun主题-商店排行</title>
-
-    <link rel="stylesheet" href="${ctx}/css/style.css" media="screen"/>
-    <link rel="stylesheet" href="${ctx}/css/top.css?v=1.0.1" media="screen"/>
-    <link rel="stylesheet" href="${ctx}/css/reset.css" media="screen"/>
+    <link rel="stylesheet" href="${ctx}/static/styles/site.min.css" media="screen"/>
 </head>
 <body>
 <form action="home!hottest.action" method="get">
@@ -26,8 +23,8 @@
                 </div>
                 <div class="contents_txt">
                     <div style="margin-top: 10px;">
-                        <font color="#666666">${title}</font>
-                        <p><font color="#aeaea6">${short_description}</font></p>
+                        <span class="title">${title}</span>
+                        <p>${short_description}</p>
                     </div>
                 </div>
             </div>
