@@ -31,7 +31,7 @@
         <div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${actionMessages}</div>
     </c:if>
     <div id="filter" style="margin-bottom:5px;">
-        <div class="pull-right"><a href="poll2!generateXml.action">查看XML</a></div>
+        <div class="pull-right"><a href="../poll2/xml/lock">查看XML</a></div>
     </div>
     <table class="table table-striped table-bordered table-condensed">
         <thead>
