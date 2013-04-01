@@ -23,12 +23,10 @@ h1 {
 
 #products {
 	float: left;
-	width: 200px;
 	margin-right: 2em;
 }
 
 #cart {
-	width: 200px;
 	float: left;
 }
 /* style the list to maximize the droppable hitarea */
@@ -41,6 +39,11 @@ h1 {
 
 #sortable2 li a {
 	color: #0066CC;
+}
+.ui-widget-content{
+    height: 420px;
+    width: 260px;
+    overflow-y: auto;
 }
 </style>
 
@@ -156,7 +159,7 @@ h1 {
 			&nbsp; 货架名称:<select id="shelf" class="span2"></select>
 		</div>
 		<div id="products">
-			<h1>仓库文件</h1>
+			<h2>仓库文件</h2>
 			<div class="ui-widget-content">
 				<ol id="sortable1" class="connectedSortable"
 					style="min-height: 300px;">
@@ -166,7 +169,7 @@ h1 {
 		</div>
 
 		<div id="cart">
-			<h1>已上架文件</h1>
+			<h2>已上架文件</h2>
 			<div class="ui-widget-content">
 				<ol id="sortable2" class="connectedSortable"
 					style="min-height: 300px;">

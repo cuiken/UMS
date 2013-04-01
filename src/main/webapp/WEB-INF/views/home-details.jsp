@@ -30,10 +30,10 @@
 					</a>
 				</div>
 				<div  class="long_des">
-					<div style="float: left; width: 50%; margin-bottom: 15px;margin-top: 15px;">
+					<div style="float: left; width: 60%; margin-bottom: 15px;margin-top: 15px;">
 						<s:text name="home.author"/>: ${info.author}
 					</div>
-					<div style="float:right;  width: 50%;margin-bottom: 15px;margin-top: 15px;">
+					<div style="float:right;  width: 40%;margin-bottom: 15px;margin-top: 15px;">
 						<s:text name="total.down"/>: ${totalDown}
 
 					</div>
