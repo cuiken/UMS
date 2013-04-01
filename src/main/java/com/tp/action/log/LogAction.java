@@ -103,6 +103,9 @@ public class LogAction extends ActionSupport {
 			log.setRequestParams(queryStr);
 		}
 		log.setCreateTime(DateUtil.convert(new Date()));
+        if(log.getAppName()==null){
+            log.setAppName("");
+        }
 		logService.saveLogInHome(log);
 		Struts2Utils.renderText("success");
 		return null;
