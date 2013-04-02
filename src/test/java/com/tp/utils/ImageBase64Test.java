@@ -49,4 +49,11 @@ public class ImageBase64Test {
 		System.out.println("zhidao: " + base64);
 	}
 
+    @Test
+    public void encodeProcess() throws Exception {
+        String path = "/image/processing.gif";
+        InputStream io = this.getClass().getResourceAsStream(path);
+        String base64 = FileUtils.encodeBase64Img(io, GIF);
+        System.out.println("processing: " + base64);
+    }
 }
