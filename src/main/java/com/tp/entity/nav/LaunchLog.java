@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.tp.entity.IdEntity;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "log_funbrowser_launch")
@@ -56,6 +57,7 @@ public class LaunchLog extends IdEntity {
 		this.net = net;
 	}
 
+    @Length(max = 35)
 	public String getModel() {
 		return model;
 	}

@@ -23,19 +23,13 @@ public class SearchLogAction extends ActionSupport {
 	public String search() throws Exception {
 		@SuppressWarnings("unchecked")
 		Map<String, String> users = (Map<String, String>) Struts2Utils.getSessionAttribute("users");
-		String imei = "";
-		if (users == null) {
-			imei = Struts2Utils.getParameter("imei");
-		} else {
+		String imei = Struts2Utils.getParameter("imei");
+		if (users != null) {
 			imei = users.get("imei");
-			if (StringUtils.isBlank(imei)) {
-				imei = Struts2Utils.getParameter("imei");
-			}
-		}
-
+        }
 		SearchLog entity = new SearchLog();
-		entity.setImei(imei);
-		entity.setKeyWord(word);
+		entity.setImei(StringUtils.defaultString(imei,""));
+		entity.setKeyWord(StringUtils.substring(word,0,100));
 		entity.setSearchType(type);
 		searchLogService.save(entity);
 		if (type.equals("baidu"))

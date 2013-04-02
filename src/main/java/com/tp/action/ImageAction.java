@@ -91,13 +91,13 @@ public class ImageAction extends ActionSupport {
 			FileUtils.copyFile(contentInfo.file, output);
 			output.flush();
 		} catch (Exception e) {
-			String ip = ServletUtils.getIpAddr(request);
-			String userAgent = request.getHeader("User-Agent");
-			String eMsg = e.getMessage();
-			if (StringUtils.isBlank(eMsg)) {
-				eMsg = contentInfo.contentPath;
-			}
-			logger.warn(eMsg + ",ip:" + ip + ",User-Agent:" + userAgent);
+//			String ip = ServletUtils.getIpAddr(request);
+//			String userAgent = request.getHeader("User-Agent");
+//			String eMsg = e.getMessage();
+//			if (StringUtils.isBlank(eMsg)) {
+//				eMsg = contentInfo.contentPath;
+//			}
+//			logger.warn(eMsg + ",ip:" + ip + ",User-Agent:" + userAgent);
 		}
 
 	}
