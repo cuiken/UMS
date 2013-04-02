@@ -4,7 +4,7 @@
 		<div style="padding-top: 13px;">
 		&copy; <s:text name="right.product"/>
 		<br>
-		<font>Copyright 2012 </font>
+		<font>Copyright 2013 </font>
 		<br/>
 		&nbsp;&nbsp;&nbsp;<font><s:text name="right.company"/></font>
 		</div>
