@@ -39,7 +39,7 @@ margin-top: 0.2em;
 ドメイン受信設定などの迷惑メール対策等により、弊社からのメール（@ttis.jp）が届かない設定になっていないか、お問い合わせ前にご確認ください。
 </p>
 <p>※お問い合わせされる際は、アプリ名、ご利用中の機種名をご記入下さい。<br>
-アプリ名は、<a href="http://jplocker.uichange.com/UMS/store/jplocker.action">こちら</a>からご確認頂けます。</p>
+
 <div>
 <a href="mailto:google_info@ttis.jp?subject=お問い合わせ&amp;body=お問い合わせ内容（できるだけ具体的に）：">&raquo;&nbsp;お問い合わせ</a>
 </div>

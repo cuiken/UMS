@@ -48,8 +48,7 @@ margin-top: 0.5em;
 <dt>所在地</dt>
 <dd>東京都中野区本町2丁目48-9 中野坂上ダイヤハイツ208</dd>
 <dt>販売業者の連絡先</dt>
-<dd>
-<a href="mailto:google_info@ttis.jp">google_info@ttis.jp</a></dd>
+<dd>google_info@ttis.jp</dd>
 
 <dt>販売責任者</dt>
 <dd>何　堅</dd>

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" isErrorPage="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="org.slf4j.Logger,org.slf4j.LoggerFactory" %>
-<%@ page import="com.tp.utils.ServletUtils" %>
+
 <%response.setStatus(200);%>
 
 <%
@@ -12,10 +12,8 @@
 		ex = (Throwable) request.getAttribute("javax.servlet.error.exception");
 
 	//记录日志
-	String userAgent = request.getHeader("User-Agent");
-	String ip=ServletUtils.getIpAddr(request);
 	Logger logger = LoggerFactory.getLogger("500.jsp");
-	logger.error(ex.getMessage()+",ip:"+ip+",User-Agent:"+userAgent, ex);
+	logger.error(ex.getMessage(), ex);
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
