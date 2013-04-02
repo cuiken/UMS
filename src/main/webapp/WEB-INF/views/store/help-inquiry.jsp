@@ -40,8 +40,5 @@ margin-top: 0.2em;
 </p>
 <p>※お問い合わせされる際は、アプリ名、ご利用中の機種名をご記入下さい。<br>
 
-<div>
-<a href="mailto:google_info@ttis.jp?subject=お問い合わせ&amp;body=お問い合わせ内容（できるだけ具体的に）：">&raquo;&nbsp;お問い合わせ</a>
-</div>
 </body>
 </html>
