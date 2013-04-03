@@ -47,205 +47,229 @@ import com.tp.utils.Struts2Utils;
 @Namespace("/log")
 public class LogAction extends ActionSupport {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private LogService logService;
-	private ClientFileManager clientFileManager;
+    private LogService logService;
+    private ClientFileManager clientFileManager;
 
-	@Override
-	public String execute() throws Exception {
+    @Override
+    public String execute() throws Exception {
 
-		return save();
-	}
+        return save();
+    }
 
-	public String save() throws Exception {
+    public String save() throws Exception {
 
-		LogDTO logDTO = getLog();
-		LogFromClient entity = BeanMapper.map(logDTO, LogFromClient.class);
-		entity.setCreateTime(DateUtil.convert(new Date()));
-		logService.saveLogFromClient(entity);
+        LogDTO logDTO = getLog();
+        LogFromClient entity = BeanMapper.map(logDTO, LogFromClient.class);
+        entity.setCreateTime(DateUtil.convert(new Date()));
+        logService.saveLogFromClient(entity);
 
-		String clientVersion = entity.getClientVersion();
-		ClientFile client = clientFileManager.getByVersion(clientVersion);
-		if (client == null || clientVersion.equals("2.6.0")) { //兼容客户端无法升级的bug
-			Struts2Utils.renderText("");
-			return null;
-		}
+        String clientVersion = entity.getClientVersion();
+        String vstring=clientVersion;
+        vstring = vstring.replaceAll("\\Q.\\E", "");
+        vstring = vstring.replaceAll("\\D", "");
+        if (vstring.length() > 3){
 
-		String version = clientFileManager.getNewestClient(clientVersion, client.getDtype());
-        ClientFile clientFile= clientFileManager.getByVersion(version);
-        if(clientFile!=null&&StringUtils.isNotBlank(clientFile.getDescription())){
-            version=version+"{"+clientFile.getDescription()+"}";
+            clientVersion= StringUtils.substring(clientVersion,0,5);
         }
-		Struts2Utils.renderText(version);
-		return null;
-	}
+        ClientFile client = clientFileManager.getByVersion(clientVersion);
+        if (client == null || clientVersion.equals("2.6.0")) { //兼容客户端无法升级的bug
+            Struts2Utils.renderText("");
+            return null;
+        }
 
-	public String saveDownload() throws Exception {
+        String version = clientFileManager.getNewestClient(clientVersion, client.getDtype());
+        ClientFile clientFile = clientFileManager.getByVersion(version);
+        if (parseVersionString(clientVersion) > 293 && clientFile != null) {
+            version = version + "{" + clientFile.getDescription() + "}";
+        }
+        Struts2Utils.renderText(version);
+        return null;
+    }
 
-		String queryStr = Struts2Utils.getParameter(Constants.QUERY_STRING);
-		if (StringUtils.isNotBlank(queryStr) && queryStr.contains("UMS"))
-			queryStr = StringUtils.substringAfterLast(queryStr, "UMS/");
-		String clientStr = Struts2Utils.getParameter("cs");
-		LogInHome log = splitClientStr(clientStr);
-		int index = StringUtils.indexOf(queryStr, "&inputPath");
-		int ques = StringUtils.indexOf(queryStr, "?");
-		if (ques != -1) {
-			log.setRequestMethod(StringUtils.substring(queryStr, 0, ques));
-		} else {
-			log.setRequestMethod("d_download");
-		}
-		if (index != -1) {
-			queryStr = StringUtils.substring(queryStr, ques + 1, index);
-			String[] qs = StringUtils.split(queryStr, "=");
-			log.setRequestParams(qs[0] + ":" + qs[1]);
-		} else {
-			log.setRequestParams(queryStr);
-		}
-		log.setCreateTime(DateUtil.convert(new Date()));
-        if(log.getAppName()==null){
+    private int parseVersionString(String vstring) {
+        int myversion = 0;
+        vstring = vstring.replaceAll("\\Q.\\E", "");
+        vstring = vstring.replaceAll("\\D", "");
+        if (vstring.length() > 3)
+            vstring = vstring.substring(0, 3);
+
+        try {
+            int parsed = Integer.parseInt(vstring);
+            if (parsed < 100) myversion = parsed * 10;
+            else myversion = parsed;
+        } catch (Exception e) {
+        }
+
+        return myversion;
+    }
+
+    public String saveDownload() throws Exception {
+
+        String queryStr = Struts2Utils.getParameter(Constants.QUERY_STRING);
+        if (StringUtils.isNotBlank(queryStr) && queryStr.contains("UMS"))
+            queryStr = StringUtils.substringAfterLast(queryStr, "UMS/");
+        String clientStr = Struts2Utils.getParameter("cs");
+        LogInHome log = splitClientStr(clientStr);
+        int index = StringUtils.indexOf(queryStr, "&inputPath");
+        int ques = StringUtils.indexOf(queryStr, "?");
+        if (ques != -1) {
+            log.setRequestMethod(StringUtils.substring(queryStr, 0, ques));
+        } else {
+            log.setRequestMethod("d_download");
+        }
+        if (index != -1) {
+            queryStr = StringUtils.substring(queryStr, ques + 1, index);
+            String[] qs = StringUtils.split(queryStr, "=");
+            log.setRequestParams(qs[0] + ":" + qs[1]);
+        } else {
+            log.setRequestParams(queryStr);
+        }
+        log.setCreateTime(DateUtil.convert(new Date()));
+        if (log.getAppName() == null) {
             log.setAppName("");
         }
-		logService.saveLogInHome(log);
-		Struts2Utils.renderText("success");
-		return null;
-	}
+        logService.saveLogInHome(log);
+        Struts2Utils.renderText("success");
+        return null;
+    }
 
-	private LogInHome splitClientStr(String requetParam) {
-		LogInHome log = new LogInHome();
-		if (StringUtils.isNotBlank(requetParam)) {
+    private LogInHome splitClientStr(String requetParam) {
+        LogInHome log = new LogInHome();
+        if (StringUtils.isNotBlank(requetParam)) {
 
-			String[] params = StringUtils.split(requetParam, "&");
+            String[] params = StringUtils.split(requetParam, "&");
 
-			for (int i = 0; i < params.length; i++) {
-				String param = params[i];
-				String[] keyValue = StringUtils.split(param, "=");
-				if (keyValue.length > 1) {
-					String key = keyValue[0];
-					String value = keyValue[1];
-					if (key.equals(Constants.PARA_CLIENT_VERSION)) {
-						log.setClientVersion(value);
-					}
-					if (key.equals(Constants.PARA_DOWNLOAD_METHOD)) {
-						log.setDownType(value);
-					}
-					if (key.equals(Constants.PARA_FROM_MARKET)) {
-						log.setFromMarket(value);
-					}
-					if (key.equals(Constants.PARA_IMEI)) {
-						log.setImei(value);
-					}
-					if (key.equals(Constants.PARA_IMSI)) {
-						log.setImsi(value);
-					}
-					if (key.equals(Constants.PARA_LANGUAGE)) {
-						log.setLanguage(value);
-					}
-					if (key.equals(Constants.PARA_RESOLUTION)) {
-						log.setResolution(value);
-					}
-					if (key.equals(Constants.PARA_STORE_TYPE)) {
-						log.setStoreType(value);
-					}
-				}
-			}
-		}
-		return log;
+            for (int i = 0; i < params.length; i++) {
+                String param = params[i];
+                String[] keyValue = StringUtils.split(param, "=");
+                if (keyValue.length > 1) {
+                    String key = keyValue[0];
+                    String value = keyValue[1];
+                    if (key.equals(Constants.PARA_CLIENT_VERSION)) {
+                        log.setClientVersion(value);
+                    }
+                    if (key.equals(Constants.PARA_DOWNLOAD_METHOD)) {
+                        log.setDownType(value);
+                    }
+                    if (key.equals(Constants.PARA_FROM_MARKET)) {
+                        log.setFromMarket(value);
+                    }
+                    if (key.equals(Constants.PARA_IMEI)) {
+                        log.setImei(value);
+                    }
+                    if (key.equals(Constants.PARA_IMSI)) {
+                        log.setImsi(value);
+                    }
+                    if (key.equals(Constants.PARA_LANGUAGE)) {
+                        log.setLanguage(value);
+                    }
+                    if (key.equals(Constants.PARA_RESOLUTION)) {
+                        log.setResolution(value);
+                    }
+                    if (key.equals(Constants.PARA_STORE_TYPE)) {
+                        log.setStoreType(value);
+                    }
+                }
+            }
+        }
+        return log;
 
-	}
+    }
 
-	@Deprecated
-	public String client() throws Exception {
+    @Deprecated
+    public String client() throws Exception {
 
-		return null;
-	}
+        return null;
+    }
 
-	public String content() throws Exception {
-		LogDTO logDTO = getLog();
-		LogForContent entity = BeanMapper.map(logDTO, LogForContent.class);
-		entity.setCreateTime(DateUtil.convert(new Date()));
-		logService.saveLogContent(entity);
-		return null;
-	}
+    public String content() throws Exception {
+        LogDTO logDTO = getLog();
+        LogForContent entity = BeanMapper.map(logDTO, LogForContent.class);
+        entity.setCreateTime(DateUtil.convert(new Date()));
+        logService.saveLogContent(entity);
+        return null;
+    }
 
-	public String redirect() throws Exception {
-		LogDTO log = getLog();
-		String url = log.getUrl();
-		String app = log.getAppName();
-		if (StringUtils.isNotBlank(app)) {
-			app = URLDecoder.decode(app, ENCODE_UTF_8);
-		}
-		LogForRedirect redire = new LogForRedirect();
-		redire.setAppName(app);
-		redire.setLinkAddr(url);
-		logService.saveRedirect(redire);
-		Struts2Utils.getResponse().sendRedirect(url);
-		return null;
-	}
+    public String redirect() throws Exception {
+        LogDTO log = getLog();
+        String url = log.getUrl();
+        String app = log.getAppName();
+        if (StringUtils.isNotBlank(app)) {
+            app = URLDecoder.decode(app, ENCODE_UTF_8);
+        }
+        LogForRedirect redire = new LogForRedirect();
+        redire.setAppName(app);
+        redire.setLinkAddr(url);
+        logService.saveRedirect(redire);
+        Struts2Utils.getResponse().sendRedirect(url);
+        return null;
+    }
 
-	public String poll() throws Exception {
+    public String poll() throws Exception {
 
-		LogDTO logDTO = getLog();
+        LogDTO logDTO = getLog();
 
-		LogForPoll entity = BeanMapper.map(logDTO, LogForPoll.class);
-		logService.savePoll(entity);
-		Struts2Utils.renderText("success");
-		return null;
-	}
+        LogForPoll entity = BeanMapper.map(logDTO, LogForPoll.class);
+        logService.savePoll(entity);
+        Struts2Utils.renderText("success");
+        return null;
+    }
 
-	private LogDTO getLog() {
-		String imei = Struts2Utils.getParameter(PARA_IMEI);
-		String imsi = Struts2Utils.getParameter(PARA_IMSI);
-		String storeType = Struts2Utils.getParameter(PARA_STORE_TYPE);
-		String ct = Struts2Utils.getParameter(PARA_CLIENT_TYPE);
-		String downType = Struts2Utils.getParameter(PARA_DOWNLOAD_METHOD);
-		String language = Struts2Utils.getParameter(PARA_LANGUAGE);
-		String clientVersion = Struts2Utils.getParameter(PARA_CLIENT_VERSION);
-		String contentVersion = Struts2Utils.getParameter(PARA_CONTENT_VERSION);
-		String resolution = Struts2Utils.getParameter(PARA_RESOLUTION);
-		String fromMarket = Struts2Utils.getParameter(PARA_FROM_MARKET);
-		String autoSwitch = Struts2Utils.getParameter(PARA_AUTO_SWITCH);
-		String safetyLock = Struts2Utils.getParameter(PARA_SAFETYLOCK);
-		String netEnv = Struts2Utils.getParameter(PARA_NET_ENVIRONMENT);
-		String op = Struts2Utils.getParameter(PARA_OPERATORS);
-		String model = Struts2Utils.getParameter(PARA_MACHINE_MODEL);
-		String doType = Struts2Utils.getParameter(PARA_DO_TYPE);
-		String bcid = Struts2Utils.getParameter(PARA_BCID);
-		String app = Struts2Utils.getParameter(PARA_APP_NAME);
-		String url = Struts2Utils.getParameter(PARA_URL);
-		String from = Struts2Utils.getParameter(PARA_FROM);
+    private LogDTO getLog() {
+        String imei = Struts2Utils.getParameter(PARA_IMEI);
+        String imsi = Struts2Utils.getParameter(PARA_IMSI);
+        String storeType = Struts2Utils.getParameter(PARA_STORE_TYPE);
+        String ct = Struts2Utils.getParameter(PARA_CLIENT_TYPE);
+        String downType = Struts2Utils.getParameter(PARA_DOWNLOAD_METHOD);
+        String language = Struts2Utils.getParameter(PARA_LANGUAGE);
+        String clientVersion = Struts2Utils.getParameter(PARA_CLIENT_VERSION);
+        String contentVersion = Struts2Utils.getParameter(PARA_CONTENT_VERSION);
+        String resolution = Struts2Utils.getParameter(PARA_RESOLUTION);
+        String fromMarket = Struts2Utils.getParameter(PARA_FROM_MARKET);
+        String autoSwitch = Struts2Utils.getParameter(PARA_AUTO_SWITCH);
+        String safetyLock = Struts2Utils.getParameter(PARA_SAFETYLOCK);
+        String netEnv = Struts2Utils.getParameter(PARA_NET_ENVIRONMENT);
+        String op = Struts2Utils.getParameter(PARA_OPERATORS);
+        String model = Struts2Utils.getParameter(PARA_MACHINE_MODEL);
+        String doType = Struts2Utils.getParameter(PARA_DO_TYPE);
+        String bcid = Struts2Utils.getParameter(PARA_BCID);
+        String app = Struts2Utils.getParameter(PARA_APP_NAME);
+        String url = Struts2Utils.getParameter(PARA_URL);
+        String from = Struts2Utils.getParameter(PARA_FROM);
 
-		LogDTO dto = new LogDTO();
-		dto.setAppName(app);
-		dto.setAutoSwitch(autoSwitch);
-		dto.setBcid(bcid);
-		dto.setClientVersion(clientVersion);
-		dto.setContentVersion(contentVersion);
-		dto.setClientType(ct);
-		dto.setDownType(downType);
-		dto.setDoType(doType);
-		dto.setFromMarket(fromMarket);
-		dto.setFrom(from);
-		dto.setImei(imei);
-		dto.setImsi(imsi);
-		dto.setLanguage(language);
-		dto.setModel(model);
-		dto.setNetEnv(netEnv);
-		dto.setOperators(op);
-		dto.setResolution(resolution);
-		dto.setSafetyLock(safetyLock);
-		dto.setStoreType(storeType);
-		dto.setUrl(url);
-		return dto;
-	}
+        LogDTO dto = new LogDTO();
+        dto.setAppName(app);
+        dto.setAutoSwitch(autoSwitch);
+        dto.setBcid(bcid);
+        dto.setClientVersion(clientVersion);
+        dto.setContentVersion(contentVersion);
+        dto.setClientType(ct);
+        dto.setDownType(downType);
+        dto.setDoType(doType);
+        dto.setFromMarket(fromMarket);
+        dto.setFrom(from);
+        dto.setImei(imei);
+        dto.setImsi(imsi);
+        dto.setLanguage(language);
+        dto.setModel(model);
+        dto.setNetEnv(netEnv);
+        dto.setOperators(op);
+        dto.setResolution(resolution);
+        dto.setSafetyLock(safetyLock);
+        dto.setStoreType(storeType);
+        dto.setUrl(url);
+        return dto;
+    }
 
-	@Autowired
-	public void setLogService(LogService logService) {
-		this.logService = logService;
-	}
+    @Autowired
+    public void setLogService(LogService logService) {
+        this.logService = logService;
+    }
 
-	@Autowired
-	public void setClientFileManager(ClientFileManager clientFileManager) {
-		this.clientFileManager = clientFileManager;
-	}
+    @Autowired
+    public void setClientFileManager(ClientFileManager clientFileManager) {
+        this.clientFileManager = clientFileManager;
+    }
 }
