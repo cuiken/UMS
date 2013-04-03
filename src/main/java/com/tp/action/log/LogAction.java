@@ -66,13 +66,9 @@ public class LogAction extends ActionSupport {
         logService.saveLogFromClient(entity);
 
         String clientVersion = entity.getClientVersion();
-        String vstring=clientVersion;
-        vstring = vstring.replaceAll("\\Q.\\E", "");
-        vstring = vstring.replaceAll("\\D", "");
-        if (vstring.length() > 3){
 
-            clientVersion= StringUtils.substring(clientVersion,0,5);
-        }
+        clientVersion = StringUtils.substring(clientVersion, 0, 5);
+
         ClientFile client = clientFileManager.getByVersion(clientVersion);
         if (client == null || clientVersion.equals("2.6.0")) { //兼容客户端无法升级的bug
             Struts2Utils.renderText("");
