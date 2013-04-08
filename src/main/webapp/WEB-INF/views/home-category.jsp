@@ -4,11 +4,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=2.0; user-scalable=0;">
-	<meta name="apple-mobile-web-app-capable" content="yes"> 
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">  
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  	<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 	<title>商店分类</title>
     <link rel="stylesheet" href="${ctx}/static/styles/site.min.css" media="screen"/>
   	<style>

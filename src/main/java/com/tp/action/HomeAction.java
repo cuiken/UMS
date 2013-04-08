@@ -125,8 +125,17 @@ public class HomeAction extends ActionSupport {
 
         language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
         Long storeId = chooseStoreId(session);
-        String shelf=Struts2Utils.getParameter("sf");
-        newestPage = fileManager.searchStoreInfoInShelf(newestPage, shelf, storeId, language);
+        String sf=Struts2Utils.getParameter("sf");
+
+       Store store= categoryManager.getStore(storeId);
+        for(Shelf s:store.getShelfs()){
+            if(s.getValue().equals(sf)){
+                categoryName=s.getName();
+                break;
+            }
+        }
+
+        newestPage = fileManager.searchStoreInfoInShelf(newestPage, sf, storeId, language);
         return "shelf";
     }
 
