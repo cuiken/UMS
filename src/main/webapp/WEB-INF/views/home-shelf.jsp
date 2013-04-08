@@ -7,18 +7,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 		<title>Fun主题-货架</title>
         <link rel="stylesheet" href="${ctx}/static/styles/site.min.css" media="screen"/>
+        <style>
+            .slide_list_dot a {
+                width: 50%;
+            }
+        </style>
 	</head>
 	<body>
 	
 		<form action="home.action" method="get">
-            <div class="dk_nav_back_gree_title_bar">
-                <a class="dk_pos_left dk_back_page" href="javascript:history.back();">
-                    <img src="${ctx}/static/images/go_back.png">
-                </a>
-                <span>${categoryName}</span>
-                <a class="dk_pos_right" href="home.action?${queryString}">
-                    <img src="${ctx}/static/images/go_home.png">
-                </a>
+            <div class="slide_list_dot">
+                <a id="game" href="home!shelf.action?sf=game&${queryString}">精品游戏</a>
+                <a id="soft" href="home!shelf.action?sf=app&${queryString}">免费软件</a>
             </div>
 			<div id="container"> 
 				<s:iterator value="newestPage.result">
@@ -44,7 +44,18 @@
 
   		<script>
 		  $(function(){
-			  
+
+              var reg=function (name)
+              {
+                  var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");
+                  if (reg.test(location.href)) return decodeURIComponent(RegExp.$2.replace(/\+/g, " ")); return "";
+              };
+
+              if(reg("sf")=='game'){
+                  $("#game").addClass("selected");
+              }else{
+                  $("#soft").addClass("selected");
+              }
 			 $("#content1").live("click",function(){ 
 				$(this).css("backgroundColor","#e7e6c8");
 			});

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.common.collect.Lists;
 import com.tp.dao.log.LogJdbcDao;
 import com.tp.entity.*;
 import com.tp.orm.PropertyFilter;
@@ -148,7 +149,7 @@ public class HomeAction extends ActionSupport {
     private String dispatcher(String type) throws Exception{
         HttpServletRequest request=Struts2Utils.getRequest();
         HttpServletResponse response=Struts2Utils.getResponse();
-        request.getRequestDispatcher("/home!shelf.action?sf="+type).forward(request,response);
+        request.getRequestDispatcher("/home!shelf.action?sf="+type).forward(request, response);
         return null;
     }
 
@@ -171,7 +172,14 @@ public class HomeAction extends ActionSupport {
     }
 
 	public String category() throws Exception {
-		categories = categoryManager.getCategoriesInStore();
+		List<Category> lists = categoryManager.getCategories();
+        categories= Lists.newArrayList();
+        for(Category category:lists){
+            if(StringUtils.contains(category.getDescription(),"hidden")){
+                continue;
+            }
+            categories.add(category);
+        }
 		return "category";
 	}
 
@@ -281,7 +289,7 @@ public class HomeAction extends ActionSupport {
 		String fromMarket = (String) session.getAttribute(Constants.PARA_FROM_MARKET);
 		String downType = (String) session.getAttribute(Constants.PARA_DOWNLOAD_METHOD);
 		StringBuilder httpBuffer = new StringBuilder();
-		if (category.equalsIgnoreCase("other")) {
+		if (category.contains("other")) {
 			httpBuffer.append("browerhttp://" + StringUtils.remove(Constants.getDomain(), "http://") + "/");
 		}
 		httpBuffer.append("file-download.action?id=");
