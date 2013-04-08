@@ -103,9 +103,9 @@ public class FileManager {
 		return fileInfoDao.findPage(page, filters);
 	}
 
-	public Page<FileStoreInfo> searchStoreInfoInShelf(final Page<FileStoreInfo> page, Shelf.Type newest, Long sid,
+	public Page<FileStoreInfo> searchStoreInfoInShelf(final Page<FileStoreInfo> page, String shelf, Long sid,
 			String language) {
-		return storeInfoDao.searchStoreInfoInShelf(page, newest.getValue(), sid, language);
+		return storeInfoDao.searchStoreInfoInShelf(page, shelf, sid, language);
 	}
 
 	public ThemeFile saveFiles(List<File> files, ThemeFile fs, FileInfo info) {

@@ -84,11 +84,11 @@ public class LockerAction extends ActionSupport {
 		Long storeId = chooseStoreId(session);
 
 		hottestPage.setPageSize(16);
-		hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST, storeId, language);
+		hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST.getValue(), storeId, language);
 
-		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST, storeId, language);
+		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST.getValue(), storeId, language);
 		if (visitByBrowse(session)) {
-			recommendPage = fileManager.searchStoreInfoInShelf(recommendPage, Shelf.Type.RECOMMEND, storeId, language);
+			recommendPage = fileManager.searchStoreInfoInShelf(recommendPage, Shelf.Type.RECOMMEND.getValue(), storeId, language);
 			List<FileStoreInfo> recommendFiles = recommendPage.getResult();
 			if (recommendFiles.size() > 0) {
 				Collections.shuffle(recommendFiles);

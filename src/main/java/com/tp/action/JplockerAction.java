@@ -65,9 +65,9 @@ public class JplockerAction extends ActionSupport {
 
         hottestPage.setPageSize(100);
         newestPage.setPageSize(100);
-        hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST, storeId, language);
+        hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST.getValue(), storeId, language);
 
-        newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST, storeId, language);
+        newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST.getValue(), storeId, language);
 
         Market market = this.getMarket(session);
         List<FileStoreInfo> allFile = Lists.newArrayList();
