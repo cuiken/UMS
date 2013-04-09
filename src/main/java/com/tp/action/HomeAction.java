@@ -143,7 +143,13 @@ public class HomeAction extends ActionSupport {
     @Deprecated
     public String star() throws Exception{
 
-        return dispatcher("star");
+        HttpSession session = Struts2Utils.getSession();
+
+        language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+        Long storeId = chooseStoreId(session);
+        newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.STAR.getValue(), storeId, language);
+        categoryName=Shelf.Type.STAR.getDisplayName();
+        return "star";
     }
 
     private String dispatcher(String type) throws Exception{

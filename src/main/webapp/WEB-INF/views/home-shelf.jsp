@@ -51,7 +51,7 @@
                   if (reg.test(location.href)) return decodeURIComponent(RegExp.$2.replace(/\+/g, " ")); return "";
               };
 
-              if(reg("sf")=='game'){
+              if(reg("sf")=='game'||location.href.indexOf("game")>0){
                   $("#game").addClass("selected");
               }else{
                   $("#soft").addClass("selected");
