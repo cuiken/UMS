@@ -39,12 +39,14 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+    <!-- 另一个事务管理器, Jdbc单数据源事务 -->
+    <bean id="quartzTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="quartzDataSource" />
+    </bean>
+
 	<!-- 使用annotation定义事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
-	
-	<import resource="applicationContext-quartz-cron-local.xml"/>
-	<import resource="cache/applicationContext-memcached.xml"/>
-	
+
 	<!-- production环境 -->
 	<beans profile="production">
 		<context:property-placeholder ignore-resource-not-found="true" location="classpath*:/application.properties"/>
@@ -63,6 +65,14 @@
 			<property name="timeBetweenEvictionRunsMillis" value="3600000" />
 			<property name="minEvictableIdleTimeMillis" value="3600000" />
 		</bean>
+        <!-- quartz使用的数据源配置 -->
+        <bean id="quartzDataSource"  class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            <property name="driverClassName" value="${quartz.jdbc.driver}" />
+            <property name="url" value="${quartz.jdbc.url}" />
+            <property name="username" value="${quartz.jdbc.username}" />
+            <property name="password" value="${quartz.jdbc.password}" />
+            <property name="defaultAutoCommit" value="false" />
+        </bean>
 	</beans>
 	
 	<!-- local development环境 -->
@@ -79,6 +89,13 @@
 			<property name="password" value="${jdbc.password}" />
 			<property name="defaultAutoCommit" value="false" />
 		</bean>
+        <!-- Simple连接池 for quartz -->
+        <bean id="quartzDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+            <property name="driverClass" value="${quartz.jdbc.driver}" />
+            <property name="url" value="${quartz.jdbc.url}" />
+            <property name="username" value="${quartz.jdbc.username}" />
+            <property name="password" value="${quartz.jdbc.password}" />
+        </bean>
 	</beans>	
 	
 	<!-- functional test 环境 -->
@@ -95,9 +112,19 @@
 			<property name="password" value="${jdbc.password}" />
 			<property name="defaultAutoCommit" value="false" />
 		</bean>
+
+        <!-- Simple连接池 for quartz -->
+        <bean id="quartzDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+            <property name="driverClass" value="${quartz.jdbc.driver}" />
+            <property name="url" value="${quartz.jdbc.url}" />
+            <property name="username" value="${quartz.jdbc.username}" />
+            <property name="password" value="${quartz.jdbc.password}" />
+        </bean>
+
 		<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 			<jdbc:script location="classpath:sql/schema-with-h2.sql"/>
 		</jdbc:initialize-database>
+
 	</beans>	
 	
 	<beans profile="test">
@@ -112,8 +139,17 @@
 			<property name="username" value="${jdbc.username}" />
 			<property name="password" value="${jdbc.password}" />	
 		</bean>
+
+        <!-- Simple连接池 for quartz -->
+        <bean id="quartzDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+            <property name="driverClass" value="${quartz.jdbc.driver}" />
+            <property name="url" value="${quartz.jdbc.url}" />
+            <property name="username" value="${quartz.jdbc.username}" />
+            <property name="password" value="${quartz.jdbc.password}" />
+        </bean>
+
 		<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 			<jdbc:script location="classpath:sql/schema-with-h2.sql"/>
 		</jdbc:initialize-database>
-	</beans>	
+	</beans>
 </beans>

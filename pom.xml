@@ -8,12 +8,12 @@
 	<name>mopita ums</name>
 	<properties>
 		<!-- 主要依赖库的版本定义 -->
-		<spring.version>3.2.0.RELEASE</spring.version>
+		<spring.version>3.2.2.RELEASE</spring.version>
 		<struts.version>2.3.12</struts.version>
 		<guava.version>13.0.1</guava.version>
 		<hibernate.version>3.6.10.Final</hibernate.version>
 		<shiro.version>1.2.1</shiro.version>
-		<quartz.version>1.8.6</quartz.version>
+		<quartz.version>2.1.6</quartz.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
 		<ehcache.version>2.5.2</ehcache.version>
 		<spymemcached.version>2.8.9</spymemcached.version>
