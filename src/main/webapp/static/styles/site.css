@@ -242,25 +242,12 @@ big a link{
     margin-top: 65px;
 }
 
-.dk_nav_back_gree_title_bar {
-    height: 43px;
-    line-height: 44px;
-    font-size: 20px;
-    color: #fff;
-    background:#e74473;
-    text-align: center;
-    margin-bottom: 4px;
-}
-.dk_nav_back_gree_title_bar .dk_pos_left {
-    float: left;
-    position: relative;
-    top: 5px;
-    left: 10px;
-}
-
-.dk_nav_back_gree_title_bar .dk_pos_right {
-    float: right;
-    position: relative;
-    top: 5px;
-    right: 10px;
+.categoryback a{
+    display: block;
+    color: #666;
+    min-height:53px;
+    text-decoration: none;
+    border-radius: 4px;
+    -webkit-border-radius:4px;
+    background: url(../images/csharp.png) no-repeat 1% center;
 }

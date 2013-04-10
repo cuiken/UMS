@@ -6,19 +6,13 @@
 	<head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 		<title>Fun主题-商店更多</title>
-        <link rel="stylesheet" href="${ctx}/static/styles/site.min.css" media="screen"/>
+        <link rel="stylesheet" href="${ctx}/static/styles/site.min.css?v=1.0" media="screen"/>
 	</head>
 	<body>
 	
 		<form action="home.action" method="get">
-            <div class="dk_nav_back_gree_title_bar">
-                <a class="dk_pos_left dk_back_page" href="javascript:history.back();">
-                    <img src="${ctx}/static/images/go_back.png">
-                </a>
-                <span>${categoryName}</span>
-                <a class="dk_pos_right" href="home.action?${queryString}">
-                    <img src="${ctx}/static/images/go_home.png">
-                </a>
+            <div class="categoryback">
+                <h3><a href="home!category.action?${queryString}"><span style="margin-left: 30px;height: 53px;line-height: 53px;">${categoryName}</span></a></h3>
             </div>
 			<div id="container"> 
 				<s:iterator value="catePage.result">

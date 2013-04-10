@@ -4,26 +4,15 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=2.0; user-scalable=0;">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <title>Fun主题-星座专题</title>
-    <link rel="stylesheet" href="${ctx}/static/styles/site.min.css" media="screen"/>
+    <link rel="stylesheet" href="${ctx}/static/styles/site.min.css?v=1.0" media="screen"/>
 </head>
 <body>
 
 <form action="home.action" method="get">
-    <div class="dk_nav_back_gree_title_bar">
-        <a class="dk_pos_left dk_back_page" href="javascript:history.back();">
-            <img src="${ctx}/static/images/go_back.png">
-        </a>
-        <span>${categoryName}</span>
-        <a class="dk_pos_right" href="home.action?${queryString}">
-            <img src="${ctx}/static/images/go_home.png">
-        </a>
+    <div class="categoryback">
+        <h3><a href="home!category.action?${queryString}"><span style="margin-left: 30px;height: 53px;line-height: 53px;">${categoryName}</span></a></h3>
     </div>
     <div id="container">
         <s:iterator value="newestPage.result">
