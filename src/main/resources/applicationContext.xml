@@ -66,12 +66,11 @@
 			<property name="minEvictableIdleTimeMillis" value="3600000" />
 		</bean>
         <!-- quartz使用的数据源配置 -->
-        <bean id="quartzDataSource"  class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-            <property name="driverClassName" value="${quartz.jdbc.driver}" />
+        <bean id="quartzDataSource"  class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+            <property name="driverClass" value="${quartz.jdbc.driver}" />
             <property name="url" value="${quartz.jdbc.url}" />
             <property name="username" value="${quartz.jdbc.username}" />
             <property name="password" value="${quartz.jdbc.password}" />
-            <property name="defaultAutoCommit" value="false" />
         </bean>
 	</beans>
 	

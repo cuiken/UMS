@@ -52,8 +52,4 @@
         <property name="jobClass" value="com.tp.job.CreateTableClusterableJob"/>
     </bean>
 
-	<!-- Job的可配置属性,在job中通过applicationContext动态获取 -->
-	<util:map id="timerJobConfig">
-		<entry key="nodeName" value="${server.node_name}" />
-	</util:map>
 </beans>
