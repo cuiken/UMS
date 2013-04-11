@@ -65,12 +65,10 @@ public class LogAction extends ActionSupport {
         entity.setCreateTime(DateUtil.convert(new Date()));
         logService.saveLogFromClient(entity);
 
-        String clientVersion = entity.getClientVersion();
-
-        clientVersion = StringUtils.substring(clientVersion, 0, 5);
+        String clientVersion = escapeVersion(entity.getClientVersion());
 
         ClientFile client = clientFileManager.getByVersion(clientVersion);
-        if (client == null || clientVersion.equals("2.6.0")) { //兼容客户端无法升级的bug
+        if (client == null || clientVersion.equals("2.6.0")) { //忽略客户端2.6.0升级
             Struts2Utils.renderText("");
             return null;
         }
@@ -82,6 +80,12 @@ public class LogAction extends ActionSupport {
         }
         Struts2Utils.renderText(version);
         return null;
+    }
+
+    private String escapeVersion(String vstring) {
+        String myversion = vstring.replaceAll("\\Q.\\E", "");
+        myversion = myversion.replaceAll("\\d", "");
+        return StringUtils.substring(vstring, 0, 5) + myversion;
     }
 
     private int parseVersionString(String vstring) {
