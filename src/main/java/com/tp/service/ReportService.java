@@ -138,7 +138,7 @@ public class ReportService {
 	}
 
 	public void createGetClientPerMarketReport(String sdate, String edate) {
-		List<Map<String, Object>> getClients = logJdbcDao.countGetClientPerMarket(sdate, edate);
+		List<Map<String, Object>> getClients = logHomeDao.countGetClientPerMarket(sdate, edate);
 		for (Map<String, Object> content : getClients) {
 			LogCountGetClient entity = new LogCountGetClient();
 			entity.setAppName((String) content.get("app_name"));

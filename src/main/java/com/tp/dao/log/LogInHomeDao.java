@@ -49,6 +49,10 @@ public class LogInHomeDao {
             "primary key(id)\n" +
             ")ENGINE=MyISAM;";
 
+    private static final String QUERY_GETCLIENT_PERMARKET = "select l.app_name,m.name as market,count(*) as get_client"
+            + " from ? l left join f_market m on l.from_market=m.pk_name"
+            + " where l.create_time between ? and ? and l.request_method='getClient' group by l.app_name,l.from_market order by l.app_name";
+
     private static final String DROP_TABLE="drop table if exists ?";
 
     private static final String TABLE_PREFIX="log_f_store_";
@@ -82,6 +86,14 @@ public class LogInHomeDao {
     public Long countClientDownByContent(String method, String param, String sdate, String edate) {
         String table = selectTable(sdate);
         return jdbcTemplate.queryForLong(StringUtils.replaceOnce(DOWNLOAD_BY_CONTENT, "?", table), method, param, sdate, edate);
+    }
+
+    /**
+     * 客户端各市场下载统计 (内容引导客户端日报)
+     */
+    public List<Map<String, Object>> countGetClientPerMarket(String sdate, String edate) {
+        String table = selectTable(sdate);
+        return jdbcTemplate.queryForList(StringUtils.replaceOnce(QUERY_GETCLIENT_PERMARKET, "?", table), sdate, edate);
     }
 
     public void save(final Map<String, Object> logs) {
