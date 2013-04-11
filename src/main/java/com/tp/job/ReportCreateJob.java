@@ -17,7 +17,7 @@ import com.tp.search.Search;
 import com.tp.service.LogService;
 import com.tp.service.ReportService;
 import com.tp.utils.Constants;
-
+@Deprecated
 public class ReportCreateJob {
 
 	private LogService logService;

@@ -37,10 +37,13 @@
 				<div class="long_des" id="desc" style="line-height: 130%;">
 					<s:text name="home.desc"/>: ${info.longDescription}
 				</div>
-				<div style="float: right;margin: 15px;">
-					<a href="home.action?${queryString}"><img id="gohome" alt="gohome" src="${ctx}/static/images/dhome.png"></a>
+
+				<div style="margin-top: 5px;">
+
+                    <a href="home!shelf.action?sf=game&${queryString}"><img src="${ctx}/static/images/like.png"></a>
+					<a style="float: right" href="home.action?${queryString}"><img id="gohome" alt="gohome" src="${ctx}/static/images/dhome.png"></a>
 				</div>
-				<div class="category">
+				<div class="category" style="margin-top: 20px;">
 					<div class="title_bar">
 						<s:text name="home.category" >
 							<s:param name="category" value="categoryName"/>
