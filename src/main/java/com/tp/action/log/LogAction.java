@@ -67,14 +67,14 @@ public class LogAction extends ActionSupport {
 
         String clientVersion = escapeVersion(entity.getClientVersion());
 
-        ClientFile client = clientFileManager.getByVersion(clientVersion);
+        ClientFile client = clientFileManager.getClientByVersion(clientVersion);
         if (client == null || clientVersion.equals("2.6.0")) { //忽略客户端2.6.0升级
             Struts2Utils.renderText("");
             return null;
         }
 
         String version = clientFileManager.getNewestClient(clientVersion, client.getDtype());
-        ClientFile clientFile = clientFileManager.getByVersion(version);
+        ClientFile clientFile = clientFileManager.getClientByVersion(version);
         if (parseVersionString(clientVersion) > 293 && clientFile != null) {
             version = version + "{" + clientFile.getDescription() + "}";
         }

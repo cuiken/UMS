@@ -75,17 +75,17 @@ public class LogInHomeDao {
 
     public Long countClientDownload(String method, String sdate, String edate) {
         String table = selectTable(sdate);
-        return jdbcTemplate.queryForLong(StringUtils.replaceOnce(COUNT_BY_METHOD, "?", table), method, sdate, edate);
+        return jdbcTemplate.queryForObject(StringUtils.replaceOnce(COUNT_BY_METHOD, "?", table), new Object[]{method, sdate, edate},Long.class);
     }
 
     public Long countUserInHome(String method, String sdate, String edate) {
         String table = selectTable(sdate);
-        return jdbcTemplate.queryForLong(StringUtils.replaceOnce(COUNT_BY_METHOD_DISTINCT, "?", table), method, sdate, edate);
+        return jdbcTemplate.queryForObject(StringUtils.replaceOnce(COUNT_BY_METHOD_DISTINCT, "?", table),new Object[]{ method, sdate, edate},Long.class);
     }
 
     public Long countClientDownByContent(String method, String param, String sdate, String edate) {
         String table = selectTable(sdate);
-        return jdbcTemplate.queryForLong(StringUtils.replaceOnce(DOWNLOAD_BY_CONTENT, "?", table), method, param, sdate, edate);
+        return jdbcTemplate.queryForObject(StringUtils.replaceOnce(DOWNLOAD_BY_CONTENT, "?", table), new Object[]{method, param, sdate, edate},Long.class);
     }
 
     /**

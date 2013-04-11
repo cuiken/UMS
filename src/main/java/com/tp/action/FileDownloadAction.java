@@ -67,14 +67,14 @@ public class FileDownloadAction extends ActionSupport {
 				inputStream.skip(p);
 			}
 			response.addHeader("Content-Disposition", "attachment; filename=" + "\"" + downloadFileName + "\"");
-			
+
 			response.setContentType(mimetypesFileTypeMap.getContentType(file.getName()));
-			
-			if(file.getPath().contains(Constants.CLIENT_STORAGE)){
+
+			if (file.getPath().contains(Constants.CLIENT_STORAGE)) {
 				Cookie c = new Cookie("downloadFlag", "on");
 				c.setMaxAge(180);
 				response.addCookie(c);
-			}		
+			}
 
 			OutputStream output = response.getOutputStream();
 			try {
@@ -89,7 +89,7 @@ public class FileDownloadAction extends ActionSupport {
 
 		return null;
 	}
-	
+
 	@PostConstruct
 	public void init() {
 		mimetypesFileTypeMap = new MimetypesFileTypeMap();
@@ -100,15 +100,9 @@ public class FileDownloadAction extends ActionSupport {
 
 		String version = Struts2Utils.getParameter(Constants.PARA_CLIENT_VERSION);
 		String contentVersion = Struts2Utils.getParameter(Constants.PARA_CONTENT_VERSION);
-		String ct = Struts2Utils.getParameter(Constants.PARA_CLIENT_TYPE);
 		String app = Struts2Utils.getParameter("app"); //兼容老版本内容下载参数v 重复混乱的情况
 		if (app != null && !app.isEmpty()) {
 			app = new String(app.getBytes("iso-8859-1"), Constants.ENCODE_UTF_8);
-		}
-		if (ct != null && ct.equals(Constants.DM_LOCKER)) {
-			return getLockerClient(version, app, Constants.LOCKER_DM);
-		} else if (ct != null) {
-			return getLockerClient(version, app, ct);
 		}
 
 		String market = Struts2Utils.getParameter(Constants.PARA_FROM_MARKET);
@@ -118,8 +112,11 @@ public class FileDownloadAction extends ActionSupport {
 		if (market != null && market.equals(Constants.MARKET_GOOGLE)) {
 			return getLockerClient(version, app, Constants.LOCKER_JP);
 		}
+		if(StringUtils.isNotBlank(version)){
+			ClientFile client=clientFileManager.getClientByVersion(version);
+			return getLockerClient(version, app, client.getDtype());
+		}
 		return getLockerClient(version, app, Constants.LOCKER_STANDARD);
-
 	}
 
 	private String getLockerClient(String version, String app, String dtype) throws Exception {

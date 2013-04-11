@@ -5,11 +5,14 @@ import com.tp.dao.log.LogInHomeDao;
 import com.tp.entity.log.LogInHome;
 import com.tp.mapper.JsonMapper;
 import com.tp.spring.SpringTxTestCase;
+import com.tp.utils.DateUtil;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +29,8 @@ public class LogInHomeServiceTest extends SpringTxTestCase {
     private LogInHomeDao logInHomeDao;
     private Map<String, Object> logs = Maps.newHashMap();
     private JsonMapper mapper = JsonMapper.buildNormalMapper();
-    private String sdate = "2013-03-25";
-    private String edate = "2013-03-26";
+    private String sdate =DateUtil.convertDate(new Date());
+    private String edate =DateUtil.convertDate(new Date());
     private String method_execute = "execute";
     private String method_getclient = "getClient";
 

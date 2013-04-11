@@ -577,3 +577,20 @@ create table f_polling_enhancement(
   create_time timestamp not null default 0,
   primary key(id)
 );
+
+CREATE TABLE `log_f_store_201304` (
+  `id` bigint(20) AUTO_INCREMENT,
+  `imei` varchar(50) ,
+  `imsi` varchar(50) ,
+  `app_name` varchar(50) ,
+  `store_type` varchar(20) ,
+  `down_type` varchar(20) ,
+  `language` varchar(20) DEFAULT NULL,
+  `client_version` varchar(20) DEFAULT NULL,
+  `resolution` varchar(100) DEFAULT NULL,
+  `from_market` varchar(255) DEFAULT NULL,
+  `request_method` varchar(255) DEFAULT NULL,
+  `request_params` varchar(255) DEFAULT NULL,
+  `create_time` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);

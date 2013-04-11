@@ -44,10 +44,6 @@ public class ClientFileManager {
 		return clientFileDao.getNewestVersionCode(dtype);
 	}
 
-	public ClientFile getByVersion(String version) {
-		return clientFileDao.findUniqueBy("version", version);
-	}
-
 	public String getNewestClient(String versionFromClient, String dtype) {
 		if (versionFromClient == null || versionFromClient.isEmpty()) {
 			return "";
