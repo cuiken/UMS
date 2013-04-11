@@ -9,6 +9,7 @@ import com.tp.cache.MemcachedObjectType;
 import com.tp.cache.SpyMemcachedClient;
 import com.tp.mapper.JsonMapper;
 import com.tp.utils.DateUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,7 @@ public class LogJdbcDao {
             + " WHERE l.create_time BETWEEN ? AND ? AND l.do_type=?  GROUP BY m.name,app_name ORDER BY app_name";
 
     private static final String QUERY_GETCLIENT_PERMARKET = "select l.app_name,m.name as market,count(*) as get_client"
-            + " from log_f_store2 l left join f_market m on l.from_market=m.pk_name"
+            + " from ? l left join f_market m on l.from_market=m.pk_name"
             + " where l.create_time between ? and ? and l.request_method='getClient' group by l.app_name,l.from_market order by l.app_name";
 
     private static final String QUERY_HOTTEST_DOWNLOAD = "SELECT ffi.f_id,ffi.title,ffi.short_description ,f.icon_path FROM f_file f right join"
@@ -41,6 +42,8 @@ public class LogJdbcDao {
     private JdbcTemplate jdbcTemplate;
     private SpyMemcachedClient memcachedClient;
     private JsonMapper jsonMapper = JsonMapper.buildNormalMapper();
+
+    private static final String TABLE_PREFIX="log_f_store_";
 
     /**
      * 内容解压安装统计
@@ -64,10 +67,11 @@ public class LogJdbcDao {
     }
 
     /**
-     * 客户端各市场下载统计
+     * 客户端各市场下载统计 (内容引导客户端日报)
      */
     public List<Map<String, Object>> countGetClientPerMarket(String sdate, String edate) {
-        return jdbcTemplate.queryForList(QUERY_GETCLIENT_PERMARKET, sdate, edate);
+        String table = selectTable(sdate);
+        return jdbcTemplate.queryForList(StringUtils.replaceOnce(QUERY_GETCLIENT_PERMARKET, "?", table), sdate, edate);
     }
 
     /**
@@ -84,6 +88,15 @@ public class LogJdbcDao {
             memcachedClient.set(key, MemcachedObjectType.THEME_SORT.getExpiredTime(), json);
         }
         return jsonMapper.fromJson(json, List.class);
+    }
+
+    private String selectTable(String date) {
+        String tableSuffix = DateUtil.get6charDateString(date);
+        if (tableSuffix.equals("201303")) {
+            return "log_f_store2";
+        } else {
+            return TABLE_PREFIX + tableSuffix;
+        }
     }
 
     @Resource
