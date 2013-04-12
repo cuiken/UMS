@@ -168,6 +168,10 @@ public class HomeAction extends ActionSupport {
 		return "love";
 	}
 
+    public String man() throws Exception{
+        return "man";
+    }
+
     public String hottest() throws Exception{
         HttpSession session = Struts2Utils.getSession();
 
@@ -369,6 +373,7 @@ public class HomeAction extends ActionSupport {
 			Struts2Utils.getResponse().sendError(HttpServletResponse.SC_NOT_FOUND, "parametter is incorrect.");
 			return null;
 		}
+        catePage.setPageSize(10);
 		catePage = fileManager.searchInfoByCategoryAndStore(catePage, categoryId, storeId, language);
 
 		return "more";

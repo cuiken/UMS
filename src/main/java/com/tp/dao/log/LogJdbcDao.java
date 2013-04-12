@@ -33,7 +33,7 @@ public class LogJdbcDao {
     private static final String QUERY_HOTTEST_DOWNLOAD = "SELECT ffi.f_id,ffi.title,ffi.short_description ,f.icon_path FROM f_file f right join"
             + " (select c.theme_name,sum(c.total_down) as download from log_count_content c"
             + " WHERE c.create_time BETWEEN ? AND ? GROUP BY c.theme_name) as l on f.title=l.theme_name"
-            + " JOIN f_file_info ffi ON f.id=ffi.f_id JOIN f_file_store fs ON f.id=fs.f_id WHERE ffi.language=? AND fs.s_id=? ORDER BY l.download desc limit ?,20";
+            + " JOIN f_file_info ffi ON f.id=ffi.f_id JOIN f_file_store fs ON f.id=fs.f_id WHERE ffi.language=? AND fs.s_id=? ORDER BY l.download desc limit ?,?";
 
     private JdbcTemplate jdbcTemplate;
     private SpyMemcachedClient memcachedClient;
@@ -64,12 +64,13 @@ public class LogJdbcDao {
      * 下载排行
      */
     public List<Map<String, Object>> countThemeFileDownload(String language, Long sid, Long pageNo) {
+        long pageSize=10;
         String key = MemcachedObjectType.THEME_SORT.getPrefix() + pageNo + language;
         String json = memcachedClient.get(key);
         if (json == null) {
             String edate = DateUtil.convertDate(new Date());
             String sdate = DateUtil.getPerMonthDate(edate);
-            List<Map<String, Object>> lists = jdbcTemplate.queryForList(QUERY_HOTTEST_DOWNLOAD, sdate, edate, language, sid, (pageNo - 1L) * 20);
+            List<Map<String, Object>> lists = jdbcTemplate.queryForList(QUERY_HOTTEST_DOWNLOAD, sdate, edate, language, sid, (pageNo - 1L) * pageSize,pageSize);
             json = jsonMapper.toJson(lists);
             memcachedClient.set(key, MemcachedObjectType.THEME_SORT.getExpiredTime(), json);
         }
