@@ -37,10 +37,10 @@
         <thead>
         <tr>
             <th>广告图片</th>
-            <th>广播名称</th>
-            <th>广播类型</th>
-            <th>状态</th>
-            <th>权重</th>
+            <th><a href="javascript:sort('contentName','asc')">广播名称</a></th>
+            <th><a href="javascript:sort('dtype','asc')">广播类型</a></th>
+            <th><a href="javascript:sort('status','asc')">状态</a></th>
+            <th><a href="javascript:sort('percent','asc')">权重</a></th>
             <th><a href="javascript:sort('createTime','asc')">更新时间</a></th>
             <th>操作</th>
         </tr>

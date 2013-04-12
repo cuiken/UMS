@@ -36,6 +36,10 @@ public class Poll2Action extends CRUDActionSupport<PollEnhancement> {
     @Override
     public String list() throws Exception {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
+        if (!page.isOrderBySetted()) {
+            page.setOrderBy("createTime");
+            page.setOrderDir(PageRequest.Sort.DESC);
+        }
         page = pollEnhancementService.searchPage(page, filters);
         sliders = page.getSlider(10);
         return SUCCESS;
