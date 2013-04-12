@@ -301,7 +301,7 @@ public class HomeAction extends ActionSupport {
 		httpBuffer.append("file-download.action?id=");
 		httpBuffer.append(info.getTheme().getId());
 		httpBuffer.append("&inputPath=");
-		if (StringUtils.isNotBlank(info.getTheme().getUxPath())) {
+		if (info.getTheme().getDtype().equals("1")) {
 			httpBuffer.append(URLEncoder.encode(info.getTheme().getUxPath(), "utf-8"));
 		} else {
 			httpBuffer.append(URLEncoder.encode(info.getTheme().getApkPath(), "utf-8"));
