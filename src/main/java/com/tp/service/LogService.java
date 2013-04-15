@@ -1,50 +1,23 @@
 package com.tp.service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import com.google.common.collect.Lists;
+import com.tp.cache.MemcachedObjectType;
+import com.tp.cache.SpyMemcachedClient;
+import com.tp.dao.log.*;
+import com.tp.entity.log.*;
+import com.tp.mapper.JsonMapper;
+import com.tp.orm.Page;
+import com.tp.orm.PropertyFilter;
+import com.tp.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
-import com.tp.cache.MemcachedObjectType;
-import com.tp.cache.SpyMemcachedClient;
-import com.tp.dao.log.LogCCInstallPerMarketDao;
-import com.tp.dao.log.LogCCInstallWithContentDao;
-import com.tp.dao.log.LogCmccResultDao;
-import com.tp.dao.log.LogCountClientDao;
-import com.tp.dao.log.LogCountContentDao;
-import com.tp.dao.log.LogCountContentMarketDao;
-import com.tp.dao.log.LogCountGetClientDao;
-import com.tp.dao.log.LogCountUnzipDao;
-import com.tp.dao.log.LogForCmccDao;
-import com.tp.dao.log.LogForContentDao;
-import com.tp.dao.log.LogForPollDao;
-import com.tp.dao.log.LogForRedirectDao;
-import com.tp.dao.log.LogFromClientDao;
-import com.tp.dao.log.LogInHomeDao;
-import com.tp.entity.log.LogCmccResult;
-import com.tp.entity.log.LogContentMarket;
-import com.tp.entity.log.LogCountClient;
-import com.tp.entity.log.LogCountClientInstallPerMarket;
-import com.tp.entity.log.LogCountClientInstallWithContent;
-import com.tp.entity.log.LogCountContent;
-import com.tp.entity.log.LogCountGetClient;
-import com.tp.entity.log.LogCountUnzip;
-import com.tp.entity.log.LogForCmcc;
-import com.tp.entity.log.LogForContent;
-import com.tp.entity.log.LogForPoll;
-import com.tp.entity.log.LogForRedirect;
-import com.tp.entity.log.LogFromClient;
-import com.tp.entity.log.LogInHome;
-import com.tp.mapper.JsonMapper;
-import com.tp.orm.Page;
-import com.tp.orm.PropertyFilter;
-import com.tp.utils.Constants;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 @Component
 @Transactional
@@ -76,7 +49,6 @@ public class LogService {
 	private LogCountContentDao countContentDao;
 
 	private LogCCInstallPerMarketDao countClientInstallDao;
-	private LogCCInstallWithContentDao countClientInstallWithContentDao;
 	private LogCountContentMarketDao countContentPerMarketDao;
 
 	private SpyMemcachedClient memcachedClient;
@@ -100,10 +72,6 @@ public class LogService {
 
 	public void saveClientInstall(LogCountClientInstallPerMarket entity) {
 		countClientInstallDao.save(entity);
-	}
-
-	public void saveClientInstallWithContent(LogCountClientInstallWithContent entity) {
-		countClientInstallWithContentDao.save(entity);
 	}
 
 	public void saveContentPerMarket(LogContentMarket entity) {
@@ -139,10 +107,7 @@ public class LogService {
 		return countClientInstallDao.findPage(page, filters);
 	}
 
-	public Page<LogCountClientInstallWithContent> searchCountClientInstallWithContent(
-			final Page<LogCountClientInstallWithContent> page, final List<PropertyFilter> filters) {
-		return countClientInstallWithContentDao.findPage(page, filters);
-	}
+
 
 	public Page<LogCountGetClient> searchGetClient(final Page<LogCountGetClient> page,
 			final List<PropertyFilter> filters) {
@@ -358,11 +323,6 @@ public class LogService {
 	@Autowired
 	public void setCountClientInstallDao(LogCCInstallPerMarketDao countClientInstallDao) {
 		this.countClientInstallDao = countClientInstallDao;
-	}
-
-	@Autowired
-	public void setCountClientInstallWithContentDao(LogCCInstallWithContentDao countClientInstallWithContentDao) {
-		this.countClientInstallWithContentDao = countClientInstallWithContentDao;
 	}
 
 	@Autowired

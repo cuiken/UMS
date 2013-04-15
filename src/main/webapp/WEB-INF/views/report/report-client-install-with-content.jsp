@@ -10,6 +10,13 @@
 				$("#report-client-install-wc-tab").addClass("active");
                 $("#sdate").datepicker();
 			})
+            function exportExcel(){
+                if($("#sdate").val()==""){
+                    alert('请选择日期');
+                    return;
+                }
+                window.location="report-client-install-with-content!export.action?date="+$("#sdate").val();
+            }
 		</script>
 	</head>
 	<body>
@@ -20,6 +27,7 @@
                 市场: <input class="input-medium" type="text"  name="filter_LIKES_marketName" value="${param['filter_LIKES_marketName']}" />
 				&nbsp;日期: <input class="input-medium" type="text" data-date-format="yyyy-mm-dd" id="sdate" autocomplete="on" name="filter_EQS_date" value="${param['filter_EQS_date']}" />
 				<input class="btn" type="button" value="搜索" onclick="search();"/>&nbsp;
+                <div style="float:right"><a href="#" class="btn" onclick="exportExcel();"><i class=" icon-download-alt"></i>Excel</a></div>
 			</div>
 			<table class="table table-striped table-bordered table-condensed">
 				<thead>

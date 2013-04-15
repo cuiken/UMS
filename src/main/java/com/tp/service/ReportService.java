@@ -33,6 +33,7 @@ public class ReportService {
 
 	private LogJdbcDao logJdbcDao;
 	private LogService logService;
+    private LogCCInstallWithContentService logCCInstallWithContentService;
 
 	private LogSearch logSearch;
 	private ThemeFileDao themeDao;
@@ -59,7 +60,7 @@ public class ReportService {
 			entity.setInstalled((Long) result.get("installed"));
 			entity.setAppName((String) result.get("app_name"));
 			entity.setMarketName((String) result.get("from_market"));
-			logService.saveClientInstallWithContent(entity);
+            logCCInstallWithContentService.save(entity);
 		}
 	}
 
@@ -238,4 +239,8 @@ public class ReportService {
 		this.logHomeDao = logHomeDao;
 	}
 
+    @Autowired
+    public void setLogCCInstallWithContentService(LogCCInstallWithContentService logCCInstallWithContentService) {
+        this.logCCInstallWithContentService = logCCInstallWithContentService;
+    }
 }
