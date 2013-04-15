@@ -87,7 +87,7 @@ public class ReportClientInstallWithContentAction extends ActionSupport {
     private void generateTitle(Sheet s, String date) {
         Row r = s.createRow(rowIndex++);
         Cell cl = r.createCell(0);
-        cl.setCellValue(date + "客户端通过内容按照日报");
+        cl.setCellValue(date + "客户端通过内容安装统计");
         cl.setCellStyle(styles.get("header"));
         s.addMergedRegion(CellRangeAddress.valueOf("$A$1:$C$1"));
     }
