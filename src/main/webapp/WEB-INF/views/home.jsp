@@ -23,7 +23,7 @@
 							</div>
 						</div>
 						<div class="contents_image">						
-							<img style="margin: 3px;" alt="${title}" onerror="${ctx}/static/images/default.png" src="${ctx}/image.action?path=${theme.iconPath}" width="72" height="72" class="contents_image_middle">						
+							<img style="margin: 3px;" alt="${title}" onerror="${ctx}/static/images/default.png" src="http://locker.uichange.com/UMS/image.action?path=${theme.iconPath}" width="72" height="72" class="contents_image_middle">
 						</div>
 					</div>								
 				</s:iterator>
@@ -31,7 +31,7 @@
 				<div class="icon_set">
 					<s:iterator value="hottestPage.result">				
 						<a href="${ctx}/home!details.action?id=${theme.id}&${queryString}">
-							<img alt="${title}" style="padding: 1px;" onerror="${ctx}/static/images/default.png"  src="${ctx}/image.action?path=${theme.iconPath}" class="icon" width="72" height="72">
+							<img alt="${title}" style="padding: 1px;" onerror="${ctx}/static/images/default.png"  src="http://uichange.com/UMS/image.action?path=${theme.iconPath}" class="icon" width="72" height="72">
 						</a>		
 					</s:iterator>
 				</div>
