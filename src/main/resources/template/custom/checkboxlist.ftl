@@ -17,7 +17,7 @@
 
         </#if>
 <#assign itemKeyStr=itemKey.toString() />
-	<label for="${parameters.name?html}-${itemKeyStr?html}" class="checkbox inline">
+	<label for="${parameters.name?html}-${itemKeyStr?html}" class="checkbox">
 	<input type="checkbox" name="${parameters.name?html}" value="${itemKeyStr?html}" id="${parameters.name?html}-${itemKeyStr?html}"<#rt/>
         <#if tag.contains(parameters.nameValue, itemKey)>
  checked="checked"<#rt/>

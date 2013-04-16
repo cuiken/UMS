@@ -87,34 +87,34 @@ public class ReportContentAction extends ActionSupport {
 		Cell cl = r.createCell(0);
 		cl.setCellValue(date + "内容日报");
 		cl.setCellStyle(styles.get("header"));
-		s.addMergedRegion(CellRangeAddress.valueOf("$A$1:$I$1"));
+		s.addMergedRegion(CellRangeAddress.valueOf("$A$1:$F$1"));
 	}
 
 	private void generateHeader(Sheet s) {
 		Row r = s.createRow(rowIndex++);
 		CellStyle headerStyle = styles.get("header");
-		String[] headers = { "序号", "内容标题", "访问总量", "广告访问量", "商店访问量", "下载总量", "市场下载量", "", "自有下载量" };
+		String[] headers = { "序号", "内容标题", "访问总量", "广告访问量", "商店访问量", "下载总量"};
 		for (int i = 0; i < headers.length; i++) {
 			Cell cl = r.createCell(i);
 			cl.setCellValue(headers[i]);
 			cl.setCellStyle(headerStyle);
 		}
-		s.addMergedRegion(CellRangeAddress.valueOf("$G$2:$H$2"));
+//		s.addMergedRegion(CellRangeAddress.valueOf("$G$2:$H$2"));
 	}
 
 	private void generateContent(Sheet s, List<LogCountContent> contents) {
-		int stCell = 3;
+//		int stCell = 3;
 		int contentSize = 0;
 		for (LogCountContent content : contents) {
 			contentSize++;
-			int size = content.getDownByPerMarket().size();
-			if (size == 0) {
+//			int size = content.getDownByPerMarket().size();
+//			if (size == 0) {
 				createRowWithNoMarket(content, s, contentSize);
-				stCell++;
-			} else {
-				createRowWithMarket(content, s, stCell, size, contentSize);
-				stCell += size;
-			}
+//				stCell++;
+//			} else {
+//				createRowWithMarket(content, s, stCell, size, contentSize);
+//				stCell += size;
+//			}
 
 		}
 	}
@@ -133,30 +133,30 @@ public class ReportContentAction extends ActionSupport {
 		c4.setCellValue(content.getVisitByStore());
 		Cell c5 = r.createCell(5);
 		c5.setCellValue(content.getTotalDown());
-		Cell c8 = r.createCell(8);
-		c8.setCellValue(content.getDownByStore());
+//		Cell c8 = r.createCell(8);
+//		c8.setCellValue(content.getDownByStore());
 		return r;
 	}
 
-	private void createRowWithMarket(LogCountContent content, Sheet s, int stCell, int size, int count) {
-		for (LogContentMarket m : content.getDownByPerMarket()) {
-			Row r = createRowWithNoMarket(content, s, count);
-
-			Cell c6 = r.createCell(6);
-			c6.setCellValue(m.getMarketName());
-			Cell c7 = r.createCell(7);
-			c7.setCellValue(m.getTotalDown());
-
-		}
-		s.addMergedRegion(CellRangeAddress.valueOf("$A$" + stCell + ":$A$" + (stCell + size - 1)));
-		s.addMergedRegion(CellRangeAddress.valueOf("$B$" + stCell + ":$B$" + (stCell + size - 1)));
-		s.addMergedRegion(CellRangeAddress.valueOf("$C$" + stCell + ":$C$" + (stCell + size - 1)));
-		s.addMergedRegion(CellRangeAddress.valueOf("$D$" + stCell + ":$D$" + (stCell + size - 1)));
-		s.addMergedRegion(CellRangeAddress.valueOf("$E$" + stCell + ":$E$" + (stCell + size - 1)));
-		s.addMergedRegion(CellRangeAddress.valueOf("$F$" + stCell + ":$F$" + (stCell + size - 1)));
-		s.addMergedRegion(CellRangeAddress.valueOf("$I$" + stCell + ":$I$" + (stCell + size - 1)));
-
-	}
+//	private void createRowWithMarket(LogCountContent content, Sheet s, int stCell, int size, int count) {
+//		for (LogContentMarket m : content.getDownByPerMarket()) {
+//			Row r = createRowWithNoMarket(content, s, count);
+//
+//			Cell c6 = r.createCell(6);
+//			c6.setCellValue(m.getMarketName());
+//			Cell c7 = r.createCell(7);
+//			c7.setCellValue(m.getTotalDown());
+//
+//		}
+//		s.addMergedRegion(CellRangeAddress.valueOf("$A$" + stCell + ":$A$" + (stCell + size - 1)));
+//		s.addMergedRegion(CellRangeAddress.valueOf("$B$" + stCell + ":$B$" + (stCell + size - 1)));
+//		s.addMergedRegion(CellRangeAddress.valueOf("$C$" + stCell + ":$C$" + (stCell + size - 1)));
+//		s.addMergedRegion(CellRangeAddress.valueOf("$D$" + stCell + ":$D$" + (stCell + size - 1)));
+//		s.addMergedRegion(CellRangeAddress.valueOf("$E$" + stCell + ":$E$" + (stCell + size - 1)));
+//		s.addMergedRegion(CellRangeAddress.valueOf("$F$" + stCell + ":$F$" + (stCell + size - 1)));
+//		s.addMergedRegion(CellRangeAddress.valueOf("$I$" + stCell + ":$I$" + (stCell + size - 1)));
+//
+//	}
 
 	@Autowired
 	public void setLogService(LogService logService) {

@@ -15,8 +15,18 @@ public enum Permission {
 	STORE_VIEW("store:view", "查看商店"), STORE_EDIT("store:edit", "修改商店"),
 
 	CATEGORY_VIEW("category:view", "查看分类"), CATEGORY_EDIT("category:edit", "修改分类"),
-	
-	REPORT_CLIENT_VIEW("report:view","查看日报"),
+
+    REPORT_CONTENT_VIEW("report_content:view","查看内容日报"),
+
+    REPORT_CLIENT_VIEW("report:view","查看客户端日报"),
+
+    REPORT_GET_CLIENT("report_get_client:view","查看内容引导客户端日报"),
+
+    REPORT_UNZIP_CONTENT("report_unzip:view","查看内容安装日报"),
+
+    REPORT_CLIENT_INSTALL("report_install:view","查看客户端安装日报"),
+
+    REPORT_CLIENT_INSTALL_BY_CONTENT("report_install_by_content:view","查看客户端通过内容安装日报"),
 	
 	FEEDBACK_VIEW("feedback:view","查看反馈"),FEEDBACK_EDIT("feedback:edit","修改反馈"),
 	

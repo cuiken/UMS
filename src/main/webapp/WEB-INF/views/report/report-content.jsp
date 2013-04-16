@@ -36,8 +36,6 @@
 					<th><a href="javascript:sort('visitByAd','desc')">广告访问量</a></th>
 					<th><a href="javascript:sort('visitByStore','desc')">商店访问量</a></th>
 					<th><a href="javascript:sort('totalDown','desc')">下载总量</a></th>
-					<th>市场下载量</th>
-					<th><a href="javascript:sort('downByStore','desc')">自有下载量</a></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -49,16 +47,6 @@
 						<td>${visitByAd}</td>
 						<td>${visitByStore}</td>
 						<td>${totalDown}</td>
-						<td>
-							<div>
-								<s:iterator value="downByPerMarket">
-									
-									<li>${marketName} &nbsp; ${totalDown}</li>								
-									
-								</s:iterator>
-							</div>
-						</td>
-						<td>${downByStore}</td>
 					</tr>
 				</s:iterator>
 				</tbody>
