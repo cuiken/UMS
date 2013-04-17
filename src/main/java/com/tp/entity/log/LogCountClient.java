@@ -1,12 +1,14 @@
 package com.tp.entity.log;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.tp.entity.IdEntity;
 
 @Entity
+@Table(name="log_count_client2")
 public class LogCountClient extends IdEntity {
 
 	private String createTime;

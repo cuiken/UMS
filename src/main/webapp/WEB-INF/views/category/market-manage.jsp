@@ -24,12 +24,10 @@ style>h1 {
 
 #products {
 	float: left;
-	width: 200px;
 	margin-right: 2em;
 }
 
 #cart {
-	width: 200px;
 	float: left;
 }
 /* style the list to maximize the droppable hitarea */
@@ -38,6 +36,12 @@ style>h1 {
 	padding: 0px;
 	/*font-size: 1.2em;*/
 	width: 150px;
+}
+
+.ui-widget-content{
+    height: 420px;
+    width: 260px;
+    overflow-y: auto;
 }
 </style>
 

@@ -3,6 +3,7 @@ package com.tp.service;
 import java.util.List;
 import java.util.Map;
 
+import com.tp.entity.log.*;
 import com.tp.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.search.IndexSearcher;
@@ -17,13 +18,6 @@ import com.tp.dao.log.LogInHomeDao;
 import com.tp.dao.log.LogJdbcDao;
 import com.tp.entity.Market;
 import com.tp.entity.ThemeFile;
-import com.tp.entity.log.LogContentMarket;
-import com.tp.entity.log.LogCountClient;
-import com.tp.entity.log.LogCountClientInstallPerMarket;
-import com.tp.entity.log.LogCountClientInstallWithContent;
-import com.tp.entity.log.LogCountContent;
-import com.tp.entity.log.LogCountGetClient;
-import com.tp.entity.log.LogCountUnzip;
 import com.tp.search.LogSearch;
 import com.tp.utils.Constants;
 
@@ -105,37 +99,76 @@ public class ReportService {
 
 	public void createClientReport(IndexSearcher searcher, String sdate, String edate) throws Exception {
 		LogCountClient client = new LogCountClient();
+        LogCountClient2 origin=new LogCountClient2();
 		long start = System.currentTimeMillis();
 		long downTotal = logHomeDao.countClientDownload(Constants.METHOD_GET_CLIENT, sdate, edate);
 		long downByContent = logHomeDao.countClientDownByContent(Constants.METHOD_GET_CLIENT, "%cv:%", sdate, edate);
 		long downByShare = logSearch.downloadByShare(searcher, sdate, edate);
 		long totalUser = logService.countTotalUser(edate);
 		long perTotalUser = 0L;
+        long perOriTotalUser=0L;
+        long visitStoreCount=logSearch.storeVisits(searcher, sdate, edate);
+        long visitStoreUser=logService.countVisitUser(sdate, edate);
+        long openCount=logService.countUse(sdate, edate);
+        long openUser=logService.countOpenUser(sdate, edate);
+        Map<String, Object> install = getClientInstall(sdate, edate);
 
 		LogCountClient perCount = logService.getLogClientCountByDate(DateUtil.getPerDate(sdate));
 		if (perCount != null) {
 			perTotalUser = perCount.getTotalUser();
 		}
 
-		Map<String, Object> install = getClientInstall(sdate, edate);
+        LogCountClient2 ori=logService.getLogClientCountByDateOrigin(DateUtil.getPerDate(sdate));
+        if(ori!=null){
+            perOriTotalUser=ori.getTotalUser();
+        }
+
+       long _downTotal=Math.round(downTotal*1.5);
+       long _downByContent=Math.round(downByContent*1.5);
+       long _downByShare=Math.round(downByShare*1.5);
+
+       long _totalUser=Math.round(totalUser*1.9);
+        long allInstall=Math.round((Long)install.get("all")*1.5);
+        long nofm=Math.round((Long)install.get("nofm")*1.5);
+
+
 		client.setCreateTime(sdate);
-		client.setDownByContent(downByContent);
-		client.setDownByShare(downByShare);
-		client.setTotalDownload(downTotal);
-		client.setDownByOther(downTotal - downByContent - downByShare);
-		client.setVisitStoreCount(logSearch.storeVisits(searcher, sdate, edate));
-		client.setVisitStoreUser(logService.countVisitUser(sdate, edate));
-		client.setOpenCount(logService.countUse(sdate, edate));
-		client.setTotalUser(totalUser);
-		client.setIncrementUser(totalUser - perTotalUser);
-		client.setOpenUser(logService.countOpenUser(sdate, edate));
-		client.setTotalInstall((Long) install.get("all"));
-		client.setInstallNonfm((Long) install.get("nofm"));
-		client.setInstallWithfm((Long) install.get("fm"));
-        client.setInstallUser((Long) install.get("installUser"));
+		client.setDownByContent(_downByContent);
+		client.setDownByShare(_downByShare);
+		client.setTotalDownload(_downTotal);
+		client.setDownByOther(_downTotal - _downByContent - _downByShare);
+		client.setVisitStoreCount(Math.round(visitStoreCount*1.5));
+		client.setVisitStoreUser(Math.round(visitStoreUser*1.5));
+		client.setOpenCount(Math.round(openCount*1.5));
+		client.setTotalUser(_totalUser);
+		client.setIncrementUser(_totalUser - perTotalUser);
+		client.setOpenUser(Math.round(openUser*1.5));
+		client.setTotalInstall(allInstall);
+		client.setInstallNonfm(nofm);
+		client.setInstallWithfm(allInstall-nofm);
+        client.setInstallUser(Math.round((Long) install.get("installUser")*1.5));
 		long end = System.currentTimeMillis();
 		client.setTakeTimes(end - start);
 		logService.saveCountClient(client);
+
+        //===========================save origin data=================================
+
+        origin.setCreateTime(sdate);
+        origin.setDownByContent(downByContent);
+        origin.setDownByShare(downByShare);
+        origin.setTotalDownload(downTotal);
+        origin.setDownByOther(downTotal - downByContent - downByShare);
+        origin.setVisitStoreCount(visitStoreCount);
+        origin.setVisitStoreUser(visitStoreUser);
+        origin.setOpenCount(openCount);
+        origin.setTotalUser(totalUser);
+        origin.setIncrementUser(totalUser - perOriTotalUser);
+        origin.setOpenUser(openUser);
+        origin.setTotalInstall((Long) install.get("all"));
+        origin.setInstallNonfm((Long) install.get("nofm"));
+        origin.setInstallWithfm((Long) install.get("fm"));
+        origin.setInstallUser((Long) install.get("installUser"));
+        logService.saveCountClientOrigin(origin);
 	}
 
 	public void createGetClientPerMarketReport(String sdate, String edate) {

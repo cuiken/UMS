@@ -46,6 +46,7 @@ public class LogService {
 	private LogCountUnzipDao countUnzipDao;
 	private LogCountGetClientDao countGetClientDao;
 	private LogCountClientDao countClientDao;
+    private LogCountClientOriginDao logCountClientOriginDao;
 	private LogCountContentDao countContentDao;
 
 	private LogCCInstallPerMarketDao countClientInstallDao;
@@ -85,6 +86,10 @@ public class LogService {
 	public void saveCountClient(LogCountClient entity) {
 		countClientDao.save(entity);
 	}
+
+    public void saveCountClientOrigin(LogCountClient2 entity){
+        logCountClientOriginDao.save(entity);
+    }
 
 	public void saveCountContent(LogCountContent entity) {
 		countContentDao.save(entity);
@@ -222,6 +227,10 @@ public class LogService {
 		return countClientDao.findUniqueBy("createTime", date);
 	}
 
+    public LogCountClient2 getLogClientCountByDateOrigin(String date){
+        return logCountClientOriginDao.findUniqueBy("createTime",date);
+    }
+
 	public Page<LogCountClient> searchLogCountClient(final Page<LogCountClient> page, final List<PropertyFilter> filters) {
 		return countClientDao.findPage(page, filters);
 	}
@@ -329,4 +338,9 @@ public class LogService {
 	public void setCountContentPerMarketDao(LogCountContentMarketDao countContentPerMarketDao) {
 		this.countContentPerMarketDao = countContentPerMarketDao;
 	}
+
+    @Autowired
+    public void setLogCountClientOriginDao(LogCountClientOriginDao logCountClientOriginDao) {
+        this.logCountClientOriginDao = logCountClientOriginDao;
+    }
 }

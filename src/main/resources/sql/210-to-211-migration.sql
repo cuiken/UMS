@@ -1,0 +1,20 @@
+create table log_count_client2(
+	id bigint not null auto_increment,
+	create_time varchar(32) unique ,
+	open_count int not null default 0,
+	total_user int not null default 0,
+	open_user int not null default 0,
+	increment_user int not null default 0,
+	total_download int not null default 0,
+	down_by_content int not null default 0,
+	down_by_share int not null default 0,
+	down_by_other int not null default 0,
+	visit_store_count int not null default 0,
+	visit_store_user int not null default 0,
+	total_install int not null default 0,
+	install_withfm int not null default 0,
+	install_nonfm int not null default 0,
+	take_times int not null default 0,
+		install_user int not null default 0,
+	primary key(id)
+);

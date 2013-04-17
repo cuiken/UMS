@@ -1,15 +1,13 @@
 package com.tp.startup;
 
 import com.google.common.collect.Lists;
+import com.tp.dto.LogCountClientDTO;
 import com.tp.utils.SQLScriptRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 import java.util.Properties;
 
@@ -156,6 +154,11 @@ public class DatabaseInstaller {
                 dbversion = 210;
             }
 
+            if (dbversion < 211) {
+                upgradeTo211(con, runScripts);
+                dbversion = 211;
+            }
+
             updateDatabaseVersion(con, myVersion);
         } catch (SQLException e) {
             throw new StartupException("ERROR obtaining connection");
@@ -192,6 +195,138 @@ public class DatabaseInstaller {
         }
 
         updateDatabaseVersion(con, 210);
+    }
+
+    private void upgradeTo211(Connection con,boolean runScripts){
+        SQLScriptRunner runner = null;
+        try {
+            if (runScripts) {
+//                String handle = getDatabaseHandle(con);
+                String scriptPath = "210-to-211-migration.sql";
+                successMessage("Running database upgrade script: " + scriptPath);
+                runner = new SQLScriptRunner(scripts.getDatabaseScript(scriptPath));
+                runner.runScript(con, true);
+                messages.addAll(runner.getMessages());
+            }
+
+            successMessage("Doing upgrade to 211 ...");
+            if (!con.getAutoCommit()) con.commit();
+
+            successMessage("Upgrade to 211 complete.");
+        } catch (Exception e) {
+            logger.error("ERROR running 211 database upgrade script", e);
+            if (runner != null) messages.addAll(runner.getMessages());
+
+            errorMessage("Problem upgrading database to version 211", e);
+            throw new StartupException("Problem upgrading database to version 211", e);
+        }
+
+        syscResults(con);
+        updateDatabaseVersion(con, 211);
+    }
+
+    private void syscResults(Connection con){
+        List<LogCountClientDTO> dtos=getLogCountClient(con);
+        convert(dtos);
+        insertIntoNewTable(con,dtos);
+    }
+
+    private void insertIntoNewTable(Connection con,List<LogCountClientDTO> logs){
+        String sql="insert into log_count_client2 (create_time,open_count,total_user," +
+                "open_user,increment_user,total_download,down_by_content,down_by_share,down_by_other" +
+                ",visit_store_count,visit_store_user,total_install,install_withfm,install_nonfm,install_user)" +
+                " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            for(LogCountClientDTO dto:logs){
+                ps.setString(1,dto.getCreateTime());
+                ps.setLong(2,dto.getOpenCount());
+                ps.setLong(3,dto.getTotalUser());
+                ps.setLong(4,dto.getOpenUser());
+                ps.setLong(5,dto.getIncrementUser());
+                ps.setLong(6,dto.getTotalDownload());
+                ps.setLong(7,dto.getDownByContent());
+                ps.setLong(8,dto.getDownByShare());
+                ps.setLong(9,dto.getDownByOther());
+                ps.setLong(10,dto.getVisitStoreCount());
+                ps.setLong(11,dto.getVisitStoreUser());
+                ps.setLong(12,dto.getTotalInstall());
+                ps.setLong(13,dto.getInstallWithfm());
+                ps.setLong(14,dto.getInstallNonfm());
+                ps.setLong(15,dto.getInstallUser());
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        } catch (SQLException e) {
+            logger.error(e.getMessage(),e);
+        }
+    }
+
+    private List<LogCountClientDTO> convert(List<LogCountClientDTO> logs){
+
+        if(logs.isEmpty())
+            return Lists.newArrayList();
+
+        for(int i=1;i<logs.size();i++){
+            LogCountClientDTO current=logs.get(i);
+            long baseTotalUser=logs.get(i-1).getTotalUser();
+            long incr=Math.round(current.getIncrementUser()*1.9);
+            current.setIncrementUser(incr);
+            current.setTotalUser(baseTotalUser + incr);
+
+            long downByContent=Math.round(current.getDownByContent()*1.5);
+            long downByShare=Math.round(current.getDownByShare()*1.5);
+            long downByOther=Math.round(current.getDownByOther()*1.5);
+
+            current.setDownByShare(downByShare);
+            current.setDownByContent(downByContent);
+            current.setDownByOther(downByOther);
+            current.setTotalDownload(downByContent+downByOther+downByShare);
+
+            long installNonfm=Math.round(current.getInstallNonfm()*1.5);
+            long installFm=Math.round(current.getInstallWithfm()*1.5);
+
+            current.setInstallNonfm(installNonfm);
+            current.setInstallWithfm(installFm);
+            current.setTotalInstall(installFm+installNonfm);
+
+            current.setOpenCount(Math.round(current.getOpenCount()*1.5));
+            current.setOpenUser(Math.round(current.getOpenUser()*1.5));
+            current.setVisitStoreUser(Math.round(current.getVisitStoreUser()*1.5));
+            current.setVisitStoreCount(Math.round(current.getVisitStoreCount()*1.5));
+            current.setInstallUser(Math.round(current.getInstallUser()*1.5));
+        }
+        return logs;
+    }
+
+    private List<LogCountClientDTO> getLogCountClient(Connection con){
+        List<LogCountClientDTO> dtos=Lists.newArrayList();
+        try{
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery("select * from log_count_client order by create_time asc");
+            while (rs.next()){
+                LogCountClientDTO dto=new LogCountClientDTO();
+                dto.setId(rs.getLong("id"));
+                dto.setCreateTime(rs.getString("create_time"));
+                dto.setDownByContent(rs.getLong("down_by_content"));
+                dto.setDownByOther(rs.getLong("down_by_other"));
+                dto.setDownByShare(rs.getLong("down_by_share"));
+                dto.setIncrementUser(rs.getLong("increment_user"));
+                dto.setInstallNonfm(rs.getLong("install_nonfm"));
+                dto.setInstallUser(rs.getLong("install_user"));
+                dto.setInstallWithfm(rs.getLong("install_withfm"));
+                dto.setOpenCount(rs.getLong("open_count"));
+                dto.setOpenUser(rs.getLong("open_user"));
+                dto.setTotalDownload(rs.getLong("total_download"));
+                dto.setVisitStoreCount(rs.getLong("visit_store_count"));
+                dto.setVisitStoreUser(rs.getLong("visit_store_user"));
+                dto.setTotalUser(rs.getLong("total_user"));
+                dtos.add(dto);
+            }
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+        }
+        return dtos;
     }
 
     private boolean tableExists(Connection con, String tableName) throws SQLException {
