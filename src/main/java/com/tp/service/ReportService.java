@@ -127,10 +127,10 @@ public class ReportService {
        long _downByContent=Math.round(downByContent*1.5);
        long _downByShare=Math.round(downByShare*1.5);
 
-       long _totalUser=Math.round(totalUser*1.9);
         long allInstall=Math.round((Long)install.get("all")*1.5);
         long nofm=Math.round((Long)install.get("nofm")*1.5);
 
+        long incr=Math.round((totalUser-perOriTotalUser)*1.9);
 
 		client.setCreateTime(sdate);
 		client.setDownByContent(_downByContent);
@@ -140,8 +140,8 @@ public class ReportService {
 		client.setVisitStoreCount(Math.round(visitStoreCount*1.5));
 		client.setVisitStoreUser(Math.round(visitStoreUser*1.5));
 		client.setOpenCount(Math.round(openCount*1.5));
-		client.setTotalUser(_totalUser);
-		client.setIncrementUser(_totalUser - perTotalUser);
+		client.setTotalUser(incr+perTotalUser);
+		client.setIncrementUser(incr);
 		client.setOpenUser(Math.round(openUser*1.5));
 		client.setTotalInstall(allInstall);
 		client.setInstallNonfm(nofm);
