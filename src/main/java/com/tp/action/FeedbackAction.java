@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -28,10 +29,12 @@ public class FeedbackAction extends CRUDActionSupport<UserFeedback> {
 	private List<Integer> sliders = Lists.newArrayList();
 	private FeedbackService feedbackService;
 
+    @RequiresPermissions("feedback:view")
 	public String execute() throws Exception {
 		return list();
 	}
 
+    @RequiresPermissions("feedback:view")
 	public String list() throws Exception {
 		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
 		String defaultFilter = Struts2Utils.getParameter("filter_EQS_status");
@@ -48,6 +51,7 @@ public class FeedbackAction extends CRUDActionSupport<UserFeedback> {
 		return SUCCESS;
 	}
 
+    @RequiresPermissions("feedback:edit")
 	public String save() throws Exception {
 		feedbackService.save(entity);
 		if (id == null)

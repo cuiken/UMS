@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,6 +39,7 @@ public class ReportContentAction extends ActionSupport {
 	private Map<String, CellStyle> styles;
 	private int rowIndex = 0;
 
+    @RequiresPermissions("report_content:view")
 	public String execute() throws Exception{
 		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
 		if (!page.isOrderBySetted()) {

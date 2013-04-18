@@ -2,6 +2,7 @@ package com.tp.action.log;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,6 +25,7 @@ public class ReportClientInstallAction extends ActionSupport {
 
 	private List<Integer> sliders = Lists.newArrayList();
 
+    @RequiresPermissions("report_install:view")
 	public String execute() throws Exception {
 		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
 		if (!page.isOrderBySetted()) {

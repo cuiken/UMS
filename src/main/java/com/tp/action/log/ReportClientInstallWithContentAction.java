@@ -13,6 +13,7 @@ import com.tp.utils.Struts2Utils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,6 +33,7 @@ public class ReportClientInstallWithContentAction extends ActionSupport {
     private int rowIndex = 0;
     private Map<String, CellStyle> styles;
 
+    @RequiresPermissions("report_install_by_content:view")
     public String execute() throws Exception {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
         if (!page.isOrderBySetted()) {

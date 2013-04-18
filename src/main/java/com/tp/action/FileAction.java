@@ -48,6 +48,11 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	private List<Integer> sliders = Lists.newArrayList();
 	private File file;
 
+    @RequiresPermissions("file:view")
+    public String execute() throws Exception {
+        return list();
+    }
+
 	@Override
 	@RequiresAuthentication
 	@RequiresPermissions("file:edit")
