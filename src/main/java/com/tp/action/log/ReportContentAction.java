@@ -43,8 +43,8 @@ public class ReportContentAction extends ActionSupport {
 	public String execute() throws Exception{
 		List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
 		if (!page.isOrderBySetted()) {
-			page.setOrderBy("createTime");
-			page.setOrderDir(Sort.DESC);
+			page.setOrderBy("createTime,totalVisit");
+			page.setOrderDir(Sort.DESC+","+Sort.DESC);
 		}
 		page = logService.searchLogCountContent(page, filters);
 		sliders = page.getSlider(10);

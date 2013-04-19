@@ -18,12 +18,12 @@
 				<thead>
 				<tr>
 					<th>日期</th>
-					<th>启用数</th>
+					<th>客户端启用次数</th>
 					<th>总用户</th>
-					<th>启用用户</th>
+					<th>客户端启用用户数</th>
 					<th>新增用户</th>
-					<th>商店访问数</th>
-					<th>访问用户数</th>
+					<th>商店访问次数</th>
+					<th>商店访问用户数</th>
 				</tr>
 				</thead>
 				<tbody>
