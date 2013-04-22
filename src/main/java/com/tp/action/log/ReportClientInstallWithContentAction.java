@@ -74,12 +74,13 @@ public class ReportClientInstallWithContentAction extends ActionSupport {
                 }
             }
             Sheet s = wb.createSheet(name);
-            s.createFreezePane(0, 2, 0, 2);
+            s.createFreezePane(0, 3, 0, 3);
             for (int i = 0; i < 3; i++) {
                 s.autoSizeColumn(i);
             }
             generateTitle(s, date);
             generateHeader(s);
+            rowIndex++;
             generateContent(s, existLogs);
             generateTotals(s, existLogs.size());
         }
@@ -124,7 +125,8 @@ public class ReportClientInstallWithContentAction extends ActionSupport {
 
     private void generateTotals(Sheet s, int count) {
 
-        Row r = s.createRow(rowIndex++);
+        //强制设置到第3行
+        Row r = s.createRow(2);
         CellStyle totalStyle = styles.get("total");
 
         Cell c1 = r.createCell(0);
@@ -134,7 +136,7 @@ public class ReportClientInstallWithContentAction extends ActionSupport {
         //合计公式
         Cell c3 = r.createCell(2);
         c3.setCellStyle(totalStyle);
-        c3.setCellFormula("SUM(C3:C" + (count + 2) + ")");
+        c3.setCellFormula("SUM(C4:C" + (count + 3) + ")");
     }
 
     public Page<LogCountClientInstallWithContent> getPage() {

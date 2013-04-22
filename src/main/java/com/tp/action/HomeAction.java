@@ -135,7 +135,7 @@ public class HomeAction extends ActionSupport {
                 break;
             }
         }
-
+        newestPage.setPageSize(10);
         newestPage = fileManager.searchStoreInfoInShelf(newestPage, sf, storeId, language);
         return "shelf";
     }
