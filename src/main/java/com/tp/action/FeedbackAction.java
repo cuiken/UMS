@@ -51,7 +51,7 @@ public class FeedbackAction extends CRUDActionSupport<UserFeedback> {
 		return SUCCESS;
 	}
 
-    @RequiresPermissions("feedback:edit")
+//    @RequiresPermissions("feedback:edit")
 	public String save() throws Exception {
 		feedbackService.save(entity);
 		if (id == null)
