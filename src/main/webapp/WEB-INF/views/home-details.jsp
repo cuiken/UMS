@@ -15,7 +15,7 @@
 					${info.title}
 				</div>
 				<div class="preview_img">
-					<img alt="${info.title}" src="${ctx}/image.action?path=${info.theme.preWebPath}" width="180" height="300">
+					<img alt="${info.title}" src="${ctx}/files/${info.theme.preWebPath}" width="180" height="300">
 				</div>
 				<div class="short_des">
 					<p>${info.shortDescription}</p>
@@ -53,7 +53,7 @@
 						<s:iterator value="catePage.result">
 
 							<a href="${ctx}/home!details.action?id=${theme.id}&${queryString}">
-								<img alt="${theme.title}" src="${ctx}/image.action?path=${theme.iconPath}" onerror="${ctx}/static/images/default.png" style="margin: 2px;" width="72" height="72" class="icon"/>
+								<img alt="${theme.title}" src="${ctx}/files/${theme.iconPath}" onerror="${ctx}/static/images/default.png" style="margin: 2px;" width="72" height="72" class="icon"/>
 							</a>
 
 						</s:iterator>

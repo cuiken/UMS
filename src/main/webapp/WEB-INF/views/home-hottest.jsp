@@ -15,7 +15,7 @@
         <s:iterator value="sorts" id="ff">
             <div class="contents_info" id="content1" onclick="location.href='home!details.action?id=${f_id}&${queryString}';">
                 <div class="contents_image">
-                    <img alt="${title}" onerror="this.src='${ctx}/static/images/default.png'" src="${ctx}/image.action?path=${icon_path}" width="72" height="72" style="margin: 3px;">
+                    <img alt="${title}" onerror="this.src='${ctx}/static/images/default.png'" src="${ctx}/files/${icon_path}" width="72" height="72" style="margin: 3px;">
                 </div>
                 <div class="contents_txt">
                     <div style="margin-top: 10px;">

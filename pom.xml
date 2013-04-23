@@ -700,6 +700,12 @@
 			<artifactId>ik-analyzer</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+        <dependency>
+            <groupId>de.javakaffee.msm</groupId>
+            <artifactId>msm-kryo-serializer</artifactId>
+            <version>1.6.0</version>
+            <scope>runtime</scope>
+        </dependency>
 	</dependencies>
 	
 	<profiles>
