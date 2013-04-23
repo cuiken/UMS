@@ -27,7 +27,7 @@
         </s:iterator>
     </div>
     <nav id="page-nav">
-        <a href="?pageNo=${nextPage}"></a>
+        <a href="?pageNo=${nextPage}&${queryString}"></a>
     </nav>
 
 </form>
@@ -35,7 +35,7 @@
 <script src="${ctx}/js/jquery/jquery.infinitescroll.min.js"></script>
 <script>
     $(function(){
-        $("#hottest").addClass("selected").attr("href","#");
+        $("#hottest").addClass("selected").removeAttr("href");
         $(".contents_info").click(function(){
             $(this).css("backgroundColor","#e7e6c8");
         });

@@ -45,7 +45,7 @@
         <script src="${ctx}/static/zepto/gameall.min.js"></script>
 		<script>
 			$(document).ready(function(){
-                $("#home").addClass("selected").attr("href","#");
+                $("#home").addClass("selected").removeAttr("href");
                 $(".contents_info").click(function(){
                     $(this).css("backgroundColor","#e7e6c8");
                 });

@@ -21,7 +21,7 @@
 					<p>${info.shortDescription}</p>
 				</div>
 				<div align="center">
-					<a href="#" id="downfree">
+					<a id="downfree">
 						<img id="download" alt="download" src="${ctx}/static/images/dt.png">
 					</a>
 				</div>
@@ -91,8 +91,14 @@
 					}).done(function(){
 						location.href='${info.theme.downloadURL}';
 					});
-
-				});
+                    if('${language}'=='zh'){
+                        $("#download").attr("src","${ctx}/static/images/dt_zh.png");
+                    }else{
+                        $("#download").attr("src","${ctx}/static/images/en/dt_en.png");
+                    }
+                    $(this).unbind('click');
+                    return false;
+                });
 	        })
 
 		</script>

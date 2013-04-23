@@ -29,7 +29,7 @@
     <script src="${ctx}/static/zepto/zepto.min.js"></script>
      <script>
          $(function(){
-             $("#category").addClass("selected").attr("href","#");
+             $("#category").addClass("selected").removeAttr("href");
          })
      </script>
  </body>
