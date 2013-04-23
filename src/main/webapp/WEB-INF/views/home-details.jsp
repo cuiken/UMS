@@ -26,10 +26,10 @@
 					</a>
 				</div>
 				<div  class="long_des">
-					<div style="float: left; width: 60%; margin-bottom: 15px;margin-top: 15px;">
+					<div style="float: left; width: 50%; margin-bottom: 15px;margin-top: 15px;">
 						<s:text name="home.author"/>: ${info.author}
 					</div>
-					<div style="float:right;  width: 40%;margin-bottom: 15px;margin-top: 15px;">
+					<div style="float:right;  width: 50%;margin-bottom: 15px;margin-top: 15px;">
 						<s:text name="total.down"/>: ${totalDown}
 
 					</div>
@@ -40,7 +40,7 @@
 
 				<div style="margin-top: 5px;">
 
-                    <a href="home!shelf.action?sf=game&${queryString}"><img src="${ctx}/static/images/like.png"></a>
+                    <a href="home!shelf.action?sf=game&${queryString}"><img id="like" src="${ctx}/static/images/like.png"></a>
 					<a style="float: right" href="home.action?${queryString}"><img id="gohome" alt="gohome" src="${ctx}/static/images/dhome.png"></a>
 				</div>
 				<div class="category" style="margin-top: 20px;">
@@ -81,6 +81,7 @@
 					$("#download").attr("src","${ctx}/static/images/en/dt.png");
 					$("#gohome").attr("src","${ctx}/static/images/en/dhome.png");
 					$("#more").attr("src","${ctx}/static/images/en/more.png");
+                    $("#like").attr("src","${ctx}/static/images/en/like_en.png");
 				}
 				$("#downfree").click(function(){
 					$.ajax({

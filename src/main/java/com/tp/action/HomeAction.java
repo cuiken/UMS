@@ -2,6 +2,7 @@ package com.tp.action;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.google.common.collect.Lists;
 import com.tp.dao.log.LogJdbcDao;
 import com.tp.entity.*;
+import com.tp.orm.PageRequest;
 import com.tp.orm.PropertyFilter;
 import com.tp.service.*;
 import org.apache.commons.lang3.StringUtils;
@@ -92,6 +94,10 @@ public class HomeAction extends ActionSupport {
         filters.add(new PropertyFilter("EQS_dtype", "store"));
         filters.add(new PropertyFilter("EQS_store", Constants.ST_LOCK));
         filters.add(new PropertyFilter("EQL_status","1"));
+        if(!advertisementPage.isOrderBySetted()){
+            advertisementPage.setOrderBy("sort");
+            advertisementPage.setOrderDir(PageRequest.Sort.ASC);
+        }
         advertisementPage=advertisementService.searchAdvertisement(advertisementPage,filters);
         bars=json(advertisementPage.getResult());
 		return SUCCESS;
@@ -248,7 +254,7 @@ public class HomeAction extends ActionSupport {
 			}
 			setDownloadType(session, cate.getDescription());
 			long count = countContentDao.queryTotalDownload(info.getTheme().getTitle());
-			totalDown = convert(count);
+			totalDown = convert(count,language);
 			catePage = fileManager.searchInfoByCategoryAndStore(catePage, cate.getId(), storeId, language);
 			List<FileStoreInfo> fileinfos = catePage.getResult();
 			fileinfos.remove(info);
@@ -264,12 +270,15 @@ public class HomeAction extends ActionSupport {
 		return "details";
 	}
 
-	private String convert(long count) {
+	private String convert(long count,String language) {
 		count = count * 10;
 
 		if (count < 10000) {
 			if (count < 1000) {
-				return "1000以下";
+                if(StringUtils.equalsIgnoreCase(language,"zh"))
+				    return "1000以下";
+                else
+                    return "0-1000";
 			} else {
 				String number = StringUtils.substring(String.valueOf(count), 0, 1);
 				for (int i = 1; i < 10; i++) {
@@ -285,8 +294,13 @@ public class HomeAction extends ActionSupport {
 
 			for (int i = 1; i < 10; i++) {
 				if (Integer.valueOf(number).equals(i)) {
+                    if(StringUtils.equalsIgnoreCase(language,"zh"))
+					    return tenThousandPosition + "万+";
+                    else{
+                        long result=Long.valueOf(tenThousandPosition + "0000");
 
-					return tenThousandPosition + "万+";
+                        return new DecimalFormat(",###").format(result)+"+";
+                    }
 				}
 			}
 

@@ -77,6 +77,7 @@ public class Poll2Action extends CRUDActionSupport<PollEnhancement> {
     }
 
     public String generateXml() throws Exception {
+        String params=Struts2Utils.getParameter("params");
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
         filters.add(new PropertyFilter("EQS_store", "lock"));
         filters.add(new PropertyFilter("EQL_status", "1"));
