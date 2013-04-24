@@ -373,10 +373,11 @@ public class HomeAction extends ActionSupport {
 		language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
 
 		Long storeId = chooseStoreId(session);
+        try {
 		categoryId = Long.valueOf(Struts2Utils.getParameter("cid"));
 
 		//		cateInfos = categoryInfoManager.getInfosBylanguage(language);
-		try {
+
 			categoryName = categoryManager.getCategory(categoryId).getName();
 		} catch (Exception e) {
 			String userAgent = request.getHeader("User-Agent");

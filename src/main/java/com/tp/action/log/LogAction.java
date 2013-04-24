@@ -83,6 +83,8 @@ public class LogAction extends ActionSupport {
     }
 
     private String escapeVersion(String vstring) {
+        if(StringUtils.isBlank(vstring))
+            return "0";
         String myversion = vstring.replaceAll("\\Q.\\E", "");
         myversion = myversion.replaceAll("\\d", "");
         return StringUtils.substring(vstring, 0, 5) + myversion;
