@@ -108,7 +108,7 @@ public class HomeAction extends ActionSupport {
         buffer.append("[");
         for(Advertisement ad:ads){
             buffer.append("{");
-            buffer.append("\"pic\":\""+Constants.getDomain()+"/image.action?path="+ad.getImgLink()+"\"");
+            buffer.append("\"pic\":\""+Constants.getDomain()+"/files/"+ad.getImgLink()+"\"");
             buffer.append(",");
             buffer.append("\"href\":\""+ad.getLink()+"\"");
             buffer.append(",");
