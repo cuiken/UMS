@@ -77,13 +77,20 @@ public class Poll2Action extends CRUDActionSupport<PollEnhancement> {
     }
 
     public String generateXml() throws Exception {
-        String params=Struts2Utils.getParameter("params");
+        final String params = Struts2Utils.getParameter("params");
+        if (StringUtils.isNotBlank(params)) {
+            new Thread() {
+                public void run() {
+                    pollEnhancementService.saveLog(params);
+                }
+            }.start();
+        }
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
         filters.add(new PropertyFilter("EQS_store", "lock"));
         filters.add(new PropertyFilter("EQL_status", "1"));
         if (!page.isOrderBySetted()) {
             page.setOrderBy("createTime,dtype");
-            page.setOrderDir(PageRequest.Sort.ASC+","+PageRequest.Sort.ASC);
+            page.setOrderDir(PageRequest.Sort.ASC + "," + PageRequest.Sort.ASC);
         }
         String xml = pollEnhancementService.toXml(page, filters);
         ServletUtils.setEtag(Struts2Utils.getResponse(), "W/\"" + Encodes.encodeMd5(xml) + "\"");

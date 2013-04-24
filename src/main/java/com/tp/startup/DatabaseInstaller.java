@@ -158,6 +158,10 @@ public class DatabaseInstaller {
                 upgradeTo211(con, runScripts);
                 dbversion = 211;
             }
+            if (dbversion < 212) {
+                upgradeTo212(con, runScripts);
+                dbversion = 212;
+            }
 
             updateDatabaseVersion(con, myVersion);
         } catch (SQLException e) {
@@ -327,6 +331,33 @@ public class DatabaseInstaller {
             logger.error(e.getMessage(), e);
         }
         return dtos;
+    }
+
+    private void upgradeTo212(Connection con, boolean runScripts) {
+        SQLScriptRunner runner = null;
+        try {
+            if (runScripts) {
+//                String handle = getDatabaseHandle(con);
+                String scriptPath = "211-to-212-migration.sql";
+                successMessage("Running database upgrade script: " + scriptPath);
+                runner = new SQLScriptRunner(scripts.getDatabaseScript(scriptPath));
+                runner.runScript(con, true);
+                messages.addAll(runner.getMessages());
+            }
+
+            successMessage("Doing upgrade to 212 ...");
+            if (!con.getAutoCommit()) con.commit();
+
+            successMessage("Upgrade to 212 complete.");
+        } catch (Exception e) {
+            logger.error("ERROR running 212 database upgrade script", e);
+            if (runner != null) messages.addAll(runner.getMessages());
+
+            errorMessage("Problem upgrading database to version 212", e);
+            throw new StartupException("Problem upgrading database to version 212", e);
+        }
+
+        updateDatabaseVersion(con, 210);
     }
 
     private boolean tableExists(Connection con, String tableName) throws SQLException {

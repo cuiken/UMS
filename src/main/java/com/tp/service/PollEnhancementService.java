@@ -3,13 +3,19 @@ package com.tp.service;
 import com.tp.cache.MemcachedObjectType;
 import com.tp.cache.SpyMemcachedClient;
 import com.tp.dao.PollEnhancementDao;
+import com.tp.dao.log.LogAppUseDao;
+import com.tp.dto.LogAppUseDTO;
 import com.tp.dto.Poll2DTO;
 import com.tp.entity.PollEnhancement;
+import com.tp.entity.log.LogAppUse;
 import com.tp.mapper.BeanMapper;
 import com.tp.mapper.JaxbMapper;
+import com.tp.mapper.JsonMapper;
 import com.tp.orm.Page;
 import com.tp.orm.PropertyFilter;
 import com.tp.utils.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +30,9 @@ import java.util.List;
 @Component
 @Transactional
 public class PollEnhancementService {
+    private Logger logger = LoggerFactory.getLogger(PollEnhancementService.class);
     private PollEnhancementDao pollEnhancementDao;
+    private LogAppUseDao logAppUseDao;
     private SpyMemcachedClient spyMemcachedClient;
 
     public PollEnhancement get(Long id) {
@@ -55,6 +63,17 @@ public class PollEnhancementService {
         return xml;
     }
 
+    public void saveLog(String json) {
+        try {
+            JsonMapper mapper = JsonMapper.buildNormalMapper();
+            LogAppUseDTO dto = mapper.fromJson(json, LogAppUseDTO.class);
+            LogAppUse entity = BeanMapper.map(dto, LogAppUse.class);
+            logAppUseDao.save(entity);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
     private String convertListToXml(List<PollEnhancement> polls) {
         List<Poll2DTO> dtos = BeanMapper.mapList(polls, Poll2DTO.class);
 
@@ -72,5 +91,10 @@ public class PollEnhancementService {
     @Autowired
     public void setSpyMemcachedClient(SpyMemcachedClient spyMemcachedClient) {
         this.spyMemcachedClient = spyMemcachedClient;
+    }
+
+    @Autowired
+    public void setLogAppUseDao(LogAppUseDao logAppUseDao) {
+        this.logAppUseDao = logAppUseDao;
     }
 }
