@@ -7,6 +7,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 		<title>Fun主题-商店详细</title>
         <link rel="stylesheet" href="${ctx}/static/styles/site.min.css" media="screen"/>
+        <style>
+            .down{
+                font-size: 22px;
+                color: #fff;
+                background: #EA2B74;
+                border-radius: 10px;
+                letter-spacing: 7px;
+                margin: auto;
+                text-align: center;
+                display: block;
+                width: 207px;
+                height: 38px;
+                line-height: 38px;
+                font-weight: bold;
+            }
+            .hasDown{
+                background:#d6d4d9;
+            }
+        </style>
 	</head>
 	<body>
 
@@ -20,11 +39,11 @@
 				<div class="short_des">
 					<p>${info.shortDescription}</p>
 				</div>
-				<div align="center">
-					<a id="downfree">
-						<img id="download" alt="download" src="${ctx}/static/images/dt.png">
-					</a>
-				</div>
+				<%--<div align="center">--%>
+
+					<%--<img id="download" alt="download" src="${ctx}/static/images/dt.png">--%>
+                    <span id="download" class="down"><s:text name="home.download"/></span>
+				<%--</div>--%>
 				<div  class="long_des">
 					<div style="float: left; width: 50%; margin-bottom: 15px;margin-top: 15px;">
 						<s:text name="home.author"/>: ${info.author}
@@ -68,8 +87,8 @@
 
 
 		</form>
-		<script src="${ctx}/static/jquery/1.7.2/jquery.min.js"></script>
-
+        <script src="${ctx}/static/zepto/zepto.min.js"></script>
+        <script src="${ctx}/static/zepto/touch.js"></script>
 		<script>
 			$(function() {
 			//	$("img").lazyload();
@@ -83,22 +102,24 @@
 					$("#more").attr("src","${ctx}/static/images/en/more.png");
                     $("#like").attr("src","${ctx}/static/images/en/like_en.png");
 				}
-				$("#downfree").click(function(){
+				$("#download").tap(function(e){
 					$.ajax({
 						type:"POST",
 						url:"log/log!saveDownload.action?id=${info.theme.id}&${queryString}",
 						dataType:"text",
 						data:{queryString:'${info.theme.downloadURL}',cs:'${queryString}'}
-					}).done(function(){
-						location.href='${info.theme.downloadURL}';
 					});
-                    if('${language}'=='zh'){
-                        $("#download").attr("src","${ctx}/static/images/dt_zh.png");
-                    }else{
-                        $("#download").attr("src","${ctx}/static/images/en/dt_en.png");
-                    }
-                    $(this).unbind('click');
-                    return false;
+
+                    location.href='${info.theme.downloadURL}';
+
+                    $(this).addClass("down hasDown");
+                    <%--if('${language}'=='zh'){--%>
+                        <%--$(this).attr("src","${ctx}/static/images/dt_zh.png");--%>
+                    <%--}else{--%>
+                        <%--$(this).attr("src","${ctx}/static/images/en/dt_en.png");--%>
+                    <%--}--%>
+//                    $(this).unbind('tap');
+                    e.preventDefault();
                 });
 	        })
 
