@@ -36,7 +36,7 @@
 				</s:iterator>
 			</div>
 			<nav id="page-nav">
-  				<a href="?newestPage.pageNo=${newestPage.next}"></a>
+  				<a href="?newestPage.pageNo=${newestPage.next}&${queryString}"></a>
 			</nav>
 		</form>
 		<script src="${ctx}/static/jquery/1.7.2/jquery.min.js"></script>

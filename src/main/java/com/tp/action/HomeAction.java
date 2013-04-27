@@ -90,15 +90,7 @@ public class HomeAction extends ActionSupport {
 		hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST.getValue(), storeId, language);
 
 		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST.getValue(), storeId, language);
-//        List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
-//        filters.add(new PropertyFilter("EQS_dtype", "store"));
-//        filters.add(new PropertyFilter("EQS_store", Constants.ST_LOCK));
-//        filters.add(new PropertyFilter("EQL_status","1"));
-//        if(!advertisementPage.isOrderBySetted()){
-//            advertisementPage.setOrderBy("sort");
-//            advertisementPage.setOrderDir(PageRequest.Sort.ASC);
-//        }
-//        advertisementPage=advertisementService.searchAdvertisement(advertisementPage,filters);
+
         bars=json(getADs("store"));
 		return SUCCESS;
 	}

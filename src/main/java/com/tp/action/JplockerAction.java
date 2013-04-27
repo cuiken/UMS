@@ -2,12 +2,15 @@ package com.tp.action;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Lists;
@@ -28,6 +31,7 @@ import com.tp.utils.Struts2Utils;
 public class JplockerAction extends ActionSupport {
 
     private static final long serialVersionUID = 1L;
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     private CategoryManager categoryManager;
 
@@ -101,19 +105,21 @@ public class JplockerAction extends ActionSupport {
         return null;
     }
 
-    private Long chooseStoreId(HttpSession session) {
-        String storeType = (String) session.getAttribute(Constants.PARA_STORE_TYPE);
-        Long storeId = (Long) session.getAttribute(Constants.ID_JPLOCKER);
+    private Long chooseStoreId(HttpSession session) throws Exception {
+
+        String storeType = Struts2Utils.getParameter(Constants.PARA_STORE_TYPE);
         if (StringUtils.isBlank(storeType)) {
             storeType = Constants.JP_LOCKER;
         }
-        if (storeId != null) {
-            return storeId;
-        } else {
+        Long storeId = 0L;
+        try {
             storeId = categoryManager.getStoreByValue(storeType).getId();
-            session.setAttribute(Constants.ID_JPLOCKER, storeId);
-            return storeId;
+        } catch (Exception e) {
+            logger.warn("商店{}不存在，请求错误～", storeType);
+            Struts2Utils.getResponse().sendError(HttpServletResponse.SC_NOT_FOUND, "parametter is incorrect.");
         }
+        return storeId;
+
     }
 
     private Market getMarket(HttpSession session) {
