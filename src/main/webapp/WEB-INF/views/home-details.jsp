@@ -107,18 +107,14 @@
 						type:"POST",
 						url:"log/log!saveDownload.action?id=${info.theme.id}&${queryString}",
 						dataType:"text",
-						data:{queryString:'${info.theme.downloadURL}',cs:'${queryString}'}
+						data:{queryString:'${info.theme.downloadURL}',cs:'${queryString}'},
+                        complete:function(){
+                            location.href='${info.theme.downloadURL}';
+                        }
 					});
 
-                    location.href='${info.theme.downloadURL}';
-
                     $(this).addClass("down hasDown");
-                    <%--if('${language}'=='zh'){--%>
-                        <%--$(this).attr("src","${ctx}/static/images/dt_zh.png");--%>
-                    <%--}else{--%>
-                        <%--$(this).attr("src","${ctx}/static/images/en/dt_en.png");--%>
-                    <%--}--%>
-//                    $(this).unbind('tap');
+
                     e.preventDefault();
                 });
 	        })
