@@ -75,7 +75,10 @@
                         客户端
                     </s:if>
                     <s:elseif test="dtype=='store'">
-                        商店
+                        商店首页
+                    </s:elseif>
+                    <s:elseif test="dtype=='store-hot'">
+                        商店最热
                     </s:elseif>
                 </td>
                 <td>

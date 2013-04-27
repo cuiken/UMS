@@ -93,11 +93,9 @@
 			$(function() {
 			//	$("img").lazyload();
 				if('${language}'=='zh'){
-					$("#download").attr("src","${ctx}/static/images/dt.png");
 					$("#gohome").attr("src","${ctx}/static/images/dhome.png");
 					$("#more").attr("src","${ctx}/static/images/more.png");
 				}else{
-					$("#download").attr("src","${ctx}/static/images/en/dt.png");
 					$("#gohome").attr("src","${ctx}/static/images/en/dhome.png");
 					$("#more").attr("src","${ctx}/static/images/en/more.png");
                     $("#like").attr("src","${ctx}/static/images/en/like_en.png");

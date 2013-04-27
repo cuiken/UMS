@@ -90,8 +90,22 @@ public class HomeAction extends ActionSupport {
 		hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST.getValue(), storeId, language);
 
 		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST.getValue(), storeId, language);
+//        List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
+//        filters.add(new PropertyFilter("EQS_dtype", "store"));
+//        filters.add(new PropertyFilter("EQS_store", Constants.ST_LOCK));
+//        filters.add(new PropertyFilter("EQL_status","1"));
+//        if(!advertisementPage.isOrderBySetted()){
+//            advertisementPage.setOrderBy("sort");
+//            advertisementPage.setOrderDir(PageRequest.Sort.ASC);
+//        }
+//        advertisementPage=advertisementService.searchAdvertisement(advertisementPage,filters);
+        bars=json(getADs("store"));
+		return SUCCESS;
+	}
+
+    private List<Advertisement> getADs(String type){
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
-        filters.add(new PropertyFilter("EQS_dtype", "store"));
+        filters.add(new PropertyFilter("EQS_dtype", type));
         filters.add(new PropertyFilter("EQS_store", Constants.ST_LOCK));
         filters.add(new PropertyFilter("EQL_status","1"));
         if(!advertisementPage.isOrderBySetted()){
@@ -99,9 +113,8 @@ public class HomeAction extends ActionSupport {
             advertisementPage.setOrderDir(PageRequest.Sort.ASC);
         }
         advertisementPage=advertisementService.searchAdvertisement(advertisementPage,filters);
-        bars=json(advertisementPage.getResult());
-		return SUCCESS;
-	}
+        return advertisementPage.getResult();
+    }
 
     private String json(List<Advertisement> ads){
         StringBuilder buffer=new StringBuilder();
@@ -184,6 +197,7 @@ public class HomeAction extends ActionSupport {
         language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
         Long storeId = chooseStoreId(session);
         sorts = logJdbcDao.countThemeFileDownload(language,storeId,pageNo);
+        bars=json(getADs("store-hot"));
         return "hottest";
     }
 

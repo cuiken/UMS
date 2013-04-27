@@ -11,6 +11,7 @@
 <body>
 <form action="home!hottest.action" method="get">
     <%@include file="home-nav.jsp"%>
+    <div id="dk_game_slider"></div>
     <div id="container" class="transitions-enabled infinite-scroll clearfix">
         <s:iterator value="sorts" id="ff">
             <div class="contents_info" id="content1" onclick="location.href='home!details.action?id=${f_id}&${queryString}';">
@@ -32,6 +33,8 @@
 
 </form>
 <script src="${ctx}/static/jquery/1.7.2/jquery.min.js"></script>
+<script src="${ctx}/static/zepto/zepto.min.js"></script>
+<script src="${ctx}/static/zepto/gameall.min.js"></script>
 <script src="${ctx}/js/jquery/jquery.infinitescroll.min.js"></script>
 <script>
     $(function(){
@@ -39,7 +42,17 @@
         $(".contents_info").click(function(){
             $(this).css("backgroundColor","#e7e6c8");
         });
+        try{
+            var bars=${bars};
+            Zepto.ui.slider('#dk_game_slider', {
+                index: bars.rand(),
+                showArr: false,
+                autoPlayTime: 2500,
+                content: bars
+            });
+        }catch(e) {
 
+        }
         var $container = $('#container');
         $container.infinitescroll({
             navSelector  : '#page-nav',

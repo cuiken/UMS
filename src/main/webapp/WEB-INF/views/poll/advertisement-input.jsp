@@ -40,7 +40,7 @@
             <label for="name" class="control-label">用途:</label>
 
             <div class="controls">
-                <s:select list="#{'client':'客户端','store':'商店'}" id="p_type" name="dtype" listKey="key" listValue="value"
+                <s:select list="#{'client':'客户端','store':'商店首页','store-hot':'商店最热'}" id="p_type" name="dtype" listKey="key" listValue="value"
                           cssClass="span2"></s:select>
             </div>
         </div>
