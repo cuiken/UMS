@@ -25,6 +25,41 @@
             .hasDown{
                 background:#d6d4d9;
             }
+
+            .contents_info{
+                /*display: inline-block;*/
+                border-top: 1px solid #e1e0c1;
+                border-bottom: 1px solid #e1e0c1;
+                margin:15px 0 3px auto;
+                width: 98%;
+            }
+
+            .contents_image{
+                position: relative;
+                max-width: 72px;
+                max-height: 72px;
+            }
+            .contents_txt{
+                float: left;
+                width: 50%;
+                margin-left: 20px;
+            }
+
+            .g_down{
+                display: inline-block;
+                margin: 10px auto;
+            }
+            .contents_image:before{
+                position: absolute;
+                z-index: 2;
+                content: '';
+                /*top: -12px;*/
+                left: 50%;
+                width: 49px;
+                height: 32px;
+                margin-left: -35px;
+                background: url(${ctx}/static/images/recommend.png);
+            }
         </style>
 	</head>
 	<body>
@@ -56,6 +91,21 @@
 				<div class="long_des" id="desc" style="line-height: 130%;">
 					<s:text name="home.desc"/>: ${info.longDescription}
 				</div>
+
+                <div class="contents_info">
+                    <span onclick="location.href='${ctx}/home!details.action?id=${gameInfo.theme.id}&${queryString}';">
+                        <span class="contents_image">
+                            <img alt="${gameInfo.title}" src="${ctx}/files/${gameInfo.theme.iconPath}">
+                        </span>
+                        <span class="contents_txt">
+                            <span class="title">${gameInfo.title}</span>
+                            <p>${gameInfo.shortDescription}</p>
+                        </span>
+                    </span>
+                    <span class="g_down">
+                        <img id="g_img_down" src="${ctx}/static/images/g_down.jpg">
+                    </span>
+                </div>
 
 				<div style="margin-top: 5px;">
 
@@ -113,6 +163,19 @@
 
                     $(this).addClass("down hasDown");
 
+                    e.preventDefault();
+                });
+                $(".g_down").click(function(e){
+                    $.ajax({
+                        type:"POST",
+                        url:"log/log!saveDownload.action?id=${gameInfo.theme.id}&${queryString}",
+                        dataType:"text",
+                        data:{queryString:'${gameInfo.theme.downloadURL}',cs:'${queryString}'},
+                        complete:function(){
+                            location.href='${gameInfo.theme.downloadURL}';
+                        }
+                    });
+                    <%--$("#g_img_down").attr("src","${ctx}/static/images/g_downed.jpg");--%>
                     e.preventDefault();
                 });
 	        })

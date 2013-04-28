@@ -36,7 +36,7 @@
 					</s:iterator>
 				</div>
                 <div class="soft_top">
-                    <a href="http://uichange.com/UMS/home/shelf/app?${queryString}">
+                    <a href="${ctx}/home/shelf/app?${queryString}">
                         <span><s:text name="home.top"/></span>
                     </a>
                 </div>

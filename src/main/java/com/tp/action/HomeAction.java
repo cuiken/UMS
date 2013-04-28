@@ -56,6 +56,7 @@ public class HomeAction extends ActionSupport {
     private Long pageNo=1L;
 	private String totalDown;
 	private FileStoreInfo info;
+    private FileStoreInfo gameInfo;
 
 	private List<CategoryInfo> cateInfos;
 	private Long categoryId;
@@ -269,12 +270,25 @@ public class HomeAction extends ActionSupport {
 				fileinfos = fileinfos.subList(0, 3);
 			}
 			catePage.setResult(fileinfos);
+            shuffleGame(storeId);
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			return "reload";
 		}
 		return "details";
 	}
+
+    private void shuffleGame(Long storeId) throws Exception{
+        newestPage.setPageSize(100);
+        newestPage = fileManager.searchStoreInfoInShelf(newestPage, "game", storeId, language);
+        List<FileStoreInfo> fileInfos=newestPage.getResult();
+        Collections.shuffle(fileInfos);
+        if(fileInfos.size()>0){
+            gameInfo=fileInfos.get(0);
+        }
+        gameInfo.getTheme().setDownloadURL("browerhttp://" + StringUtils.remove(Constants.getDomain(), "http://") + "/file-download.action?id="+gameInfo.getTheme().getId()+"&inputPath="+gameInfo.getTheme().getApkPath());
+    }
 
 	private String convert(long count,String language) {
 		count = count * 10;
@@ -428,7 +442,11 @@ public class HomeAction extends ActionSupport {
 		return newestPage;
 	}
 
-	public Page<FileStoreInfo> getCatePage() {
+    public FileStoreInfo getGameInfo() {
+        return gameInfo;
+    }
+
+    public Page<FileStoreInfo> getCatePage() {
 		return catePage;
 	}
 

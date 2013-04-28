@@ -22,7 +22,7 @@
             </div>
 			<div id="container"> 
 				<s:iterator value="newestPage.result">
-					<div class="contents_info" id="content1" onclick="location.href='home!details.action?id=${theme.id}&${queryString}';">
+					<div class="contents_info" id="content1" onclick="location.href='${ctx}/home!details.action?id=${theme.id}&${queryString}';">
 						<div class="contents_image">						
 							<img alt="${title}" onerror="this.src='${ctx}/static/images/default.png'" src="${ctx}/files/${theme.iconPath}" width="72" height="72" style="margin: 3px;">
 						</div>
