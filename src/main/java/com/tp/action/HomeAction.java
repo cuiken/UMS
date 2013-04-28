@@ -259,7 +259,7 @@ public class HomeAction extends ActionSupport {
 					break;
 				}
 			}
-			setDownloadType(session, cate.getDescription());
+			setDownloadType(session, cate.getDescription(),info);
 			long count = countContentDao.queryTotalDownload(info.getTheme().getTitle());
 			totalDown = convert(count,language);
 			catePage = fileManager.searchInfoByCategoryAndStore(catePage, cate.getId(), storeId, language);
@@ -270,7 +270,7 @@ public class HomeAction extends ActionSupport {
 				fileinfos = fileinfos.subList(0, 3);
 			}
 			catePage.setResult(fileinfos);
-            shuffleGame(storeId);
+            shuffleGame(storeId,session);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -279,7 +279,7 @@ public class HomeAction extends ActionSupport {
 		return "details";
 	}
 
-    private void shuffleGame(Long storeId) throws Exception{
+    private void shuffleGame(Long storeId,HttpSession session) throws Exception{
         newestPage.setPageSize(100);
         newestPage = fileManager.searchStoreInfoInShelf(newestPage, "game", storeId, language);
         List<FileStoreInfo> fileInfos=newestPage.getResult();
@@ -287,7 +287,8 @@ public class HomeAction extends ActionSupport {
         if(fileInfos.size()>0){
             gameInfo=fileInfos.get(0);
         }
-        gameInfo.getTheme().setDownloadURL("browerhttp://" + StringUtils.remove(Constants.getDomain(), "http://") + "/file-download.action?id="+gameInfo.getTheme().getId()+"&inputPath="+gameInfo.getTheme().getApkPath());
+//        gameInfo.getTheme().setDownloadURL("browerhttp://" + StringUtils.remove(Constants.getDomain(), "http://") + "/file-download.action?id="+gameInfo.getTheme().getId()+"&inputPath="+gameInfo.getTheme().getApkPath());
+        setDownloadType(session,gameInfo.getTheme().getCategories().get(0).getDescription(),gameInfo);
     }
 
 	private String convert(long count,String language) {
@@ -328,7 +329,7 @@ public class HomeAction extends ActionSupport {
 		return "";
 	}
 
-	private void setDownloadType(HttpSession session, String category) throws UnsupportedEncodingException {
+	private void setDownloadType(HttpSession session, String category,FileStoreInfo fsi) throws UnsupportedEncodingException {
 
 		String fromMarket = (String) session.getAttribute(Constants.PARA_FROM_MARKET);
 		String downType = (String) session.getAttribute(Constants.PARA_DOWNLOAD_METHOD);
@@ -337,52 +338,52 @@ public class HomeAction extends ActionSupport {
 			httpBuffer.append("browerhttp://" + StringUtils.remove(Constants.getDomain(), "http://") + "/");
 		}
 		httpBuffer.append("file-download.action?id=");
-		httpBuffer.append(info.getTheme().getId());
+		httpBuffer.append(fsi.getTheme().getId());
 		httpBuffer.append("&inputPath=");
-		if (info.getTheme().getDtype().equals("1")) {
-			httpBuffer.append(URLEncoder.encode(info.getTheme().getUxPath(), "utf-8"));
+		if (fsi.getTheme().getDtype().equals("1")) {
+			httpBuffer.append(URLEncoder.encode(fsi.getTheme().getUxPath(), "utf-8"));
 		} else {
-			httpBuffer.append(URLEncoder.encode(info.getTheme().getApkPath(), "utf-8"));
+			httpBuffer.append(URLEncoder.encode(fsi.getTheme().getApkPath(), "utf-8"));
 		}
 
-		httpBuffer.append("&title=" + URLEncoder.encode(info.getTitle(), "utf-8"));
+		httpBuffer.append("&title=" + URLEncoder.encode(fsi.getTitle(), "utf-8"));
 		httpBuffer.append(URLEncoder.encode("|", "utf-8")).append(
-				URLEncoder.encode(info.getTheme().getTitle(), "utf-8"));
+				URLEncoder.encode(fsi.getTheme().getTitle(), "utf-8"));
 		httpBuffer.append("&");
 		if (downType.equals(DownloadType.MARKET.getValue())) {
-			marketDownload(fromMarket, httpBuffer.toString());
+			marketDownload(fromMarket, httpBuffer.toString(),fsi);
 		} else {
-			info.getTheme().setDownloadURL(httpBuffer.toString());
+            fsi.getTheme().setDownloadURL(httpBuffer.toString());
 		}
 	}
 
-	private void marketDownload(String fromMarket, String http) {
+	private void marketDownload(String fromMarket, String http,FileStoreInfo fsi) {
 		Market market = marketManager.findByPkName(fromMarket);
 		if (market == null || market.getMarketKey().isEmpty()) {
-			info.getTheme().setDownloadURL(http);
+			fsi.getTheme().setDownloadURL(http);
 		} else {
-			fileInMarket(market, http);
+			fileInMarket(market, http,fsi);
 		}
 	}
 
-	private void fileInMarket(Market market, String http) {
+	private void fileInMarket(Market market, String http,FileStoreInfo fsi) {
 		List<ThemeFile> files = market.getThemes();
-		if (files.contains(info.getTheme())) {
-			String uri = market.getMarketKey() + info.getTheme().getMarketURL();
+		if (files.contains(fsi.getTheme())) {
+			String uri = market.getMarketKey() + fsi.getTheme().getMarketURL();
 			if (market.getPkName().equals(Constants.LENVOL_STORE)) {
-				uri += ("&versioncode=" + info.getTheme().getVersion());
+				uri += ("&versioncode=" + fsi.getTheme().getVersion());
 			}
 			if (market.getPkName().equals(Constants.OPPO_NEARME)) {
-				List<FileMarketValue> fvs = info.getTheme().getMarketValues();
+				List<FileMarketValue> fvs = fsi.getTheme().getMarketValues();
 				for (FileMarketValue fm : fvs) {
 					if (market.getId().equals(fm.getMarket().getId())) {
 						uri += "&" + (fm.getKeyName() + "=" + fm.getKeyValue());
 					}
 				}
 			}
-			info.getTheme().setDownloadURL(uri);
+            fsi.getTheme().setDownloadURL(uri);
 		} else {
-			info.getTheme().setDownloadURL(http);
+            fsi.getTheme().setDownloadURL(http);
 		}
 	}
 
