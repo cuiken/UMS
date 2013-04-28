@@ -250,3 +250,23 @@ big a link{
     -webkit-border-radius:4px;
     background: url(../images/csharp.png) no-repeat 1% center;
 }
+
+.soft_top{
+    margin: 3px;
+    border: solid 1px #CCC;
+    -webkit-box-shadow: 0 1px 0 white;
+    box-shadow: 0 1px 0 white;
+    background: url(../images/sharp.png) no-repeat 99% center;
+}
+.soft_top a{
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    background: url(../images/robot.png) no-repeat 1% center;
+    width: 100%;
+}
+.soft_top span{
+    font-size: 18px;
+    letter-spacing: 3px;
+    margin-left:85px;
+}

@@ -98,5 +98,11 @@
 	<rule>
 		<from>^/nav/download$</from>
 		<to type="forward">/nav/fun-browser!getClient.action</to>
-	</rule>	
+	</rule>
+
+    <rule>
+        <from>^/home/shelf/([a-zA-Z0-9_]+)$</from>
+        <to type="forward">/home!shelf.action?sf=$1</to>
+    </rule>
+
 </urlrewrite>

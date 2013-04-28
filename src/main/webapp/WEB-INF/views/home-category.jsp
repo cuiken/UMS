@@ -25,6 +25,11 @@
 				<img alt="${name}" src="${ctx}/files/${icon}">
 			</a>
 		</s:iterator>
+        <div class="soft_top">
+            <a href="http://uichange.com/UMS/home/shelf/app?${queryString}">
+                <span><s:text name="home.top"/></span>
+            </a>
+        </div>
 	</div>
     <script src="${ctx}/static/zepto/zepto.min.js"></script>
      <script>

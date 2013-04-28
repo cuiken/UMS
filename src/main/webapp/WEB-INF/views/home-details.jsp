@@ -59,7 +59,7 @@
 
 				<div style="margin-top: 5px;">
 
-                    <a href="home!shelf.action?sf=game&${queryString}"><img id="like" src="${ctx}/static/images/like.png"></a>
+                    <a href="${ctx}/home/shelf/game?${queryString}"><img id="like" src="${ctx}/static/images/like.png"></a>
 					<a style="float: right" href="home.action?${queryString}"><img id="gohome" alt="gohome" src="${ctx}/static/images/dhome.png"></a>
 				</div>
 				<div class="category" style="margin-top: 20px;">

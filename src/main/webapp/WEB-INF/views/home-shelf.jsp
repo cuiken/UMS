@@ -17,8 +17,8 @@
 	
 		<form action="home.action" method="get">
             <div class="slide_list_dot">
-                <a id="game" href="home!shelf.action?sf=game&${queryString}">精品游戏</a>
-                <a id="soft" href="home!shelf.action?sf=app&${queryString}">免费软件</a>
+                <a id="game" href="${ctx}/home/shelf/game?${queryString}">精品游戏</a>
+                <a id="soft" href="${ctx}/home/shelf/app?${queryString}">免费软件</a>
             </div>
 			<div id="container"> 
 				<s:iterator value="newestPage.result">
