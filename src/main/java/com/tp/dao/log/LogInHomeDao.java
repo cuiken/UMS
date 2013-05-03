@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,9 +68,16 @@ public class LogInHomeDao {
 
     }
 
-    public void createTable() {
+    public void createTable() throws Exception{
         String table = getNextMonthTableName();
-        jdbcTemplate.execute(StringUtils.replaceOnce(DROP_TABLE, "?", table));
+        Connection conn= jdbcTemplate.getDataSource().getConnection();
+//        jdbcTemplate.execute(StringUtils.replaceOnce(DROP_TABLE, "?", table));
+        ResultSet rs = conn.getMetaData().getTables(null, null, "%", null);
+        while (rs.next()) {
+            if (table.toLowerCase().equals(rs.getString("TABLE_NAME").toLowerCase())) {
+                return;
+            }
+        }
         jdbcTemplate.execute(StringUtils.replaceOnce(CREATE_TABLE, "?", table));
     }
 

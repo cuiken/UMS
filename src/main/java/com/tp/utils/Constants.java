@@ -87,7 +87,8 @@ public class Constants {
 	public static String getDomain() {
 		HttpServletRequest request = Struts2Utils.getRequest();
 		StringBuilder buffer = new StringBuilder();
-		buffer.append("http://").append(request.getServerName()).append(":").append(request.getLocalPort())
+		buffer.append("http://").append(request.getServerName())
+//                .append(":").append(request.getLocalPort())
 				.append(request.getContextPath());
 		return buffer.toString();
 	}

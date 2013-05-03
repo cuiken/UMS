@@ -69,7 +69,11 @@ public class ReportCreateJob {
 	}
 
     public void createLogInHomeTable(){
-        logInHomeDao.createTable();
+        try{
+            logInHomeDao.createTable();
+        }catch (Exception e){
+
+        }
     }
 
 	@Autowired

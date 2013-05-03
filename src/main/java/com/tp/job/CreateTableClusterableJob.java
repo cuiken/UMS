@@ -25,6 +25,10 @@ public class CreateTableClusterableJob extends QuartzJobBean{
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         LogInHomeDao logInHomeDao=applicationContext.getBean(LogInHomeDao.class);
-        logInHomeDao.createTable();
+        try{
+            logInHomeDao.createTable();
+        }catch(Exception e){
+
+        }
     }
 }
