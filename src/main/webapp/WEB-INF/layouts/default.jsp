@@ -13,10 +13,13 @@
 <meta http-equiv="Expires" content="0" />
 
 <link type="image/x-icon" href="${ctx}/static/images/favicon.ico" rel="shortcut icon">
-<link href="${ctx}/static/bootstrap/2.1.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-<link href="${ctx}/static/bootstrap/2.1.1/css/bootstrap-responsive.min.css" type="text/css" rel="stylesheet" />
+<link href="${ctx}/static/bootstrap/2.1.1/css/bootstraped.min.css" type="text/css" rel="stylesheet" />
+<link href="${ctx}/static/bootstrap/2.1.1/css/bootstraped-responsive.min.css" type="text/css" rel="stylesheet" />
 <link href="${ctx}/static/bootstrap/2.1.1/css/datepicker.css" type="text/css" rel="stylesheet" />
 <link href="${ctx}/static/styles/default.min.css" type="text/css" rel="stylesheet" />
+<!--[if IE 7]>
+    <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
 <script src="${ctx}/static/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 
 <sitemesh:head />
@@ -28,13 +31,13 @@
 		<%@ include file="/WEB-INF/layouts/header.jsp"%>
 		<div class="row" style="margin-top: 10px;">
 			<%@ include file="/WEB-INF/layouts/left.jsp"%>
-			<div id="main" class="span10" >
+			<div id="main" class="span9" >
 				<sitemesh:body />
 			</div>
 		</div>
 		<%@ include file="/WEB-INF/layouts/footer.jsp"%>
 	</div>
-	<script src="${ctx}/static/bootstrap/2.1.1/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="${ctx}/static/bootstrap/2.1.1/js/bootstraped.min.js" type="text/javascript"></script>
 	<script src="${ctx}/static/bootstrap/2.1.1/js/bootstrap-datepicker.js" type="text/javascript"></script>
 </body>
 </html>

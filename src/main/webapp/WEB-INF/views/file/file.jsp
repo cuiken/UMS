@@ -46,7 +46,7 @@
 				上传</a>
 			</div>		
 		</div>
-		<table class="table table-striped table-bordered table-condensed">
+		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
 					<th><a href="javascript:sort('title','asc')">标题</a></th>

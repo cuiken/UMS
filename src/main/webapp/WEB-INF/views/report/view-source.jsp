@@ -21,7 +21,7 @@
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active" id="status">
-					<table class="table table-striped table-bordered table-condensed">
+					<table class="table table-bordered table-hover">
 						<s:iterator value="status">
 							Server: [${address}]															
 							<s:iterator value="status">

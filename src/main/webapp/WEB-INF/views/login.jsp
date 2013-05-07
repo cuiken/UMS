@@ -18,8 +18,8 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <link type="image/x-icon" href="${ctx}/static/images/favicon.ico" rel="shortcut icon">
-	<link href="${ctx}/static/bootstrap/2.1.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-	<link href="${ctx}/static/bootstrap/2.1.1/css/bootstrap-responsive.min.css" type="text/css" rel="stylesheet" />
+	<link href="${ctx}/static/bootstrap/2.1.1/css/bootstraped.min.css" type="text/css" rel="stylesheet" />
+	<link href="${ctx}/static/bootstrap/2.1.1/css/bootstraped-responsive.min.css" type="text/css" rel="stylesheet" />
 	<link href="${ctx}/css/mini-web.css" type="text/css" rel="stylesheet" />
 	<link href="${ctx}/static/jquery-validation/1.10.0/validate.css" rel="stylesheet">
 	<script src="${ctx}/static/jquery/1.7.2/jquery.min.js"></script>
@@ -147,6 +147,6 @@
 	</div>
 	</div>
 	<%@ include file="/WEB-INF/layouts/footer.jsp"%>
-	<script src="${ctx}/static/bootstrap/2.1.1/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="${ctx}/static/bootstrap/2.1.1/js/bootstraped.min.js" type="text/javascript"></script>
 </body>
 </html>

@@ -20,7 +20,7 @@ b<%@ page contentType="text/html;charset=UTF-8"%>
 				&nbsp;日期: <input class="input-medium" type="text" data-date-format="yyyy-mm-dd" id="sdate" autocomplete="on" name="filter_EQS_date" value="${param['filter_EQS_date']}" />
 				<input class="btn" type="button" value="搜索" onclick="search();"/>&nbsp;
 			</div>
-			<table class="table table-striped table-bordered table-condensed">
+			<table class="table table-bordered table-hover">
 				<thead>
 				<tr>
 					<th><a href="javascript:sort('date','desc')">日期</a></th>
