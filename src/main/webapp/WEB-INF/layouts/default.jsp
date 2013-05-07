@@ -31,7 +31,7 @@
 		<%@ include file="/WEB-INF/layouts/header.jsp"%>
 		<div class="row" style="margin-top: 10px;">
 			<%@ include file="/WEB-INF/layouts/left.jsp"%>
-			<div id="main" class="span9" >
+			<div id="main" class="span10" >
 				<sitemesh:body />
 			</div>
 		</div>
