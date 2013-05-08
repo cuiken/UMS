@@ -39,10 +39,11 @@ public class LogCountContentDao extends HibernateDao<LogCountContent, Long> {
 
     public String queryTotalDownload(String fname,String language) {
         String prefix = MemcachedObjectType.THEME_COUNT_DOWNLOAD.getPrefix();
-        Long count = spyMemcachedClient.get(prefix + fname);
+        String key=StringUtils.deleteWhitespace(prefix + fname);
+        Long count = spyMemcachedClient.get(key);
         if (count == null) {
             count = (Long) createQuery(SUM_EACH_DOWNLOAD, fname).uniqueResult();
-            spyMemcachedClient.set(prefix + fname, MemcachedObjectType.THEME_COUNT_DOWNLOAD.getExpiredTime(), count);
+            spyMemcachedClient.set(key, MemcachedObjectType.THEME_COUNT_DOWNLOAD.getExpiredTime(), count);
         }
         return convert(count,language);
     }
