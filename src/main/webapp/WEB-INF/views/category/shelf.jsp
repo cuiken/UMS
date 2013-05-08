@@ -55,7 +55,7 @@
 			<div id="filter" style="margin-bottom: 5px;">
 				商店:<s:select list="allStores" listKey="id" listValue="name" name="" id="store" cssClass="span2" />
 			</div>
-			<table id="content" class="table table-striped table-bordered table-condensed">
+			<table id="content" class="table table-striped table-bordered">
 				<thead>
 				<tr>
 					<th>货架名称</th>

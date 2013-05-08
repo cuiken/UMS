@@ -24,7 +24,7 @@
 				<div id="message" class="success">${actionMessages}</div>	
 			</c:if>
 			
-			<table class="table table-striped table-bordered table-condensed">
+			<table class="table table-striped table-bordered">
 				<thead>
 				<tr>
 					<th>市场名称</th>

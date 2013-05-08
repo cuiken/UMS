@@ -23,7 +23,7 @@
 			<div id="message" class="alert alert-success">${actionMessages}</div>
 		</c:if>
 
-		<table class="table table-striped table-bordered table-condensed">
+		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>分类名称</th>

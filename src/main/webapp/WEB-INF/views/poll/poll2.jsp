@@ -33,7 +33,7 @@
     <div id="filter" style="margin-bottom:5px;">
         <div class="pull-right"><a href="../poll2/xml/lock">查看XML</a></div>
     </div>
-    <table class="table table-striped table-bordered table-condensed">
+    <table class="table table-striped table-bordered">
         <thead>
         <tr>
             <th>广告图片</th>
