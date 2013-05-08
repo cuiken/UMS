@@ -260,8 +260,7 @@ public class HomeAction extends ActionSupport {
 				}
 			}
 			setDownloadType(session, cate.getDescription(),info);
-			long count = countContentDao.queryTotalDownload(info.getTheme().getTitle());
-			totalDown = convert(count,language);
+			totalDown = countContentDao.queryTotalDownload(info.getTheme().getTitle(),language);
 			catePage = fileManager.searchInfoByCategoryAndStore(catePage, cate.getId(), storeId, language);
 			List<FileStoreInfo> fileinfos = catePage.getResult();
 			fileinfos.remove(info);
@@ -281,8 +280,12 @@ public class HomeAction extends ActionSupport {
 
     private void shuffleGame(Long storeId,HttpSession session) throws Exception{
         newestPage.setPageSize(100);
+        hottestPage.setPageSize(100);
         newestPage = fileManager.searchStoreInfoInShelf(newestPage, "game", storeId, language);
+        hottestPage=fileManager.searchStoreInfoInShelf(newestPage, "app", storeId, language);
+
         List<FileStoreInfo> fileInfos=newestPage.getResult();
+        fileInfos.addAll(hottestPage.getResult());
         Collections.shuffle(fileInfos);
         if(fileInfos.size()>0){
             gameInfo=fileInfos.get(0);
@@ -290,44 +293,6 @@ public class HomeAction extends ActionSupport {
 //        gameInfo.getTheme().setDownloadURL("browerhttp://" + StringUtils.remove(Constants.getDomain(), "http://") + "/file-download.action?id="+gameInfo.getTheme().getId()+"&inputPath="+gameInfo.getTheme().getApkPath());
         setDownloadType(session,gameInfo.getTheme().getCategories().get(0).getDescription(),gameInfo);
     }
-
-	private String convert(long count,String language) {
-		count = count * 10;
-
-		if (count < 10000) {
-			if (count < 1000) {
-                if(StringUtils.equalsIgnoreCase(language,"zh"))
-				    return "1000以下";
-                else
-                    return "0-1000";
-			} else {
-				String number = StringUtils.substring(String.valueOf(count), 0, 1);
-				for (int i = 1; i < 10; i++) {
-					if (Integer.valueOf(number).equals(i)) {
-						return i + "000+";
-					}
-				}
-			}
-		} else {
-			String number = StringUtils.substring(String.valueOf(count), 0, 1);
-			String tenThousandPosition = StringUtils.substring(String.valueOf(count), 0,
-					String.valueOf(count).length() - 4);
-
-			for (int i = 1; i < 10; i++) {
-				if (Integer.valueOf(number).equals(i)) {
-                    if(StringUtils.equalsIgnoreCase(language,"zh"))
-					    return tenThousandPosition + "万+";
-                    else{
-                        long result=Long.valueOf(tenThousandPosition + "0000");
-
-                        return new DecimalFormat(",###").format(result)+"+";
-                    }
-				}
-			}
-
-		}
-		return "";
-	}
 
 	private void setDownloadType(HttpSession session, String category,FileStoreInfo fsi) throws UnsupportedEncodingException {
 

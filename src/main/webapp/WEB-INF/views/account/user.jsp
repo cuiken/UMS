@@ -42,7 +42,7 @@
 						<td>${user.groupNames}</td>
 						<td>${user.status}</td>
 						<td><shiro:hasPermission name="user:edit">
-								<a href="user!input.action?id=${user.id}">修改</a>
+								<a href="user!input.action?id=${user.id}"><i class="icon-edit"></i></a>
 							</shiro:hasPermission></td>
 					</tr>
 				</c:forEach>

@@ -47,8 +47,8 @@
 						</c:otherwise>
 						</c:choose></td>
 					<td><shiro:hasPermission name="group:edit">
-							<a href="group!input.action?id=${group.id}">修改</a>
-							<a href="#" onclick="deleteThis(${group.id})">删除</a>
+							<a href="group!input.action?id=${group.id}"><i class="icon-edit"></i></a> &nbsp;
+							<a href="#" onclick="deleteThis(${group.id})"><i class="icon-remove-sign"></i></a>
 						</shiro:hasPermission></td>
 				</tr>
 			</c:forEach>

@@ -140,7 +140,7 @@
 							<div class="control-group">
 								<label for="longDescription" class="control-label" style="vertical-align: top">详细描述:<font class="red">*</font></label>
 								<div class="controls">
-									<textarea class="input-xlarge" rows="6" id="longDescription[${info.index}]" name="fileInfo[${info.index}].longDescription" class="required" maxlength="500">${longDescription}</textarea>
+									<textarea class="input-xxlarge" rows="6" id="longDescription[${info.index}]" name="fileInfo[${info.index}].longDescription" class="required" maxlength="500">${longDescription}</textarea>
 								</div>
 							</div>
 							<div class="control-group">

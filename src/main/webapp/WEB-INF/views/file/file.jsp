@@ -68,7 +68,8 @@
 						<td>${modifyTime}</td>
 						<td><shiro:hasPermission name="file:edit">
 								<!-- <a href="file-info.action?themeId=${id}">语言</a> -->
-								<a href="#" onclick="deleteThis(${id})">删除</a>
+                                 &nbsp;
+								<a href="#" onclick="deleteThis(${id})"><i class="icon-remove-sign"></i></a>
 							</shiro:hasPermission></td>
 					</tr>
 				</s:iterator>

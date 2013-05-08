@@ -19,6 +19,7 @@
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#status" data-toggle="tab">Memcached Status</a></li>
 				<li><a href="#logcat" data-toggle="tab">Log Cat</a></li>
+                <li><a href="#logclient" data-toggle="tab">同步客户端数据</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active" id="status">
@@ -58,6 +59,9 @@
 						
 					</div>
 				</div>
+                <div class="tab-pane" id="logclient">
+                    <i class="icon-plane"></i>
+                </div>
 			</div>
 		</div>
 		

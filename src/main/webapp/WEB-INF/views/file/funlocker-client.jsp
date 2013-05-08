@@ -54,8 +54,8 @@
 					<td>${createTime}</td>
 					<td>${modifyTime}</td>
 					<td>${dtype}</td>
-					<td><a href="funlocker-client!input.action?id=${id}">编辑</a>&nbsp;
-						<a href="#" onclick="deleteThis(${id})">删除</a></td>
+					<td><a href="funlocker-client!input.action?id=${id}"><i class="icon-edit"></i></a>&nbsp;
+						<a href="#" onclick="deleteThis(${id})"><i class="icon-remove-sign"></i></a></td>
 				</tr>
 			</s:iterator>
 		</tbody>

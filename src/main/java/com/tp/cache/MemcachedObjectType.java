@@ -29,6 +29,8 @@ public enum MemcachedObjectType {
 
     THEME_SORT("theme_sort:", 60 * 60 * 12),
 
+    THEME_COUNT_DOWNLOAD("theme_count_download:", 60 * 60 * 12),
+
     //=====================计数器key======================================
 
     COUNTER_CLIENT("counter_client", 60 * 60 * 12),
