@@ -83,7 +83,7 @@
 </div>-->
 
 
-<div id="leftbar" class="well span3" style="max-width: 340px; padding: 8px 0;margin-top: 15px;">
+<div id="leftbar" class="well span3" style="padding: 8px 0;margin-top: 15px;">
 
         <ul class="nav nav-list">
             <shiro:hasPermission name="user:view">
