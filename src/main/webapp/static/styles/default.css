@@ -28,19 +28,22 @@
     text-transform: uppercase;
 }
 .submenu a {
-    background-image: url("../images/background/submenua.gif");
+    /*background-image: url("../images/background/submenua.gif");*/
     background-position: right center;
     background-repeat: no-repeat;
-    border-bottom: 1px dashed #EEEEEE;
+    border-bottom: 1px dashed #e5e5e5;
     text-decoration: none;
     display: block;
     padding: 5px 0 5px 5px;
     width: 100%;
 }
 .submenu a:hover,.submenu .active  {
-    background-color: #EEEEEE;
-    background-image: url("../images/background/submenua_hover.jpg");
-    background-repeat: repeat-y;
+    /*background-color: #EEEEEE;*/
+    /*background-image: url("../images/background/submenua_hover.jpg");*/
+    /*background-repeat: repeat-y;*/
+    background: #08c;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
 }
 
 /*main*/

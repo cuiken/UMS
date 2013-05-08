@@ -27,9 +27,9 @@
 </head>
 
 <body>
-	<div class="container"> 
+	<div class="container-fluid">
 		<%@ include file="/WEB-INF/layouts/header.jsp"%>
-		<div class="row" style="margin-top: 10px;">
+		<div class="row-fluid" style="margin-top: 10px;">
 			<%@ include file="/WEB-INF/layouts/left.jsp"%>
 			<div id="main" class="span10" >
 				<sitemesh:body />
