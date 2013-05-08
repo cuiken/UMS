@@ -8,6 +8,7 @@
 			$(document).ready(function(){
 				$("#message").fadeOut(3000);
 				$("#store-tab").addClass("active");
+                $("#store-tab a").append("<i class='icon-remove-circle'></i>");
 			});
 			function deleteThis(id){
 				if(confirm("该操作会删除所有关联货架!确定要删除吗?")){

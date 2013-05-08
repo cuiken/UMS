@@ -10,6 +10,7 @@
 		<script>
 			$(document).ready(function(){
 				$("#shelf-tab").addClass("active");
+                $("#shelf-tab a").append("<i class='icon-remove-circle'></i>");
 				$("#name").focus();
 				$("#inputForm").validate({
 					

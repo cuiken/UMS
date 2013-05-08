@@ -8,6 +8,7 @@
 		<script>
 			$(function(){
 				$("#report-client-install-wc-tab").addClass("active");
+                $("#report-client-install-wc-tab a").append("<i class='icon-remove-circle'></i>");
                 $("#sdate").datepicker();
 			})
             function exportExcel(){
@@ -27,7 +28,7 @@
                 市场: <input class="input-medium" type="text"  name="filter_LIKES_marketName" value="${param['filter_LIKES_marketName']}" />
 				&nbsp;日期: <input class="input-medium" type="text" data-date-format="yyyy-mm-dd" id="sdate" autocomplete="on" name="filter_EQS_date" value="${param['filter_EQS_date']}" />
 				<input class="btn" type="button" value="搜索" onclick="search();"/>&nbsp;
-                <div style="float:right"><a href="#" class="btn" onclick="exportExcel();"><i class=" icon-download-alt"></i>Excel</a></div>
+                <div style="float:right"><a href="#" class="btn" onclick="exportExcel();"><i class=" icon-download"></i>导出</a></div>
 			</div>
 			<table class="table table-bordered table-hover">
 				<thead>

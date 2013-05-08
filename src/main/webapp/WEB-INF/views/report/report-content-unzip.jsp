@@ -8,6 +8,7 @@
 		<script>
 			$(function(){
 				$("#report-contentUnzip-tab").addClass("active");
+                $("#report-contentUnzip-tab a").append("<i class='icon-remove-circle'></i>");
                 $("#sdate").datepicker();
 			})
 		</script>

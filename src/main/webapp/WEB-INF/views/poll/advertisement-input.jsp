@@ -11,6 +11,7 @@
         $(document).ready(function () {
             $("#sort").focus();
             $("#advertisement-tab").addClass("active");
+            $("#advertisement-tab a").append("<i class='icon-remove-circle'></i>");
             $("#inputForm").validate();
         });
     </script>

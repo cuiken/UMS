@@ -8,6 +8,7 @@
 	$(document).ready(function() {
 
 		$("#viewsource-tab").addClass("active");
+        $("#viewsource-tab a").append("<i class='icon-remove-circle'></i>");
 	});
 </script>
 </head>

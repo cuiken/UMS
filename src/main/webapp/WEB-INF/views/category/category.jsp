@@ -8,6 +8,7 @@
 			$(document).ready(function(){
 				$("#message").fadeOut(3000);	
 				$("#category-tab").addClass("active");
+                $("#category-tab a").append("<i class='icon-remove-circle'></i>");
 			});
 			function deleteThis(id){
 				if(confirm("确定要删除吗?")){

@@ -10,6 +10,7 @@
 	$(document).ready(function() {
 		//active tab
 		$("#feedback-tab").addClass("active");
+        $("#feedback-tab a").append("<i class='icon-remove-circle'></i>");
 					
 	});
 </script>

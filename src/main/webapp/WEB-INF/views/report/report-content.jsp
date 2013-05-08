@@ -9,6 +9,7 @@
 
 			$(function(){
 				$("#reportcn-tab").addClass("active");
+                $("#reportcn-tab a").append("<i class='icon-remove-circle'></i>");
                 $("#sdate").datepicker();
 			})
 
@@ -25,7 +26,7 @@
 				内容: <input class="input-medium" type="text" id="theme" name="filter_LIKES_themeName" value="${param['filter_LIKES_themeName']}" />
 				&nbsp;日期: <input class="input-medium" type="text" data-date-format="yyyy-mm-dd" id="sdate" autocomplete="on" name="filter_EQS_logDate" value="${param['filter_EQS_logDate']}" />
 				<input class="btn" type="button" value="搜索" onclick="search();"/>&nbsp;
-				<div style="float:right"><a href="#" class="btn" onclick="exportExcel();"><i class=" icon-download-alt"></i>Excel</a></div>
+				<div style="float:right"><a href="#" class="btn" onclick="exportExcel();"><i class=" icon-download"></i>导出</a></div>
 			</div>
 			<table class="table table-bordered table-hover">
 				<thead>

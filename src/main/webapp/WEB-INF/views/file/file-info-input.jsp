@@ -11,6 +11,7 @@
 			$(document).ready(function(){
 				$("#inputForm").validate();
 				$("#lock-tab").addClass("active");
+                $("#lock-tab a").append("<i class='icon-remove-circle'></i>");
 			});
 		</script>
 	</head>

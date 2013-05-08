@@ -55,6 +55,7 @@ h1 {
 	$(function() {
 		$("#message").fadeOut(3000);
 		$("#shelf-tab").addClass("active");
+        $("#shelf-tab a").append("<i class='icon-remove-circle'></i>");
 		$( "#sortable1, #sortable2" ).sortable({
 			//revert: true, //缓冲效果 
 	        cursor: 'move', //拖动的时候鼠标样式 

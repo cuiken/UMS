@@ -10,7 +10,7 @@
 			$(document).ready(function(){
 				$("#message").fadeOut(3000);
 				$("#market-tab").addClass("active");
-				
+                $("#market-tab a").append("<i class='icon-remove-circle'></i>");
 			});
 			function deleteThis(id,tid,mid){
 				if(confirm("确定要删除吗?")){

@@ -9,6 +9,7 @@
 			$(document).ready(function(){
 				$("#message").fadeOut(3000);
 				$("#lock-tab").addClass("active");
+                $("#lock-tab a").append("<i class='icon-remove-circle'></i>");
 				$("#f_dtype").change(function(){
 					search();			
 				});

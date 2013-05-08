@@ -10,6 +10,7 @@
 		$(document).ready(function() {
 			$("#name").focus();
 			$("#group-tab").addClass("active");
+            $("#group-tab a").append("<i class='icon-remove-circle'></i>");
 			$("#inputForm").validate();
 		});
 	</script>

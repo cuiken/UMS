@@ -8,6 +8,7 @@
 		<script>
 			$(function(){
 				$("#report-getClient-tab").addClass("active");
+                $("#report-getClient-tab a").append("<i class='icon-remove-circle'></i>");
                 $("#sdate").datepicker();
 			})
 		</script>

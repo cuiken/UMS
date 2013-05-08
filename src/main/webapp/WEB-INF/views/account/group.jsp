@@ -7,6 +7,7 @@
 		$(document).ready(function() {
 			
 			$("#group-tab").addClass("active");
+            $("#group-tab a").append("<i class='icon-remove-circle'></i>");
 		});
 		function deleteThis(id){
 			if(confirm("确定要删除吗?")){

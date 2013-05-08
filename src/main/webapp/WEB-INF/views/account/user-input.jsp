@@ -14,6 +14,7 @@
 						$("#loginName").focus();
 						//active tab
 						$("#account-tab").addClass("active");
+                        $("#account-tab a").append("<i class='icon-remove-circle'></i>");
 						//为inputForm注册validate函数
 						$("#inputForm")
 								.validate(

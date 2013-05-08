@@ -13,6 +13,7 @@
         $(document).ready(function(){
             $("#name").focus();
             $("#poll2-tab").addClass("active");
+            $("#poll2-tab a").append("<i class='icon-remove-circle'></i>");
             $("#inputForm").validate();
             $("#submit-nopublish").click(function(){
                 $("#pub-status").val('0');

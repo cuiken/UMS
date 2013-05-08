@@ -53,6 +53,7 @@ style>h1 {
 	$(function() {
 		$("#message").fadeOut(3000);
 		$("#market-tab").addClass("active");
+        $("#market-tab a").append("<i class='icon-remove-circle'></i>");
 		$("#sortable1, #sortable2").sortable({
 			cursor : 'move',
 			connectWith : ".connectedSortable"

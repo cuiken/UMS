@@ -8,6 +8,7 @@ b<%@ page contentType="text/html;charset=UTF-8"%>
 		<script>
 			$(function(){
 				$("#report-client-install-tab").addClass("active");
+                $("#report-client-install-tab a").append("<i class='icon-remove-circle'></i>");
                 $("#sdate").datepicker();
 			})
 		</script>

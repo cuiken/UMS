@@ -10,6 +10,7 @@
 		<script>
 			$(document).ready(function(){
 				$("#lock-tab").addClass("active");
+                $("#lock-tab a").append("<i class='icon-remove-circle'></i>");
 				$("#inputForm").validate({
 					rules:{
 						title:{

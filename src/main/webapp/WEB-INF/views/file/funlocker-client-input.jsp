@@ -10,6 +10,7 @@
 <script>
 	$(document).ready(function() {
 		$("#client-tab").addClass("active");
+        $("#client-tab a").append("<i class='icon-remove-circle'></i>");
 		$("#inputForm").validate({
 			rules : {
 				dtype : "required"

@@ -11,6 +11,7 @@
 			$(document).ready(function(){
 				$("#name").focus();
 				$("#market-tab").addClass("active");
+                $("#market-tab a").append("<i class='icon-remove-circle'></i>");
 				$("#inputForm").validate({
 					rules:{
 						name:{

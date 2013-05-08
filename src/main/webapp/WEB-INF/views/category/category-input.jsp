@@ -11,6 +11,7 @@
 			$(document).ready(function(){
 				$("#name").focus();
 				$("#category-tab").addClass("active");
+                $("#category-tab a").append("<i class='icon-remove-circle'></i>");
 				$("#inputForm").validate({			
 					rules:{
 						name:{

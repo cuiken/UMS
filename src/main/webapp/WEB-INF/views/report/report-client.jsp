@@ -8,6 +8,7 @@
 		<script>
 			$(function(){
 				$("#reportc-tab").addClass("active");
+                $("#reportc-tab a").append("<i class='icon-remove-circle'></i>");
 			})
 		</script>
 	</head>

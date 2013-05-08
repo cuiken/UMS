@@ -11,7 +11,7 @@
 			$(document).ready(function(){
 				$("#name").focus();
 				$("#ccategory-tab").addClass("active");
-				
+                $("#ccategory-tab a").append("<i class='icon-remove-circle'></i>");
 				$("#inputForm").validate();
 			});
 		</script>

@@ -10,6 +10,7 @@
 		<script>
 			$(document).ready(function(){
 				$("#market-tab").addClass("active");
+                $("#market-tab a").append("<i class='icon-remove-circle'></i>");
 				$("#inputForm").validate();
 			});
 		

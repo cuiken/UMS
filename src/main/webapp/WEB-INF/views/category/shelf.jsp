@@ -9,6 +9,7 @@
 			$(document).ready(function(){
 				$("#message").fadeOut(3000);
 				$("#shelf-tab").addClass("active");
+                $("#shelf-tab a").append("<i class='icon-remove-circle'></i>");
 				var sid=$("#store").val();
 				
 				var getData=function(sid){

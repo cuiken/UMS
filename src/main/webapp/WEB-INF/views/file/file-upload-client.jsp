@@ -11,6 +11,7 @@
 	$(document).ready(function() {
 		$("#inputForm").validate();
 		$("#client-tab").addClass("active");
+        $("#client-tab a").append("<i class='icon-remove-circle'></i>");
 		$("#message").fadeOut(3000);
 
 	});

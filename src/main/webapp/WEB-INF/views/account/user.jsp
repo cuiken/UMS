@@ -7,6 +7,7 @@
 	$(document).ready(function() {
 		
 		$("#account-tab").addClass("active");
+        $("#account-tab a").append("<i class='icon-remove-circle'></i>");
 	});
 </script>
 </head>

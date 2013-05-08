@@ -9,6 +9,7 @@
         $(document).ready(function(){
             $("#message").fadeOut(3000);
             $("#poll2-tab").addClass("active");
+            $("#poll2-tab a").append("<i class='icon-remove-circle'></i>");
         });
 
         function deleteThis(id){
@@ -31,7 +32,7 @@
         <div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${actionMessages}</div>
     </c:if>
     <div id="filter" style="margin-bottom:5px;">
-        <div class="pull-right"><a href="../poll2/xml/lock">查看XML</a></div>
+        <div class="pull-right"><a href="../poll2/xml/lock"><i class="icon-rss"></i>XML</a></div>
     </div>
     <table class="table table-striped table-bordered">
         <thead>

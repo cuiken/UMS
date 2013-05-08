@@ -9,6 +9,7 @@
 			$(document).ready(function(){
 				$("#message").fadeOut(3000);
 				$("#market-tab").addClass("active");
+                $("#market-tab a").append("<i class='icon-remove-circle'></i>");
 			});
 			function deleteThis(id){
 				if(confirm("该操作会删除所有上市文件!确定要删除吗?")){

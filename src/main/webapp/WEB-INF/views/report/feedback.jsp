@@ -8,6 +8,7 @@
 		<script>
 			$(function(){
 				$("#feedback-tab").addClass("active");
+                $("#feedback-tab a").append("<i class='icon-remove-circle'></i>");
 				$("#f_status").change(function(){
 					search();			
 				});
