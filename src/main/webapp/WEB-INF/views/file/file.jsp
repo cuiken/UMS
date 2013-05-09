@@ -42,9 +42,8 @@
 				type="button" id="submit_btn" class="btn" value="搜索"
 				onclick="search();" />
 			<div class="pull-right">
-				<a class="btn" href="#" onclick="doupload();">
-				<i class="icon-upload"></i>
-				上传</a>
+				<a class="icon-plus" href="#" onclick="doupload();">
+				新增</a>
 			</div>		
 		</div>
 		<table class="table table-bordered table-hover">

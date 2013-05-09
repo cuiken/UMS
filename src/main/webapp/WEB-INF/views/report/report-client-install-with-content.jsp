@@ -28,7 +28,7 @@
                 市场: <input class="input-medium" type="text"  name="filter_LIKES_marketName" value="${param['filter_LIKES_marketName']}" />
 				&nbsp;日期: <input class="input-medium" type="text" data-date-format="yyyy-mm-dd" id="sdate" autocomplete="on" name="filter_EQS_date" value="${param['filter_EQS_date']}" />
 				<input class="btn" type="button" value="搜索" onclick="search();"/>&nbsp;
-                <div style="float:right"><a href="#" class="btn" onclick="exportExcel();"><i class=" icon-download"></i>导出</a></div>
+                <div style="float:right"><a href="#" class="icon-download" onclick="exportExcel();"> 导出</a></div>
 			</div>
 			<table class="table table-bordered table-hover">
 				<thead>

@@ -27,9 +27,8 @@
 		</div>
 	</c:if>
 	<div class="pull-right" style="margin-bottom: 5px;">
-		<a class="btn" href="file-upload!client.action"> 
-		<i class="icon-upload"></i> 上传
-		</a>
+		<a class="icon-plus" href="file-upload!client.action">
+            新增</a>
 	</div>
 
 

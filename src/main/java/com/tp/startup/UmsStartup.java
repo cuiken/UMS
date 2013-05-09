@@ -52,7 +52,7 @@ public final class UmsStartup {
 
     public static DatabaseProvider getDatabaseProvider() {
         if (dbProvider == null) {
-            throw new IllegalStateException("Roller Weblogger has not been prepared yet");
+            throw new IllegalStateException("UMS has not been prepared yet");
         }
         return dbProvider;
     }

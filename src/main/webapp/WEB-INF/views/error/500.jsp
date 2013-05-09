@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" isErrorPage="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="org.slf4j.Logger,org.slf4j.LoggerFactory" %>
-
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <%response.setStatus(200);%>
 
 <%
@@ -21,9 +21,10 @@
 <head>
 	<title>500 - </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="${ctx}/static/bootstrap/2.1.1/css/bootstraped.min.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
-<div><h1>服务器开小差了.</h1></div>
+<div style="text-align: center"><i style="font-size: 280px;" class="icon-wrench"></i><h1>服务器开小差了!</h1></div>
 </body>
 </html>

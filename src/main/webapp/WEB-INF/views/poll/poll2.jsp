@@ -32,7 +32,13 @@
         <div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${actionMessages}</div>
     </c:if>
     <div id="filter" style="margin-bottom:5px;">
-        <div class="pull-right"><a href="../poll2/xml/lock"><i class="icon-rss"></i>XML</a></div>
+        广播类型:<s:select list="#{'0':'上线通知','1':'广告'}" id="p_dtype" name="filter_EQS_dtype" listKey="key" listValue="value" cssClass="span2"></s:select>
+        <div class="pull-right">
+            <shiro:hasPermission name="store:edit">
+                <a class="icon-plus" href="poll2!input.action"> 新增</a>
+            </shiro:hasPermission>
+            &nbsp;<a href="../poll2/xml/lock"><i class="icon-rss"></i></a>
+        </div>
     </div>
     <table class="table table-striped table-bordered">
         <thead>
@@ -88,9 +94,6 @@
         </tbody>
     </table>
     <%@include file="/common/page.jsp" %>
-    <shiro:hasPermission name="store:edit">
-        <a class="btn" href="poll2!input.action">添加广播</a>
-    </shiro:hasPermission>
 </form>
 </body>
 </html>

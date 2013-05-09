@@ -51,7 +51,12 @@
     </c:if>
     <div id="filter" style="margin-bottom:5px;">
         商店: <s:select list="stores" id="f_store" name="filter_EQS_store" listKey="value" listValue="name" cssClass="span2"></s:select>
-        <div class="pull-right"><a href="#" onclick="goXml();"><i class="icon-rss"></i>XML</a></div>
+        <div class="pull-right">
+            <shiro:hasPermission name="store:edit">
+                <a class="icon-plus" id="addpoll" href="#"> 新增</a>
+            </shiro:hasPermission>
+            &nbsp;<a href="#" onclick="goXml();"><i class="icon-rss"></i></a>
+        </div>
     </div>
     <table class="table table-striped table-bordered">
         <thead>
@@ -103,9 +108,6 @@
         </tbody>
     </table>
     <%@include file="/common/page.jsp" %>
-    <shiro:hasPermission name="store:edit">
-        <a class="btn" id="addpoll" href="#">新增广告</a>
-    </shiro:hasPermission>
 </form>
 </body>
 </html>

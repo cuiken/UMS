@@ -87,7 +87,7 @@
 
         <ul class="nav nav-list">
             <shiro:hasPermission name="user:view">
-                <li class="nav-header">系统管理</li>
+                <li class="nav-header"><i class="icon-home"></i>系统管理</li>
                 <li id="account-tab"><a href="${ctx}/account/user.action">帐号管理</a></li>
             <shiro:hasPermission name="group:view">
                 <li id="group-tab"> <a href="${ctx}/account/group.action">角色管理</a></li>
@@ -95,18 +95,18 @@
                 <li id="viewsource-tab"> <a href="${ctx}/report/view-source.action">系统工具</a></li>
             </shiro:hasPermission>
             <shiro:hasPermission name="file:view">
-                <li class="nav-header">文件管理</li>
+                <li class="nav-header"><i class="icon-leaf"></i>文件管理</li>
                 <li id="lock-tab"><a href="${ctx}/file/file.action">解锁文件</a></li>
                 <li id="client-tab"><a href="${ctx}/file/funlocker-client.action">客户端文件</a></li>
             </shiro:hasPermission>
             <shiro:hasPermission name="category:view">
-                <li class="nav-header">文件分类管理</li>
+                <li class="nav-header"><i class="icon-leaf"></i>文件分类管理</li>
                 <li id="category-tab"><a href="${ctx}/category/category.action">解锁类别</a> </li>
                 <li id="ccategory-tab"><a href="${ctx}/category/client-type.action">客户端类别</a></li>
             </shiro:hasPermission>
 
             <shiro:hasPermission name="store:view">
-                <li class="nav-header">商店市场管理</li>
+                <li class="nav-header"><i class="icon-leaf"></i>商店市场管理</li>
                 <li id="store-tab"><a href="${ctx}/category/store.action">商店列表</a></li>
                 <li id="shelf-tab"><a  href="${ctx}/category/shelf.action">货架列表</a></li>
                 <li id="market-tab"><a href="${ctx}/category/market.action">市场列表</a></li>
@@ -115,7 +115,7 @@
                 <li id="advertisement-tab"><a href="${ctx}/poll/advertisement.action">广告条管理</a></li>
             </shiro:hasPermission>
 
-            <li class="nav-header">报表管理</li>
+            <li class="nav-header"><i class="icon-leaf"></i>报表管理</li>
 
                 <shiro:hasPermission name="report:view">
                     <li id="reportc-tab"><a href="${ctx}/report/report-client.action">客户端日报</a></li>
@@ -147,7 +147,7 @@
 
 
             <shiro:hasPermission name="navigation:view">
-                <li class="nav-header">导航管理</li>
+                <li class="nav-header"><i class="icon-leaf"></i>导航管理</li>
 
                 <li><a href="${ctx}/nav/board.action">导航相关</a></li>
 
