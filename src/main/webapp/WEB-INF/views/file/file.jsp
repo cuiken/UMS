@@ -41,9 +41,8 @@
 				value="${param['filter_LIKES_title']}" size="20" /> <input
 				type="button" id="submit_btn" class="btn" value="搜索"
 				onclick="search();" />
-			<div class="pull-right">
-				<a class="icon-plus" href="#" onclick="doupload();">
-				新增</a>
+			<div class="pull-right" style="margin: 10px;">
+				<a class="icon-plus" href="#" onclick="doupload();">新增</a>
 			</div>		
 		</div>
 		<table class="table table-bordered table-hover">

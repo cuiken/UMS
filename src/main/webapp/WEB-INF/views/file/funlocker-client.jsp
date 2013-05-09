@@ -26,9 +26,8 @@
 			${actionMessages}
 		</div>
 	</c:if>
-	<div class="pull-right" style="margin-bottom: 5px;">
-		<a class="icon-plus" href="file-upload!client.action">
-            新增</a>
+	<div class="pull-right" style="margin: 10px;">
+		<a class="icon-plus" href="file-upload!client.action">新增</a>
 	</div>
 
 

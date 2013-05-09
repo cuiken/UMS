@@ -23,7 +23,11 @@
 		<c:if test="${not empty actionMessages}">
 			<div id="message" class="alert alert-success">${actionMessages}</div>
 		</c:if>
-
+        <div class="pull-right" style="margin: 10px;">
+            <shiro:hasPermission name="category:edit">
+                <a class="icon-plus" href="category!input.action">新增</a>
+            </shiro:hasPermission>
+        </div>
 		<table class="table table-striped table-bordered table-condensed">
 			<thead>
 				<tr>
@@ -50,9 +54,6 @@
 				</s:iterator>
 			</tbody>
 		</table>
-		<shiro:hasPermission name="category:edit">
-			<a class="btn" href="category!input.action">创建分类</a>
-		</shiro:hasPermission>
 
 	</form>
 

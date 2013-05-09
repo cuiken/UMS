@@ -35,7 +35,7 @@
         广播类型:<s:select list="#{'0':'上线通知','1':'广告'}" id="p_dtype" name="filter_EQS_dtype" listKey="key" listValue="value" cssClass="span2"></s:select>
         <div class="pull-right">
             <shiro:hasPermission name="store:edit">
-                <a class="icon-plus" href="poll2!input.action"> 新增</a>
+                <a class="icon-plus" href="poll2!input.action">新增</a>
             </shiro:hasPermission>
             &nbsp;<a href="../poll2/xml/lock"><i class="icon-rss"></i></a>
         </div>
