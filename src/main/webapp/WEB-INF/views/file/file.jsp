@@ -66,7 +66,8 @@
 						<td>${modifyTime}</td>
 						<td><shiro:hasPermission name="file:edit">
 								<!-- <a href="file-info.action?themeId=${id}">语言</a> -->
-                                 &nbsp;
+                                <a><i class="icon-star"></i></a>&nbsp;
+                                <a><i class="icon-heart"></i></a>&nbsp;
 								<a href="#" onclick="deleteThis(${id})"><i class="icon-trash"></i></a>
 							</shiro:hasPermission></td>
 					</tr>
