@@ -32,13 +32,13 @@ public class LogCCInstallWithContentService {
     }
 
     public List<String> getMarketFromLog(String sdate){
-        String edate= DateUtil.getNextDate(sdate);
-        return logCCInstallWithContentDao.getMarketByDate(sdate,edate);
+//        String edate= DateUtil.getNextDate(sdate);
+        return logCCInstallWithContentDao.getMarketByDate(sdate,sdate);
     }
 
     public List<LogCountClientInstallWithContent> getLogs(String sdate){
-        String edate= DateUtil.getNextDate(sdate);
-        return logCCInstallWithContentDao.getByDate(sdate,edate);
+//        String edate= DateUtil.getNextDate(sdate);
+        return logCCInstallWithContentDao.getByDate(sdate,sdate);
     }
 
     @Autowired
