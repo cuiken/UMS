@@ -53,7 +53,7 @@
         商店: <s:select list="stores" id="f_store" name="filter_EQS_store" listKey="value" listValue="name" cssClass="span2"></s:select>
         <div class="pull-right">
             <shiro:hasPermission name="store:edit">
-                <a class="icon-plus" id="addpoll" href="#"> 新增</a>
+                <a class="icon-plus" id="addpoll" href="#">新增</a>
             </shiro:hasPermission>
             &nbsp;<a href="#" onclick="goXml();"><i class="icon-rss"></i></a>
         </div>
