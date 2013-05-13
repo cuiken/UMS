@@ -24,7 +24,7 @@
 									+val.value+"</td><td>"
 									+val.description
 									+"</td><td><a href=shelf!manage.action?id="
-									+val.id+">管理</a></td></tr>";
+									+val.id+"><i class='icon-cog'></i></a></td></tr>";
 								
 								});
 								
@@ -55,6 +55,9 @@
 			</c:if>
 			<div id="filter" style="margin-bottom: 5px;">
 				商店:<s:select list="allStores" listKey="id" listValue="name" name="" id="store" cssClass="span2" />
+                <div class="pull-right">
+                    <a class="icon-plus" href="#" id="createShelf">新增</a>
+                </div>
 			</div>
 			<table id="content" class="table table-striped table-bordered">
 				<thead>
@@ -78,8 +81,7 @@
 						</td>
 				</tr>
 				-->
-			</table>		
-			<a class="btn" href="#" id="createShelf">创建货架</a>	
+			</table>
 
 		</form>
 		

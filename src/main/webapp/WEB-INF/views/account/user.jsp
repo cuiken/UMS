@@ -21,7 +21,11 @@
 				${actionMessages}
 			</div>
 		</c:if>
-
+        <div class="pull-right">
+            <shiro:hasPermission name="user:edit">
+                <a class="icon-plus" href="user!input.action">新增</a>
+            </shiro:hasPermission>
+        </div>
 		<table id="contentTable" class="table table-bordered table-hover">
 			<thead>
 				<tr>
@@ -48,10 +52,6 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<shiro:hasPermission name="user:edit">
-			<a class="btn" href="user!input.action">创建用户</a>
-		</shiro:hasPermission>
-
 	</form>
 </body>
 </html>

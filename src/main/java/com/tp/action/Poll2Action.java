@@ -36,6 +36,11 @@ public class Poll2Action extends CRUDActionSupport<PollEnhancement> {
     @Override
     public String list() throws Exception {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
+        String defaultFilter = Struts2Utils.getParameter("filter_EQS_dtype");
+        if (defaultFilter == null) {
+            PropertyFilter filter = new PropertyFilter("EQS_dtype", "0");
+            filters.add(filter);
+        }
         if (!page.isOrderBySetted()) {
             page.setOrderBy("createTime");
             page.setOrderDir(PageRequest.Sort.DESC);

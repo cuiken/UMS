@@ -25,7 +25,11 @@
 			${actionMessages}
 		</div>
 	</c:if>
-
+    <div class="pull-right">
+        <shiro:hasPermission name="group:edit">
+            <a class="icon-plus" href="group!input.action">新增</a>
+        </shiro:hasPermission>
+    </div>
 	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
@@ -48,16 +52,11 @@
 						</c:choose></td>
 					<td><shiro:hasPermission name="group:edit">
 							<a href="group!input.action?id=${group.id}"><i class="icon-edit"></i></a> &nbsp;
-							<a href="#" onclick="deleteThis(${group.id})"><i class="icon-remove-sign"></i></a>
+							<a href="#" onclick="deleteThis(${group.id})"><i class="icon-trash"></i></a>
 						</shiro:hasPermission></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-
-	<shiro:hasPermission name="group:edit">
-		<a class="btn" href="group!input.action">创建角色</a>
-	</shiro:hasPermission>
-
 </body>
 </html>

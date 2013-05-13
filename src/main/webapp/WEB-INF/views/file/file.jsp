@@ -42,8 +42,7 @@
 				type="button" id="submit_btn" class="btn" value="搜索"
 				onclick="search();" />
 			<div class="pull-right">
-				<a class="icon-plus" href="#" onclick="doupload();">
-				新增</a>
+				<a class="icon-plus" href="#" onclick="doupload();">新增</a>
 			</div>		
 		</div>
 		<table class="table table-bordered table-hover">
@@ -68,7 +67,7 @@
 						<td><shiro:hasPermission name="file:edit">
 								<!-- <a href="file-info.action?themeId=${id}">语言</a> -->
                                  &nbsp;
-								<a href="#" onclick="deleteThis(${id})"><i class="icon-remove-sign"></i></a>
+								<a href="#" onclick="deleteThis(${id})"><i class="icon-trash"></i></a>
 							</shiro:hasPermission></td>
 					</tr>
 				</s:iterator>

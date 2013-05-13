@@ -126,3 +126,7 @@
     border: 1px solid #eee;
     color: #ddd;
 }
+.pull-right{
+    line-height: 20px;
+    height: 20px;
+}

@@ -7,7 +7,7 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="${ctx}">UMS2.0</a>
+				</a> <a class="brand" href="${ctx}"><i class="icon-cloud-upload"></i>&nbsp;UMS2.0</a>
 					<div class="nav-collapse collapse ">
 					<shiro:user>
 						<ul class="nav pull-right">

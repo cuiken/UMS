@@ -26,9 +26,8 @@
 			${actionMessages}
 		</div>
 	</c:if>
-	<div class="pull-right" style="margin-bottom: 5px;">
-		<a class="icon-plus" href="file-upload!client.action">
-            新增</a>
+	<div class="pull-right">
+		<a class="icon-plus" href="file-upload!client.action">新增</a>
 	</div>
 
 
@@ -54,7 +53,7 @@
 					<td>${modifyTime}</td>
 					<td>${dtype}</td>
 					<td><a href="funlocker-client!input.action?id=${id}"><i class="icon-edit"></i></a>&nbsp;
-						<a href="#" onclick="deleteThis(${id})"><i class="icon-remove-sign"></i></a></td>
+						<a href="#" onclick="deleteThis(${id})"><i class="icon-trash"></i></a></td>
 				</tr>
 			</s:iterator>
 		</tbody>

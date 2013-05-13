@@ -24,7 +24,12 @@
 			<c:if test="${not empty actionMessages}">
 				<div id="message" class="success">${actionMessages}</div>	
 			</c:if>
-			
+			<div class="pull-right">
+                <shiro:hasPermission name="store:edit">
+                    <a class="icon-plus" href="market!input.action">新增</a>&nbsp;
+                    <a class="icon-cog" href="market!manage.action">管理</a>
+                </shiro:hasPermission>
+			</div>
 			<table class="table table-striped table-bordered">
 				<thead>
 				<tr>
@@ -63,18 +68,14 @@
 						</td>
 						<td>
 							<shiro:hasPermission name="store:edit">
-								<a href="market!input.action?id=${id}">编辑</a>&nbsp;
-								<a href="#" onclick="deleteThis(${id})">删除</a>
+								<a href="market!input.action?id=${id}"><i class="icon-edit"></i></a>&nbsp;
+								<a href="#" onclick="deleteThis(${id})"><i class="icon-trash"></i></a>
 							</shiro:hasPermission>
 						</td>
 					</tr>
 				</s:iterator>
 				</tbody>
 			</table>
-			<shiro:hasPermission name="store:edit">
-				<a class="btn" href="market!input.action">创建市场</a>&nbsp;
-				<a class="btn" href="market!manage.action">管理市场</a>
-			</shiro:hasPermission>
 
 		</form>
 		

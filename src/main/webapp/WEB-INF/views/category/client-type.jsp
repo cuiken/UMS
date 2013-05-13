@@ -23,7 +23,11 @@
 		<c:if test="${not empty actionMessages}">
 			<div id="message" class="alert alert-success">${actionMessages}</div>
 		</c:if>
-
+        <div class="pull-right">
+            <shiro:hasPermission name="category:edit">
+                <a class="icon-plus" href="client-type!input.action">新增</a>
+            </shiro:hasPermission>
+        </div>
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
@@ -39,17 +43,15 @@
 						<td>${value}</td>
 						<td>
 							<shiro:hasPermission name="category:edit">
-								<a href="client-type!input.action?id=${id}">编辑</a>
-								<a href="#" onclick="deleteThis(${id})">删除</a>
+								<a href="client-type!input.action?id=${id}"><i class="icon-edit"></i></a>
+                                &nbsp;
+								<a href="#" onclick="deleteThis(${id})"><i class="icon-trash"></i></a>
 							</shiro:hasPermission>	
 						</td>
 					</tr>
 				</s:iterator>
 			</tbody>
 		</table>
-		<shiro:hasPermission name="category:edit">
-			<a class="btn" href="client-type!input.action">创建分类</a>
-		</shiro:hasPermission>
 	</form>
 
 </body>

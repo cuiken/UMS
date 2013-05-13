@@ -97,11 +97,12 @@
                 <td>${createTime}</td>
                 <td><shiro:hasPermission name="store:edit">
                     <s:if test="status==0">
-                        <a href="#" onclick="changeStatus(${id})">发布</a>
+                        <a href="#" onclick="changeStatus(${id})"><i class="icon-star-empty"></i></a>
                     </s:if><s:elseif test="status==1">
-                    <a href="#" onclick="changeStatus(${id})">取消发布</a>
+                    <a href="#" onclick="changeStatus(${id})"><i class="icon-star"></i></a>
                 </s:elseif>
-                    <a href="#" onclick="deleteThis(${id})">删除</a>
+                    &nbsp;
+                    <a href="#" onclick="deleteThis(${id})"><i class="icon-trash"></i></a>
                 </shiro:hasPermission></td>
             </tr>
         </s:iterator>
