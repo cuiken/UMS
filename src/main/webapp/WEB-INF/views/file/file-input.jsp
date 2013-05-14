@@ -83,7 +83,7 @@
 							</div>
 						</div>	
 						<div class="control-group">
-							<label for="checkedStoreIds" class="control-label">文件类型:</label>
+							<label for="checkedStoreIds" class="control-label">投放商店:</label>
 							<div class="controls">
 								<s:checkboxlist name="checkedStoreIds" id="checkedStoreIds" list="allStore" listKey="id" listValue="name" theme="custom"></s:checkboxlist>
 							</div>

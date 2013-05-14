@@ -42,6 +42,8 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	private FileManager fileManager;
 	private CategoryManager categoryManager;
 
+    private String dtype;
+
 	private List<Integer> sliders = Lists.newArrayList();
 	private File file;
 
@@ -270,4 +272,11 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 		return sliders;
 	}
 
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
+    }
 }

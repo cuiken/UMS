@@ -10,10 +10,14 @@
 				$("#message").fadeOut(3000);
 				$("#lock-tab").addClass("active");
                 $("#lock-tab a").append("<i class='icon-remove-circle'></i>");
-				$("#f_dtype").change(function(){
-					search();			
-				});
-				$("#f_dtype").val(${param['filter_EQS_dtype']});
+                var dtype='${param['filter_EQS_dtype']}';
+                if(dtype==0){
+                    $("#standard").addClass("active");
+                }else if(dtype==1){
+                    $("#model").addClass("active");
+                }else{
+                    $("#app").addClass("active");
+                }
 			});
 			function deleteThis(id){
 				if(confirm("确定要删除吗?")){
@@ -22,30 +26,43 @@
 			}
 			
 			function doupload(){
-				var t=$("#f_dtype").val();
-				window.location="file-upload.action?dtype="+t;
+				window.location="file-upload.action?dtype="+'${param['filter_EQS_dtype']}';
 			}
+            function doHot(id,pageNo,type){
+                window.location="file!hotTag.action?id="+id+"&page.pageNo="+pageNo+"&dtype="+type;
+            }
+            function doNew(id,pageNo,type){
+               window.location="file!newTag.action?id="+id+"&page.pageNo="+pageNo+"&dtype="+type;
+            }
 		</script>
 </head>
 <body>
 	<h1>文件列表</h1>
 	<form id="mainForm" action="file.action" method="post" class="form-horizontal">
-
+        <input type="hidden" name="filter_EQS_dtype" value="${param['filter_EQS_dtype']}">
 
 		<c:if test="${not empty actionMessages}">
 			<div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${actionMessages}</div>
 		</c:if>
-		<div id="filter" style="margin-bottom:5px;">
-				文件类型:<s:select list="#{'0':'标准解锁','1':'模板解锁'}" id="f_dtype" name="filter_EQS_dtype" listKey="key" listValue="value" cssClass="span2"></s:select>
-				&nbsp;标题: <input type="text" class="input-medium" name="filter_LIKES_title"
-				value="${param['filter_LIKES_title']}" size="20" /> <input
-				type="button" id="submit_btn" class="btn" value="搜索"
-				onclick="search();" />
-			<div class="pull-right">
-				<a class="icon-plus" href="#" onclick="doupload();">新增</a>
-			</div>		
-		</div>
-		<table class="table table-bordered table-hover">
+        <ul class="nav nav-pills" style="margin-bottom: 2px;float: left;">
+            <li id="standard">
+                <a href="file.action?filter_EQS_dtype=0">标准解锁</a>
+            </li>
+            <li id="model">
+               <a href="file.action?filter_EQS_dtype=1">模板解锁</a>
+            </li>
+            <li id="app">
+               <a href="file.action?filter_EQS_dtype=2">广告包文件</a>
+            </li>
+        </ul>
+        <div id="filter">
+            <input type="text" class="search-query span2" name="filter_LIKES_title" value="${param['filter_LIKES_title']}" size="20" placeholder="标题" />
+            <input type="button" id="submit_btn" class="btn" value="搜索" onclick="search();" />
+            <div class="pull-right">
+                <a class="icon-plus" href="#" onclick="doupload();">新增</a>
+            </div>
+        </div>
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th><a href="javascript:sort('title','asc')">标题</a></th>
@@ -60,8 +77,8 @@
 			<tbody>
 				<s:iterator value="page.result">
 					<tr>
-						<td><s:if test="ishot==1"><i class="icon-thumbs-up"></i></s:if>
-                            <s:if test="isnew==1"><i class="icon-time"></i></s:if>
+						<td><s:if test="ishot==1"><i class="icon-thumbs-up" style="color: #ff6600;"></i></s:if>
+                            <s:if test="isnew==1"><i class="icon-time" style="color: #ff6600"></i></s:if>
                             <a href="file!input.action?id=${id}&page.pageNo=${page.pageNo}">${title}</a>
                         </td>
 						<td>${name}</td>
@@ -72,18 +89,18 @@
 						<td><shiro:hasPermission name="file:edit">
 								<!-- <a href="file-info.action?themeId=${id}">语言</a> -->
                             <s:if test="isnew==1">
-                                <a href="file!newTag.action?id=${id}&page.pageNo=${page.pageNo}"><i class="icon-star"></i></a>
+                                <a href="#" onclick="doNew('${id}','${page.pageNo}','${dtype}')"><i class="icon-star"></i></a>
                             </s:if><s:else>
-                                <a href="file!newTag.action?id=${id}&page.pageNo=${page.pageNo}"><i class="icon-star-empty"></i></a>
+                                <a href="#" onclick="doNew('${id}','${page.pageNo}','${dtype}')"><i class="icon-star-empty"></i></a>
                             </s:else>
                             &nbsp;
                             <s:if test="ishot==1">
-                                <a href="file!hotTag.action?id=${id}&page.pageNo=${page.pageNo}"><i class="icon-heart"></i></a>
+                                <a href="#" onclick="doHot('${id}','${page.pageNo}','${dtype}')"><i class="icon-heart"></i></a>
                             </s:if><s:else>
-                                <a href="file!hotTag.action?id=${id}&page.pageNo=${page.pageNo}"><i class="icon-heart-empty"></i></a>
+                                <a href="#" onclick="doHot('${id}','${page.pageNo}','${dtype}')"><i class="icon-heart-empty"></i></a>
                             </s:else>
                             &nbsp;
-							<a href="#" onclick="deleteThis(${id})"><i class="icon-trash"></i></a>
+							<a href="#" onclick="deleteThis('${id}')"><i class="icon-trash"></i></a>
 							</shiro:hasPermission></td>
 					</tr>
 				</s:iterator>

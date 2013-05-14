@@ -128,7 +128,7 @@
 			</fieldset>
 			<div class="form-actions">
 				<input type="submit" class="btn btn-primary" value="上传">&nbsp;
-				<input type="button" class="btn" id="golist" value="取消"/>
+				<input type="button" class="btn"  onclick="history.back();" value="取消"/>
 			</div>	
 
 		</form>
