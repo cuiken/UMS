@@ -25,298 +25,341 @@ import com.tp.utils.ConvertUtils;
 
 /**
  * 文件基础关系实体
- * 
+ *
  * @author ken.cui
- * 
  */
 @Entity
 @Table(name = "f_file")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ThemeFile extends IdEntity {
 
-	private String name;
-	private String title;
-	private Long uxSize;
-	private Long apkSize;
-	private BigDecimal price;
-	private String uxHvga;
-	private String uxWvga;
-	private String apkPath;
-	private String uxPath;
-	private String dtype;
-	private String marketURL;
-	private String version;
-	private String iconPath;
-	private String adPath;
-	private String preWebPath;
-	private String preClientPath;
-	private String createTime;
-	private String modifyTime;
+    private String name;
+    private String title;
+    private Long uxSize;
+    private Long apkSize;
+    private BigDecimal price;
+    private String uxHvga;
+    private String uxWvga;
+    private String apkPath;
+    private String uxPath;
+    private String dtype;
+    private String marketURL;
+    private String version;
+    private String iconPath;
+    private String adPath;
+    private String preWebPath;
+    private String preClientPath;
+    private String createTime;
+    private String modifyTime;
 
-	private String downloadURL;
+    private String downloadURL;
 
-	private List<ThemeThirdURL> thirdURLs = Lists.newArrayList();
-	private List<Category> categories = Lists.newArrayList();
-	private List<FileInfo> fileInfo = Lists.newArrayList();
-	private List<FileStoreInfo> infoStore = Lists.newArrayList();
-	private List<ShelfFileLink> shelfFiles = Lists.newArrayList();
-	private List<FileMarketValue> marketValues = Lists.newArrayList();
-	private List<Store> stores = Lists.newArrayList();
+    private Long ishot;
+    private Long isnew;
+    private List<Gender> genders = Lists.newArrayList();
 
-	public String getName() {
-		return name;
-	}
+    private List<ThemeThirdURL> thirdURLs = Lists.newArrayList();
+    private List<Category> categories = Lists.newArrayList();
+    private List<FileInfo> fileInfo = Lists.newArrayList();
+    private List<FileStoreInfo> infoStore = Lists.newArrayList();
+    private List<ShelfFileLink> shelfFiles = Lists.newArrayList();
+    private List<FileMarketValue> marketValues = Lists.newArrayList();
+    private List<Store> stores = Lists.newArrayList();
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public Long getUxSize() {
-		return uxSize;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setUxSize(Long uxSize) {
-		this.uxSize = uxSize;
-	}
+    public Long getUxSize() {
+        return uxSize;
+    }
 
-	public Long getApkSize() {
-		return apkSize;
-	}
+    public void setUxSize(Long uxSize) {
+        this.uxSize = uxSize;
+    }
 
-	public void setApkSize(Long apkSize) {
-		this.apkSize = apkSize;
-	}
+    public Long getApkSize() {
+        return apkSize;
+    }
 
-	public BigDecimal getPrice() {
-		return price;
-	}
+    public void setApkSize(Long apkSize) {
+        this.apkSize = apkSize;
+    }
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+    public BigDecimal getPrice() {
+        return price;
+    }
 
-	@Column(name = "ux_h_path")
-	public String getUxHvga() {
-		return uxHvga;
-	}
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
-	public void setUxHvga(String uxHvga) {
-		this.uxHvga = uxHvga;
-	}
+    @Column(name = "ux_h_path")
+    public String getUxHvga() {
+        return uxHvga;
+    }
 
-	@Column(name = "ux_w_path")
-	public String getUxWvga() {
-		return uxWvga;
-	}
+    public void setUxHvga(String uxHvga) {
+        this.uxHvga = uxHvga;
+    }
 
-	public void setUxWvga(String uxWvga) {
-		this.uxWvga = uxWvga;
-	}
+    @Column(name = "ux_w_path")
+    public String getUxWvga() {
+        return uxWvga;
+    }
 
-	public String getApkPath() {
-		return apkPath;
-	}
+    public void setUxWvga(String uxWvga) {
+        this.uxWvga = uxWvga;
+    }
 
-	public void setApkPath(String apkPath) {
-		this.apkPath = apkPath;
-	}
+    public String getApkPath() {
+        return apkPath;
+    }
 
-	public String getUxPath() {
-		return uxPath;
-	}
+    public void setApkPath(String apkPath) {
+        this.apkPath = apkPath;
+    }
 
-	public void setUxPath(String uxPath) {
-		this.uxPath = uxPath;
-	}
+    public String getUxPath() {
+        return uxPath;
+    }
 
-	public String getDtype() {
-		return dtype;
-	}
+    public void setUxPath(String uxPath) {
+        this.uxPath = uxPath;
+    }
 
-	public void setDtype(String dtype) {
-		this.dtype = dtype;
-	}
+    public String getDtype() {
+        return dtype;
+    }
 
-	public String getIconPath() {
-		return iconPath;
-	}
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
+    }
 
-	public void setIconPath(String iconPath) {
-		this.iconPath = iconPath;
-	}
+    public String getIconPath() {
+        return iconPath;
+    }
 
-	public String getAdPath() {
-		return adPath;
-	}
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
+    }
 
-	public void setAdPath(String adPath) {
-		this.adPath = adPath;
-	}
+    public String getAdPath() {
+        return adPath;
+    }
 
-	public String getPreWebPath() {
-		return preWebPath;
-	}
+    public void setAdPath(String adPath) {
+        this.adPath = adPath;
+    }
 
-	public void setPreWebPath(String preWebPath) {
-		this.preWebPath = preWebPath;
-	}
+    public String getPreWebPath() {
+        return preWebPath;
+    }
 
-	public String getPreClientPath() {
-		return preClientPath;
-	}
+    public void setPreWebPath(String preWebPath) {
+        this.preWebPath = preWebPath;
+    }
 
-	public void setPreClientPath(String preClientPath) {
-		this.preClientPath = preClientPath;
-	}
+    public String getPreClientPath() {
+        return preClientPath;
+    }
 
-	@Column(name = "market_url")
-	public String getMarketURL() {
-		return marketURL;
-	}
+    public void setPreClientPath(String preClientPath) {
+        this.preClientPath = preClientPath;
+    }
 
-	public void setMarketURL(String marketURL) {
-		this.marketURL = marketURL;
-	}
+    @Column(name = "market_url")
+    public String getMarketURL() {
+        return marketURL;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public void setMarketURL(String marketURL) {
+        this.marketURL = marketURL;
+    }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public String getCreateTime() {
-		return createTime;
-	}
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
-	}
+    public String getCreateTime() {
+        return createTime;
+    }
 
-	public String getModifyTime() {
-		return modifyTime;
-	}
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
 
-	public void setModifyTime(String modifyTime) {
-		this.modifyTime = modifyTime;
-	}
+    public String getModifyTime() {
+        return modifyTime;
+    }
 
-	@Transient
-	public String getDownloadURL() {
-		return downloadURL;
-	}
+    public void setModifyTime(String modifyTime) {
+        this.modifyTime = modifyTime;
+    }
 
-	public void setDownloadURL(String downloadURL) {
-		this.downloadURL = downloadURL;
-	}
+    @Column(name="is_hot")
+    public Long getIshot() {
+        return ishot;
+    }
 
-	@OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, orphanRemoval = true)
-	public List<ThemeThirdURL> getThirdURLs() {
-		return thirdURLs;
-	}
+    public void setIshot(Long ishot) {
+        this.ishot = ishot;
+    }
 
-	public void setThirdURLs(List<ThemeThirdURL> thirdURLs) {
-		this.thirdURLs = thirdURLs;
-	}
+    @Column(name="is_new")
+    public Long getIsnew() {
+        return isnew;
+    }
 
-	@OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, orphanRemoval = true)
-	public List<FileInfo> getFileInfo() {
-		return fileInfo;
-	}
+    public void setIsnew(Long isnew) {
+        this.isnew = isnew;
+    }
 
-	public void setFileInfo(List<FileInfo> fileInfo) {
-		this.fileInfo = fileInfo;
-	}
+    @Transient
+    public String getDownloadURL() {
+        return downloadURL;
+    }
 
-	@OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, orphanRemoval = true)
-	public List<FileStoreInfo> getInfoStore() {
-		return infoStore;
-	}
+    public void setDownloadURL(String downloadURL) {
+        this.downloadURL = downloadURL;
+    }
 
-	public void setInfoStore(List<FileStoreInfo> infoStore) {
-		this.infoStore = infoStore;
-	}
+    @OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    public List<ThemeThirdURL> getThirdURLs() {
+        return thirdURLs;
+    }
 
-	@OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, orphanRemoval = true)
-	public List<ShelfFileLink> getShelfFiles() {
-		return shelfFiles;
-	}
+    public void setThirdURLs(List<ThemeThirdURL> thirdURLs) {
+        this.thirdURLs = thirdURLs;
+    }
 
-	public void setShelfFiles(List<ShelfFileLink> shelfFiles) {
-		this.shelfFiles = shelfFiles;
-	}
+    @OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    public List<FileInfo> getFileInfo() {
+        return fileInfo;
+    }
 
-	@OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE }, orphanRemoval = true)
-	public List<FileMarketValue> getMarketValues() {
-		return marketValues;
-	}
+    public void setFileInfo(List<FileInfo> fileInfo) {
+        this.fileInfo = fileInfo;
+    }
 
-	public void setMarketValues(List<FileMarketValue> marketValues) {
-		this.marketValues = marketValues;
-	}
+    @OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    public List<FileStoreInfo> getInfoStore() {
+        return infoStore;
+    }
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "f_category_file", joinColumns = { @JoinColumn(name = "file_id") }, inverseJoinColumns = { @JoinColumn(name = "category_id") })
-	public List<Category> getCategories() {
-		return categories;
-	}
+    public void setInfoStore(List<FileStoreInfo> infoStore) {
+        this.infoStore = infoStore;
+    }
 
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
+    @OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    public List<ShelfFileLink> getShelfFiles() {
+        return shelfFiles;
+    }
 
-	@ManyToMany
-	@JoinTable(name = "f_file_store", joinColumns = { @JoinColumn(name = "f_id") }, inverseJoinColumns = { @JoinColumn(name = "s_id") })
-	@Fetch(FetchMode.SUBSELECT)
-	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public List<Store> getStores() {
-		return stores;
-	}
+    public void setShelfFiles(List<ShelfFileLink> shelfFiles) {
+        this.shelfFiles = shelfFiles;
+    }
 
-	public void setStores(List<Store> stores) {
-		this.stores = stores;
-	}
+    @OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    public List<FileMarketValue> getMarketValues() {
+        return marketValues;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Transient
-	public List<Long> getCheckedCategoryIds() {
-		return ConvertUtils.convertElementPropertyToList(categories, "id");
-	}
+    public void setMarketValues(List<FileMarketValue> marketValues) {
+        this.marketValues = marketValues;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Transient
-	public List<Long> getCheckedStoreIds() {
-		return ConvertUtils.convertElementPropertyToList(stores, "id");
-	}
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "f_category_file", joinColumns = {@JoinColumn(name = "file_id")}, inverseJoinColumns = {@JoinColumn(name = "category_id")})
+    public List<Category> getCategories() {
+        return categories;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
 
-		ThemeFile that = (ThemeFile) obj;
-		return that.getId().equals(this.getId());
-	}
+    @ManyToMany
+    @JoinTable(name = "f_file_store", joinColumns = {@JoinColumn(name = "f_id")}, inverseJoinColumns = {@JoinColumn(name = "s_id")})
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    public List<Store> getStores() {
+        return stores;
+    }
 
-	@Override
-	public int hashCode() {
-		assert false : "hashCode not designed";
-		return 42; // any arbitrary constant will do
-	}
+    public void setStores(List<Store> stores) {
+        this.stores = stores;
+    }
 
-	@Override
-	public String toString() {
+    @ManyToMany
+    @JoinTable(name = "f_file_gender", joinColumns = {@JoinColumn(name = "file_id")}, inverseJoinColumns = {@JoinColumn(name = "gender_id")})
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    public List<Gender> getGenders() {
+        return genders;
+    }
 
-		return ToStringBuilder.reflectionToString(this);
-	}
+    public void setGenders(List<Gender> genders) {
+        this.genders = genders;
+    }
+
+    @Transient
+    public String getGenderNames() {
+        return ConvertUtils.convertElementPropertyToString(genders, "name", ",");
+    }
+
+    @Transient
+    public List<Long> getCheckedGenderIds(){
+        return ConvertUtils.convertElementPropertyToList(genders,"id");
+    }
+
+    @SuppressWarnings("unchecked")
+    @Transient
+    public List<Long> getCheckedCategoryIds() {
+        return ConvertUtils.convertElementPropertyToList(categories, "id");
+    }
+
+    @SuppressWarnings("unchecked")
+    @Transient
+    public List<Long> getCheckedStoreIds() {
+        return ConvertUtils.convertElementPropertyToList(stores, "id");
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+
+        ThemeFile that = (ThemeFile) obj;
+        return that.getId().equals(this.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 42; // any arbitrary constant will do
+    }
+
+    @Override
+    public String toString() {
+
+        return ToStringBuilder.reflectionToString(this);
+    }
 
 }

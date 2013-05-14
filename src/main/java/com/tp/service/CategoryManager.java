@@ -2,27 +2,14 @@ package com.tp.service;
 
 import java.util.List;
 
+import com.tp.dao.*;
+import com.tp.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.tp.dao.CategoryDao;
-import com.tp.dao.ClientTypeDao;
-import com.tp.dao.FileStoreInfoDao;
-import com.tp.dao.ShelfDao;
-import com.tp.dao.ShelfFileLinkDao;
-import com.tp.dao.StoreDao;
-import com.tp.dao.ThemeFileDao;
 import com.tp.dto.ShelfDTO;
-import com.tp.entity.Category;
-import com.tp.entity.ClientType;
-import com.tp.entity.FileInfo;
-import com.tp.entity.FileStoreInfo;
-import com.tp.entity.Shelf;
-import com.tp.entity.ShelfFileLink;
-import com.tp.entity.Store;
-import com.tp.entity.ThemeFile;
 import com.tp.mapper.JsonMapper;
 
 @Component
@@ -36,6 +23,11 @@ public class CategoryManager {
 	private ClientTypeDao clientDao;
 	private FileStoreInfoDao storeInfoDao;
 	private ThemeFileDao themeFileDao;
+    private GenderDao genderDao;
+
+    public List<Gender> getAllGenders(){
+        return genderDao.getAll();
+    }
 
 	public Category getCategory(Long id) {
 		return categoryDao.get(id);
@@ -298,4 +290,9 @@ public class CategoryManager {
 	public void setClientDao(ClientTypeDao clientDao) {
 		this.clientDao = clientDao;
 	}
+
+    @Autowired
+    public void setGenderDao(GenderDao genderDao) {
+        this.genderDao = genderDao;
+    }
 }

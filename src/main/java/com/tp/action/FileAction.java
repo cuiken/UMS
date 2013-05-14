@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import com.tp.entity.*;
 import com.tp.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -15,11 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Lists;
 import com.tp.dao.HibernateUtils;
-import com.tp.entity.Category;
-import com.tp.entity.FileInfo;
-import com.tp.entity.Store;
-import com.tp.entity.ThemeFile;
-import com.tp.entity.ThemeThirdURL;
 import com.tp.orm.Page;
 import com.tp.orm.PropertyFilter;
 import com.tp.orm.PageRequest.Sort;
@@ -40,6 +36,7 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	private Long id;
 	private List<Long> checkedCategoryIds;
 	private List<Long> checkedStoreIds;
+    private List<Long> checkedGenderIds;
 	private Page<ThemeFile> page = new Page<ThemeFile>();
 	private List<FileInfo> fileInfo;
 	private FileManager fileManager;
@@ -68,6 +65,7 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	public String input() throws Exception {
 		checkedCategoryIds = entity.getCheckedCategoryIds();
 		checkedStoreIds = entity.getCheckedStoreIds();
+        checkedGenderIds=entity.getCheckedGenderIds();
 		return INPUT;
 	}
 
@@ -82,13 +80,35 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 			filters.add(filter);
 		}
 		if (!page.isOrderBySetted()) {
-			page.setOrderBy("createTime");
-			page.setOrderDir(Sort.DESC);
+			page.setOrderBy("ishot,isnew,createTime");
+			page.setOrderDir(Sort.DESC+","+Sort.DESC+","+Sort.DESC);
 		}
 		page = fileManager.searchThemeFile(page, filters);
 		sliders = page.getSlider(10);
 		return SUCCESS;
 	}
+
+    public String hotTag() throws Exception{
+        entity=fileManager.getThemeFile(id);
+        if(entity.getIshot()==1L){
+            entity.setIshot(0L);
+        }else{
+            entity.setIshot(1L);
+        }
+        fileManager.saveThemeFile(entity);
+        return RELOAD;
+    }
+
+    public String newTag() throws Exception{
+        entity=fileManager.getThemeFile(id);
+        if(entity.getIsnew()==1L){
+            entity.setIsnew(0L);
+        }else{
+            entity.setIsnew(1L);
+        }
+        fileManager.saveThemeFile(entity);
+        return RELOAD;
+    }
 
 	@Override
 	protected void prepareModel() throws Exception {
@@ -106,6 +126,7 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	public String save() throws Exception {
 		HibernateUtils.mergeByCheckedIds(entity.getCategories(), checkedCategoryIds, Category.class);
 		HibernateUtils.mergeByCheckedIds(entity.getStores(), checkedStoreIds, Store.class);
+        HibernateUtils.mergeByCheckedIds(entity.getGenders(),checkedGenderIds,Gender.class);
 		List<File> files = copyNewFile(file, entity.getApkPath());
 
 		entity.setModifyTime(DateUtil.convert(new Date()));
@@ -187,6 +208,10 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 		return categoryManager.getAllStore();
 	}
 
+    public List<Gender> getGenderList(){
+        return categoryManager.getAllGenders();
+    }
+
 	@Autowired
 	public void setFileManager(FileManager fileManager) {
 		this.fileManager = fileManager;
@@ -221,7 +246,15 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 		this.checkedStoreIds = checkedStoreIds;
 	}
 
-	public List<FileInfo> getFileInfo() {
+    public List<Long> getCheckedGenderIds() {
+        return checkedGenderIds;
+    }
+
+    public void setCheckedGenderIds(List<Long> checkedGenderIds) {
+        this.checkedGenderIds = checkedGenderIds;
+    }
+
+    public List<FileInfo> getFileInfo() {
 		return fileInfo;
 	}
 

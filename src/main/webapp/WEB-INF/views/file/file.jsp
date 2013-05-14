@@ -51,6 +51,7 @@
 					<th><a href="javascript:sort('title','asc')">标题</a></th>
 					<th>文件名</th>
 					<th>版本号</th>
+                    <th>Tag</th>
 					<th><a href="javascript:sort('createTime','asc')">添加时间</a></th>
 					<th><a href="javascript:sort('modifyTime','asc')">更新时间</a></th>
 					<th>操作</th>
@@ -59,16 +60,30 @@
 			<tbody>
 				<s:iterator value="page.result">
 					<tr>
-						<td><a href="file!input.action?id=${id}&page.pageNo=${page.pageNo}">${title}</a></td>
+						<td><s:if test="ishot==1"><i class="icon-thumbs-up"></i></s:if>
+                            <s:if test="isnew==1"><i class="icon-time"></i></s:if>
+                            <a href="file!input.action?id=${id}&page.pageNo=${page.pageNo}">${title}</a>
+                        </td>
 						<td>${name}</td>
 						<td>${version}</td>
+                        <td>${genderNames}</td>
 						<td>${createTime}</td>
 						<td>${modifyTime}</td>
 						<td><shiro:hasPermission name="file:edit">
 								<!-- <a href="file-info.action?themeId=${id}">语言</a> -->
-                                <a><i class="icon-star"></i></a>&nbsp;
-                                <a><i class="icon-heart"></i></a>&nbsp;
-								<a href="#" onclick="deleteThis(${id})"><i class="icon-trash"></i></a>
+                            <s:if test="isnew==1">
+                                <a href="file!newTag.action?id=${id}&page.pageNo=${page.pageNo}"><i class="icon-star"></i></a>
+                            </s:if><s:else>
+                                <a href="file!newTag.action?id=${id}&page.pageNo=${page.pageNo}"><i class="icon-star-empty"></i></a>
+                            </s:else>
+                            &nbsp;
+                            <s:if test="ishot==1">
+                                <a href="file!hotTag.action?id=${id}&page.pageNo=${page.pageNo}"><i class="icon-heart"></i></a>
+                            </s:if><s:else>
+                                <a href="file!hotTag.action?id=${id}&page.pageNo=${page.pageNo}"><i class="icon-heart-empty"></i></a>
+                            </s:else>
+                            &nbsp;
+							<a href="#" onclick="deleteThis(${id})"><i class="icon-trash"></i></a>
 							</shiro:hasPermission></td>
 					</tr>
 				</s:iterator>

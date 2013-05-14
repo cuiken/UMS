@@ -54,11 +54,11 @@
 						<div class="control-group">
 							<label for="name" class="control-label">文件名:</label>
 							<div class="controls">
-								<input class="disabled" type="text" value="${name}" disabled>
+								<input class="disabled" id="name" type="text" value="${name}" disabled>
 							</div>
 						</div>
 						<div class="control-group">
-							<label for="title" class="control-label">标题:<font class="red">*</font></label>
+							<label for="title" class="control-label">标题:</label>
 							<div class="controls">
 								<input type="text" id="title" name="title" size="25" maxlength="30" value="${title}" class="required">
 							</div>			
@@ -70,8 +70,14 @@
 								<span class="help-inline">*仅支持zip文件,最大28M*</span>
 							</div>
 						</div>
+                        <div class="control-group">
+                            <label for="genders" class="control-label">Tag:</label>
+                            <div class="controls">
+                                <s:checkboxlist list="genderList" id="genders" name="checkedGenderIds" listKey="id" listValue="name" theme="custom"></s:checkboxlist>
+                            </div>
+                        </div>
 						<div class="control-group">
-							<label for="checkedCategoryIds" class="control-label">文件分类:<font class="red">*</font></label>
+							<label for="checkedCategoryIds" class="control-label">文件分类:</label>
 							<div class="controls">
 								<s:checkboxlist name="checkedCategoryIds" id="checkedCategoryIds" list="allCategoryList" listKey="id" listValue="name" theme="custom"></s:checkboxlist>
 							</div>
@@ -83,13 +89,13 @@
 							</div>
 						</div>				
 						<div class="control-group"> 
-							<label for="marketURL" class="control-label">APK包名:<font class="red">*</font></label>
+							<label for="marketURL" class="control-label">APK包名:</label>
 							<div class="controls">
 								<input type="text" class="input-xlarge" id="marketURL" name="marketURL" value="${marketURL}" maxlength="100" class="required">
 							</div>			
 						</div>
 						<div class="control-group">
-							<label for="version" class="control-label">文件版本:<font class="red">*</font></label>
+							<label for="version" class="control-label">文件版本:</label>
 							<div class="controls">
 								<input type="text" id="version" name="version" value="${version}" maxlength="10" class="required">
 							</div>				
@@ -126,25 +132,25 @@
 						<div id="${language}" class="tab-pane">
 							<input type="hidden" name="fileInfo[${info.index}].id" value="${id}"/>
 							<div class="control-group">
-								<label for="title" class="control-label">文件别名:<font class="red">*</font></label>
+								<label for="title" class="control-label">文件别名:</label>
 								<div class="controls">
 									<input type="text" id="title[${info.index}]" name="fileInfo[${info.index}].title" value="${title}" maxlength="50" class="required"/>
 								</div>
 							</div>
 							<div class="control-group">
-								<label for="shortDescription" class="control-label">简要描述:<font class="red">*</font></label>
+								<label for="shortDescription" class="control-label">简要描述:</label>
 								<div class="controls">
 									<input id="shortDescription[${info.index}]" name="fileInfo[${info.index}].shortDescription" type="text" maxlength="50" value="${shortDescription}" class="required"/>
 								</div>
 							</div>
 							<div class="control-group">
-								<label for="longDescription" class="control-label" style="vertical-align: top">详细描述:<font class="red">*</font></label>
+								<label for="longDescription" class="control-label" style="vertical-align: top">详细描述:</label>
 								<div class="controls">
 									<textarea class="input-xxlarge" rows="6" id="longDescription[${info.index}]" name="fileInfo[${info.index}].longDescription" class="required" maxlength="500">${longDescription}</textarea>
 								</div>
 							</div>
 							<div class="control-group">
-								<label for="author" class="control-label">作者:<font class="red">*</font></label>
+								<label for="author" class="control-label">作者:</label>
 								<div class="controls">
 									<input type="text" id="author[${info.index}]" name="fileInfo[${info.index}].author" value="${author}" maxlength="25" class="required"/>
 								</div>

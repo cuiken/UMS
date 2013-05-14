@@ -122,6 +122,8 @@ public class FileUploadAction extends ActionSupport {
 		theme.setPrice(new BigDecimal(price));
 		theme.setDtype(dtype);
 		theme.setMarketURL(marketURL);
+        theme.setIsnew(0L);
+        theme.setIshot(0L);
 		theme.setCreateTime(DateUtil.convert(new Date()));
 		HibernateUtils.mergeByCheckedIds(theme.getCategories(), checkedCategoryIds, Category.class);
 		HibernateUtils.mergeByCheckedIds(theme.getStores(), checkedStoreIds, Store.class);
