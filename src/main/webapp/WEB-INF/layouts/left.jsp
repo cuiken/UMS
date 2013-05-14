@@ -6,6 +6,7 @@
 <div id="leftbar" class="well span3" style="padding: 8px 0;margin-top: 15px;">
 
         <ul class="nav nav-list">
+            <li id="home-tab"><a href="/UMS"><i class="icon-home"></i>首页</a></li>
             <shiro:hasPermission name="user:view">
                 <li class="nav-header"><i class="icon-cog"></i>系统管理</li>
                 <li id="account-tab"><a href="${ctx}/account/user.action">帐号管理</a></li>

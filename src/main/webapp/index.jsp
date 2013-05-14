@@ -1,3 +1,3 @@
 <% 
-	response.sendRedirect("report/report-client.action");
+	response.sendRedirect("default.action");
 %>
