@@ -55,9 +55,9 @@
                <a href="file.action?filter_EQS_dtype=2">广告包文件</a>
             </li>
         </ul>
-        <div id="filter">
-            <input type="text" class="search-query span2" name="filter_LIKES_title" value="${param['filter_LIKES_title']}" size="20" placeholder="标题" />
-            <input type="button" id="submit_btn" class="btn" value="搜索" onclick="search();" />
+        <div id="filter" style="display: inline;margin-left: 20px;">
+            <input type="text" class="search-query input-medium" name="filter_LIKES_title" value="${param['filter_LIKES_title']}" size="20" placeholder="标题" />
+            <input type="button" id="submit_btn" class="btn" value="查询" onclick="search();" />
             <div class="pull-right">
                 <a class="icon-plus" href="#" onclick="doupload();">新增</a>
             </div>
@@ -65,7 +65,7 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th><a href="javascript:sort('title','asc')">标题</a></th>
+					<th><a href="javascript:sort('title','asc')">#标题</a></th>
 					<th>文件名</th>
 					<th>版本号</th>
                     <th>Tag</th>
