@@ -79,8 +79,10 @@ public class ShelfAction extends CRUDActionSupport<Shelf> {
 	@Override
 	@RequiresPermissions("store:edit")
 	public String save() throws Exception {
-		Store store = categoryManager.getStore(sid);
-		entity.setStore(store);
+        if(id==null){
+            Store store = categoryManager.getStore(sid);
+            entity.setStore(store);
+        }
 		categoryManager.saveShelf(entity);
 		addActionMessage("保存成功");
 		return RELOAD;

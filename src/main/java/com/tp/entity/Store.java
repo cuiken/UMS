@@ -2,15 +2,7 @@ package com.tp.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -46,7 +38,8 @@ public class Store extends CateItem {
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "f_file_store", joinColumns = { @JoinColumn(name = "s_id") }, inverseJoinColumns = { @JoinColumn(name = "f_id") })
-	public List<ThemeFile> getThemes() {
+	@OrderBy("createTime DESC ")
+    public List<ThemeFile> getThemes() {
 		return themes;
 	}
 	

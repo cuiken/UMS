@@ -49,7 +49,9 @@
                <i class="icon-trash icon-2x"></i>
                删除 <br>
                <i class="icon-rss icon-2x"></i>
-               与客户端交互XML接口
+               与客户端交互XML接口<br>
+               <i class="icon-copy icon-2x"></i>
+               复制
            </p>
        </div>
    </div>

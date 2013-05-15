@@ -24,7 +24,9 @@
 									+val.value+"</td><td>"
 									+val.description
 									+"</td><td><a href=shelf!manage.action?id="
-									+val.id+"><i class='icon-cog'></i></a></td></tr>";
+									+val.id+"><i class='icon-cog'></i></a>&nbsp;&nbsp;"+
+                                            "<a href=shelf!input.action?id="+val.id+"><i class='icon-edit'></i></a>&nbsp;&nbsp;" +
+                                            "<a href=shelf!delete.action?id="+val.id+"><i class='icon-trash'></i></a></td></tr>";
 								
 								});
 								
@@ -70,17 +72,6 @@
 				</thead>
 				<tbody>
 				</tbody>
-				<!--  		
-				<tr>
-						<td>${name}</td>
-						<td>${description}</td>
-						<td>
-							<a href="shelf!manage.action?id=${id}">管理</a>
-							<a href="shelf!input.action?id=${id}">修改</a>
-							<a href="shelf!delete.action?id=${id}">删除</a>
-						</td>
-				</tr>
-				-->
 			</table>
 
 		</form>
