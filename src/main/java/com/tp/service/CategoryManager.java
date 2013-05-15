@@ -23,10 +23,10 @@ public class CategoryManager {
 	private ClientTypeDao clientDao;
 	private FileStoreInfoDao storeInfoDao;
 	private ThemeFileDao themeFileDao;
-    private GenderDao genderDao;
+    private FileTagDao fileTagDao;
 
-    public List<Gender> getAllGenders(){
-        return genderDao.getAll();
+    public List<FileTag> getAllTags(){
+        return fileTagDao.getAll();
     }
 
 	public Category getCategory(Long id) {
@@ -292,7 +292,7 @@ public class CategoryManager {
 	}
 
     @Autowired
-    public void setGenderDao(GenderDao genderDao) {
-        this.genderDao = genderDao;
+    public void setFileTagDao(FileTagDao fileTagDao) {
+        this.fileTagDao = fileTagDao;
     }
 }

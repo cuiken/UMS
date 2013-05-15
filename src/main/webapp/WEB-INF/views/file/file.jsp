@@ -83,7 +83,7 @@
                         </td>
 						<td>${name}</td>
 						<td>${version}</td>
-                        <td>${genderNames}</td>
+                        <td>${tagNames}</td>
 						<td>${createTime}</td>
 						<td>${modifyTime}</td>
 						<td><shiro:hasPermission name="file:edit">

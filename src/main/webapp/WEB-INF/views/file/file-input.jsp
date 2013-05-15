@@ -71,9 +71,9 @@
 							</div>
 						</div>
                         <div class="control-group">
-                            <label for="genders" class="control-label">Tag:</label>
+                            <label for="tags" class="control-label">Tag:</label>
                             <div class="controls">
-                                <s:checkboxlist list="genderList" id="genders" name="checkedGenderIds" listKey="id" listValue="name" theme="custom"></s:checkboxlist>
+                                <s:checkboxlist list="tagList" id="tags" name="checkedTagIds" listKey="id" listValue="name" theme="custom"></s:checkboxlist>
                             </div>
                         </div>
 						<div class="control-group">

@@ -56,7 +56,7 @@ public class ThemeFile extends IdEntity {
 
     private Long ishot;
     private Long isnew;
-    private List<Gender> genders = Lists.newArrayList();
+    private List<FileTag> fileTags = Lists.newArrayList();
 
     private List<ThemeThirdURL> thirdURLs = Lists.newArrayList();
     private List<Category> categories = Lists.newArrayList();
@@ -308,25 +308,25 @@ public class ThemeFile extends IdEntity {
     }
 
     @ManyToMany
-    @JoinTable(name = "f_file_gender", joinColumns = {@JoinColumn(name = "file_id")}, inverseJoinColumns = {@JoinColumn(name = "gender_id")})
+    @JoinTable(name = "f_file_tag", joinColumns = {@JoinColumn(name = "file_id")}, inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     @Fetch(FetchMode.SUBSELECT)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    public List<Gender> getGenders() {
-        return genders;
+    public List<FileTag> getFileTags() {
+        return fileTags;
     }
 
-    public void setGenders(List<Gender> genders) {
-        this.genders = genders;
-    }
-
-    @Transient
-    public String getGenderNames() {
-        return ConvertUtils.convertElementPropertyToString(genders, "name", ",");
+    public void setFileTags(List<FileTag> fileTags) {
+        this.fileTags = fileTags;
     }
 
     @Transient
-    public List<Long> getCheckedGenderIds(){
-        return ConvertUtils.convertElementPropertyToList(genders,"id");
+    public String getTagNames() {
+        return ConvertUtils.convertElementPropertyToString(fileTags, "name", ",");
+    }
+
+    @Transient
+    public List<Long> getCheckedTagIds(){
+        return ConvertUtils.convertElementPropertyToList(fileTags,"id");
     }
 
     @SuppressWarnings("unchecked")

@@ -36,7 +36,7 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	private Long id;
 	private List<Long> checkedCategoryIds;
 	private List<Long> checkedStoreIds;
-    private List<Long> checkedGenderIds;
+    private List<Long> checkedTagIds;
 	private Page<ThemeFile> page = new Page<ThemeFile>();
 	private List<FileInfo> fileInfo;
 	private FileManager fileManager;
@@ -67,7 +67,7 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	public String input() throws Exception {
 		checkedCategoryIds = entity.getCheckedCategoryIds();
 		checkedStoreIds = entity.getCheckedStoreIds();
-        checkedGenderIds=entity.getCheckedGenderIds();
+        checkedTagIds=entity.getCheckedTagIds();
 		return INPUT;
 	}
 
@@ -128,7 +128,7 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 	public String save() throws Exception {
 		HibernateUtils.mergeByCheckedIds(entity.getCategories(), checkedCategoryIds, Category.class);
 		HibernateUtils.mergeByCheckedIds(entity.getStores(), checkedStoreIds, Store.class);
-        HibernateUtils.mergeByCheckedIds(entity.getGenders(),checkedGenderIds,Gender.class);
+        HibernateUtils.mergeByCheckedIds(entity.getFileTags(),checkedTagIds,FileTag.class);
 		List<File> files = copyNewFile(file, entity.getApkPath());
 
 		entity.setModifyTime(DateUtil.convert(new Date()));
@@ -210,8 +210,8 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 		return categoryManager.getAllStore();
 	}
 
-    public List<Gender> getGenderList(){
-        return categoryManager.getAllGenders();
+    public List<FileTag> getTagList(){
+        return categoryManager.getAllTags();
     }
 
 	@Autowired
@@ -248,12 +248,12 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 		this.checkedStoreIds = checkedStoreIds;
 	}
 
-    public List<Long> getCheckedGenderIds() {
-        return checkedGenderIds;
+    public List<Long> getCheckedTagIds() {
+        return checkedTagIds;
     }
 
-    public void setCheckedGenderIds(List<Long> checkedGenderIds) {
-        this.checkedGenderIds = checkedGenderIds;
+    public void setCheckedTagIds(List<Long> checkedTagIds) {
+        this.checkedTagIds = checkedTagIds;
     }
 
     public List<FileInfo> getFileInfo() {

@@ -1,6 +1,6 @@
 package com.tp.dao;
 
-import com.tp.entity.Gender;
+import com.tp.entity.FileTag;
 import com.tp.orm.hibernate.HibernateDao;
 import org.springframework.stereotype.Component;
 
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Component;
  * Time: 上午10:49
  */
 @Component
-public class GenderDao extends HibernateDao<Gender, Long> {
+public class FileTagDao extends HibernateDao<FileTag, Long> {
 }

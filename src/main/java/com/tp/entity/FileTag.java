@@ -9,8 +9,8 @@ import javax.persistence.Table;
  * Time: 上午9:27
  */
 @Entity
-@Table(name="f_gender")
-public class Gender extends IdEntity {
+@Table(name="f_tag")
+public class FileTag extends IdEntity {
     private String name;
 
     public String getName() {
@@ -23,7 +23,7 @@ public class Gender extends IdEntity {
 
     @Override
     public String toString() {
-        return "Gender{" +
+        return "Tag{" +
                 "name='" + name + '\'' +
                 '}';
     }
