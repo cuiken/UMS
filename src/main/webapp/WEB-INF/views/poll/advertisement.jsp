@@ -58,7 +58,7 @@
             &nbsp;<a href="#" onclick="goXml();"><i class="icon-rss"></i></a>
         </div>
     </div>
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th>编号</th>

@@ -22,7 +22,7 @@
 			<div id="filter">
 				<s:select list="#{'0':'待处理','1':'已处理'}" id="f_status" name="filter_EQS_status" listKey="key" listValue="value"></s:select>
 			</div>
-			<table class="table table-bordered table-hover">
+			<table class="table table-hover">
 				<thead>
 				<tr>
 					<th>反馈内容</th>

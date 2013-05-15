@@ -31,8 +31,8 @@
                 <li id="store-tab"><a href="${ctx}/category/store.action">商店列表</a></li>
                 <li id="shelf-tab"><a  href="${ctx}/category/shelf.action">货架列表</a></li>
                 <li id="market-tab"><a href="${ctx}/category/market.action">市场列表</a></li>
-                <li id="poll-tab"><a href="${ctx}/poll/polling.action">广播列表</a></li>
-                <li id="poll2-tab"><a href="${ctx}/poll/poll2.action">广播列表(enhancement)</a></li>
+                <%--<li id="poll-tab"><a href="${ctx}/poll/polling.action">广播列表</a></li>--%>
+                <li id="poll2-tab"><a href="${ctx}/poll/poll2.action">广播列表</a></li>
                 <li id="advertisement-tab"><a href="${ctx}/poll/advertisement.action">广告条管理</a></li>
             </shiro:hasPermission>
 

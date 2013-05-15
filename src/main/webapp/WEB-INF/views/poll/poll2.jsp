@@ -44,7 +44,7 @@
             &nbsp;<a href="../poll2/xml/lock"><i class="icon-rss"></i></a>
         </div>
     </div>
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th>广告图片</th>

@@ -15,7 +15,7 @@
 	<body>
 		<form id="mainForm" action="report-client.action" method="get">
 			<h1>客户端日报</h1>
-			<table class="table table-bordered table-hover">
+			<table class="table table-hover">
 				<thead>
 				<tr>
 					<th>日期</th>

@@ -28,7 +28,7 @@
 				<input class="btn" type="button" value="搜索" onclick="search();"/>&nbsp;
 				<div class="pull-right"><a href="#" class="icon-download-alt" onclick="exportExcel();">导出</a></div>
 			</div>
-			<table class="table table-bordered table-hover">
+			<table class="table table-hover">
 				<thead>
 				<tr>
 					<th><a href="javascript:sort('createTime','desc')">日期</a></th>
