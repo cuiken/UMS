@@ -58,8 +58,8 @@ public class AdvertisementAction extends CRUDActionSupport<Advertisement> {
             filters.add(filter);
         }
         if (!page.isOrderBySetted()) {
-            page.setOrderBy("status,createTime");
-            page.setOrderDir(Sort.DESC + "," + "," + Sort.DESC);
+            page.setOrderBy("status,sort,createTime");
+            page.setOrderDir(Sort.DESC + "," +Sort.ASC+ "," + Sort.DESC);
         }
         page = advertisementService.searchAdvertisement(page, filters);
         sliders = page.getSlider(10);
