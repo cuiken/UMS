@@ -27,7 +27,7 @@
 				解锁名称: <input class="input-medium search-query" type="text" id="theme" name="filter_LIKES_appName" value="${param['filter_LIKES_appName']}" />
                 市场: <input class="input-medium search-query" type="text"  name="filter_LIKES_marketName" value="${param['filter_LIKES_marketName']}" />
 				&nbsp;日期: <input class="input-medium" type="text" data-date-format="yyyy-mm-dd" id="sdate" autocomplete="on" name="filter_EQS_date" value="${param['filter_EQS_date']}" />
-				<input class="btn" type="button" value="搜索" onclick="search();"/>&nbsp;
+				<input class="btn" type="button" value="查询" onclick="search();"/>&nbsp;
                 <div class="pull-right"><a href="#" class="icon-download-alt" onclick="exportExcel();">导出</a></div>
 			</div>
 			<table class="table table-hover">

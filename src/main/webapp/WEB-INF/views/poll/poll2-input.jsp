@@ -51,6 +51,7 @@
 <form id="inputForm" action="poll2!save.action" method="post" class="form-horizontal" enctype="multipart/form-data">
     <input type="hidden" id="pid" name="id" value="${id}">
     <input type="hidden" name="store" value="${store}">
+    <input type="hidden" name="dtype" id="dtype" value="${dtype}">
     <input type="hidden" name="status" value="${status}" id="pub-status">
     <fieldset>
         <legend><small>广播编辑</small></legend>
@@ -58,7 +59,11 @@
         <div class="control-group">
             <label for="dtype" class="control-label">类型:</label>
             <div class="controls">
-                <s:select list="#{'0':'上线通知','1':'广告'}" id="dtype" name="dtype" listKey="key" listValue="value" cssClass="span2"></s:select>
+                <s:if test="dtype==1">
+                    <input type="text" value="抽屉广告" disabled="disabled">
+                </s:if><s:else>
+                    <input type="text" value="上线通知" disabled="disabled">
+                </s:else>
             </div>
         </div>
         <div class="control-group">
@@ -76,7 +81,7 @@
         <div class="control-group">
             <label for="link" class="control-label">广播链接:</label>
             <div class="controls">
-                <input type="url" id="link" name="appUrl" maxlength="255" value="${appUrl}" class="required"/>
+                <textarea class="input-xlarge url required" id="link" name="appUrl" maxlength="255" rows="3">${appUrl}</textarea>
             </div>
         </div>
         <section id="spec">

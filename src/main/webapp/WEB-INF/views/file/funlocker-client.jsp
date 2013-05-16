@@ -31,7 +31,7 @@
 	</div>
 
 
-	<table class="table table-bordered table-hover">
+	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th>文件名</th>

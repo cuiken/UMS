@@ -21,7 +21,7 @@
 			});
 			function deleteThis(id){
 				if(confirm("确定要删除吗?")){
-					window.location="file!delete.action?id="+id;
+					window.location="file!delete.action?id="+id+"&dtype="+'${param['filter_EQS_dtype']}';
 				}
 			}
 			

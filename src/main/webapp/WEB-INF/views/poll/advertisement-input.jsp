@@ -23,6 +23,7 @@
       enctype="multipart/form-data">
     <input type="hidden" name="id" value="${id}">
     <input type="hidden" name="store" value="${store}">
+    <input type="hidden" name="dtype" value="${dtype}">
     <input type="hidden" name="status" value="${status}" id="pub-status">
     <fieldset>
         <legend>
@@ -31,18 +32,24 @@
         <div id="messageBox" class="alert alert-error" style="display:none">输入有误，请先更正。</div>
 
         <div class="control-group">
+            <label for="name" class="control-label">类型:</label>
+
+            <div class="controls">
+                <s:if test="dtype=='client'">
+                   <input type="text" value="客户端广告" disabled="disabled">
+                </s:if><s:elseif test="dtype=='store'">
+                    <input type="text" value="商店广告" disabled="disabled">
+                </s:elseif><s:elseif test="dtype=='sbot'">
+                    <input type="text" value="商店底部广告" disabled="disabled">
+                </s:elseif><s:elseif test="dtype=='diy'">
+                    <input type="text" value="DIY" disabled="disabled">
+                </s:elseif>
+            </div>
+        </div>
+        <div class="control-group">
             <label for="sort" class="control-label">编号:</label>
             <div class="controls">
                 <input type="text" id="sort"  name="sort" value="${sort}" maxlength="5" class="required number">
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label for="name" class="control-label">用途:</label>
-
-            <div class="controls">
-                <s:select list="#{'client':'客户端','store':'商店首页','store-hot':'商店最热'}" id="p_type" name="dtype" listKey="key" listValue="value"
-                          cssClass="span2"></s:select>
             </div>
         </div>
         <div class="control-group">
@@ -65,7 +72,7 @@
             <label for="link" class="control-label">跳转链接:</label>
 
             <div class="controls">
-                <input type="url" id="link" name="link" maxlength="255" value="${link}" class="required"/>
+                <textarea class="input-xlarge url required" id="link" name="link" maxlength="255" rows="3">${link}</textarea>
             </div>
         </div>
 

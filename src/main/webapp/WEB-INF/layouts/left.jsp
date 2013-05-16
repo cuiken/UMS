@@ -32,8 +32,8 @@
                 <li id="shelf-tab"><a  href="${ctx}/category/shelf.action">货架列表</a></li>
                 <li id="market-tab"><a href="${ctx}/category/market.action">市场列表</a></li>
                 <%--<li id="poll-tab"><a href="${ctx}/poll/polling.action">广播列表</a></li>--%>
-                <li id="poll2-tab"><a href="${ctx}/poll/poll2.action">广播列表</a></li>
-                <li id="advertisement-tab"><a href="${ctx}/poll/advertisement.action">广告条管理</a></li>
+                <li id="poll2-tab"><a href="${ctx}/poll/poll2.action?filter_EQS_dtype=0">广播列表</a></li>
+                <li id="advertisement-tab"><a href="${ctx}/poll/advertisement.action?filter_EQS_store=lock&filter_EQS_dtype=client">广告条管理</a></li>
             </shiro:hasPermission>
 
             <li class="nav-header"><i class="icon-eye-open"></i>报表查看</li>

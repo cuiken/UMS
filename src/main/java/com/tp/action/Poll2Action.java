@@ -22,7 +22,7 @@ import java.util.List;
  * Time: 上午10:43
  */
 @Namespace("/poll")
-@Results({@Result(name = CRUDActionSupport.RELOAD, location = "poll2.action", type = "redirect")})
+@Results({@Result(name = CRUDActionSupport.RELOAD, location = "poll2.action",params = {"filter_EQS_dtype","${dtype}"},type = "redirect")})
 public class Poll2Action extends CRUDActionSupport<PollEnhancement> {
     private Long id;
     private PollEnhancement entity;
@@ -30,6 +30,7 @@ public class Poll2Action extends CRUDActionSupport<PollEnhancement> {
     private File image;
     private String imageFileName;
     private List<Integer> sliders = Lists.newArrayList();
+    private String dtype;
 
     private PollEnhancementService pollEnhancementService;
 
@@ -42,8 +43,8 @@ public class Poll2Action extends CRUDActionSupport<PollEnhancement> {
             filters.add(filter);
         }
         if (!page.isOrderBySetted()) {
-            page.setOrderBy("createTime");
-            page.setOrderDir(PageRequest.Sort.DESC);
+            page.setOrderBy("status,createTime");
+            page.setOrderDir(PageRequest.Sort.DESC+","+PageRequest.Sort.DESC);
         }
         page = pollEnhancementService.searchPage(page, filters);
         sliders = page.getSlider(10);
@@ -78,6 +79,7 @@ public class Poll2Action extends CRUDActionSupport<PollEnhancement> {
             entity.setStatus(0L);
         }
         pollEnhancementService.save(entity);
+        dtype=entity.getDtype();
         return RELOAD;
     }
 
@@ -149,5 +151,13 @@ public class Poll2Action extends CRUDActionSupport<PollEnhancement> {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
     }
 }

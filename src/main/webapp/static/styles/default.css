@@ -135,3 +135,22 @@
     padding-left: 14px;
     padding-right: 14px;
 }
+
+.thumbnail_td{
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+}
+
+.thumbnail_td img{
+    height: 32px;
+    width: 32px;
+}
+
+.thumbnail_td img.ad{
+    height: 30px;
+    width: 120px;
+}
+
+table{
+    clear: both;
+}

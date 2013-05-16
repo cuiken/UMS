@@ -10,15 +10,19 @@
             $("#message").fadeOut(3000);
             $("#poll2-tab").addClass("active");
             $("#poll2-tab a").append("<i class='icon-remove-circle'></i>");
-            $("#p_dtype").change(function(){
-                search();
-            });
-            $("#p_dtype").val(${param['filter_EQS_dtype']});
+
+            var dtype='${param['filter_EQS_dtype']}';
+            if(dtype==0){
+                $("#pollNT").addClass("active");
+                $(".thumbnail_td img").addClass("ad");
+            }else if(dtype==1){
+                $("#pollAD").addClass("active");
+            }
         });
 
         function deleteThis(id){
             if(confirm("确定要删除吗?")){
-                window.location="../poll/poll2!delete.action?id="+id;
+                window.location="../poll/poll2!delete.action?id="+id+"&dtype="+'${param['filter_EQS_dtype']}';
             }
         }
         function changeStatus(id){
@@ -30,26 +34,32 @@
 <body>
 <h1>广播列表</h1>
 <form id="mainForm" action="poll2.action" method="get" class="form-horizontal">
-
+    <input type="hidden" name="filter_EQS_dtype" value="${param['filter_EQS_dtype']}">
 
     <c:if test="${not empty actionMessages}">
         <div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${actionMessages}</div>
     </c:if>
+    <ul class="nav nav-pills" style="margin-bottom: 2px;float: left;">
+        <li id="pollNT">
+            <a href="poll2.action?filter_EQS_dtype=0">上线通知</a>
+        </li>
+        <li id="pollAD">
+            <a href="poll2.action?filter_EQS_dtype=1">抽屉广告</a>
+        </li>
+    </ul>
     <div id="filter" style="margin-bottom:5px;">
-        广播类型:<s:select list="#{'0':'上线通知','1':'广告'}" id="p_dtype" name="filter_EQS_dtype" listKey="key" listValue="value" cssClass="span2"></s:select>
-        <div class="pull-right">
+         <div class="pull-right">
             <shiro:hasPermission name="store:edit">
-                <a class="icon-plus" href="poll2!input.action">新增</a>
+                <a class="icon-plus" href="poll2!input.action?dtype=${param['filter_EQS_dtype']}">新增</a>
             </shiro:hasPermission>
             &nbsp;<a href="../poll2/xml/lock"><i class="icon-rss"></i></a>
         </div>
     </div>
-    <table class="table table-striped">
+    <table class="table table-hover">
         <thead>
         <tr>
-            <th>广告图片</th>
-            <th><a href="javascript:sort('contentName','asc')">广播名称</a></th>
-            <th><a href="javascript:sort('dtype','asc')">广播类型</a></th>
+            <th>预览图</th>
+            <th><a href="javascript:sort('contentName','asc')">名称</a></th>
             <th><a href="javascript:sort('status','asc')">状态</a></th>
             <th><a href="javascript:sort('percent','asc')">权重</a></th>
             <th><a href="javascript:sort('createTime','asc')">更新时间</a></th>
@@ -59,16 +69,8 @@
         <tbody>
         <s:iterator value="page.result">
             <tr>
-                <td><img alt="广告图片" src="${ctx}/image.action?path=${imgLink}" style="height: 20px;width: 70px;"></td>
+                <td class="thumbnail_td"><img alt="图片" src="${ctx}/image.action?path=${imgLink}"></td>
                 <td><a href="poll2!input.action?id=${id}&pageNo=${page.pageNo}">${contentName}</a></td>
-                <td>
-                    <s:if test="dtype==0">
-                        上线通知
-                    </s:if>
-                    <s:elseif test="dtype==1">
-                        广告
-                    </s:elseif>
-                </td>
                 <td>
                     <s:if test="status==0">
                         未发布

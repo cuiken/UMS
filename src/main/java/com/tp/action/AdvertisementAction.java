@@ -23,7 +23,7 @@ import com.tp.service.AdvertisementService;
 import com.tp.utils.Struts2Utils;
 
 @Namespace("/poll")
-@Results({@Result(name = CRUDActionSupport.RELOAD, params = {"filter_EQS_store", "${store}"}, location = "advertisement.action", type = "redirect")})
+@Results({@Result(name = CRUDActionSupport.RELOAD, params = {"filter_EQS_store", "${store}","filter_EQS_dtype","${dtype}"}, location = "advertisement.action", type = "redirect")})
 public class AdvertisementAction extends CRUDActionSupport<Advertisement> {
     private static final long serialVersionUID = 1L;
 
@@ -36,6 +36,7 @@ public class AdvertisementAction extends CRUDActionSupport<Advertisement> {
     private File preview;
     private String previewFileName;
     private String store;
+    private String dtype;
 
     @Override
     public Advertisement getModel() {
@@ -47,13 +48,18 @@ public class AdvertisementAction extends CRUDActionSupport<Advertisement> {
     public String list() throws Exception {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
         String defaultFilter = Struts2Utils.getParameter("filter_EQS_store");
+        dtype = Struts2Utils.getParameter("filter_EQS_dtype");
         if (defaultFilter == null) {
             PropertyFilter filter = new PropertyFilter("EQS_store", "lock");
             filters.add(filter);
         }
+        if (StringUtils.isBlank(dtype)) {
+            PropertyFilter filter = new PropertyFilter("EQS_dtype", "client");
+            filters.add(filter);
+        }
         if (!page.isOrderBySetted()) {
-            page.setOrderBy("createTime");
-            page.setOrderDir(Sort.DESC);
+            page.setOrderBy("status,createTime");
+            page.setOrderDir(Sort.DESC + "," + "," + Sort.DESC);
         }
         page = advertisementService.searchAdvertisement(page, filters);
         sliders = page.getSlider(10);
@@ -95,6 +101,8 @@ public class AdvertisementAction extends CRUDActionSupport<Advertisement> {
             entity.setStatus(0L);
         }
         advertisementService.save(entity);
+        store = entity.getStore();
+        dtype=entity.getDtype();
         return RELOAD;
     }
 
@@ -108,8 +116,8 @@ public class AdvertisementAction extends CRUDActionSupport<Advertisement> {
         page.setPageSize(5);
         filters.add(new PropertyFilter("EQS_dtype", "client"));
         filters.add(new PropertyFilter("EQS_store", store));
-        filters.add(new PropertyFilter("EQL_status","1"));
-        String xml = advertisementService.toXml(page, filters,store);
+        filters.add(new PropertyFilter("EQL_status", "1"));
+        String xml = advertisementService.toXml(page, filters, store);
         Struts2Utils.renderXml(xml);
         return null;
     }
@@ -167,5 +175,13 @@ public class AdvertisementAction extends CRUDActionSupport<Advertisement> {
 
     public void setStore(String store) {
         this.store = store;
+    }
+
+    public String getDtype() {
+        return dtype;
+    }
+
+    public void setDtype(String dtype) {
+        this.dtype = dtype;
     }
 }

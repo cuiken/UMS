@@ -30,7 +30,7 @@
                     <a class="icon-cog" href="market!manage.action">管理</a>
                 </shiro:hasPermission>
 			</div>
-			<table class="table table-striped table-bordered">
+			<table class="table table-striped">
 				<thead>
 				<tr>
 					<th>市场名称</th>
