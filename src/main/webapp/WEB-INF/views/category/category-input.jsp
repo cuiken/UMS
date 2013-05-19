@@ -30,7 +30,7 @@
 		</script>
 	</head>
 	<body>
-		<h1>文件管理</h1>
+		<h1>分类管理</h1>
 		<form id="inputForm" action="category!save.action" method="post" class="form-horizontal" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${id}">
 			<fieldset>

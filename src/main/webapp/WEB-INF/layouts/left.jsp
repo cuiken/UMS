@@ -24,6 +24,7 @@
                 <li class="nav-header"><i class="icon-tags"></i>文件分类管理</li>
                 <li id="category-tab"><a href="${ctx}/category/category.action">解锁类别</a> </li>
                 <li id="ccategory-tab"><a href="${ctx}/category/client-type.action">客户端类别</a></li>
+                <li id="topic-tab"><a href="${ctx}/category/topic.action">专题管理</a></li>
             </shiro:hasPermission>
 
             <shiro:hasPermission name="store:view">

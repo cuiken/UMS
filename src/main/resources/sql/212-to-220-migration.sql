@@ -17,3 +17,21 @@ create table f_file_tag(
   tag_id int not null,
   primary key(file_id,tag_id)
 )ENGINE=InnoDB;
+
+create table f_topic(
+  id int auto_increment,
+  name varchar(50) not null,
+  value varchar(35),
+  description varchar(255),
+  icon varchar(255),
+  sort int,
+  primary key(id)
+)ENGINE=InnoDB;
+
+create table f_file_topic(
+  id int auto_increment,
+  theme_id int,
+  topic_id int,
+  sort int,
+  primary key(id)
+)engine=innodb;
