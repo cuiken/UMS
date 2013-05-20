@@ -44,6 +44,7 @@
                 <td class="thumbnail_td"><img class="ad" alt="${name}" src="${ctx}/image.action?path=${icon}"></td>
                 <td>${name}</td>
                 <td><shiro:hasPermission name="category:edit">
+                    <a href="topic!manage.action?id=${id}"><i class="icon-cog"></i></a>&nbsp;&nbsp;
                     <a href="topic!input.action?id=${id}"><i class="icon-edit"></i></a>&nbsp;&nbsp;
                     <a href="#" onclick="deleteThis(${id})"><i class="icon-trash"></i></a>
                 </shiro:hasPermission></td>

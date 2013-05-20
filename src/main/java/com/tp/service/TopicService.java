@@ -3,6 +3,7 @@ package com.tp.service;
 import com.tp.dao.TopicFileLinkDao;
 import com.tp.dao.TopicDao;
 import com.tp.entity.Topic;
+import com.tp.entity.TopicFileLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,14 @@ public class TopicService {
 
     public List<Topic> getAllTopics(){
         return topicDao.getAll();
+    }
+
+    public void saveTopicLink(TopicFileLink entity){
+        topicFileLinkDao.save(entity);
+    }
+
+    public void deleteTopicLink(Long topicId){
+        topicFileLinkDao.delete(topicId);
     }
     @Autowired
     public void setTopicDao(TopicDao topicDao) {

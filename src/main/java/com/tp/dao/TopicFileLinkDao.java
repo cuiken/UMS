@@ -13,4 +13,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TopicFileLinkDao extends HibernateDao<TopicFileLink,Long>{
+
+    private static final String  DELETE_BY_TOPIC="delete from TopicFileLink tfl where tfl.topic.id=?";
+
+    public void delete(Long topicId){
+        createQuery(DELETE_BY_TOPIC,topicId).executeUpdate();
+    }
 }

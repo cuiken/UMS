@@ -34,4 +34,4 @@ create table f_file_topic(
   topic_id int,
   sort int,
   primary key(id)
-)engine=innodb;
+)ENGINE=InnoDB;
