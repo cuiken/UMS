@@ -11,7 +11,7 @@ body{
     font: 14px 'Helvetica Neue',Arial,sans-serif;
     background-color: #faf8f5;
     /*width: 320px;*/
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     -webkit-user-select: none;
     -webkit-touch-callout: none;
 }
@@ -26,6 +26,7 @@ nav{
     box-shadow:  3px 1px 5px #7c7979;
     font-size: 15px;
     padding:3px 0;
+    padding-top: 20px;
 }
 nav > a{
     width: 25%;
