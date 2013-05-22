@@ -11,10 +11,12 @@
         <link rel="stylesheet" href="${ctx}/static/styles/siteV2.0.css"/>
         <style>
             .nav_second_level{
-                background: url(${ctx}/static/images/2.0/female-selected.png);
+                background: url(${ctx}/static/images/2.0/female-selected.png) no-repeat;
+                background-size: 100% 100%;
             }
             .nav_second_level_male{
-                background: url(${ctx}/static/images/2.0/male-selected.png);
+                background: url(${ctx}/static/images/2.0/male-selected.png) no-repeat;
+                background-size: 100% 100%;
             }
             .female_default{
                 color: #6f6e6e;

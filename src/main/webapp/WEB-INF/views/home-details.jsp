@@ -38,7 +38,7 @@
     }
 
     .description{
-        width: 280px;
+        /*width: 280px;*/
         margin: 0 10px;
         padding: 10px;
         border-radius: 4px;
@@ -106,7 +106,7 @@
     .more-btn{
         display: block;
         margin-left: 7px;
-        width: 103px;
+        /*width: 103px;*/
         height: 32px;
         line-height: 32px;
         text-align: center;
@@ -114,6 +114,7 @@
         -webkit-border-radius: 4px;
         box-shadow: 0 0 5px #052e6b;
         color: #fff;
+        width: 40%;
     }
 
     .webkit-box .info{
