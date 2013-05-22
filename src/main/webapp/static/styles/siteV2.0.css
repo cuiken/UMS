@@ -149,3 +149,50 @@ nav > a.selected{
 {
     margin-top: 5px;
 }
+
+.load-btn{
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    /*background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#eee),color-stop(1,#f9f9f9));*/
+    text-shadow: 0 1px 1px #fff;
+    /*border-top: 1px solid #d7d7d7;*/
+    /*border-bottom: 1px solid #fff;*/
+    color: #333;
+    font-size: 14px;
+    width: 260px;
+}
+.click-state::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAaCAMAAABvn+dxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRFd3d3AAAADlogTAAAAAJ0Uk5T/wDltzBKAAAAU0lEQVR42tySAQrAIAwDL///9KRstSe+YEWxXkMwILkVtQ6yNgjXlSpBeCmCBKm/XibdMRV7vDXDihhn0Bh2sOOB0+SSuI8/JY4Ti0YJr7/kEWAAa1MBS66ah5oAAAAASUVORK5CYII=") no-repeat;
+    background: url(../images/2.0/list-more.png) no-repeat;
+    background-size: contain;
+}
+
+.go-top{
+    /*float: right;*/
+    background: url(../images/2.0/go-top.png) center no-repeat;
+    /*background-size: 20px;*/
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin: 5px 0;
+}
+/*.ft-tool {*/
+    /*position: relative;*/
+    /*height: 40px;*/
+    /*padding: 0 25px;*/
+    /*background: #efefef;*/
+    /*border-top: 1px solid #d7d7d7;*/
+    /*line-height: 40px;*/
+    /*margin-top: 10px;*/
+/*}*/
+.footer{
+    display: -webkit-box;
+    padding: 10px;
+}

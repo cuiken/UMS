@@ -436,6 +436,54 @@ public class HomeAction extends ActionSupport {
 		return "more";
 	}
 
+    public String categoryMore() throws Exception{
+
+        HttpSession session = Struts2Utils.getSession();
+        HttpServletRequest request = Struts2Utils.getRequest();
+        language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+        categoryId = Long.valueOf(Struts2Utils.getParameter("cid"));
+        Long storeId = chooseStoreId(session);
+        catePage.setPageSize(10);
+        catePage.setPageNo(pageNo.intValue());
+        catePage = fileManager.searchInfoByCategoryAndStore(catePage, categoryId, storeId, language);
+        Struts2Utils.renderJson(category2Json(catePage.getResult()));
+        return null;
+    }
+    private String category2Json(List<FileStoreInfo> infos){
+        String queryString=(String)Struts2Utils.getSession().getAttribute("queryString");
+        Locale locale= getLocale();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("localStrings", locale) ;
+        StringBuilder buffer=new StringBuilder();
+        buffer.append("{");
+        if(infos.size()<10){
+            buffer.append("\"code\":900");
+        }else{
+            buffer.append("\"code\":200");
+        }
+        buffer.append(",\"data\":\"");
+        for(FileStoreInfo info:infos){
+            buffer.append("<li onclick=\\\"location.href='home!details.action?id="+info.getTheme().getId()+"&"+queryString+"'\\\">");
+            buffer.append("<div class=\\\"icon\\\"><img src=\\\"http://uichange.com/UMS/files/"+info.getTheme().getIconPath()+"\\\"></div>");
+            buffer.append(" <div class=\\\"y-split\\\"></div>");
+            buffer.append(" <div class=\\\"info\\\">" +
+                    "        <p class=\\\"title\\\">"+info.getTitle()+"</p>" +
+                    "        <p class=\\\"txt\\\">"+info.getShortDescription()+"</p>" +
+                    "        <div class=\\\"y-split right\\\"></div>" +
+                    "        <div class=\\\"down-btn\\\">" +
+                    "            <img src=\\\"static/images/2.0/down.png\\\">" +
+                    "            <span>"+resourceBundle.getString("home.down")+"</span>" +
+                    "        </div>" +
+                    "    </div>");
+            buffer.append("</li>");
+        }
+        buffer.append("\"}");
+        return buffer.toString();
+    }
+
+    public String topic() throws Exception{
+        return "topic";
+    }
+
 	@Autowired
 	public void setFileManager(FileManager fileManager) {
 		this.fileManager = fileManager;
@@ -500,7 +548,7 @@ public class HomeAction extends ActionSupport {
 		return categoryId;
 	}
 
-	public String getCategoryName() {
+    public String getCategoryName() {
 		return categoryName;
 	}
 

@@ -130,7 +130,7 @@
 </style>
 <body>
 <nav class="details">
-    <a href="home.action"><img src="${ctx}/static/images/2.0/back.png"></a>
+    <a href="#" onclick="history.back();return false;"><img src="${ctx}/static/images/2.0/back.png"></a>
     <a>${info.title}</a>
     <a href="home.action"><img src="${ctx}/static/images/2.0/home.png"></a>
 </nav>
