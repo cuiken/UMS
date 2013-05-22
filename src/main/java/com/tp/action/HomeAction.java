@@ -55,6 +55,7 @@ public class HomeAction extends ActionSupport {
 	private String totalDown;
 	private FileStoreInfo info;
     private FileStoreInfo gameInfo;
+    private FileStoreInfo appInfo;
 
 	private List<CategoryInfo> cateInfos;
 	private Long categoryId;
@@ -308,11 +309,12 @@ public class HomeAction extends ActionSupport {
 			List<FileStoreInfo> fileinfos = catePage.getResult();
 			fileinfos.remove(info);
 			Collections.shuffle(fileinfos);
-			if (fileinfos.size() > 3) {
-				fileinfos = fileinfos.subList(0, 3);
+			if (fileinfos.size() > 2) {
+				fileinfos = fileinfos.subList(0, 2);
 			}
 			catePage.setResult(fileinfos);
             shuffleGame(storeId,session);
+            shuffleApp(storeId,session);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -323,18 +325,29 @@ public class HomeAction extends ActionSupport {
 
     private void shuffleGame(Long storeId,HttpSession session) throws Exception{
         newestPage.setPageSize(100);
-        hottestPage.setPageSize(100);
+
         newestPage = fileManager.searchStoreInfoInShelf(newestPage, "game", storeId, language);
-        hottestPage=fileManager.searchStoreInfoInShelf(newestPage, "app", storeId, language);
+
 
         List<FileStoreInfo> fileInfos=newestPage.getResult();
-        fileInfos.addAll(hottestPage.getResult());
+//        fileInfos.addAll(hottestPage.getResult());
         Collections.shuffle(fileInfos);
         if(fileInfos.size()>0){
             gameInfo=fileInfos.get(0);
         }
 //        gameInfo.getTheme().setDownloadURL("browerhttp://" + StringUtils.remove(Constants.getDomain(), "http://") + "/file-download.action?id="+gameInfo.getTheme().getId()+"&inputPath="+gameInfo.getTheme().getApkPath());
         setDownloadType(session,gameInfo.getTheme().getCategories().get(0).getDescription(),gameInfo);
+    }
+
+    private void shuffleApp(Long storeId,HttpSession session) throws Exception{
+        hottestPage.setPageSize(100);
+        hottestPage=fileManager.searchStoreInfoInShelf(newestPage, "app", storeId, language);
+        List<FileStoreInfo> fileInfos=hottestPage.getResult();
+        Collections.shuffle(fileInfos);
+        if(fileInfos.size()>0){
+            appInfo=fileInfos.get(0);
+        }
+        setDownloadType(session,appInfo.getTheme().getCategories().get(0).getDescription(),appInfo);
     }
 
 	private void setDownloadType(HttpSession session, String category,FileStoreInfo fsi) throws UnsupportedEncodingException {
@@ -453,6 +466,10 @@ public class HomeAction extends ActionSupport {
 
     public FileStoreInfo getGameInfo() {
         return gameInfo;
+    }
+
+    public FileStoreInfo getAppInfo() {
+        return appInfo;
     }
 
     public Page<FileStoreInfo> getCatePage() {

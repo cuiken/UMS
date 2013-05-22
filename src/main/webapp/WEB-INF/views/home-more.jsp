@@ -6,7 +6,8 @@
 	<head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 		<title>Fun主题-商店更多</title>
-        <link rel="stylesheet" href="${ctx}/static/styles/site.min.css?v=1.0" media="screen"/>
+        <link rel="stylesheet" href="${ctx}/static/styles/site.min.css?v=1.0"/>
+        <link rel="stylesheet" href="${ctx}/static/styles/siteV2.0.css"/>
 	</head>
 	<body>
 	
@@ -44,9 +45,9 @@
               });
 		    var $container = $('#container');
 		    $container.infinitescroll({
-		      navSelector  : '#page-nav',    
-		      nextSelector : '#page-nav a',  
-		      itemSelector : '.contents_info',     
+		      navSelector  : '#page-nav',
+		      nextSelector : '#page-nav a',
+		      itemSelector : '.contents_info',
 		      loading: {
 		    	 	finished: undefined,
 		         	finishedMsg:"<s:text name='home.finishedMsg'/>",

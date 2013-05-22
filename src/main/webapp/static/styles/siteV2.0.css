@@ -115,7 +115,7 @@ nav > a.selected{
     height: 25px;
 }
 
-.content .y-split{
+.y-split{
     background: url(../images/2.0/y-split.png) no-repeat;
     width: 2px;
     height: 60px;
