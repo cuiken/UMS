@@ -1,5 +1,6 @@
-<div class="slide_list_dot">
+<nav>
     <a id="home" href="home.action?${queryString}"><s:text name="nav.newest"/></a>
     <a id="hottest" href="home!hottest.action?${queryString}"><s:text name="nav.hottest"/></a>
     <a id="category" href="home!category.action?${queryString}"><s:text name="nav.category"/></a>
-</div>
+    <a id="topic" href=""><s:text name="nav.topic"></s:text></a>
+</nav>

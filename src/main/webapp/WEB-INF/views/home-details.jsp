@@ -1,185 +1,164 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp" %>
-<% response.setHeader("remember", "true"); %>
 <!DOCTYPE HTML>
 <html lang="en">
-	<head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-		<title>Fun主题-商店详细</title>
-        <link rel="stylesheet" href="${ctx}/static/styles/site.min.css" media="screen"/>
-        <style>
-            .down{
-                font-size: 22px;
-                color: #fff;
-                background: #EA2B74;
-                border-radius: 10px;
-                letter-spacing: 7px;
-                margin: auto;
-                text-align: center;
-                display: block;
-                width: 207px;
-                height: 38px;
-                line-height: 38px;
-                font-weight: bold;
-            }
-            .hasDown{
-                background:#d6d4d9;
-            }
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <title>Fun主题-商店详细</title>
+    <link rel="stylesheet" href="${ctx}/static/styles/siteV2.0.css"/>
+</head>
+<style>
+    body{
+        background: #faf7f0;
+    }
+    .details a{
+        width: 33.3%;
+    }
 
-            .contents_info{
-                /*display: inline-block;*/
-                border-top: 1px solid #e1e0c1;
-                border-bottom: 1px solid #e1e0c1;
-                margin:15px 0 3px auto;
-                width: 98%;
-            }
+    .btns .offset-r{
+        margin: 10px 14px;
+    }
 
-            .contents_image{
-                position: relative;
-                max-width: 72px;
-                max-height: 72px;
-            }
-            .contents_txt{
-                float: left;
-                width: 50%;
-                margin-left: 20px;
-            }
+    .description{
+        width: 280px;
+        height: 80px;
+        margin: 0 10px;
+        padding: 10px;
+        border-radius: 4px;
+        background-image: -webkit-linear-gradient(top, #f7f7f7,#e5e5e5);
+        box-shadow: 0 0 5px #d7d4d4;
+    }
 
-            .g_down{
-                display: inline-block;
-                margin: 10px auto;
-            }
-            .contents_image:before{
-                position: absolute;
-                z-index: 2;
-                content: '';
-                /*top: -12px;*/
-                left: 50%;
-                width: 49px;
-                height: 32px;
-                margin-left: -35px;
-                background: url(${ctx}/static/images/recommend.png);
-            }
-        </style>
-	</head>
-	<body>
+    .description p{
+        margin: 5px auto;
+        clear: both;
 
-		<form action="home!details.action" method="get">
-				<div class="title_bar">
-					${info.title}
-				</div>
-				<div class="preview_img">
-					<img alt="${info.title}" src="${ctx}/files/${info.theme.preWebPath}" width="180" height="300">
-				</div>
-				<div class="short_des">
-					<p>${info.shortDescription}</p>
-				</div>
-				<%--<div align="center">--%>
+    }
+    .description .size span {
+        display: block;
+        float: left;
+        width: 50%;
+        margin-bottom: 5px;
+    }
 
-					<%--<img id="download" alt="download" src="${ctx}/static/images/dt.png">--%>
-                    <span id="download" class="down"><s:text name="home.download"/></span>
-				<%--</div>--%>
-				<div  class="long_des">
-					<div style="float: left; width: 50%; margin-bottom: 15px;margin-top: 15px;">
-						<s:text name="home.author"/>: ${info.author}
-					</div>
-					<div style="float:right;  width: 50%;margin-bottom: 15px;margin-top: 15px;">
-						<s:text name="total.down"/>: ${totalDown}
+    .more{
+        margin-top: 15px;
+        height: 100%;
+    }
 
-					</div>
-				</div>
-				<div class="long_des" id="desc" style="line-height: 130%;">
-					<s:text name="home.desc"/>: ${info.longDescription}
-				</div>
+    .more h3{
+        margin: 2px auto;
+        background: url(${ctx}/static/images/2.0/x-split.png) no-repeat 0 100%;
+    }
+    .webkit-box{
+        display: -webkit-box;
+    }
 
-                <div class="contents_info">
-                    <span onclick="location.href='${ctx}/home!details.action?id=${gameInfo.theme.id}&${queryString}';">
-                        <span class="contents_image">
-                            <img alt="${gameInfo.title}" src="${ctx}/files/${gameInfo.theme.iconPath}">
-                        </span>
-                        <span class="contents_txt">
-                            <span class="title">${gameInfo.title}</span>
-                            <p>${gameInfo.shortDescription}</p>
-                        </span>
-                    </span>
-                    <span class="g_down">
-                        <img id="g_img_down" src="${ctx}/static/images/g_down.jpg">
-                    </span>
+    .webkit-box1{
+        -webkit-box-flex: 1;
+    }
+
+    .dk_split_item_continer{
+        list-style: none;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        clear: both;
+    }
+    .dk_split_item_continer li {
+        height: 50px;
+        margin: 0;
+        padding: 8px 0px;
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+        -webkit-box-pack: justify;
+        -webkit-box-align: center;
+        position: relative;
+        background: url(${ctx}/static/images/2.0/x-split.png) no-repeat 0 100%;
+    }
+
+    .webkit-box .icon img{
+        width: 50px;
+        height: 50px;
+        margin-left: 2px;
+    }
+
+    .txt {
+        font-size: 12px;
+    }
+</style>
+<body>
+<nav class="details">
+    <a href="home.action"><img src="${ctx}/static/images/2.0/back.png"></a>
+    <a>${info.title}</a>
+    <a href="home.action"><img src="${ctx}/static/images/2.0/home.png"></a>
+</nav>
+<section id="container">
+    <div class="preview">
+
+        <img src="${ctx}/static/images/2.0/preview.jpg">
+
+    </div>
+    <div class="btns">
+        <img  class="offset-r" src="${ctx}/static/images/2.0/offset-left.png">
+        <img  class="down-btn" src="${ctx}/static/images/2.0/down-btn.png">
+        <img  class="offset-r"src="${ctx}/static/images/2.0/offset-right.png">
+    </div>
+    <div class="description">
+        <div class="size">
+            <span>大小: ${fn:substring(info.theme.apkSize/1024/1024,0,4)} M</span>
+            <span id="down"><s:text name="total.down"/>: ${totalDown}</span>
+        </div>
+        <p><s:text name="home.author"/>: ${info.author}</p>
+        <p><s:text name="home.desc"/>: ${fn:substring(info.longDescription,0,30)}...</p>
+    </div>
+</section>
+<section class="description more">
+    <h3>猜你喜欢</h3>
+    <div class="webkit-box">
+        <ul class="webkit-box1 dk_split_item_continer">
+            <li>
+                <div class="icon">
+                    <img src="${ctx}/static/images/2.0/1.jpg">
                 </div>
-
-				<div style="margin-top: 5px;">
-
-                    <a href="${ctx}/home/shelf/game?${queryString}"><img id="like" src="${ctx}/static/images/like.png"></a>
-					<a style="float: right" href="home.action?${queryString}"><img id="gohome" alt="gohome" src="${ctx}/static/images/dhome.png"></a>
-				</div>
-				<div class="category" style="margin-top: 20px;">
-					<div class="title_bar">
-						<s:text name="home.category" >
-							<s:param name="category" value="categoryName"/>
-						</s:text>
-					</div>
-					<div class="icon_set">
-						<s:iterator value="catePage.result">
-
-							<a href="${ctx}/home!details.action?id=${theme.id}&${queryString}">
-								<img alt="${theme.title}" src="${ctx}/files/${theme.iconPath}" onerror="${ctx}/static/images/default.png" style="margin: 2px;" width="72" height="72" class="icon"/>
-							</a>
-
-						</s:iterator>
-
-						<a href="${ctx}/home!more.action?cid=${info.theme.categories[0].id}&${queryString}">
-							<img id="more" alt="更多" src="${ctx}/static/images/more.png" width="72" height="72" style="margin: 2px;" class="icon" />
-						</a>
-					</div>
-				</div>
-
-				<%@include file="/common/footer.jsp" %>
-
-
-		</form>
-        <script src="${ctx}/static/zepto/zepto.min.js"></script>
-        <script src="${ctx}/static/zepto/touch.js"></script>
-		<script>
-			$(function() {
-			//	$("img").lazyload();
-				if('${language}'=='zh'){
-					$("#gohome").attr("src","${ctx}/static/images/dhome.png");
-					$("#more").attr("src","${ctx}/static/images/more.png");
-				}else{
-					$("#gohome").attr("src","${ctx}/static/images/en/dhome.png");
-					$("#more").attr("src","${ctx}/static/images/en/more.png");
-                    $("#like").attr("src","${ctx}/static/images/en/like_en.png");
-				}
-				$("#download").tap(function(e){
-					$.ajax({
-						type:"POST",
-						url:"log/log!saveDownload.action?id=${info.theme.id}&${queryString}",
-						dataType:"text",
-						data:{queryString:'${info.theme.downloadURL}',cs:'${queryString}'},
-                        complete:function(){
-                            location.href='${info.theme.downloadURL}';
-                        }
-					});
-
-                    $(this).addClass("down hasDown");
-
-                    e.preventDefault();
-                });
-                $(".g_down").click(function(e){
-                    $.ajax({
-                        type:"POST",
-                        url:"log/log!saveDownload.action?id=${gameInfo.theme.id}&${queryString}",
-                        dataType:"text",
-                        data:{queryString:'${gameInfo.theme.downloadURL}',cs:'${queryString}'},
-                        complete:function(){
-                            location.href='${gameInfo.theme.downloadURL}';
-                        }
-                    });
-                    <%--$("#g_img_down").attr("src","${ctx}/static/images/g_downed.jpg");--%>
-                    e.preventDefault();
-                });
-	        })
-
-		</script>
-	</body>
+                <div class="info">
+                    <p>薰衣草</p>
+                    <p class="txt">大小: 0.3M <span>&nbsp;下载</span></p>
+                </div>
+            </li>
+            <li>
+                <div class="icon">
+                    <img src="${ctx}/static/images/2.0/2.jpg">
+                </div>
+                <div class="info">
+                    <p>薰衣草之</p>
+                    <p class="txt">大小: 0.3M<span>&nbsp;下载</span></p>
+                </div>
+            </li>
+            <li><img src="${ctx}/static/images/2.0/more.png"></li>
+        </ul>
+        <ul class="webkit-box1 dk_split_item_continer">
+            <li>
+                <div class="icon">
+                    <img src="${ctx}/static/images/2.0/3.jpg">
+                </div>
+                <div class="info">
+                    <p>薰衣</p>
+                    <p class="txt">大小: 0.3M<span>&nbsp;下载</span></p>
+                </div>
+            </li>
+            <li>
+                <div class="icon">
+                    <img src="${ctx}/static/images/2.0/4.jpg">
+                </div>
+                <div class="info">
+                    <p>薰衣草之恋</p>
+                    <p class="txt">大小: 0.3M<span>&nbsp;下载</span></p>
+                </div>
+            </li>
+            <li><img src="${ctx}/static/images/2.0/more.png"></li>
+        </ul>
+    </div>
+</section>
+</body>
 </html>

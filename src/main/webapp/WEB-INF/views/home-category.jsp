@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 	<title>商店分类</title>
     <link rel="stylesheet" href="${ctx}/static/styles/site.min.css" media="screen"/>
+    <link rel="stylesheet" href="${ctx}/static/styles/siteV2.0.css"/>
   	<style>
   		.preview img{
 			width: 48.5%;
@@ -14,6 +15,7 @@
 		}
 		.preview{
 			font-size: 0;
+            margin-top: 10px;
 		}
   	</style>
  </head>
@@ -22,14 +24,14 @@
 	<div class="preview">
 		<s:iterator value="categories">
 			<a href="${ctx}/home!more.action?cid=${id}&${queryString}">
-				<img alt="${name}" src="${ctx}/files/${icon}">
+				<img alt="${name}" src="http://uichange.com/UMS/files/${icon}">
 			</a>
 		</s:iterator>
-        <div class="soft_top">
-            <a href="${ctx}/home/shelf/app?${queryString}">
-                <span><s:text name="home.top"/></span>
-            </a>
-        </div>
+        <%--<div class="soft_top">--%>
+            <%--<a href="${ctx}/home/shelf/app?${queryString}">--%>
+                <%--<span><s:text name="home.top"/></span>--%>
+            <%--</a>--%>
+        <%--</div>--%>
 	</div>
     <script src="${ctx}/static/zepto/zepto.min.js"></script>
      <script>

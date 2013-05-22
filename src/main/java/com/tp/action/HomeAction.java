@@ -3,9 +3,7 @@ package com.tp.action;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -114,7 +112,7 @@ public class HomeAction extends ActionSupport {
         buffer.append("[");
         for(Advertisement ad:ads){
             buffer.append("{");
-            buffer.append("\"pic\":\""+Constants.getDomain()+"/files/"+ad.getImgLink()+"\"");
+            buffer.append("\"pic\":\"http://uichange.com/UMS/files/"+ad.getImgLink()+"\"");
             buffer.append(",");
             buffer.append("\"href\":\""+ad.getLink()+"\"");
             buffer.append(",");
@@ -190,11 +188,56 @@ public class HomeAction extends ActionSupport {
         language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
         Long storeId = chooseStoreId(session);
         sorts = logJdbcDao.countThemeFileDownload(language,storeId,pageNo);
-        bars=json(getADs("store-hot"));
+//        bars=json(getADs("store-hot"));
         return "hottest";
     }
 
-	public String category() throws Exception {
+    public String jsonMore() throws Exception{
+        HttpSession session = Struts2Utils.getSession();
+
+        language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+        Long storeId = chooseStoreId(session);
+        sorts = logJdbcDao.countThemeFileDownload(language,storeId,pageNo);
+        String json=toJson(sorts);
+        json=json.replaceAll("/","\\\\/");
+//        json=json.replaceAll("\"","\\\"");
+        logger.info(json);
+        Struts2Utils.renderJson(json);
+        return null;
+    }
+
+    private String toJson(List<Map<String,Object>> contents){
+        String queryString=(String)Struts2Utils.getSession().getAttribute("queryString");
+        Locale locale= getLocale();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("localStrings", locale) ;
+        StringBuilder buffer=new StringBuilder();
+        buffer.append("{");
+        if(contents.size()<10){
+            buffer.append("\"code\":900");
+        }else{
+            buffer.append("\"code\":200");
+        }
+        buffer.append(",\"data\":\"");
+        for(Map<String,Object> theme:contents){
+            buffer.append("<li onclick=\\\"location.href='home!details.action?id="+theme.get("f_id")+"&"+queryString+"'\\\">");
+            buffer.append("<div class=\\\"icon\\\"><img src=\\\"http://uichange.com/UMS/files/"+theme.get("iconPath")+"\\\"></div>");
+            buffer.append(" <div class=\\\"y-split\\\"></div>");
+            buffer.append(" <div class=\\\"info\\\">" +
+                    "        <p class=\\\"title\\\">"+theme.get("title")+"</p>" +
+                    "        <p class=\\\"txt\\\">"+theme.get("shortDescription")+"</p>" +
+                    "        <div class=\\\"y-split right\\\"></div>" +
+                    "        <div class=\\\"down-btn\\\">" +
+                    "            <img src=\\\"static/images/2.0/down.png\\\">" +
+                    "            <span>"+resourceBundle.getString("home.down")+"</span>" +
+                    "        </div>" +
+                    "    </div>");
+            buffer.append("</li>");
+        }
+        buffer.append("\"}");
+        return buffer.toString();
+    }
+
+    public String category() throws Exception {
 		List<Category> lists = categoryManager.getCategories();
         categories= Lists.newArrayList();
         for(Category category:lists){
