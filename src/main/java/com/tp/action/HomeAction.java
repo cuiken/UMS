@@ -202,7 +202,7 @@ public class HomeAction extends ActionSupport {
         String json=toJson(sorts);
         json=json.replaceAll("/","\\\\/");
 //        json=json.replaceAll("\"","\\\"");
-        logger.info(json);
+//        logger.info(json);
         Struts2Utils.renderJson(json);
         return null;
     }
@@ -220,7 +220,7 @@ public class HomeAction extends ActionSupport {
         }
         buffer.append(",\"data\":\"");
         for(Map<String,Object> theme:contents){
-            buffer.append("<li onclick=\\\"location.href='home!details.action?id="+theme.get("f_id")+"&"+queryString+"'\\\">");
+            buffer.append("<li>");
             buffer.append("<div class=\\\"icon\\\"><img src=\\\"http://uichange.com/UMS/files/"+theme.get("iconPath")+"\\\"></div>");
             buffer.append(" <div class=\\\"y-split\\\"></div>");
             buffer.append(" <div class=\\\"info\\\">" +
@@ -232,6 +232,7 @@ public class HomeAction extends ActionSupport {
                     "            <span>"+resourceBundle.getString("home.down")+"</span>" +
                     "        </div>" +
                     "    </div>");
+            buffer.append("<a href=\\\"home!details.action?id="+theme.get("f_id")+"&"+queryString+"\\\" class=\\\"down-area\\\"></a>");
             buffer.append("</li>");
         }
         buffer.append("\"}");
@@ -462,7 +463,7 @@ public class HomeAction extends ActionSupport {
         }
         buffer.append(",\"data\":\"");
         for(FileStoreInfo info:infos){
-            buffer.append("<li onclick=\\\"location.href='home!details.action?id="+info.getTheme().getId()+"&"+queryString+"'\\\">");
+            buffer.append("<li>");
             buffer.append("<div class=\\\"icon\\\"><img src=\\\"http://uichange.com/UMS/files/"+info.getTheme().getIconPath()+"\\\"></div>");
             buffer.append(" <div class=\\\"y-split\\\"></div>");
             buffer.append(" <div class=\\\"info\\\">" +
@@ -474,6 +475,7 @@ public class HomeAction extends ActionSupport {
                     "            <span>"+resourceBundle.getString("home.down")+"</span>" +
                     "        </div>" +
                     "    </div>");
+            buffer.append("<a href=\\\"home!details.action?id="+info.getTheme().getId()+"&"+queryString+"\\\" class=\\\"down-area\\\"></a>");
             buffer.append("</li>");
         }
         buffer.append("\"}");

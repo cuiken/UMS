@@ -1,4 +1,4 @@
-<li onclick="location.href='${ctx}/home!details.action?id=${theme.id}&${queryString}';">
+<li>
     <div class="icon">
         <img src="http://uichange.com/UMS/files/${theme.iconPath}">
     </div>
@@ -12,5 +12,5 @@
             <span><s:text name="home.down"></s:text></span>
         </div>
     </div>
-
+    <a href="${ctx}/home!details.action?id=${theme.id}&${queryString}" class="down-area"></a>
 </li>

@@ -14,6 +14,7 @@
     }
     .details a{
         width: 33.3%;
+        background: none;
     }
 
     .preview{
@@ -138,8 +139,8 @@
 <section id="container">
     <div class="preview">
 
-        <%--<img src="http://locker.uichange.com/UMS/files/${info.theme.preWebPath}">--%>
-        <img src="${ctx}/static/images/2.0/preview.jpg">
+        <img src="http://locker.uichange.com/UMS/files/${info.theme.preWebPath}">
+        <%--<img src="${ctx}/static/images/2.0/preview.jpg">--%>
 
     </div>
     <div class="btns">
@@ -160,7 +161,7 @@
 <section class="description more">
     <h3>猜你喜欢</h3>
     <div class="webkit-box">
-        <ul class="webkit-box1 dk_split_item_continer odd">
+        <ul class="webkit-box1 dk_split_item_continer odd v-list">
             <s:iterator value="catePage.result">
                 <li>
                     <div class="icon">
@@ -171,11 +172,12 @@
                         <p>${theme.title}</p>
                         <p class="txt">大小: ${fn:substring(theme.apkSize/1024/1024,0,4)} M</p>
                     </div>
+                    <a href="${ctx}/home!details.action?id=${theme.id}&${queryString}" class="down-area"></a>
                 </li>
             </s:iterator>
 
         </ul>
-        <ul class="webkit-box1 dk_split_item_continer even">
+        <ul class="webkit-box1 dk_split_item_continer even v-list">
             <li>
                 <div class="icon">
                     <img alt="${appInfo.theme.title}" src="http://locker.uichange.com/UMS/files/${appInfo.theme.iconPath}">
@@ -185,6 +187,7 @@
                     <p>${appInfo.theme.title}</p>
                     <p class="txt">大小: ${fn:substring(appInfo.theme.apkSize/1024/1024,0,4)} M</p>
                 </div>
+                <a href="${ctx}/home!details.action?id=${appInfo.theme.id}&${queryString}" class="down-area"></a>
             </li>
             <li>
                 <div class="icon">
@@ -195,6 +198,7 @@
                     <p>${gameInfo.theme.title}</p>
                     <p class="txt">大小: ${fn:substring(gameInfo.theme.apkSize/1024/1024,0,4)} M</p>
                 </div>
+                <a href="${ctx}/home!details.action?id=${gameInfo.theme.id}&${queryString}" class="down-area"></a>
             </li>
 
         </ul>

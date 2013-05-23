@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <title>Fun主题-主题</title>
      <link href="${ctx}/static/bootstrap/2.1.1/css/bootstraped.min.css" type="text/css" rel="stylesheet" />
-    <link rel="stylesheet" href="${ctx}/static/styles/site.min.css"/>
+    <%--<link rel="stylesheet" href="${ctx}/static/styles/site.min.css"/>--%>
     <link rel="stylesheet" href="${ctx}/static/styles/siteV2.0.css"/>
 
   </head>
