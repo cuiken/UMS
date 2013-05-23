@@ -19,6 +19,10 @@ public class Page<T> extends PageRequest implements Iterable<T> {
 	public Page() {
 	}
 
+    public Page(int pageSize){
+        this.pageSize=pageSize;
+    }
+
 	public Page(PageRequest request) {
 		this.pageNo = request.pageNo;
 		this.pageSize = request.pageSize;

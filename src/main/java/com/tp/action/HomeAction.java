@@ -44,11 +44,11 @@ public class HomeAction extends ActionSupport {
 	private LogCountContentDao countContentDao;
     private LogJdbcDao logJdbcDao;
 
-	private Page<FileStoreInfo> hottestPage = new Page<FileStoreInfo>();
+	private Page<FileStoreInfo> hottestPage = new Page<FileStoreInfo>(10);
     private Page<Advertisement> advertisementPage=new Page<Advertisement>();
 
-	private Page<FileStoreInfo> newestPage = new Page<FileStoreInfo>();
-	private Page<FileStoreInfo> catePage = new Page<FileStoreInfo>();
+	private Page<FileStoreInfo> newestPage = new Page<FileStoreInfo>(10);
+	private Page<FileStoreInfo> catePage = new Page<FileStoreInfo>(10);
 
 	private Long id;
     private Long pageNo=1L;
@@ -86,14 +86,33 @@ public class HomeAction extends ActionSupport {
 		language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
 		Long storeId = chooseStoreId(session);
 
-		hottestPage.setPageSize(16);
-		hottestPage = fileManager.searchStoreInfoInShelf(hottestPage, Shelf.Type.HOTTEST.getValue(), storeId, language);
+        String type=Struts2Utils.getParameter("g");
+        if(StringUtils.isBlank(type)){
+            type="female";
+        }
 
-		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST.getValue(), storeId, language);
+		newestPage = fileManager.searchStoreInfoInShelf(newestPage, type, storeId, language);
 
         bars=json(getADs("store"));
 		return SUCCESS;
 	}
+
+    public String shelfJson() throws Exception{
+        HttpSession session = Struts2Utils.getSession();
+
+        language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+        Long storeId = chooseStoreId(session);
+
+        String type=Struts2Utils.getParameter("g");
+        if(StringUtils.isBlank(type)){
+            type="female";
+        }
+        newestPage.setPageNo(pageNo.intValue());
+        newestPage = fileManager.searchStoreInfoInShelf(newestPage, type, storeId, language);
+        String json= category2Json(newestPage.getResult());
+        Struts2Utils.renderJson(json);
+        return null;
+    }
 
     private List<Advertisement> getADs(String type){
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
@@ -146,7 +165,7 @@ public class HomeAction extends ActionSupport {
                 break;
             }
         }
-        newestPage.setPageSize(10);
+
         newestPage = fileManager.searchStoreInfoInShelf(newestPage, sf, storeId, language);
         return "shelf";
     }
@@ -220,23 +239,30 @@ public class HomeAction extends ActionSupport {
         }
         buffer.append(",\"data\":\"");
         for(Map<String,Object> theme:contents){
-            buffer.append("<li>");
-            buffer.append("<div class=\\\"icon\\\"><img src=\\\"http://uichange.com/UMS/files/"+theme.get("iconPath")+"\\\"></div>");
-            buffer.append(" <div class=\\\"y-split\\\"></div>");
-            buffer.append(" <div class=\\\"info\\\">" +
-                    "        <p class=\\\"title\\\">"+theme.get("title")+"</p>" +
-                    "        <p class=\\\"txt\\\">"+theme.get("shortDescription")+"</p>" +
-                    "        <div class=\\\"y-split right\\\"></div>" +
-                    "        <div class=\\\"down-btn\\\">" +
-                    "            <img src=\\\"static/images/2.0/down.png\\\">" +
-                    "            <span>"+resourceBundle.getString("home.down")+"</span>" +
-                    "        </div>" +
-                    "    </div>");
-            buffer.append("<a href=\\\"home!details.action?id="+theme.get("f_id")+"&"+queryString+"\\\" class=\\\"down-area\\\"></a>");
-            buffer.append("</li>");
+
+            loopHtml(buffer,(Integer)theme.get("f_id"),(String)theme.get("iconPath"),(String)theme.get("title"),
+                    (String)theme.get("shortDescription"),resourceBundle,queryString);
         }
         buffer.append("\"}");
         return buffer.toString();
+    }
+
+    private void loopHtml(StringBuilder buffer,int id,String icon,String title,String shortDescription,ResourceBundle resourceBundle,String queryString){
+
+        buffer.append("<li>");
+        buffer.append("<div class=\\\"icon\\\"><img src=\\\"http://uichange.com/UMS/files/"+icon+"\\\"></div>");
+        buffer.append(" <div class=\\\"y-split\\\"></div>");
+        buffer.append(" <div class=\\\"info\\\">" +
+                "        <p class=\\\"title\\\">"+title+"</p>" +
+                "        <p class=\\\"txt\\\">"+shortDescription+"</p>" +
+                "        <div class=\\\"y-split right\\\"></div>" +
+                "        <div class=\\\"down-btn\\\">" +
+                "            <img src=\\\"static/images/2.0/down.png\\\">" +
+                "            <span>"+resourceBundle.getString("home.down")+"</span>" +
+                "        </div>" +
+                "    </div>");
+        buffer.append("<a href=\\\"home!details.action?id="+id+"&"+queryString+"\\\" class=\\\"down-area\\\"></a>");
+        buffer.append("</li>");
     }
 
     public String category() throws Exception {
@@ -431,7 +457,7 @@ public class HomeAction extends ActionSupport {
 			Struts2Utils.getResponse().sendError(HttpServletResponse.SC_NOT_FOUND, "parametter is incorrect.");
 			return null;
 		}
-        catePage.setPageSize(10);
+
 		catePage = fileManager.searchInfoByCategoryAndStore(catePage, categoryId, storeId, language);
 
 		return "more";
@@ -444,7 +470,7 @@ public class HomeAction extends ActionSupport {
         language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
         categoryId = Long.valueOf(Struts2Utils.getParameter("cid"));
         Long storeId = chooseStoreId(session);
-        catePage.setPageSize(10);
+
         catePage.setPageNo(pageNo.intValue());
         catePage = fileManager.searchInfoByCategoryAndStore(catePage, categoryId, storeId, language);
         Struts2Utils.renderJson(category2Json(catePage.getResult()));
@@ -463,20 +489,9 @@ public class HomeAction extends ActionSupport {
         }
         buffer.append(",\"data\":\"");
         for(FileStoreInfo info:infos){
-            buffer.append("<li>");
-            buffer.append("<div class=\\\"icon\\\"><img src=\\\"http://uichange.com/UMS/files/"+info.getTheme().getIconPath()+"\\\"></div>");
-            buffer.append(" <div class=\\\"y-split\\\"></div>");
-            buffer.append(" <div class=\\\"info\\\">" +
-                    "        <p class=\\\"title\\\">"+info.getTitle()+"</p>" +
-                    "        <p class=\\\"txt\\\">"+info.getShortDescription()+"</p>" +
-                    "        <div class=\\\"y-split right\\\"></div>" +
-                    "        <div class=\\\"down-btn\\\">" +
-                    "            <img src=\\\"static/images/2.0/down.png\\\">" +
-                    "            <span>"+resourceBundle.getString("home.down")+"</span>" +
-                    "        </div>" +
-                    "    </div>");
-            buffer.append("<a href=\\\"home!details.action?id="+info.getTheme().getId()+"&"+queryString+"\\\" class=\\\"down-area\\\"></a>");
-            buffer.append("</li>");
+
+            loopHtml(buffer,info.getTheme().getId().intValue(),info.getTheme().getIconPath(),info.getTitle(),
+                    info.getShortDescription(),resourceBundle,queryString);
         }
         buffer.append("\"}");
         return buffer.toString();

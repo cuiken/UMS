@@ -120,7 +120,7 @@ nav > a.selected{
     top: 20px;
     right: 5px;
     width: 34px;
-    height: 25px;
+    /*height: 25px;*/
     text-align: center;
 }
 
@@ -155,7 +155,7 @@ nav > a.selected{
     background-size: 100% 100%;
     /*margin: 15px 0;*/
 }
-.nav_second_level span{
+.nav_second_level a{
     display: block;
     float: left;
     text-align: center;
@@ -181,7 +181,8 @@ nav > a.selected{
     /*border-bottom: 1px solid #fff;*/
     color: #333;
     font-size: 14px;
-    width: 80%;
+    width: 79%;
+    padding-left: 10px;
 }
 .click-state::before {
     content: "";
@@ -276,6 +277,8 @@ nav > a.selected{
     height: 80px;
     overflow: hidden;
     -webkit-user-select: none;
+    -webkit-backface-visibility:hidden;
+    -webkit-transform-style:preserve-3d;
 }
 
 /*
