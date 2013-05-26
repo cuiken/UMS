@@ -12,5 +12,10 @@
             <span><s:text name="home.down"></s:text></span>
         </div>
     </div>
+    <s:if test="ishot==1">
+        <span class="icon_n"></span>
+    </s:if><s:elseif test="isnew==1">
+    <span class="icon_n icon_n_new"></span>
+</s:elseif>
     <a href="${ctx}/home!details.action?id=${f_id}&${queryString}" class="down-area"></a>
 </li>

@@ -36,10 +36,11 @@ public class HomeAction extends ActionSupport {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	private CategoryManager categoryManager;
-	private CategoryInfoManager categoryInfoManager;
+//	private CategoryInfoManager categoryInfoManager;
 	private FileManager fileManager;
 	private MarketManager marketManager;
     private AdvertisementService advertisementService;
+    private TopicService topicService;
 
 	private LogCountContentDao countContentDao;
     private LogJdbcDao logJdbcDao;
@@ -57,7 +58,7 @@ public class HomeAction extends ActionSupport {
     private FileStoreInfo gameInfo;
     private FileStoreInfo appInfo;
 
-	private List<CategoryInfo> cateInfos;
+//	private List<CategoryInfo> cateInfos;
 	private Long categoryId;
 
 	private String categoryName;
@@ -67,8 +68,12 @@ public class HomeAction extends ActionSupport {
     private String bars;
 
     private List<Map<String,Object>> sorts;
+    private List<Topic> topics;
 
-	@Override
+    private String title;
+    private String topicDescription;
+
+    @Override
 	public String execute() throws Exception {
 
 		return list();
@@ -97,6 +102,61 @@ public class HomeAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+    public String topicList() throws Exception{
+        HttpSession session = Struts2Utils.getSession();
+
+        language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+        String topicId=Struts2Utils.getParameter("topicId");
+        if(StringUtils.isBlank(topicId)){
+            topicId="";
+        }
+        Long id=Long.valueOf(topicId);
+        Topic topic=topicService.getTopic(id);
+        title=topic.getName();
+        topicDescription=topic.getDescription();
+        newestPage=fileManager.searchTopicFile(newestPage,id,language);
+
+        return "topic-list";
+    }
+
+    public String topicListJson() throws Exception{
+        HttpSession session = Struts2Utils.getSession();
+        language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+        String topicId=Struts2Utils.getParameter("topicId");
+        String pageNo=Struts2Utils.getParameter("pageNo");
+        if(StringUtils.isBlank(topicId)){
+            topicId="";
+        }
+        Long id=Long.valueOf(topicId);
+        newestPage.setPageNo(Integer.valueOf(pageNo));
+        newestPage=fileManager.searchTopicFile(newestPage,id,language);
+        String json=category2Json(getNewestPage().getResult());
+        Struts2Utils.renderJson(json);
+        return null;
+    }
+    public String cate() throws Exception{
+        HttpSession session = Struts2Utils.getSession();
+
+        language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+        Long storeId = chooseStoreId(session);
+
+        String type=Struts2Utils.getParameter("g");
+
+
+        if(StringUtils.isBlank(type)){
+            type="female";
+            title="女生专区";
+        }else{
+            if(type.equals("male")){
+                title="男生专区";
+            }else if(type.equals("female")){
+                title="女生专区";
+            }
+        }
+
+        newestPage = fileManager.searchStoreInfoInShelf(newestPage, type, storeId, language);
+        return "cate";
+    }
     public String shelfJson() throws Exception{
         HttpSession session = Struts2Utils.getSession();
 
@@ -162,12 +222,23 @@ public class HomeAction extends ActionSupport {
         for(Shelf s:store.getShelfs()){
             if(s.getValue().equals(sf)){
                 categoryName=s.getName();
+                title=s.getName();
                 break;
             }
         }
 
         newestPage = fileManager.searchStoreInfoInShelf(newestPage, sf, storeId, language);
         return "shelf";
+    }
+
+    public String diy() throws Exception{
+        HttpSession session = Struts2Utils.getSession();
+
+        language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
+        Long storeId = chooseStoreId(session);
+        newestPage = fileManager.searchStoreInfoInShelf(newestPage, "diy", storeId, language);
+        bars=json(getADs("diy"));
+        return "diy";
     }
 
     @Deprecated
@@ -239,29 +310,123 @@ public class HomeAction extends ActionSupport {
         }
         buffer.append(",\"data\":\"");
         for(Map<String,Object> theme:contents){
+            SpanHtml html=new SpanHtml((Integer) theme.get("f_id"),(Integer)theme.get("isnew")
+                    ,(Integer)theme.get("ishot"), (String) theme.get("iconPath"), (String) theme.get("title"),
+                    (String) theme.get("shortDescription"), queryString, resourceBundle);
 
-            loopHtml(buffer,(Integer)theme.get("f_id"),(String)theme.get("iconPath"),(String)theme.get("title"),
-                    (String)theme.get("shortDescription"),resourceBundle,queryString);
+            loopHtml(buffer,html);
         }
         buffer.append("\"}");
         return buffer.toString();
     }
 
-    private void loopHtml(StringBuilder buffer,int id,String icon,String title,String shortDescription,ResourceBundle resourceBundle,String queryString){
+    static  class  SpanHtml{
+        private int id;
+        private String iconPath;
+        private String title;
+        private String shortDescription;
+        private ResourceBundle resourceBundle;
+        private String queryString;
+        private int isnew;
+        private int ishot;
+
+        SpanHtml(int id,int isnew,int ishot,String iconPath,String title,String shortDescription,String queryString,ResourceBundle resourceBundle){
+            this.id=id;
+            this.ishot=ishot;
+            this.isnew=isnew;
+            this.queryString=queryString;
+            this.resourceBundle=resourceBundle;
+            this.title=title;
+            this.iconPath=iconPath;
+            this.shortDescription=shortDescription;
+        }
+
+        int getIsnew() {
+            return isnew;
+        }
+
+        void setIsnew(int isnew) {
+            this.isnew = isnew;
+        }
+
+        int getIshot() {
+            return ishot;
+        }
+
+        void setIshot(int ishot) {
+            this.ishot = ishot;
+        }
+
+        int getId() {
+            return id;
+        }
+
+        void setId(int id) {
+            this.id = id;
+        }
+
+        String getIconPath() {
+            return iconPath;
+        }
+
+        void setIconPath(String iconPath) {
+            this.iconPath = iconPath;
+        }
+
+        String getTitle() {
+            return title;
+        }
+
+        void setTitle(String title) {
+            this.title = title;
+        }
+
+        String getShortDescription() {
+            return shortDescription;
+        }
+
+        void setShortDescription(String shortDescription) {
+            this.shortDescription = shortDescription;
+        }
+
+        ResourceBundle getResourceBundle() {
+            return resourceBundle;
+        }
+
+        void setResourceBundle(ResourceBundle resourceBundle) {
+            this.resourceBundle = resourceBundle;
+        }
+
+        String getQueryString() {
+            return queryString;
+        }
+
+        void setQueryString(String queryString) {
+            this.queryString = queryString;
+        }
+    }
+
+    private void loopHtml(StringBuilder buffer,SpanHtml html){
 
         buffer.append("<li>");
-        buffer.append("<div class=\\\"icon\\\"><img src=\\\"http://uichange.com/UMS/files/"+icon+"\\\"></div>");
+        buffer.append("<div class=\\\"icon\\\"><img src=\\\"http://uichange.com/UMS/files/"+html.getIconPath()+"\\\"></div>");
         buffer.append(" <div class=\\\"y-split\\\"></div>");
         buffer.append(" <div class=\\\"info\\\">" +
-                "        <p class=\\\"title\\\">"+title+"</p>" +
-                "        <p class=\\\"txt\\\">"+shortDescription+"</p>" +
+                "        <p class=\\\"title\\\">"+html.getTitle()+"</p>" +
+                "        <p class=\\\"txt\\\">"+html.getShortDescription()+"</p>" +
                 "        <div class=\\\"y-split right\\\"></div>" +
                 "        <div class=\\\"down-btn\\\">" +
                 "            <img src=\\\"static/images/2.0/down.png\\\">" +
-                "            <span>"+resourceBundle.getString("home.down")+"</span>" +
+                "            <span>"+html.getResourceBundle().getString("home.down")+"</span>" +
                 "        </div>" +
                 "    </div>");
-        buffer.append("<a href=\\\"home!details.action?id="+id+"&"+queryString+"\\\" class=\\\"down-area\\\"></a>");
+        if(html.getIshot()==1){
+            buffer.append("<span class=\\\"icon_n\\\"></span>");
+        }else if(html.getIsnew()==1){
+            buffer.append("<span class=\\\"icon_n icon_n_new\\\"></span>");
+        }
+
+        buffer.append("<a href=\\\"home!details.action?id="+html.getId()+"&"+html.getQueryString()+"\\\" class=\\\"down-area\\\"></a>");
         buffer.append("</li>");
     }
 
@@ -489,15 +654,17 @@ public class HomeAction extends ActionSupport {
         }
         buffer.append(",\"data\":\"");
         for(FileStoreInfo info:infos){
-
-            loopHtml(buffer,info.getTheme().getId().intValue(),info.getTheme().getIconPath(),info.getTitle(),
-                    info.getShortDescription(),resourceBundle,queryString);
+            SpanHtml html=new SpanHtml(info.getTheme().getId().intValue(),info.getTheme().getIsnew().intValue(),info.getTheme().getIshot().intValue(),
+                    info.getTheme().getIconPath(),info.getTitle(),
+                  info.getShortDescription(),queryString,resourceBundle);
+            loopHtml(buffer,html);
         }
         buffer.append("\"}");
         return buffer.toString();
     }
 
     public String topic() throws Exception{
+        topics=topicService.getAllTopics();
         return "topic";
     }
 
@@ -515,11 +682,11 @@ public class HomeAction extends ActionSupport {
 	public void setMarketManager(MarketManager marketManager) {
 		this.marketManager = marketManager;
 	}
-
-	@Autowired
-	public void setCategoryInfoManager(CategoryInfoManager categoryInfoManager) {
-		this.categoryInfoManager = categoryInfoManager;
-	}
+//
+//	@Autowired
+//	public void setCategoryInfoManager(CategoryInfoManager categoryInfoManager) {
+//		this.categoryInfoManager = categoryInfoManager;
+//	}
 
 	public Page<FileStoreInfo> getHottestPage() {
 		return hottestPage;
@@ -557,11 +724,19 @@ public class HomeAction extends ActionSupport {
         return  advertisementPage;
     }
 
-	public List<CategoryInfo> getCateInfos() {
-		return cateInfos;
-	}
+    public String getTopicDescription() {
+        return topicDescription;
+    }
 
-	public Long getCategoryId() {
+    //	public List<CategoryInfo> getCateInfos() {
+//		return cateInfos;
+//	}
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Long getCategoryId() {
 		return categoryId;
 	}
 
@@ -569,7 +744,11 @@ public class HomeAction extends ActionSupport {
 		return categoryName;
 	}
 
-	public String getLanguage() {
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public String getLanguage() {
 		return language;
 	}
 
@@ -577,7 +756,7 @@ public class HomeAction extends ActionSupport {
 		return categories;
 	}
 
-	public String getTotalDown() {
+    public String getTotalDown() {
 		return totalDown;
 	}
 
@@ -614,5 +793,10 @@ public class HomeAction extends ActionSupport {
     @Autowired
     public void setLogJdbcDao(LogJdbcDao logJdbcDao){
         this.logJdbcDao=logJdbcDao;
+    }
+
+    @Autowired
+    public void setTopicService(TopicService topicService) {
+        this.topicService = topicService;
     }
 }

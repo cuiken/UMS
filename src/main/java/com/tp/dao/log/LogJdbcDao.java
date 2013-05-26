@@ -30,10 +30,10 @@ public class LogJdbcDao {
             + " FROM log_f_content l LEFT JOIN f_market m ON m.pk_name=l.from_market"
             + " WHERE l.create_time BETWEEN ? AND ? AND l.do_type=?  GROUP BY m.name,app_name ORDER BY app_name";
 
-    private static final String QUERY_HOTTEST_DOWNLOAD = "SELECT ffi.f_id,ffi.title,ffi.short_description as shortDescription ,f.icon_path as iconPath FROM f_file f right join"
+    private static final String QUERY_HOTTEST_DOWNLOAD = "SELECT ffi.f_id,ffi.title,ffi.short_description as shortDescription ,f.icon_path as iconPath ,f.is_hot as ishot, f.is_new as isnew FROM f_file f right join"
             + " (select c.theme_name,sum(c.total_down) as download from log_count_content c"
             + " WHERE c.create_time BETWEEN ? AND ? GROUP BY c.theme_name) as l on f.title=l.theme_name"
-            + " JOIN f_file_info ffi ON f.id=ffi.f_id JOIN f_file_store fs ON f.id=fs.f_id WHERE ffi.language=? AND fs.s_id=? AND f.dtype<>2 ORDER BY l.download desc limit ?,?";
+            + " JOIN f_file_info ffi ON f.id=ffi.f_id JOIN f_file_store fs ON f.id=fs.f_id WHERE ffi.language=? AND fs.s_id=? AND f.dtype=0 ORDER BY l.download desc limit ?,?";
 
     private JdbcTemplate jdbcTemplate;
     private SpyMemcachedClient memcachedClient;

@@ -63,6 +63,7 @@ public class ThemeFile extends IdEntity {
     private List<FileInfo> fileInfo = Lists.newArrayList();
     private List<FileStoreInfo> infoStore = Lists.newArrayList();
     private List<ShelfFileLink> shelfFiles = Lists.newArrayList();
+    private List<TopicFileLink> topicFiles=Lists.newArrayList();
     private List<FileMarketValue> marketValues = Lists.newArrayList();
     private List<Store> stores = Lists.newArrayList();
 
@@ -274,6 +275,15 @@ public class ThemeFile extends IdEntity {
 
     public void setShelfFiles(List<ShelfFileLink> shelfFiles) {
         this.shelfFiles = shelfFiles;
+    }
+
+    @OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    public List<TopicFileLink> getTopicFiles() {
+        return topicFiles;
+    }
+
+    public void setTopicFiles(List<TopicFileLink> topicFiles) {
+        this.topicFiles = topicFiles;
     }
 
     @OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)

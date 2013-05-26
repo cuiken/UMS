@@ -133,3 +133,34 @@ var SQ = SQ || {};
     };
     SQ.LoadMore=LoadMore;
 }(Zepto,window));
+
+$(document).ready(function(){
+//应用信息展开&关闭
+    $(".toggle-btn").bind("click",function(){
+        var $toggleBtn = $(this);
+        var $info = $toggleBtn.prev();
+        var h = $info.height();
+        toggleInfo( $info, $toggleBtn, h )
+    });
+
+//应用信息隐藏
+    $(".J_info").each(function(){
+        var $info = $(this);
+        var h = $info.height();
+        var $toggleBtn = $(this).next();
+        toggleInfo( $info, $toggleBtn, h )
+    });
+    function toggleInfo( $info, $toggleBtn, h ){
+        if( h > 87 ){
+            hide();
+        }else if( h == 87 ){
+            $info.height( "auto" );
+            $toggleBtn.addClass("arr-d");
+        }
+        function hide(){
+            $info.height("87px");
+            $toggleBtn.removeClass("arr-d");
+            $toggleBtn.show();
+        }
+    }
+});

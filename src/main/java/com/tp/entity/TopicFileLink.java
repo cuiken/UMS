@@ -14,19 +14,19 @@ import javax.persistence.*;
 @Entity
 @Table(name="f_file_topic")
 public class TopicFileLink extends IdEntity{
-    private ThemeFile themeFile;
+    private ThemeFile theme;
     private Topic topic;
     private Long sort;
 
     @ManyToOne
     @JoinColumn(name="theme_id")
     @OrderBy("sort asc")
-    public ThemeFile getThemeFile() {
-        return themeFile;
+    public ThemeFile getTheme() {
+        return theme;
     }
 
-    public void setThemeFile(ThemeFile themeFile) {
-        this.themeFile = themeFile;
+    public void setTheme(ThemeFile theme) {
+        this.theme = theme;
     }
 
     @ManyToOne

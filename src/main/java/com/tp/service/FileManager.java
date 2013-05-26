@@ -108,6 +108,10 @@ public class FileManager {
 		return storeInfoDao.searchStoreInfoInShelf(page, shelf, sid, language);
 	}
 
+    public Page<FileStoreInfo> searchTopicFile(final Page<FileStoreInfo> page,Long topicId,String language){
+        return storeInfoDao.searchStoreInfoByTopic(page,topicId,language);
+    }
+
 	public ThemeFile saveFiles(List<File> files, ThemeFile fs, FileInfo info) {
 		saveFiles(files, fs);
 		saveFileinfo(fs, info);

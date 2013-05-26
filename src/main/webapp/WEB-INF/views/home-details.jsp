@@ -28,9 +28,9 @@
     }
     .btns .more-btn{
         margin: 0 auto;
-        height: 45px;
+        height: 40px;
         width: 150px;
-        line-height: 45px;
+        line-height: 40px;
         font-weight: bold;
         font-size: 16px;
     }
@@ -40,11 +40,13 @@
 
     .description{
         /*width: 280px;*/
+        position: relative;
         margin: 0 10px;
         padding: 10px;
         border-radius: 4px;
         background-image: -webkit-linear-gradient(top, #f7f7f7,#e5e5e5);
         box-shadow: 0 0 5px #d7d4d4;
+        overflow: hidden;
     }
 
     .description p{
@@ -71,6 +73,7 @@
     }
     .webkit-box{
         display: -webkit-box;
+        -webkit-box-pack:justify;
     }
 
     .webkit-box1{
@@ -106,7 +109,7 @@
 
     .more-btn{
         display: block;
-        margin-left: 7px;
+        /*margin-left: 7px;*/
         /*width: 103px;*/
         height: 32px;
         line-height: 32px;
@@ -117,7 +120,10 @@
         color: #fff;
         width: 40%;
     }
-
+    .more-btn a{
+        color: #fff;
+        display: block;
+    }
     .webkit-box .info{
         -webkit-box-flex:1;
         overflow: hidden;
@@ -128,6 +134,38 @@
 
     .txt {
         font-size: 12px;
+    }
+
+    .preview img{
+        border: 3px solid #fff;
+        box-shadow: 0 0 3px #ccc;
+    }
+    .toggle-btn{
+        display: block;
+        background: url(${ctx}/static/images/2.0/icon-down.png) no-repeat 0 0;
+        width: 23px;
+        height: 28px;
+        position: absolute;
+        right: 10px;
+        bottom: 2px;
+        background-size: 100% 100%;
+    }
+    .soft-info {
+        position: relative;
+        padding: 5px 10px 27px;
+        border-top: 1px solid #fff;
+        text-shadow: 0 1px 0 #fefefe;
+        overflow: hidden;
+    }
+    .soft-info .introduce {
+        margin: 5px 0;
+        line-height: 19px;
+        word-break: break-all;
+        overflow: hidden;
+    }
+    .arr-d{
+        background: url(${ctx}/static/images/2.0/icon-up.png) no-repeat 0 0;
+        background-size: 100% 100%;
     }
 </style>
 <body>
@@ -140,22 +178,21 @@
     <div class="preview">
 
         <img src="http://locker.uichange.com/UMS/files/${info.theme.preWebPath}">
-        <%--<img src="${ctx}/static/images/2.0/preview.jpg">--%>
 
     </div>
     <div class="btns">
         <img  class="offset-r" src="${ctx}/static/images/2.0/offset-left.png">
-        <%--<img  class="down-btn" src="${ctx}/static/images/2.0/down-btn.png">--%>
-        <a style="text-decoration: none;display: block;height: 45px;" href="http://locker.uichange.com/UMS/${info.theme.downloadURL}"><span class="more-btn">免费下载</span></a>
+        <a style="text-decoration: none;display: block;height: 45px;margin: 10px 0;" href="http://locker.uichange.com/UMS/${info.theme.downloadURL}"><span class="more-btn">免费下载</span></a>
         <img  class="offset-r"src="${ctx}/static/images/2.0/offset-right.png">
     </div>
-    <div class="description">
-        <div class="size">
+    <div class="description soft-info">
+        <div class="size introduce J_info">
             <span>大小: ${fn:substring(info.theme.apkSize/1024/1024,0,4)} M</span>
             <span id="down" style="text-align: right"><s:text name="total.down"/>: ${totalDown}</span>
+            <p><s:text name="home.author"/>: ${info.author}</p>
+            <p><s:text name="home.desc"/>: ${info.longDescription}</p>
         </div>
-        <p><s:text name="home.author"/>: ${info.author}</p>
-        <p><s:text name="home.desc"/>: ${fn:substring(info.longDescription,0,30)}...</p>
+        <span class="toggle-btn"></span>
     </div>
 </section>
 <section class="description more">
@@ -204,9 +241,11 @@
         </ul>
     </div>
     <div class="webkit-box" style="margin: 10px auto;">
-        <span class="more-btn">更多主题</span>
-        <span class="more-btn" style="margin-left: 30px;">更多精彩</span>
+        <span class="more-btn"><a href="${ctx}/home!more.action?cid=${info.theme.categories[0].id}&${queryString}">更多主题</a></span>
+        <span class="more-btn"><a href="${ctx}/home!shelf.action?sf=game&${queryString}">更多精彩</a></span>
     </div>
 </section>
+<script src="${ctx}/static/zepto/zepto.min.js"></script>
+<script src="${ctx}/static/zepto/android.js"></script>
 </body>
 </html>

@@ -104,7 +104,7 @@ public class TopicAction extends CRUDActionSupport<Topic>{
         List<TopicFileLink> topicFileLinks=entity.getTopicFileLinkList();
         List<ThemeFile> exist=Lists.newArrayList();
         for(TopicFileLink link:topicFileLinks){
-            exist.add(link.getThemeFile());
+            exist.add(link.getTheme());
         }
         return exist;
     }
@@ -117,7 +117,7 @@ public class TopicAction extends CRUDActionSupport<Topic>{
             ThemeFile themeFile=fileManager.getThemeFile(fid);
             TopicFileLink link=new TopicFileLink();
             link.setTopic(entity);
-            link.setThemeFile(themeFile);
+            link.setTheme(themeFile);
             link.setSort(++i);
             topicService.saveTopicLink(link);
         }

@@ -12,5 +12,11 @@
             <span><s:text name="home.down"></s:text></span>
         </div>
     </div>
+    <s:if test="theme.ishot==1">
+        <span class="icon_n"></span>
+    </s:if><s:elseif test="theme.isnew==1">
+        <span class="icon_n icon_n_new"></span>
+    </s:elseif>
+
     <a href="${ctx}/home!details.action?id=${theme.id}&${queryString}" class="down-area"></a>
 </li>
