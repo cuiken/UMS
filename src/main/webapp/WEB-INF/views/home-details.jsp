@@ -16,9 +16,14 @@
         width: 33.3%;
         background: none;
     }
+    .details a img{
+        width: 26px;
+        height: 26px;
+    }
 
     .preview{
         text-align: center;
+        margin-top: 20px;
     }
     .btns
     {
@@ -142,7 +147,12 @@
 
     .preview img{
         border: 3px solid #fff;
-        box-shadow: 0 0 3px #ccc;
+        box-shadow: 0 0 5px #ccc;
+        width: 128px;
+        height: 214px;
+    }
+    .preview img:last-child{
+        margin-left: 10px;
     }
     .toggle-btn{
         display: block;
@@ -182,6 +192,9 @@
     <div class="preview">
 
         <img src="http://locker.uichange.com/UMS/files/${info.theme.preWebPath}">
+        <s:if test="info.theme.preClientPath!=null">
+        <img src="http://locker.uichange.com/UMS/files/${info.theme.preClientPath}">
+        </s:if>
 
     </div>
     <div class="btns">
@@ -191,7 +204,13 @@
     </div>
     <div class="description soft-info">
         <div class="size introduce J_info">
-            <span>大小: ${fn:substring(info.theme.apkSize/1024/1024,0,4)} M</span>
+            <span>大小:
+                <s:if test="info.theme.apkSize==''">
+                    ${fn:substring(info.theme.apkSize/1024/1024,0,4)}
+                </s:if><s:else>
+                    ${fn:substring(info.theme.uxSize/1024/1024,0,4)}
+                </s:else>
+                M</span>
             <span id="down" style="text-align: right"><s:text name="total.down"/>: ${totalDown}</span>
             <p><s:text name="home.author"/>: ${info.author}</p>
             <p><s:text name="home.desc"/>: ${info.longDescription}</p>
@@ -211,7 +230,13 @@
                     <div class="y-split"></div>
                     <div class="info">
                         <p>${theme.title}</p>
-                        <p class="txt">大小: ${fn:substring(theme.apkSize/1024/1024,0,4)} M</p>
+                        <p class="txt">大小:
+                            <s:if test="theme.apkSize==''">
+                                ${fn:substring(theme.apkSize/1024/1024,0,4)}
+                            </s:if><s:else>
+                                ${fn:substring(theme.uxSize/1024/1024,0,4)}
+                            </s:else>
+                            M</p>
                     </div>
                     <a href="${ctx}/home!details.action?id=${theme.id}&${queryString}" class="down-area"></a>
                 </li>

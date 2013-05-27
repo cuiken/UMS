@@ -72,7 +72,12 @@
 						<input type="text" id="title" name="title" maxlength="30" value="${title}" class="required">
 					</div>	
 				</div>
-				
+                <div class="control-group">
+                    <label for="tags" class="control-label">Tag:</label>
+                    <div class="controls">
+                        <s:checkboxlist list="tagList" id="tags" name="checkedTagIds" listKey="id" listValue="name" theme="custom"></s:checkboxlist>
+                    </div>
+                </div>
 				<div class="control-group">
 					<label for="checkedCategoryIds" class="control-label">分类:<font class="red">*</font></label>
 					<div class="controls">

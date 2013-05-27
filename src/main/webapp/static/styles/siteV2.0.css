@@ -29,7 +29,7 @@ a {
 nav{
     height: 40px;
     line-height: 40px;
-    background-image: -webkit-linear-gradient(top,#ece9e9,#f4f2f2, #fff,#f6f4f4,#dbd7d7);
+    background-image: -webkit-linear-gradient(top,#fff,#eeecec);
     box-shadow:  3px 1px 5px #7c7979;
     font-size: 15px;
     padding:3px 0;
@@ -130,7 +130,7 @@ nav > a.selected{
 }
 
 .content .down-btn img{
-    width: 24px;
+    width: 25px;
     height: 25px;
 }
 
@@ -187,11 +187,11 @@ nav > a.selected{
 .click-state::before {
     content: "";
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 13px;
     margin-right: 5px;
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAaCAMAAABvn+dxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRFd3d3AAAADlogTAAAAAJ0Uk5T/wDltzBKAAAAU0lEQVR42tySAQrAIAwDL///9KRstSe+YEWxXkMwILkVtQ6yNgjXlSpBeCmCBKm/XibdMRV7vDXDihhn0Bh2sOOB0+SSuI8/JY4Ti0YJr7/kEWAAa1MBS66ah5oAAAAASUVORK5CYII=") no-repeat;
-    background: url(../images/2.0/list-more.png) no-repeat;
+    background: url(../images/2.0/list-more.png) no-repeat 0 1px;
     background-size: contain;
 }
 
@@ -203,6 +203,7 @@ nav > a.selected{
     height: 30px;
     display: block;
     margin: 5px 0;
+    background-size: contain;
 }
 /*.ft-tool {*/
     /*position: relative;*/
@@ -353,9 +354,9 @@ nav > a.selected{
     position: absolute;
     display: block;
     width: 45px;
-    height: 25px;
+    height: 20px;
     top: 0;
-    left: 13px;
+    left: 17px;
     margin-left: -14px;
     text-align: center;
     background: url(../images/2.0/hot.png) no-repeat;
@@ -366,4 +367,13 @@ nav > a.selected{
     display: block;
     background: url(../images/2.0/new.png) no-repeat;
     background-size: 100% 100%;
+}
+
+.details a{
+    width: 33.3%;
+    background: none;
+}
+.details a img{
+    width: 26px;
+    height: 26px;
 }

@@ -17,7 +17,7 @@
                 background-size: 100% 100%;
             }
             .nav_second_level a{
-                padding-top: 0;
+                padding-top: 7px;
             }
              .app{
                 background: url(${ctx}/static/images/2.0/app-selected.png) no-repeat;

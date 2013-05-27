@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.tp.entity.*;
 import com.tp.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -16,12 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.tp.dao.HibernateUtils;
-import com.tp.entity.Category;
-import com.tp.entity.ClientFile;
-import com.tp.entity.FileInfo;
-import com.tp.entity.FileType;
-import com.tp.entity.Store;
-import com.tp.entity.ThemeFile;
 import com.tp.service.CategoryManager;
 import com.tp.service.ClientFileManager;
 import com.tp.service.FileManager;
@@ -210,6 +205,10 @@ public class FileUploadAction extends ActionSupport {
 	public void setCheckedStoreIds(List<Long> checkedStoreIds) {
 		this.checkedStoreIds = checkedStoreIds;
 	}
+
+    public List<FileTag> getTagList(){
+        return categoryManager.getAllTags();
+    }
 
 	@Autowired
 	public void setFileManager(FileManager fileManager) {
