@@ -1,10 +1,6 @@
 package com.tp.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
@@ -32,6 +28,8 @@ public class FileStoreInfo extends IdEntity {
 
 	private ThemeFile theme;
 	private Store store;
+
+    private Long offset;
 
 	public String getTitle() {
 		return title;
@@ -110,7 +108,16 @@ public class FileStoreInfo extends IdEntity {
 		this.fiId = fiId;
 	}
 
-	@Override
+    @Transient
+    public Long getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Long offset) {
+        this.offset = offset;
+    }
+
+    @Override
 	public String toString() {
 
 		return ToStringBuilder.reflectionToString(this);

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.tp.dao.log.LogJdbcDao;
 import com.tp.entity.*;
 import com.tp.orm.PageRequest;
@@ -72,6 +73,7 @@ public class HomeAction extends ActionSupport {
 
     private String title;
     private String topicDescription;
+    private Long offset;
 
     @Override
 	public String execute() throws Exception {
@@ -495,10 +497,24 @@ public class HomeAction extends ActionSupport {
 					break;
 				}
 			}
-			setDownloadType(session, cate.getDescription(),info);
+
 			totalDown = countContentDao.queryTotalDownload(info.getTheme().getTitle(),language);
+            catePage.setPageSize(100);
 			catePage = fileManager.searchInfoByCategoryAndStore(catePage, cate.getId(), storeId, language);
 			List<FileStoreInfo> fileinfos = catePage.getResult();
+
+            if(offset!=null){
+                Map<Long,FileStoreInfo> offsetInfo=getOffsetInfo(fileinfos);
+                long size=offsetInfo.size();
+                if(offset<=0L){
+                    offset=1L;
+                }else if(offset>=size){
+                    offset=size;
+                }
+                info=offsetInfo.get(offset);
+                offset=info.getOffset();
+            }
+
 			fileinfos.remove(info);
 			Collections.shuffle(fileinfos);
 			if (fileinfos.size() > 2) {
@@ -507,13 +523,24 @@ public class HomeAction extends ActionSupport {
 			catePage.setResult(fileinfos);
             shuffleGame(storeId,session);
             shuffleApp(storeId,session);
-
+            setDownloadType(session, cate.getDescription(),info);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			return "reload";
 		}
 		return "details";
 	}
+
+    private Map<Long,FileStoreInfo> getOffsetInfo(List<FileStoreInfo> infos){
+        long i=0;
+        Map<Long,FileStoreInfo> offsetMap= Maps.newHashMap();
+        for(FileStoreInfo info:infos){
+            ++i;
+            info.setOffset(i);
+            offsetMap.put(i,info);
+        }
+        return offsetMap;
+    }
 
     private void shuffleGame(Long storeId,HttpSession session) throws Exception{
         newestPage.setPageSize(100);
@@ -780,7 +807,15 @@ public class HomeAction extends ActionSupport {
         return pageNo+1;
     }
 
-	@Autowired
+    public Long getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Long offset) {
+        this.offset = offset;
+    }
+
+    @Autowired
 	public void setCountContentDao(LogCountContentDao countContentDao) {
 		this.countContentDao = countContentDao;
 	}

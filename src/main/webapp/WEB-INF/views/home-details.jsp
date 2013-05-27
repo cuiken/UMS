@@ -38,6 +38,10 @@
         margin: 10px 14px;
     }
 
+    .btns a{
+        display: block;
+    }
+
     .description{
         /*width: 280px;*/
         position: relative;
@@ -181,9 +185,9 @@
 
     </div>
     <div class="btns">
-        <img  class="offset-r" src="${ctx}/static/images/2.0/offset-left.png">
+        <a href="${ctx}/home!details.action?id=${param.id}&offset=${info.offset-1}&${queryString}"><img  class="offset-r" src="${ctx}/static/images/2.0/offset-left.png"></a>
         <a style="text-decoration: none;display: block;height: 45px;margin: 10px 0;" href="http://locker.uichange.com/UMS/${info.theme.downloadURL}"><span class="more-btn">免费下载</span></a>
-        <img  class="offset-r"src="${ctx}/static/images/2.0/offset-right.png">
+        <a href="${ctx}/home!details.action?id=${param.id}&offset=${info.offset+1}&${queryString}"><img  class="offset-r"src="${ctx}/static/images/2.0/offset-right.png"></a>
     </div>
     <div class="description soft-info">
         <div class="size introduce J_info">
