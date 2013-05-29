@@ -8,16 +8,13 @@
 		<title>Fun主题-货架</title>
         <link rel="stylesheet" href="${ctx}/static/styles/siteV2.0.css"/>
         <style>
-            .details a{
-                width: 33.3%;
-                background: none;
-            }
+
             .nav_second_level{
                 background: url(${ctx}/static/images/2.0/game-selected.png) no-repeat;
                 background-size: 100% 100%;
             }
             .nav_second_level a{
-                padding-top: 7px;
+                padding-top: 4px;
             }
              .app{
                 background: url(${ctx}/static/images/2.0/app-selected.png) no-repeat;

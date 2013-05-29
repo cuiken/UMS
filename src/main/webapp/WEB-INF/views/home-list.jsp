@@ -1,6 +1,6 @@
 <li>
     <div class="icon">
-        <img src="http://uichange.com/UMS/files/${theme.iconPath}">
+        <img src="${ctx}/image.action?path=${theme.iconPath}">
     </div>
     <div class="y-split"></div>
     <div class="info">
@@ -8,8 +8,10 @@
         <p class="txt">${shortDescription}</p>
         <div class="y-split right"></div>
         <div class="down-btn">
-            <img src="${ctx}/static/images/2.0/down.png">
+            <a href="#" onclick="goDownload('${theme.id}','${theme.downloadURL}');">
+                <img src="${ctx}/static/images/2.0/down.png">
             <span><s:text name="home.down"></s:text></span>
+            </a>
         </div>
     </div>
     <s:if test="theme.ishot==1">

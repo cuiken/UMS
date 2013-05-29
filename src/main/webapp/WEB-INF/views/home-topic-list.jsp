@@ -7,17 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <title>Fun主题-专题列表</title>
     <link rel="stylesheet" href="${ctx}/static/styles/siteV2.0.css">
-    <style>
-        .details a{
-            width: 33.3%;
-            background: none;
-        }
-    </style>
 </head>
 <body>
 <form action="home!hottest.action" method="get">
     <%@include file="home-details-nav.jsp"%>
-    <div>
+    <div class="topic-top">
         <img src="${ctx}/static/images/2.0/topic.png">
         <img src="${ctx}/static/images/2.0/y-split.png">
         <span>

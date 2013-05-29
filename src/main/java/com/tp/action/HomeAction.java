@@ -56,8 +56,8 @@ public class HomeAction extends ActionSupport {
     private Long pageNo=1L;
 	private String totalDown;
 	private FileStoreInfo info;
-    private FileStoreInfo gameInfo;
-    private FileStoreInfo appInfo;
+    private List<FileStoreInfo> gameInfo;
+    private List<FileStoreInfo> appInfo;
 
 //	private List<CategoryInfo> cateInfos;
 	private Long categoryId;
@@ -100,9 +100,17 @@ public class HomeAction extends ActionSupport {
 
 		newestPage = fileManager.searchStoreInfoInShelf(newestPage, type, storeId, language);
 
+        setEachDownloadURl(newestPage,session);
         bars=json(getADs("store"));
 		return SUCCESS;
 	}
+
+    private void setEachDownloadURl(Page<FileStoreInfo> page,HttpSession session)throws Exception{
+        for(FileStoreInfo info:page.getResult()){
+            String category=info.getTheme().getCategories().get(0).getDescription();
+            setDownloadType(session,category,info);
+        }
+    }
 
     public String topicList() throws Exception{
         HttpSession session = Struts2Utils.getSession();
@@ -117,7 +125,7 @@ public class HomeAction extends ActionSupport {
         title=topic.getName();
         topicDescription=topic.getDescription();
         newestPage=fileManager.searchTopicFile(newestPage,id,language);
-
+        setEachDownloadURl(newestPage,session);
         return "topic-list";
     }
 
@@ -157,6 +165,7 @@ public class HomeAction extends ActionSupport {
         }
 
         newestPage = fileManager.searchStoreInfoInShelf(newestPage, type, storeId, language);
+        setEachDownloadURl(newestPage,session);
         return "cate";
     }
     public String shelfJson() throws Exception{
@@ -194,7 +203,7 @@ public class HomeAction extends ActionSupport {
         buffer.append("[");
         for(Advertisement ad:ads){
             buffer.append("{");
-            buffer.append("\"pic\":\"http://uichange.com/UMS/files/"+ad.getImgLink()+"\"");
+            buffer.append("\"pic\":\"/UMS/image.action?path="+ad.getImgLink()+"\"");
             buffer.append(",");
             buffer.append("\"href\":\""+ad.getLink()+"\"");
             buffer.append(",");
@@ -230,6 +239,7 @@ public class HomeAction extends ActionSupport {
         }
 
         newestPage = fileManager.searchStoreInfoInShelf(newestPage, sf, storeId, language);
+        setEachDownloadURl(newestPage,session);
         return "shelf";
     }
 
@@ -240,6 +250,7 @@ public class HomeAction extends ActionSupport {
         Long storeId = chooseStoreId(session);
         newestPage = fileManager.searchStoreInfoInShelf(newestPage, "diy", storeId, language);
         bars=json(getADs("diy"));
+        setEachDownloadURl(newestPage,session);
         return "diy";
     }
 
@@ -281,7 +292,7 @@ public class HomeAction extends ActionSupport {
         language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
         Long storeId = chooseStoreId(session);
         sorts = logJdbcDao.countThemeFileDownload(language,storeId,pageNo);
-//        bars=json(getADs("store-hot"));
+
         return "hottest";
     }
 
@@ -315,7 +326,7 @@ public class HomeAction extends ActionSupport {
             SpanHtml html=new SpanHtml((Integer) theme.get("f_id"),(Integer)theme.get("isnew")
                     ,(Integer)theme.get("ishot"), (String) theme.get("iconPath"), (String) theme.get("title"),
                     (String) theme.get("shortDescription"), queryString, resourceBundle);
-
+            html.setUrl("file-download.action?inputPath="+theme.get("apk_path")+"&title="+theme.get("title")+"|"+theme.get("title"));
             loopHtml(buffer,html);
         }
         buffer.append("\"}");
@@ -331,6 +342,7 @@ public class HomeAction extends ActionSupport {
         private String queryString;
         private int isnew;
         private int ishot;
+        private String url;
 
         SpanHtml(int id,int isnew,int ishot,String iconPath,String title,String shortDescription,String queryString,ResourceBundle resourceBundle){
             this.id=id;
@@ -341,6 +353,14 @@ public class HomeAction extends ActionSupport {
             this.title=title;
             this.iconPath=iconPath;
             this.shortDescription=shortDescription;
+        }
+
+        String getUrl() {
+            return url;
+        }
+
+        void setUrl(String url) {
+            this.url = url;
         }
 
         int getIsnew() {
@@ -411,15 +431,17 @@ public class HomeAction extends ActionSupport {
     private void loopHtml(StringBuilder buffer,SpanHtml html){
 
         buffer.append("<li>");
-        buffer.append("<div class=\\\"icon\\\"><img src=\\\"http://uichange.com/UMS/files/"+html.getIconPath()+"\\\"></div>");
+        buffer.append("<div class=\\\"icon\\\"><img src=\\\"/UMS/image.action?path="+html.getIconPath()+"\\\"></div>");
         buffer.append(" <div class=\\\"y-split\\\"></div>");
         buffer.append(" <div class=\\\"info\\\">" +
                 "        <p class=\\\"title\\\">"+html.getTitle()+"</p>" +
                 "        <p class=\\\"txt\\\">"+html.getShortDescription()+"</p>" +
                 "        <div class=\\\"y-split right\\\"></div>" +
                 "        <div class=\\\"down-btn\\\">" +
+                "        <a href=\\\"#\\\" onclick=\\\"goDownload('"+html.getId()+"','"+html.getUrl()+"')\\\">"+
                 "            <img src=\\\"static/images/2.0/down.png\\\">" +
                 "            <span>"+html.getResourceBundle().getString("home.down")+"</span>" +
+                "        </a>"+
                 "        </div>" +
                 "    </div>");
         if(html.getIshot()==1){
@@ -497,32 +519,37 @@ public class HomeAction extends ActionSupport {
 					break;
 				}
 			}
-
-			totalDown = countContentDao.queryTotalDownload(info.getTheme().getTitle(),language);
             catePage.setPageSize(100);
-			catePage = fileManager.searchInfoByCategoryAndStore(catePage, cate.getId(), storeId, language);
+            if(cate.getDescription().contains("other")){
+                if(cate.getName().contains("游戏")){
+                    catePage=fileManager.searchStoreInfoInShelf(catePage,Shelf.Type.GAME.getValue(),storeId,language);
+                }else if(cate.getName().contains("推荐")){
+                    catePage=fileManager.searchStoreInfoInShelf(catePage,"app",storeId,language);
+                }
+            }else {
+                catePage = fileManager.searchInfoByCategoryAndStore(catePage, cate.getId(), storeId, language);
+            }
+
 			List<FileStoreInfo> fileinfos = catePage.getResult();
 
             if(offset!=null){
                 Map<Long,FileStoreInfo> offsetInfo=getOffsetInfo(fileinfos);
                 long size=offsetInfo.size();
-                if(offset<=0L){
-                    offset=1L;
-                }else if(offset>=size){
-                    offset=size;
+                if(offset<=0L||offset>size){
+                    offset=0L;
                 }
                 info=offsetInfo.get(offset);
                 offset=info.getOffset();
             }
-
+            totalDown = countContentDao.queryTotalDownload(info.getTheme().getTitle(),language);
 			fileinfos.remove(info);
 			Collections.shuffle(fileinfos);
 			if (fileinfos.size() > 2) {
 				fileinfos = fileinfos.subList(0, 2);
 			}
 			catePage.setResult(fileinfos);
-            shuffleGame(storeId,session);
-            shuffleApp(storeId,session);
+            shuffleGame(info,storeId,session);
+            shuffleApp(info,storeId,session);
             setDownloadType(session, cate.getDescription(),info);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -542,31 +569,48 @@ public class HomeAction extends ActionSupport {
         return offsetMap;
     }
 
-    private void shuffleGame(Long storeId,HttpSession session) throws Exception{
-        newestPage.setPageSize(100);
-
-        newestPage = fileManager.searchStoreInfoInShelf(newestPage, "game", storeId, language);
-
-
-        List<FileStoreInfo> fileInfos=newestPage.getResult();
-//        fileInfos.addAll(hottestPage.getResult());
-        Collections.shuffle(fileInfos);
-        if(fileInfos.size()>0){
-            gameInfo=fileInfos.get(0);
-        }
-//        gameInfo.getTheme().setDownloadURL("browerhttp://" + StringUtils.remove(Constants.getDomain(), "http://") + "/file-download.action?id="+gameInfo.getTheme().getId()+"&inputPath="+gameInfo.getTheme().getApkPath());
-        setDownloadType(session,gameInfo.getTheme().getCategories().get(0).getDescription(),gameInfo);
+    private void shuffleGame(FileStoreInfo current,Long storeId,HttpSession session) throws Exception{
+        gameInfo=shuffle(current,"game",storeId,session);
     }
 
-    private void shuffleApp(Long storeId,HttpSession session) throws Exception{
-        hottestPage.setPageSize(100);
-        hottestPage=fileManager.searchStoreInfoInShelf(newestPage, "app", storeId, language);
-        List<FileStoreInfo> fileInfos=hottestPage.getResult();
-        Collections.shuffle(fileInfos);
-        if(fileInfos.size()>0){
-            appInfo=fileInfos.get(0);
+    private void shuffleApp(FileStoreInfo current,Long storeId,HttpSession session) throws Exception{
+        appInfo=shuffle(current,"app",storeId,session);
+    }
+
+    private List<FileStoreInfo> shuffle(FileStoreInfo currentInfo,String type,Long storeId,HttpSession session) throws Exception{
+        String g=Struts2Utils.getParameter("g");
+        if(StringUtils.isNotBlank(g)){
+            if(g.equals("female")){
+                g="女";
+            }else{
+                g="男";
+            }
         }
-        setDownloadType(session,appInfo.getTheme().getCategories().get(0).getDescription(),appInfo);
+        newestPage.setPageSize(100);
+        newestPage=fileManager.searchStoreInfoInShelf(newestPage, type, storeId, language);
+        List<FileStoreInfo> fileInfos=newestPage.getResult();
+        List<FileStoreInfo> subInfo=Lists.newArrayList();
+        fileInfos.remove(currentInfo);
+        for(FileStoreInfo info :fileInfos){
+            String tags=info.getTheme().getTagNames();
+
+            if(tags!=null&&g!=null&&tags.contains(g)){
+                subInfo.add(info);
+            }
+        }
+
+        if(subInfo.size()==0){
+            subInfo.addAll(fileInfos);
+        }
+        Collections.shuffle(subInfo);
+
+        if(subInfo.size()>1){
+            subInfo= subInfo.subList(0,2);
+            for(FileStoreInfo info:subInfo){
+                setDownloadType(session,info.getTheme().getCategories().get(0).getDescription(),info);
+            }
+        }
+        return subInfo;
     }
 
 	private void setDownloadType(HttpSession session, String category,FileStoreInfo fsi) throws UnsupportedEncodingException {
@@ -651,7 +695,7 @@ public class HomeAction extends ActionSupport {
 		}
 
 		catePage = fileManager.searchInfoByCategoryAndStore(catePage, categoryId, storeId, language);
-
+        setEachDownloadURl(catePage,session);
 		return "more";
 	}
 
@@ -668,8 +712,9 @@ public class HomeAction extends ActionSupport {
         Struts2Utils.renderJson(category2Json(catePage.getResult()));
         return null;
     }
-    private String category2Json(List<FileStoreInfo> infos){
-        String queryString=(String)Struts2Utils.getSession().getAttribute("queryString");
+    private String category2Json(List<FileStoreInfo> infos) throws Exception{
+        HttpSession session=Struts2Utils.getSession();
+        String queryString=(String)session.getAttribute("queryString");
         Locale locale= getLocale();
         ResourceBundle resourceBundle = ResourceBundle.getBundle("localStrings", locale) ;
         StringBuilder buffer=new StringBuilder();
@@ -684,6 +729,8 @@ public class HomeAction extends ActionSupport {
             SpanHtml html=new SpanHtml(info.getTheme().getId().intValue(),info.getTheme().getIsnew().intValue(),info.getTheme().getIshot().intValue(),
                     info.getTheme().getIconPath(),info.getTitle(),
                   info.getShortDescription(),queryString,resourceBundle);
+            setDownloadType(session,info.getTheme().getCategories().get(0).getDescription(),info);
+            html.setUrl(info.getTheme().getDownloadURL());
             loopHtml(buffer,html);
         }
         buffer.append("\"}");
@@ -723,11 +770,11 @@ public class HomeAction extends ActionSupport {
 		return newestPage;
 	}
 
-    public FileStoreInfo getGameInfo() {
+    public List<FileStoreInfo> getGameInfo() {
         return gameInfo;
     }
 
-    public FileStoreInfo getAppInfo() {
+    public List<FileStoreInfo> getAppInfo() {
         return appInfo;
     }
 

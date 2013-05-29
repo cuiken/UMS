@@ -227,7 +227,11 @@ public class HomeInterceptor extends AbstractInterceptor {
 		String op = Struts2Utils.getParameter(PARA_OPERATORS);
 		String ct = Struts2Utils.getParameter(PARA_CLIENT_TYPE);
 		String app=Struts2Utils.getParameter(PARA_APP_NAME);
+        String g=Struts2Utils.getParameter("g");
 		Map<String, Object> requestParams = Maps.newHashMap();
+        if(g!=null){
+            requestParams.put("g",g);
+        }
 		if (fromClient != null) {
 			requestParams.put(PARA_FROM, fromClient);
 		}

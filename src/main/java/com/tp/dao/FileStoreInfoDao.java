@@ -20,7 +20,7 @@ public class FileStoreInfoDao extends HibernateDao<FileStoreInfo, Long> {
 	private static final String Q_BY_ = "select fsi from FileStoreInfo fsi where fsi.store.id=? and fsi.theme.id=? and fsi.language=?";
 
 	private static final String Q_SHELF_THEME_STORE = "select distinct fsi from FileStoreInfo fsi join fsi.theme.shelfFiles s where s.shelf.value=? and s.shelf.store.id=? and fsi.store.id=? and fsi.language=?  order by s.sort";
-	private static final String Q_TOPIC_THEME = "select distinct fsi from FileStoreInfo fsi join fsi.theme.topicFiles  tf where tf.topic.id=? and fsi.language=? order by tf.sort";
+	private static final String Q_TOPIC_THEME = "select distinct fsi from FileStoreInfo fsi join fsi.theme.topicFiles  tf where tf.topic.id=? and fsi.language=? and fsi.store.id=2 order by tf.sort";
     private static final String Q_BY_CATEGORY_AND_STORE = "select distinct fsi from FileStoreInfo fsi join fsi.theme.categories c join fsi.theme.shelfFiles s where c.id=? and fsi.store.id=? and fsi.language=? order by s.sort";
 	//	private static final String Q_BY_STORE_AND_LANGUAGE = "select fsi from FileStoreInfo fsi where fsi.store.id=? and fsi.language=?";
 

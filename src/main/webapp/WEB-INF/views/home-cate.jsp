@@ -7,12 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <title>Fun主题-商店排行</title>
     <link rel="stylesheet" href="${ctx}/static/styles/siteV2.0.css">
-    <style>
-        .details a{
-            width: 33.3%;
-            background: none;
-        }
-    </style>
+
 </head>
 <body>
 <form action="home!hottest.action" method="get">

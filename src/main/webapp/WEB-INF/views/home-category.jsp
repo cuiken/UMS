@@ -6,14 +6,14 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 	<title>商店分类</title>
-    <%--<link rel="stylesheet" href="${ctx}/static/styles/site.min.css" media="screen"/>--%>
+
     <link rel="stylesheet" href="${ctx}/static/styles/siteV2.0.css"/>
   	<style>
-  		.preview img{
+  		.category-preview img{
 			width: 48.5%;
 			margin-left:3px;
 		}
-		.preview{
+		.category-preview{
 			font-size: 0;
             margin-top: 10px;
 		}
@@ -21,17 +21,13 @@
  </head>
  <body>
     <%@include file="home-nav.jsp"%>
-	<div class="preview">
+	<div class="category-preview">
 		<s:iterator value="categories">
 			<a href="${ctx}/home!more.action?cid=${id}&${queryString}">
-				<img alt="${name}" src="http://uichange.com/UMS/files/${icon}">
+				<img alt="${name}" src="${ctx}/image.action?path=${icon}">
 			</a>
 		</s:iterator>
-        <%--<div class="soft_top">--%>
-            <%--<a href="${ctx}/home/shelf/app?${queryString}">--%>
-                <%--<span><s:text name="home.top"/></span>--%>
-            <%--</a>--%>
-        <%--</div>--%>
+
 	</div>
     <script src="${ctx}/static/zepto/zepto.min.js"></script>
      <script>

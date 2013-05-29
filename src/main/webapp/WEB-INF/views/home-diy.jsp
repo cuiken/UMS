@@ -10,27 +10,6 @@
 
     <link rel="stylesheet" href="${ctx}/static/styles/siteV2.0.css"/>
     <style>
-        a:active{
-            background: rgba(0,0,0,0);
-        }
-        .nav_second_level{
-            background: url(${ctx}/static/images/2.0/female-selected.png) no-repeat;
-            background-size: 100% 100%;
-        }
-        .nav_second_level_male{
-            background: url(${ctx}/static/images/2.0/male-selected.png) no-repeat;
-            background-size: 100% 100%;
-        }
-        .female_default{
-            color: #6f6e6e;
-        }
-        .male_selected{
-            color:#1d9efe;
-        }
-
-        .female_selected{
-            color: #ed3d41;
-        }
         .diy-top{
             padding-top: 20px;
             width: 100%;
@@ -67,18 +46,6 @@
 <script src="${ctx}/static/zepto/android.js"></script>
 <script>
     $(document).ready(function(){
-        $("#home").addClass("selected").removeAttr("href");
-
-        var app='${param.g}';
-        if(app ==='' ||app ==='female'){
-            $("#female").addClass("female_selected").removeAttr("href");
-            $("#male").removeClass("male_selected").addClass("female_default");
-            $("#nav_second_level").removeClass("nav_second_level_male");
-        }else if(app === 'male'){
-            $("#male").addClass("male_selected").removeAttr("href");
-            $("#female").removeClass("female_selected").addClass("female_default");
-            $("#nav_second_level").addClass("nav_second_level_male");
-        };
 
         var bars=${bars};
         $.ui.slider('#dk_game_slider', {

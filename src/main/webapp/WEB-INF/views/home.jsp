@@ -7,12 +7,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 		<title>Fun主题-商店首页</title>
-        <%--<link rel="stylesheet" href="${ctx}/static/styles/site.min.css"/>--%>
         <link rel="stylesheet" href="${ctx}/static/styles/siteV2.0.css"/>
         <style>
-            a:active{
-                background: rgba(0,0,0,0);
-            }
+
             .nav_second_level{
                 background: url(${ctx}/static/images/2.0/female-selected.png) no-repeat;
                 background-size: 100% 100%;
@@ -41,8 +38,8 @@
 			<div id="container">
                 <div id="dk_game_slider"></div>
                 <div id="nav_second_level" class="nav_second_level">
-                    <a id="male" href="${ctx}/home.action?g=male&${queryString}">男生专区</a>
-                    <a id="female" href="${ctx}/home.action?g=female&${queryString}">女生专区</a>
+                    <a id="male" href="${ctx}/home.action?g=male">男生专区</a>
+                    <a id="female" href="${ctx}/home.action?g=female">女生专区</a>
                 </div>
                 <div class="content ajax-wrap">
                 <ul class="v-list J_ajaxWrap">
@@ -86,7 +83,9 @@
                     autoPlayTime: 2500,
                     content: bars
                 });
+
 			});
+
 		</script>
 	</body>
 </html>
