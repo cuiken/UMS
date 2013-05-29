@@ -92,12 +92,12 @@
 		<filter-name>indexCacheFilter</filter-name>
 		<filter-class>net.sf.ehcache.constructs.web.filter.SimplePageCachingFilter</filter-class>
 	</filter>
-	
+	<!--
 	<filter-mapping>
 		<filter-name>indexCacheFilter</filter-name>
 		<url-pattern>/home.action</url-pattern>
 	</filter-mapping>
-	
+	-->
 	<filter-mapping>
 		<filter-name>indexCacheFilter</filter-name>
 		<url-pattern>/store/jplocker.action</url-pattern>

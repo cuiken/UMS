@@ -24,6 +24,7 @@
                <div class="J_scrollLoadMore load-btn click-state" data-api="home!jsonMore.action"></div>
                 <a href="#" class="go-top"></a>
             </div>
+            <%@include file="home-banner.jsp"%>
         </div>
     </div>
 
@@ -33,7 +34,8 @@
 <script>
     $(function(){
         $("#hottest").addClass("selected").removeAttr("href");
-
+        $("#banner").attr("href","browerhttp://uichange.com:80/UMS/file-download.action?id=258&inputPath=2a67dbec690d44e0b70cde855e08915a%2F360MobileSafe100934.apk&title=360%E5%8D%AB%E5%A3%AB%7C360%E5%8D%AB%E5%A3%AB&");
+        $("#banner > img").attr("src","${ctx}/static/images/2.0/ad/360.jpg");
     });
 </script>
 </body>

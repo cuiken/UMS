@@ -31,6 +31,7 @@
                         <div class="J_scrollLoadMore load-btn click-state" data-api="home!categoryMore.action?cid=${param.cid}"></div>
                         <a href="#" class="go-top"></a>
                     </div>
+                    <%@include file="home-banner.jsp"%>
                 </div>
 			</div>
 
@@ -39,7 +40,10 @@
 		<script src="${ctx}/static/zepto/android.js"></script>
 
   		<script>
-
-	</script>
+            $(function(){
+                $("#banner").attr("href","http://uichange.com/UMS/home!shelf.action?sf=game&${queryString}");
+                $("#banner > img").attr("src","${ctx}/static/images/2.0/ad/game.jpg");
+            })
+	    </script>
 	</body>
 </html>

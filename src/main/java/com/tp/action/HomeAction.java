@@ -535,8 +535,10 @@ public class HomeAction extends ActionSupport {
             if(offset!=null){
                 Map<Long,FileStoreInfo> offsetInfo=getOffsetInfo(fileinfos);
                 long size=offsetInfo.size();
-                if(offset<=0L||offset>size){
-                    offset=0L;
+                if(offset<=0L){
+                   offset=size;
+                }else if(offset>size){
+                    offset=1L;
                 }
                 info=offsetInfo.get(offset);
                 offset=info.getOffset();
