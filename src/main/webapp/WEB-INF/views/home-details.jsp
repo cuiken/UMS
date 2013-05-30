@@ -60,10 +60,10 @@
                 <s:iterator value="appInfo">
                     <li>
                         <div class="icon">
-                            <img alt="${theme.title}" src="/UMS/image.action?path=${theme.iconPath}">
+                            <img alt="${title}" src="/UMS/image.action?path=${theme.iconPath}">
                         </div>
                         <div class="info">
-                            <p>${theme.title}</p>
+                            <p>${title}</p>
                             <p class="txt">大小: ${fn:substring(theme.apkSize/1024/1024,0,4)} M</p>
                             <p>下载</p>
                         </div>
@@ -74,10 +74,10 @@
             <s:iterator value="catePage.result">
                 <li>
                     <div class="icon">
-                        <img alt="${theme.title}" src="/UMS/image.action?path=${theme.iconPath}">
+                        <img alt="${title}" src="/UMS/image.action?path=${theme.iconPath}">
                     </div>
                     <div class="info">
-                        <p>${theme.title}</p>
+                        <p>${title}</p>
                         <p class="txt">大小:
                             <s:if test="theme.apkSize!=null">
                                 ${fn:substring(theme.apkSize/1024/1024,0,4)}
@@ -98,10 +98,10 @@
                 <s:iterator value="gameInfo">
                     <li>
                         <div class="icon">
-                            <img alt="${theme.title}" src="/UMS/image.action?path=${theme.iconPath}">
+                            <img alt="${title}" src="/UMS/image.action?path=${theme.iconPath}">
                         </div>
                         <div class="info">
-                            <p>${theme.title}</p>
+                            <p>${title}</p>
                             <p class="txt">大小: ${fn:substring(theme.apkSize/1024/1024,0,4)} M</p>
                             <p>下载</p>
                         </div>
@@ -111,10 +111,10 @@
             </s:if><s:else>
             <li>
                 <div class="icon">
-                    <img alt="${appInfo[0].theme.title}" src="/UMS/image.action?path=${appInfo[0].theme.iconPath}">
+                    <img alt="${appInfo[0].title}" src="/UMS/image.action?path=${appInfo[0].theme.iconPath}">
                 </div>
                 <div class="info">
-                    <p>${appInfo[0].theme.title}</p>
+                    <p>${appInfo[0].title}</p>
                     <p class="txt">大小: ${fn:substring(appInfo[0].theme.apkSize/1024/1024,0,4)} M</p>
                     <p>下载</p>
                 </div>
@@ -125,7 +125,7 @@
                     <img src="/UMS/image.action?path=${gameInfo[0].theme.iconPath}">
                 </div>
                 <div class="info">
-                    <p>${gameInfo[0].theme.title}</p>
+                    <p>${gameInfo[0].title}</p>
                     <p class="txt">大小: ${fn:substring(gameInfo[0].theme.apkSize/1024/1024,0,4)} M</p>
                     <p>下载</p>
                 </div>
