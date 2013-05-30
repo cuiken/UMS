@@ -5,12 +5,15 @@
 	<head>
 		<title>文件上传</title>	
 		<link href="${ctx}/static/jquery-validation/1.10.0/validate.css" rel="stylesheet">
+        <link href="${ctx}/static/bootstrap/2.1.1/css/slider.css" rel="stylesheet">
 		<script src="${ctx}/static/jquery-validation/1.10.0/jquery.validate.min.js"></script>
 		<script src="${ctx}/static/jquery-validation/1.10.0/messages_bs_zh.js"></script>
+        <script src="${ctx}/static/bootstrap/2.1.1/js/bootstrap-slider.js"></script>
 		<script>
 			$(document).ready(function(){
 				$("#lock-tab").addClass("active");
                 $("#lock-tab a").append("<i class='icon-remove-circle'></i>");
+                $('#percent').slider("setValue",$("#percent").val());
 				$("#inputForm").validate({
 					rules:{
 						title:{
@@ -78,6 +81,14 @@
                         <s:checkboxlist list="tagList" id="tags" name="checkedTagIds" listKey="id" listValue="name" theme="custom"></s:checkboxlist>
                     </div>
                 </div>
+                <s:if test="dtype==2">
+                    <div class="control-group">
+                        <label for="percent" class="control-label">权重:</label>
+                        <div class="controls">
+                            <input type="text" id="percent" name="percent" data-slider-step="1" data-slider-min="1" data-slider-max="10" data-slider-value="${percent}" value="${percent}" />
+                        </div>
+                    </div>
+                </s:if>
 				<div class="control-group">
 					<label for="checkedCategoryIds" class="control-label">分类:<font class="red">*</font></label>
 					<div class="controls">

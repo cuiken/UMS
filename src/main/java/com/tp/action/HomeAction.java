@@ -107,6 +107,9 @@ public class HomeAction extends ActionSupport {
 
     private void setEachDownloadURl(Page<FileStoreInfo> page,HttpSession session)throws Exception{
         for(FileStoreInfo info:page.getResult()){
+            if(info.getTheme().getTagNames().contains("隐藏")){
+                page.getResult().remove(info);
+            }
             String category=info.getTheme().getCategories().get(0).getDescription();
             setDownloadType(session,category,info);
         }
@@ -604,10 +607,10 @@ public class HomeAction extends ActionSupport {
         if(subInfo.size()==0){
             subInfo.addAll(fileInfos);
         }
-        Collections.shuffle(subInfo);
-
+//        Collections.shuffle(subInfo);
+        subInfo=fileManager.shuffInfos(subInfo);
         if(subInfo.size()>1){
-            subInfo= subInfo.subList(0,2);
+//            subInfo= subInfo.subList(0,2);
             for(FileStoreInfo info:subInfo){
                 setDownloadType(session,info.getTheme().getCategories().get(0).getDescription(),info);
             }

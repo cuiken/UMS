@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+﻿<%@ page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp" %>
 <% response.setHeader("remember", "true"); %>
 <!DOCTYPE HTML>
@@ -77,7 +77,7 @@
                     $("#male").addClass("male_selected").removeAttr("href");
                     $("#female").removeClass("female_selected").addClass("female_default");
                     $("#nav_second_level").addClass("nav_second_level_male");
-                    $("#banner").attr("href","browerhttp://uichange.com/UMS/file-download.action?id=417&inputPath=33987d22ffd14daea8ca5007954745f7%2Fgnm_other_zhen_34_20130520_1252_r1_v1.0.0.4.apk&title=%E6%90%9E%E4%BD%A0%E5%A6%B9%7C%E6%90%9E%E4%BD%A0%E5%A6%B9&");
+                    $("#banner").attr("href","browerhttp://uichange.com/UMS/file-download.action?id=417&inputPath=0ae8887a025e4ff482cc4f804201bedd%2Fgnm_other_zhen_34_20130520_1252_r1_v1.0.0.4.apk&title=%E6%90%9E%E4%BD%A0%E5%A6%B9%7C%E6%90%9E%E4%BD%A0%E5%A6%B9&");
                     $("#banner > img").attr("src","${ctx}/static/images/2.0/ad/gaonimei.jpg");
                 };
 

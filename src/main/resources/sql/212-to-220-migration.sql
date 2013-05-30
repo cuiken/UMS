@@ -1,5 +1,7 @@
 alter table f_file add column (is_hot tinyint not null default 0,is_new tinyint not null default 0);
 
+alter table f_file add column (percent int default 1);
+
 update f_file set dtype='2' where  ux_size is null;
 
 create table f_tag(

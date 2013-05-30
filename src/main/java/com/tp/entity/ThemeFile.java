@@ -56,6 +56,8 @@ public class ThemeFile extends IdEntity {
 
     private Long ishot;
     private Long isnew;
+    private Long percent;
+
     private List<FileTag> fileTags = Lists.newArrayList();
 
     private List<ThemeThirdURL> thirdURLs = Lists.newArrayList();
@@ -139,6 +141,14 @@ public class ThemeFile extends IdEntity {
 
     public void setUxPath(String uxPath) {
         this.uxPath = uxPath;
+    }
+
+    public Long getPercent() {
+        return percent;
+    }
+
+    public void setPercent(Long percent) {
+        this.percent = percent;
     }
 
     public String getDtype() {

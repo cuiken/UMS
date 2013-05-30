@@ -2,6 +2,7 @@ package com.tp.service;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -270,6 +271,41 @@ public class FileManager {
 		}
 		return theme;
 	}
+
+    public List<FileStoreInfo> shuffInfos(List<FileStoreInfo> originInfos){
+        List<FileStoreInfo> correct=Lists.newArrayList();
+        Collections.shuffle(originInfos);
+        FileStoreInfo firstWeight=getWeightInfo(originInfos);
+        correct.add(firstWeight);
+        originInfos.remove(firstWeight);
+        FileStoreInfo secondWeight=getWeightInfo(originInfos);
+        correct.add(secondWeight);
+        return correct;
+    }
+
+    private FileStoreInfo getWeightInfo(List<FileStoreInfo> infos){
+        int random=getRandom(getSum(infos));
+        long weight=0;
+        for(FileStoreInfo info:infos){
+              weight+=info.getTheme().getPercent();
+              if(weight>=random){
+                  return info;
+              }
+        }
+        return null;
+    }
+
+    private int getSum(List<FileStoreInfo> infos){
+        int sum=0;
+        for(FileStoreInfo info:infos){
+            sum+=info.getTheme().getPercent();
+        }
+        return sum;
+    }
+
+    private int getRandom(int seed){
+        return (int)Math.round(Math.random()*seed);
+    }
 
 	@Autowired
 	public void setFileInfoDao(FileInfoDao fileInfoDao) {
