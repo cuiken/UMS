@@ -67,14 +67,6 @@
                     <li id="feedback-tab"><a href="${ctx}/report/feedback.action">用户意见反馈</a></li>
                 </shiro:hasPermission>
 
-
-            <shiro:hasPermission name="navigation:view">
-                <li class="nav-header"><i class="icon-leaf"></i>导航管理</li>
-
-                <li><a href="${ctx}/nav/board.action">导航相关</a></li>
-
-            </shiro:hasPermission>
-
         </ul>
 
 </div>
