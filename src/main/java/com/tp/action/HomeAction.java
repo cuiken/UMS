@@ -16,6 +16,7 @@ import com.tp.entity.*;
 import com.tp.orm.PageRequest;
 import com.tp.orm.PropertyFilter;
 import com.tp.service.*;
+import com.tp.utils.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -126,6 +127,7 @@ public class HomeAction extends ActionSupport {
         if(StringUtils.isBlank(topicId)){
             topicId="";
         }
+        topicId= FileUtils.getIconLevel(topicId);//兼容莫名的参数格式:1#
         Long id=Long.valueOf(topicId);
         Topic topic=topicService.getTopic(id);
         title=topic.getName();

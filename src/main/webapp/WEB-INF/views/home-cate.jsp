@@ -21,7 +21,7 @@
                 </s:iterator>
             </ul>
             <div class="footer">
-                <div class="J_scrollLoadMore load-btn click-state" data-api="home!shelfJson.action?g=${param.g}"></div>
+                <div class="J_scrollLoadMore load-btn click-state" data-api="home!shelfJson.action?g=${param.g}&${queryString}"></div>
                 <a href="#" class="go-top"></a>
             </div>
         </div>

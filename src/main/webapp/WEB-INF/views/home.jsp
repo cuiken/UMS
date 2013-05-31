@@ -49,7 +49,7 @@
                     </s:iterator>
                     </ul>
                     <div class="footer">
-                        <div class="J_scrollLoadMore load-btn click-state" data-api="home!shelfJson.action?g=${param.g}"></div>
+                        <div class="J_scrollLoadMore load-btn click-state" data-api="home!shelfJson.action?${queryString}&g=${param.g}"></div>
                         <a href="#" class="go-top"></a>
                     </div>
                     <%@include file="home-banner.jsp"%>
@@ -71,13 +71,13 @@
                     $("#female").addClass("female_selected").removeAttr("href");
                     $("#male").removeClass("male_selected").addClass("female_default");
                     $("#nav_second_level").removeClass("nav_second_level_male");
-                    $("#banner").attr("href","browerhttp://uichange.com:80/UMS/file-download.action?id=367&inputPath=3bcec3ff1a29453b803522b434a6bb4e%2Fxindoudizhu.apk&title=%E8%B5%A2%E8%AF%9D%E8%B4%B9%E6%96%97%E5%9C%B0%E4%B8%BB%7C%E8%B5%A2%E8%AF%9D%E8%B4%B9%E6%96%97%E5%9C%B0%E4%B8%BB&");
+                    $("#banner").attr("href","browerhttp://uichange.com/UMS/file-download.action?id=367&inputPath=eb6f4d5685dc443899691c36b5a6edb4%2Fxindoudizhu.apk&title=%E8%B5%A2%E8%AF%9D%E8%B4%B9%E6%96%97%E5%9C%B0%E4%B8%BB%7C%E8%B5%A2%E8%AF%9D%E8%B4%B9%E6%96%97%E5%9C%B0%E4%B8%BB&");
                     $("#banner > img").attr("src","${ctx}/static/images/2.0/ad/xindoudizhu.jpg");
                 }else if(app === 'male'){
                     $("#male").addClass("male_selected").removeAttr("href");
                     $("#female").removeClass("female_selected").addClass("female_default");
                     $("#nav_second_level").addClass("nav_second_level_male");
-                    $("#banner").attr("href","browerhttp://uichange.com/UMS/file-download.action?id=417&inputPath=0ae8887a025e4ff482cc4f804201bedd%2Fgnm_other_zhen_34_20130520_1252_r1_v1.0.0.4.apk&title=%E6%90%9E%E4%BD%A0%E5%A6%B9%7C%E6%90%9E%E4%BD%A0%E5%A6%B9&");
+                    $("#banner").attr("href","browerhttp://uichange.com/UMS/file-download.action?id=417&inputPath=985341da1a0a4d539cd580c84a6c2a5e%2Fgnm_other_zhen_34_20130520_1252_r1_v1.0.0.4.apk&title=%E6%90%9E%E4%BD%A0%E5%A6%B9%7C%E6%90%9E%E4%BD%A0%E5%A6%B9&");
                     $("#banner > img").attr("src","${ctx}/static/images/2.0/ad/gaonimei.jpg");
                 };
 
