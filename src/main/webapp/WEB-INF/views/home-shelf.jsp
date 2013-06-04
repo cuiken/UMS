@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+﻿<%@ page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp" %>
 <% response.setHeader("remember", "true"); %>
 <!DOCTYPE HTML>
@@ -19,6 +19,9 @@
              .app{
                 background: url(${ctx}/static/images/2.0/app-selected.png) no-repeat;
                  background-size: 100% 100%;
+            }
+            .v-list .down-area {
+                right: 80px;
             }
         </style>
 	</head>
@@ -41,6 +44,7 @@
                         <div class="J_scrollLoadMore load-btn click-state" data-api="home!shelfJson.action?g=${param.sf}"></div>
                         <a href="#" class="go-top"></a>
                     </div>
+                    <%@include file="home-banner.jsp"%>
                 </div>
 			</div>
 
@@ -58,8 +62,12 @@
 
               if(reg("sf")=='game'||location.href.indexOf("game")>0){
                   $("#nav_second_level").addClass("nav_second_level");
+                  $("#banner").attr("href","http://locker.uichange.com/UMS/log/redirect?url=http://54629.mmb.cn/wap/Column.do?columnId=456471");
+                  $("#banner > img").attr("src","${ctx}/static/images/2.0/ad/qinglvzhuang.jpg");
               }else{
                   $("#nav_second_level").addClass("app");
+                  $("#banner").attr("href","http://locker.uichange.com/UMS/log/redirect?url=http://54626.mmb.cn/wap/Column.do?columnId=92393");
+                  $("#banner > img").attr("src","${ctx}/static/images/2.0/ad/neiyi.jpg");
               }
 			 $("#content1").live("click",function(){ 
 				$(this).css("backgroundColor","#e7e6c8");

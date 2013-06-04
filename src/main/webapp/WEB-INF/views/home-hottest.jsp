@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+﻿<%@ page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp" %>
 <% response.setHeader("remember", "true"); %>
 <!DOCTYPE HTML>
@@ -34,8 +34,8 @@
 <script>
     $(function(){
         $("#hottest").addClass("selected").removeAttr("href");
-        $("#banner").attr("href","browerhttp://uichange.com:80/UMS/file-download.action?id=258&inputPath=2a67dbec690d44e0b70cde855e08915a%2F360MobileSafe100934.apk&title=360%E5%8D%AB%E5%A3%AB%7C360%E5%8D%AB%E5%A3%AB&");
-        $("#banner > img").attr("src","${ctx}/static/images/2.0/ad/360.jpg");
+        $("#banner").attr("href","http://locker.uichange.com/UMS/log/redirect?url=http://54628.mmb.cn/wap/Column.do?columnId=520377");
+        $("#banner > img").attr("src","${ctx}/static/images/2.0/ad/shoushi.jpg");
     });
 </script>
 </body>

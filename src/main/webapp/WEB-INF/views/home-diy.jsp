@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+﻿<%@ page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp" %>
 <% response.setHeader("remember", "true"); %>
 <!DOCTYPE HTML>
@@ -47,8 +47,8 @@
 <script src="${ctx}/static/zepto/android.js"></script>
 <script>
     $(document).ready(function(){
-        $("#banner").attr("href","http://uichange.com/UMS/home!shelf.action?sf=game&${queryString}");
-        $("#banner > img").attr("src","${ctx}/static/images/2.0/ad/game.jpg");
+        $("#banner").attr("href","http://locker.uichange.com/UMS/log/redirect?url=http://54623.mmb.cn/wap/Column.do?columnId=456206");
+        $("#banner > img").attr("src","${ctx}/static/images/2.0/ad/nvzhuang.jpg");
         var bars=${bars};
         $.ui.slider('#dk_game_slider', {
             index: bars.rand(),

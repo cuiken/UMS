@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+﻿<%@ page contentType="text/html;charset=UTF-8"%>
 <%@include file="/common/taglibs.jsp" %>
 
 <!DOCTYPE HTML>
@@ -24,6 +24,7 @@
                 <div class="J_scrollLoadMore load-btn click-state" data-api="home!shelfJson.action?g=${param.g}&${queryString}"></div>
                 <a href="#" class="go-top"></a>
             </div>
+            <%@include file="home-banner.jsp"%>
         </div>
     </div>
 
@@ -31,7 +32,11 @@
 <script src="${ctx}/static/zepto/zepto.min.js"></script>
 <script src="${ctx}/static/zepto/android.js"></script>
 <script>
-
+$(function(){
+        $("#hottest").addClass("selected").removeAttr("href");
+        $("#banner").attr("href","http://locker.uichange.com/UMS/log/redirect?url=http://54629.mmb.cn/wap/Column.do?columnId=456471");
+        $("#banner > img").attr("src","${ctx}/static/images/2.0/ad/qinglvzhuang.jpg");
+    });
 </script>
 </body>
 </html>
