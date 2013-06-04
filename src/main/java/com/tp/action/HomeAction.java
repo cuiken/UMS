@@ -333,7 +333,7 @@ public class HomeAction extends ActionSupport {
         for(Map<String,Object> theme:contents){
             SpanHtml html=new SpanHtml((Integer) theme.get("f_id"),(Integer)theme.get("isnew")
                     ,(Integer)theme.get("ishot"), (String) theme.get("iconPath"), (String) theme.get("title"),
-                    (String) theme.get("shortDescription"), queryString, resourceBundle);
+                    (String) theme.get("shortDescription"), queryString, resourceBundle,(String)theme.get("dtype"));
             html.setUrl("file-download.action?inputPath="+theme.get("apk_path")+"&title="+theme.get("title")+"|"+theme.get("title"));
             loopHtml(buffer,html);
         }
@@ -350,9 +350,10 @@ public class HomeAction extends ActionSupport {
         private String queryString;
         private int isnew;
         private int ishot;
+        private String dtype;
         private String url;
 
-        SpanHtml(int id,int isnew,int ishot,String iconPath,String title,String shortDescription,String queryString,ResourceBundle resourceBundle){
+        SpanHtml(int id,int isnew,int ishot,String iconPath,String title,String shortDescription,String queryString,ResourceBundle resourceBundle,String dtype){
             this.id=id;
             this.ishot=ishot;
             this.isnew=isnew;
@@ -361,6 +362,15 @@ public class HomeAction extends ActionSupport {
             this.title=title;
             this.iconPath=iconPath;
             this.shortDescription=shortDescription;
+            this.dtype=dtype;
+        }
+
+        String getDtype() {
+            return dtype;
+        }
+
+        void setDtype(String dtype) {
+            this.dtype = dtype;
         }
 
         String getUrl() {
@@ -443,15 +453,18 @@ public class HomeAction extends ActionSupport {
         buffer.append(" <div class=\\\"y-split\\\"></div>");
         buffer.append(" <div class=\\\"info\\\">" +
                 "        <p class=\\\"title\\\">"+html.getTitle()+"</p>" +
-                "        <p class=\\\"txt\\\">"+html.getShortDescription()+"</p>" +
-                "        <div class=\\\"y-split right\\\"></div>" +
-                "        <div class=\\\"down-btn\\\">" +
-                "        <a href=\\\"#\\\" onclick=\\\"goDownload('"+html.getId()+"','"+html.getUrl()+"')\\\">"+
-                "            <img src=\\\"static/images/2.0/down.png\\\">" +
-                "            <span>"+html.getResourceBundle().getString("home.down")+"</span>" +
-                "        </a>"+
-                "        </div>" +
-                "    </div>");
+                "        <p class=\\\"txt\\\">"+html.getShortDescription()+"</p>");
+        if(html.getDtype().equals("2")){
+            buffer.append("<div class=\\\"y-split right\\\"></div>" +
+                    "        <div class=\\\"down-btn\\\">" +
+                    "        <a href=\\\"#\\\" onclick=\\\"goDownload('"+html.getId()+"','"+html.getUrl()+"')\\\">"+
+                    "            <img src=\\\"static/images/2.0/down.png\\\">" +
+                    "            <span>"+html.getResourceBundle().getString("home.down")+"</span>" +
+                    "        </a>"+
+                    "        </div>");
+        }
+        buffer.append("</div>");
+
         if(html.getIshot()==1){
             buffer.append("<span class=\\\"icon_n\\\"></span>");
         }else if(html.getIsnew()==1){
@@ -738,7 +751,7 @@ public class HomeAction extends ActionSupport {
         for(FileStoreInfo info:infos){
             SpanHtml html=new SpanHtml(info.getTheme().getId().intValue(),info.getTheme().getIsnew().intValue(),info.getTheme().getIshot().intValue(),
                     info.getTheme().getIconPath(),info.getTitle(),
-                  info.getShortDescription(),queryString,resourceBundle);
+                  info.getShortDescription(),queryString,resourceBundle,info.getTheme().getDtype());
             setDownloadType(session,info.getTheme().getCategories().get(0).getDescription(),info);
             html.setUrl(info.getTheme().getDownloadURL());
             loopHtml(buffer,html);

@@ -29,11 +29,6 @@
         </s:if>
 
     </div>
-    <div class="btns">
-        <a href="${ctx}/home!details.action?id=${param.id}&offset=${info.offset-1}&${queryString}"><img  class="offset-r" src="${ctx}/static/images/2.0/offset-left.png"></a>
-        <a id="download"  href="#"><span class="more-btn"><img src="${ctx}/static/images/2.0/down-split.png"><span style="display: block;margin-left: 15px;">免费下载</span></span></a>
-        <a href="${ctx}/home!details.action?id=${param.id}&offset=${info.offset+1}&${queryString}"><img  class="offset-r"src="${ctx}/static/images/2.0/offset-right.png"></a>
-    </div>
     <div class="description soft-info">
         <div class="size introduce J_info">
             <span>大小:
@@ -50,6 +45,11 @@
             <p><s:text name="home.desc"/>: ${info.longDescription}</p>
         </div>
         <span class="toggle-btn"></span>
+    </div>
+    <div class="btns">
+        <a href="${ctx}/home!details.action?id=${param.id}&offset=${info.offset-1}&${queryString}"><img  class="offset-r" src="${ctx}/static/images/2.0/offset-left.png"></a>
+        <a id="download"  href="#"><span class="more-btn"><img src="${ctx}/static/images/2.0/down-split.png"><span style="display: block;margin-left: 15px;">免费下载</span></span></a>
+        <a href="${ctx}/home!details.action?id=${param.id}&offset=${info.offset+1}&${queryString}"><img  class="offset-r"src="${ctx}/static/images/2.0/offset-right.png"></a>
     </div>
 </section>
 <section class="description more">

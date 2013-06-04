@@ -34,7 +34,7 @@
                 <div class="content ajax-wrap">
                     <ul class="v-list J_ajaxWrap">
                         <s:iterator value="newestPage.result">
-                            <%@include file="home-list.jsp"%>
+                            <%@include file="home-app.jsp"%>
                         </s:iterator>
                     </ul>
                     <div class="footer">
