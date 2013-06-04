@@ -69,7 +69,7 @@
         <div class="control-group">
             <label for="name" class="control-label">广播名称:</label>
             <div class="controls">
-                <input type="text" id="name" name="contentName" maxlength="20" value="${contentName}" class="required"/>
+                <input type="text" id="name" name="contentName" maxlength="50" value="${contentName}" class="required"/>
             </div>
         </div>
         <div class="control-group">
