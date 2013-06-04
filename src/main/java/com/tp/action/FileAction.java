@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-import com.tp.entity.*;
-import com.tp.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -16,13 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Lists;
 import com.tp.dao.HibernateUtils;
+import com.tp.entity.Category;
+import com.tp.entity.FileInfo;
+import com.tp.entity.FileTag;
+import com.tp.entity.Store;
+import com.tp.entity.ThemeFile;
+import com.tp.entity.ThemeThirdURL;
 import com.tp.orm.Page;
-import com.tp.orm.PropertyFilter;
 import com.tp.orm.PageRequest.Sort;
+import com.tp.orm.PropertyFilter;
 import com.tp.service.CategoryManager;
-import com.tp.service.FileInfoObservable;
 import com.tp.service.FileManager;
 import com.tp.utils.Constants;
+import com.tp.utils.DateUtil;
 import com.tp.utils.FileUtils;
 import com.tp.utils.Struts2Utils;
 
@@ -135,9 +139,7 @@ public class FileAction extends CRUDActionSupport<ThemeFile> {
 		fileManager.saveFiles(files, entity);
 		for (FileInfo info : entity.getFileInfo()) {
 			info.setTheme(entity);
-			FileInfoObservable observer = new FileInfoObservable();
-			observer.setFileManager(fileManager);
-			observer.saveFileInfo(info);
+			fileManager.saveFileInfo(info);
 		}
 		saveThirdURL(entity);
 		addActionMessage("保存成功");

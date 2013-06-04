@@ -12,13 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 import com.tp.dao.FileInfoDao;
-import com.tp.dao.FileStoreInfoDao;
 import com.tp.dao.ThemeFileDao;
 import com.tp.dao.ThemeThirdURLDao;
 import com.tp.dto.FileDTO;
 import com.tp.entity.FileInfo;
 import com.tp.entity.FileMarketValue;
-import com.tp.entity.FileStoreInfo;
 import com.tp.entity.Market;
 import com.tp.entity.Shelf;
 import com.tp.entity.ThemeFile;
@@ -35,7 +33,6 @@ public class FileManager {
 
 	private FileInfoDao fileInfoDao;
 	private ThemeFileDao themeFileDao;
-	private FileStoreInfoDao storeInfoDao;
 	private ThemeThirdURLDao thirdDao;
 
 	public void saveThirdURL(ThemeThirdURL entity) {
@@ -44,6 +41,10 @@ public class FileManager {
 
 	public FileInfo getFileInfo(Long id) {
 		return fileInfoDao.get(id);
+	}
+	
+	public FileInfo getFileInfoByFileAndLanguage(Long fid,String language){
+		return fileInfoDao.findByFileIdAndLanguage(fid, language);
 	}
 
 	public List<ThemeFile> getAllThemeFile() {
@@ -54,17 +55,16 @@ public class FileManager {
 		return themeFileDao.searchFileByShelf(page, stype.getValue(), sid);
 	}
 
-	public Page<FileStoreInfo> searchInfoByCategoryAndStore(final Page<FileStoreInfo> page, Long cid, Long sid,
-			String lang) {
-		return storeInfoDao.searchByCategoryAndStore(page, cid, sid, lang);
+	public Page<FileInfo> searchInfoByCategoryAndStore(final Page<FileInfo> page, Long cid, Long sid, String lang) {
+		return fileInfoDao.searchByCategoryAndStore(page, cid, sid, lang);
 	}
 
-	public Page<FileStoreInfo> searchByStore(final Page<FileStoreInfo> page, Long sid, String language) {
-		return storeInfoDao.searchNewestByStore(page, sid, language);
+	public Page<FileInfo> searchByStore(final Page<FileInfo> page, Long sid, String language) {
+		return fileInfoDao.searchNewestByStore(page, sid, language);
 	}
 
-	public Page<FileStoreInfo> searchDiyTemplate(final Page<FileStoreInfo> page, Long sid, String language) {
-		return storeInfoDao.searchDiyTemplate(page, sid, language);
+	public Page<FileInfo> searchDiyTemplate(final Page<FileInfo> page, Long sid, String language) {
+		return fileInfoDao.searchDiyTemplate(page, sid, language);
 	}
 
 	/**
@@ -72,13 +72,13 @@ public class FileManager {
 	 * @param fiId 
 	 * @return
 	 */
-	public boolean isInfoInStore(Long fiId) {
-		return !getStoreInfoByFiId(fiId).isEmpty();
-	}
-
-	public List<FileStoreInfo> getStoreInfoByFiId(Long fiId) {
-		return storeInfoDao.findBy("fiId", fiId);
-	}
+	//	public boolean isInfoInStore(Long fiId) {
+	//		return !getStoreInfoByFiId(fiId).isEmpty();
+	//	}
+	//
+//	public List<FileInfo> getStoreInfoByFiId(Long fiId) {
+//		return fileInfoDao.findBy("fiId", fiId);
+//	}
 
 	public boolean isFileInfoUnique(Long fid, String language) {
 		FileInfo info = fileInfoDao.findByFileIdAndLanguage(fid, language);
@@ -86,10 +86,6 @@ public class FileManager {
 			return true;
 		else
 			return false;
-	}
-
-	public FileStoreInfo getStoreInfoBy(Long sid, Long fid, String language) {
-		return storeInfoDao.get(sid, fid, language);
 	}
 
 	public Page<ThemeFile> searchThemeFile(final Page<ThemeFile> page, final List<PropertyFilter> filters) {
@@ -104,14 +100,13 @@ public class FileManager {
 		return fileInfoDao.findPage(page, filters);
 	}
 
-	public Page<FileStoreInfo> searchStoreInfoInShelf(final Page<FileStoreInfo> page, String shelf, Long sid,
-			String language) {
-		return storeInfoDao.searchStoreInfoInShelf(page, shelf, sid, language);
+	public Page<FileInfo> searchStoreInfoInShelf(final Page<FileInfo> page, String shelf, Long sid, String language) {
+		return fileInfoDao.searchStoreInfoInShelf(page, shelf, sid, language);
 	}
 
-    public Page<FileStoreInfo> searchTopicFile(final Page<FileStoreInfo> page,Long topicId,String language){
-        return storeInfoDao.searchStoreInfoByTopic(page,topicId,language);
-    }
+	public Page<FileInfo> searchTopicFile(final Page<FileInfo> page, Long topicId, String language) {
+		return fileInfoDao.searchStoreInfoByTopic(page, topicId, language);
+	}
 
 	public ThemeFile saveFiles(List<File> files, ThemeFile fs, FileInfo info) {
 		saveFiles(files, fs);
@@ -185,26 +180,6 @@ public class FileManager {
 		return remainFile;
 	}
 
-	public FileStoreInfo getStoreInfo(Long id) {
-		return storeInfoDao.get(id);
-	}
-
-	public void saveStoreInfo(FileStoreInfo entity) {
-		storeInfoDao.save(entity);
-	}
-
-	public void deleteStoreInfo(Long id) {
-		storeInfoDao.delete(id);
-	}
-
-	public void deleteStoreInfoByFmId(Long fid) {
-		storeInfoDao.deleteByFileInfo(fid);
-	}
-
-	public List<FileStoreInfo> getThemeInfoByStore(Long tid, Long sid) {
-		return storeInfoDao.getInfoByTheme(tid, sid);
-	}
-
 	public String jsonString(List<ThemeFile> themeFiles) {
 		List<FileDTO> fileDtos = Lists.newArrayList();
 
@@ -272,40 +247,40 @@ public class FileManager {
 		return theme;
 	}
 
-    public List<FileStoreInfo> shuffInfos(List<FileStoreInfo> originInfos){
-        List<FileStoreInfo> correct=Lists.newArrayList();
-        Collections.shuffle(originInfos);
-        FileStoreInfo firstWeight=getWeightInfo(originInfos);
-        correct.add(firstWeight);
-        originInfos.remove(firstWeight);
-        FileStoreInfo secondWeight=getWeightInfo(originInfos);
-        correct.add(secondWeight);
-        return correct;
-    }
+	public List<FileInfo> shuffInfos(List<FileInfo> originInfos) {
+		List<FileInfo> correct = Lists.newArrayList();
+		Collections.shuffle(originInfos);
+		FileInfo firstWeight = getWeightInfo(originInfos);
+		correct.add(firstWeight);
+		originInfos.remove(firstWeight);
+		FileInfo secondWeight = getWeightInfo(originInfos);
+		correct.add(secondWeight);
+		return correct;
+	}
 
-    private FileStoreInfo getWeightInfo(List<FileStoreInfo> infos){
-        int random=getRandom(getSum(infos));
-        long weight=0;
-        for(FileStoreInfo info:infos){
-              weight+=info.getTheme().getPercent();
-              if(weight>=random){
-                  return info;
-              }
-        }
-        return null;
-    }
+	private FileInfo getWeightInfo(List<FileInfo> infos) {
+		int random = getRandom(getSum(infos));
+		long weight = 0;
+		for (FileInfo info : infos) {
+			weight += info.getTheme().getPercent();
+			if (weight >= random) {
+				return info;
+			}
+		}
+		return null;
+	}
 
-    private int getSum(List<FileStoreInfo> infos){
-        int sum=0;
-        for(FileStoreInfo info:infos){
-            sum+=info.getTheme().getPercent();
-        }
-        return sum;
-    }
+	private int getSum(List<FileInfo> infos) {
+		int sum = 0;
+		for (FileInfo info : infos) {
+			sum += info.getTheme().getPercent();
+		}
+		return sum;
+	}
 
-    private int getRandom(int seed){
-        return (int)Math.round(Math.random()*seed);
-    }
+	private int getRandom(int seed) {
+		return (int) Math.round(Math.random() * seed);
+	}
 
 	@Autowired
 	public void setFileInfoDao(FileInfoDao fileInfoDao) {
@@ -315,11 +290,6 @@ public class FileManager {
 	@Autowired
 	public void setThemeFileDao(ThemeFileDao themeFileDao) {
 		this.themeFileDao = themeFileDao;
-	}
-
-	@Autowired
-	public void setStoreInfoDao(FileStoreInfoDao storeInfoDao) {
-		this.storeInfoDao = storeInfoDao;
 	}
 
 	@Autowired

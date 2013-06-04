@@ -46,7 +46,7 @@
 						
 						<td>
 							<shiro:hasPermission name="store:edit">
-								<a href="store!input.action?copyId=${id}"><i class="icon-copy"></i></a>&nbsp;
+								<!-- <a href="store!input.action?copyId=${id}"><i class="icon-copy"></i></a>&nbsp; -->
 								<a href="store!input.action?id=${id}"><i class="icon-edit"></i></a>&nbsp;
 								<a href="#" onclick="deleteThis(${id})"><i class="icon-trash"></i></a>
 							</shiro:hasPermission>

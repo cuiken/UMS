@@ -63,7 +63,6 @@ public class ThemeFile extends IdEntity {
     private List<ThemeThirdURL> thirdURLs = Lists.newArrayList();
     private List<Category> categories = Lists.newArrayList();
     private List<FileInfo> fileInfo = Lists.newArrayList();
-    private List<FileStoreInfo> infoStore = Lists.newArrayList();
     private List<ShelfFileLink> shelfFiles = Lists.newArrayList();
     private List<TopicFileLink> topicFiles=Lists.newArrayList();
     private List<FileMarketValue> marketValues = Lists.newArrayList();
@@ -267,15 +266,6 @@ public class ThemeFile extends IdEntity {
 
     public void setFileInfo(List<FileInfo> fileInfo) {
         this.fileInfo = fileInfo;
-    }
-
-    @OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)
-    public List<FileStoreInfo> getInfoStore() {
-        return infoStore;
-    }
-
-    public void setInfoStore(List<FileStoreInfo> infoStore) {
-        this.infoStore = infoStore;
     }
 
     @OneToMany(mappedBy = "theme", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE}, orphanRemoval = true)

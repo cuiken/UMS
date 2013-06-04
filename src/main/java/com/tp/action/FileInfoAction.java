@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tp.entity.FileInfo;
 import com.tp.entity.ThemeFile;
-import com.tp.service.FileInfoObservable;
 import com.tp.service.FileManager;
 
 @Namespace("/file")
@@ -24,13 +23,11 @@ public class FileInfoAction extends CRUDActionSupport<FileInfo> {
 	private FileInfo entity;
 
 	private FileManager fileManager;
-	private FileInfoObservable observer = new FileInfoObservable();
 
 	@Override
 	@RequiresPermissions("file:edit")
 	public String delete() throws Exception {
-		observer.setFileManager(fileManager);
-		observer.deleteFileInfo(id);
+		fileManager.deleteFileInfo(id);
 		return RELOAD;
 	}
 
@@ -61,16 +58,11 @@ public class FileInfoAction extends CRUDActionSupport<FileInfo> {
 	@Override
 	@RequiresPermissions("file:edit")
 	public String save() throws Exception {
-		observer.setFileManager(fileManager);
 		ThemeFile file = fileManager.getThemeFile(themeId);
-		if (entity.getId() == null && fileManager.isFileInfoUnique(themeId, entity.getLanguage())) {
+		if (fileManager.isFileInfoUnique(themeId, entity.getLanguage())) {
 			entity.setTheme(file);
-			observer.saveFileInfo(entity);
+			fileManager.saveFileInfo(entity);
 			addActionMessage("保存成功");
-		} else if (entity.getId() != null) {
-			entity.setTheme(file);
-			observer.saveFileInfo(entity);
-			addActionMessage("修改成功");
 		} else {
 			addActionMessage("改语言信息已存在");
 		}

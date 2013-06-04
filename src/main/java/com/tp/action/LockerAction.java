@@ -20,8 +20,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.tp.entity.Category;
 import com.tp.entity.CategoryInfo;
 import com.tp.entity.DownloadType;
+import com.tp.entity.FileInfo;
 import com.tp.entity.FileMarketValue;
-import com.tp.entity.FileStoreInfo;
 import com.tp.entity.Market;
 import com.tp.entity.Shelf;
 import com.tp.entity.Store;
@@ -49,14 +49,14 @@ public class LockerAction extends ActionSupport {
 	private MarketManager marketManager;
 	private LogService logService;
 
-	private Page<FileStoreInfo> hottestPage = new Page<FileStoreInfo>();
-	private Page<FileStoreInfo> recommendPage = new Page<FileStoreInfo>();
+	private Page<FileInfo> hottestPage = new Page<FileInfo>();
+	private Page<FileInfo> recommendPage = new Page<FileInfo>();
 
-	private Page<FileStoreInfo> newestPage = new Page<FileStoreInfo>();
-	private Page<FileStoreInfo> catePage = new Page<FileStoreInfo>();
+	private Page<FileInfo> newestPage = new Page<FileInfo>();
+	private Page<FileInfo> catePage = new Page<FileInfo>();
 
 	private Long id;
-	private FileStoreInfo info;
+	private FileInfo info;
 
 	private List<CategoryInfo> cateInfos;
 	private Long categoryId;
@@ -88,8 +88,9 @@ public class LockerAction extends ActionSupport {
 
 		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST.getValue(), storeId, language);
 		if (visitByBrowse(session)) {
-			recommendPage = fileManager.searchStoreInfoInShelf(recommendPage, Shelf.Type.RECOMMEND.getValue(), storeId, language);
-			List<FileStoreInfo> recommendFiles = recommendPage.getResult();
+			recommendPage = fileManager.searchStoreInfoInShelf(recommendPage, Shelf.Type.RECOMMEND.getValue(), storeId,
+					language);
+			List<FileInfo> recommendFiles = recommendPage.getResult();
 			if (recommendFiles.size() > 0) {
 				Collections.shuffle(recommendFiles);
 				adFile = recommendFiles.get(0).getTheme();
@@ -220,9 +221,9 @@ public class LockerAction extends ActionSupport {
 		String detailsURL = "/store/locker!details.action?st=" + st + "&amp;id=";
 		String xml = fileManager.adXml(adPage.getResult(), domain, detailsURL);
 		Struts2Utils.renderXml(xml);*/
-        HttpServletRequest request=Struts2Utils.getRequest();
-        HttpServletResponse response=Struts2Utils.getResponse();
-        request.getRequestDispatcher("/poll/advertisement!generateXml.action").forward(request,response);
+		HttpServletRequest request = Struts2Utils.getRequest();
+		HttpServletResponse response = Struts2Utils.getResponse();
+		request.getRequestDispatcher("/poll/advertisement!generateXml.action").forward(request, response);
 		return null;
 	}
 
@@ -238,7 +239,7 @@ public class LockerAction extends ActionSupport {
 				session.setAttribute(Constants.QUERY_STRING, "st=" + st);
 			language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
 			Long storeId = chooseStoreId(session);
-			info = fileManager.getStoreInfoBy(storeId, id, language);
+			info = fileManager.getFileInfoByFileAndLanguage(id, language);
 			if (info == null)
 				return "reload";
 			setDownloadType(session);
@@ -252,7 +253,7 @@ public class LockerAction extends ActionSupport {
 			}
 
 			catePage = fileManager.searchInfoByCategoryAndStore(catePage, cate.getId(), storeId, language);
-			List<FileStoreInfo> fileinfos = catePage.getResult();
+			List<FileInfo> fileinfos = catePage.getResult();
 			fileinfos.remove(info);
 			Collections.shuffle(fileinfos);
 			if (fileinfos.size() > 3) {
@@ -356,19 +357,19 @@ public class LockerAction extends ActionSupport {
 		this.logService = logService;
 	}
 
-	public Page<FileStoreInfo> getHottestPage() {
+	public Page<FileInfo> getHottestPage() {
 		return hottestPage;
 	}
 
-	public Page<FileStoreInfo> getNewestPage() {
+	public Page<FileInfo> getNewestPage() {
 		return newestPage;
 	}
 
-	public Page<FileStoreInfo> getRecommendPage() {
+	public Page<FileInfo> getRecommendPage() {
 		return recommendPage;
 	}
 
-	public Page<FileStoreInfo> getCatePage() {
+	public Page<FileInfo> getCatePage() {
 		return catePage;
 	}
 
@@ -376,11 +377,11 @@ public class LockerAction extends ActionSupport {
 		this.id = id;
 	}
 
-	public FileStoreInfo getInfo() {
+	public FileInfo getInfo() {
 		return info;
 	}
 
-	public void setInfo(FileStoreInfo info) {
+	public void setInfo(FileInfo info) {
 		this.info = info;
 	}
 

@@ -93,7 +93,6 @@ public class ShelfAction extends CRUDActionSupport<Shelf> {
 		if (selectId == noSelect)
 			return "";
 		entity = categoryManager.getShelf(selectId);
-		categoryManager.merge(entity, checkedFileIds);
 		shelfFileLinkManager.mergeCheckedIds(entity, checkedFileIds);
 
 		addActionMessage("保存成功");

@@ -19,15 +19,12 @@ public class CategoryManager {
 	private CategoryDao categoryDao;
 	private StoreDao storeDao;
 	private ShelfDao shelfDao;
-	private ShelfFileLinkDao sflDao;
 	private ClientTypeDao clientDao;
-	private FileStoreInfoDao storeInfoDao;
-	private ThemeFileDao themeFileDao;
-    private FileTagDao fileTagDao;
+	private FileTagDao fileTagDao;
 
-    public List<FileTag> getAllTags(){
-        return fileTagDao.getAll();
-    }
+	public List<FileTag> getAllTags() {
+		return fileTagDao.getAll();
+	}
 
 	public Category getCategory(Long id) {
 		return categoryDao.get(id);
@@ -109,119 +106,6 @@ public class CategoryManager {
 		return mapper.toJson(sdto);
 	}
 
-	public void copyAllStore(Long storeId, Store targetStore) {
-		Store originalStore = this.getStore(storeId);
-		List<Shelf> oriShelfs = originalStore.getShelfs();
-		List<ThemeFile> singleThemeFile = Lists.newArrayList();
-		for (Shelf oriShelf : oriShelfs) {
-			Shelf targetShelf = new Shelf();
-			targetShelf.setName(oriShelf.getName());
-			copyShelfFiles(targetShelf, oriShelf.getShelfFile());
-			targetShelf.setDescription(oriShelf.getDescription());
-			targetShelf.setStore(targetStore);
-			targetShelf.setValue(oriShelf.getValue());
-			this.saveShelf(targetShelf);
-			for (ThemeFile file : getThemes(oriShelf.getShelfFile())) { //remove the theme file where in one store on diff shelfs 
-				if (!singleThemeFile.contains(file)) {
-					singleThemeFile.add(file);
-				}
-
-			}
-		}
-		copyFileStoreInfo(singleThemeFile, targetStore);
-	}
-
-	private List<ThemeFile> getThemes(List<ShelfFileLink> links) {
-		List<ThemeFile> themes = Lists.newArrayList();
-		for (ShelfFileLink shelfFile : links) {
-			themes.add(shelfFile.getTheme());
-		}
-		return themes;
-	}
-
-	private void copyShelfFiles(Shelf targetShelf, List<ShelfFileLink> oriLinks) {
-		for (ShelfFileLink ori : oriLinks) {
-			ShelfFileLink targetLink = new ShelfFileLink();
-			targetLink.setTheme(ori.getTheme());
-			targetLink.setShelf(targetShelf);
-			targetLink.setSort(ori.getSort());
-			sflDao.save(targetLink);
-		}
-
-	}
-
-	/**
-	 * 整合FileStoreInfo信息
-	 * 
-	 */
-	public void merge(Shelf shelf, List<Long> ids) {
-		List<ThemeFile> themes = getThemes(shelf.getShelfFile());
-		Store store = shelf.getStore();
-
-		if (ids == null) {
-			for (ThemeFile f : themes) {
-				if (!isFileInStore(store, shelf, f)) {
-					storeInfoDao.deleteByThemeAndStore(f.getId(), store.getId());
-				}
-			}
-
-			return;
-		}
-		List<Long> checkedIds = Lists.newArrayList();
-		List<ThemeFile> checkedThemes = Lists.newArrayList();
-		checkedThemes.addAll(themes);
-		checkedIds.addAll(ids);
-
-		for (ThemeFile file : checkedThemes) {
-			Long id = file.getId();
-			if (!checkedIds.contains(id) && !isFileInStore(store, shelf, file)) {
-				storeInfoDao.deleteByThemeAndStore(id, store.getId());
-			} else {
-				checkedIds.remove(id);
-			}
-		}
-		for (Long id : checkedIds) {
-			ThemeFile file = themeFileDao.get(id);
-			if (!isFileInStore(store, shelf, file)) {
-				copyFileStoreInfo(file, store);
-			}
-
-		}
-	}
-
-	private boolean isFileInStore(Store store, Shelf sh, ThemeFile theme) {
-		List<ThemeFile> allFileInStore = Lists.newArrayList();
-		List<Shelf> shelfs = store.getShelfs();
-		for (Shelf shelf : shelfs) {
-			if (!shelf.equals(sh))
-				allFileInStore.addAll(getThemes(shelf.getShelfFile()));
-		}
-		return allFileInStore.contains(theme);
-	}
-
-	private void copyFileStoreInfo(List<ThemeFile> themes, Store store) {
-		for (ThemeFile theme : themes) {
-			copyFileStoreInfo(theme, store);
-		}
-	}
-
-	private void copyFileStoreInfo(ThemeFile theme, Store store) {
-		List<FileInfo> infos = theme.getFileInfo();
-		for (FileInfo fmi : infos) {
-			FileStoreInfo storeInfo = new FileStoreInfo();
-			storeInfo.setTitle(fmi.getTitle());
-			storeInfo.setShortDescription(fmi.getShortDescription());
-			storeInfo.setLongDescription(fmi.getLongDescription());
-			storeInfo.setAuthor(fmi.getAuthor());
-			storeInfo.setPrice(fmi.getPrice());
-			storeInfo.setLanguage(fmi.getLanguage());
-			storeInfo.setFiId(fmi.getId());
-			storeInfo.setTheme(theme);
-			storeInfo.setStore(store);
-			storeInfoDao.save(storeInfo);
-		}
-	}
-
 	@Transactional(readOnly = true)
 	public boolean isStoreNameUnique(String newStoreName, String oldStoreName) {
 		return storeDao.isPropertyUnique("name", newStoreName, oldStoreName);
@@ -272,27 +156,12 @@ public class CategoryManager {
 	}
 
 	@Autowired
-	public void setStoreInfoDao(FileStoreInfoDao storeInfoDao) {
-		this.storeInfoDao = storeInfoDao;
-	}
-
-	@Autowired
-	public void setThemeFileDao(ThemeFileDao themeFileDao) {
-		this.themeFileDao = themeFileDao;
-	}
-
-	@Autowired
-	public void setSflDao(ShelfFileLinkDao sflDao) {
-		this.sflDao = sflDao;
-	}
-
-	@Autowired
 	public void setClientDao(ClientTypeDao clientDao) {
 		this.clientDao = clientDao;
 	}
 
-    @Autowired
-    public void setFileTagDao(FileTagDao fileTagDao) {
-        this.fileTagDao = fileTagDao;
-    }
+	@Autowired
+	public void setFileTagDao(FileTagDao fileTagDao) {
+		this.fileTagDao = fileTagDao;
+	}
 }

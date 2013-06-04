@@ -20,12 +20,10 @@
 								
 								var html="";
 								$.each(data,function(i,val){		
-									html+="<tr><td>"+val.name+"</td><td>"
+									html+="<tr><td><a href=shelf!manage.action?id="+val.id+">"+val.name+"</a></td><td>"
 									+val.value+"</td><td>"
 									+val.description
-									+"</td><td><a href=shelf!manage.action?id="
-									+val.id+"><i class='icon-cog'></i></a>&nbsp;&nbsp;"+
-                                            "<a href=shelf!input.action?id="+val.id+"><i class='icon-edit'></i></a>&nbsp;&nbsp;" +
+									+"</td><td><a href=shelf!input.action?id="+val.id+"><i class='icon-edit'></i></a>&nbsp;&nbsp;" +
                                             "<a href=shelf!delete.action?id="+val.id+"><i class='icon-trash'></i></a></td></tr>";
 								
 								});

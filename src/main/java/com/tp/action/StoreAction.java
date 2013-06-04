@@ -60,8 +60,7 @@ public class StoreAction extends CRUDActionSupport<Store> {
 	public String save() throws Exception {
 
 		categoryManager.saveStore(entity);
-		if (copyId != null)
-			categoryManager.copyAllStore(copyId, entity);
+		
 		if (id == null && copyId == null)
 			categoryManager.createDefaultShelf(entity);
 		addActionMessage("保存成功");

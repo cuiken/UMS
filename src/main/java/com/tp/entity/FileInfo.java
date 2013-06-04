@@ -5,6 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
@@ -29,6 +30,8 @@ public class FileInfo extends IdEntity {
 	private Long price;
 
 	private ThemeFile theme;
+	
+	private Long offset;
 
 	public String getTitle() {
 		return title;
@@ -87,6 +90,15 @@ public class FileInfo extends IdEntity {
 
 	public void setTheme(ThemeFile theme) {
 		this.theme = theme;
+	}
+	
+	@Transient
+	public Long getOffset() {
+		return offset;
+	}
+	
+	public void setOffset(Long offset) {
+		this.offset = offset;
 	}
 
 	@Override

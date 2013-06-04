@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Lists;
 import com.opensymphony.xwork2.ActionSupport;
-import com.tp.entity.FileStoreInfo;
+import com.tp.entity.FileInfo;
 import com.tp.entity.Market;
 import com.tp.entity.Shelf;
 import com.tp.entity.ThemeFile;
@@ -38,12 +38,12 @@ public class JplockerAction extends ActionSupport {
     private FileManager fileManager;
     private MarketManager marketManager;
 
-    private Page<FileStoreInfo> hottestPage = new Page<FileStoreInfo>();
+    private Page<FileInfo> hottestPage = new Page<FileInfo>();
 
-    private Page<FileStoreInfo> newestPage = new Page<FileStoreInfo>();
-    private Page<FileStoreInfo> catePage = new Page<FileStoreInfo>();
+    private Page<FileInfo> newestPage = new Page<FileInfo>();
+    private Page<FileInfo> catePage = new Page<FileInfo>();
 
-    private FileStoreInfo info;
+    private FileInfo info;
 
     private String language;
 
@@ -74,11 +74,11 @@ public class JplockerAction extends ActionSupport {
         newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.NEWEST.getValue(), storeId, language);
 
         Market market = this.getMarket(session);
-        List<FileStoreInfo> allFile = Lists.newArrayList();
+        List<FileInfo> allFile = Lists.newArrayList();
         allFile.addAll(newestPage.getResult());
         allFile.addAll(hottestPage.getResult());
 
-        for (FileStoreInfo info : allFile) {
+        for (FileInfo info : allFile) {
             fileManager.setDownloadType(market, info.getTheme());
         }
         return SUCCESS;
@@ -145,23 +145,23 @@ public class JplockerAction extends ActionSupport {
         this.marketManager = marketManager;
     }
 
-    public Page<FileStoreInfo> getHottestPage() {
+    public Page<FileInfo> getHottestPage() {
         return hottestPage;
     }
 
-    public Page<FileStoreInfo> getNewestPage() {
+    public Page<FileInfo> getNewestPage() {
         return newestPage;
     }
 
-    public Page<FileStoreInfo> getCatePage() {
+    public Page<FileInfo> getCatePage() {
         return catePage;
     }
 
-    public FileStoreInfo getInfo() {
+    public FileInfo getInfo() {
         return info;
     }
 
-    public void setInfo(FileStoreInfo info) {
+    public void setInfo(FileInfo info) {
         this.info = info;
     }
 

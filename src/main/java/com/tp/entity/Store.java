@@ -13,7 +13,6 @@ import com.tp.utils.ConvertUtils;
 @DiscriminatorValue("Store")
 public class Store extends CateItem {
 
-	private List<FileStoreInfo> fileStoreInfo = Lists.newArrayList();
 	private List<Shelf> shelfs = Lists.newArrayList();
 
 	private List<ThemeFile> themes = Lists.newArrayList();
@@ -25,15 +24,6 @@ public class Store extends CateItem {
 
 	public void setShelfs(List<Shelf> shelfs) {
 		this.shelfs = shelfs;
-	}
-
-	@OneToMany(mappedBy = "store", cascade = { CascadeType.REMOVE }, fetch = FetchType.LAZY, orphanRemoval = true)
-	public List<FileStoreInfo> getFileStoreInfo() {
-		return fileStoreInfo;
-	}
-
-	public void setFileStoreInfo(List<FileStoreInfo> fileStoreInfo) {
-		this.fileStoreInfo = fileStoreInfo;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)
