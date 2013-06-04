@@ -4,6 +4,8 @@ import com.tp.entity.Topic;
 import com.tp.orm.hibernate.HibernateDao;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Administrator
@@ -13,4 +15,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TopicDao extends HibernateDao<Topic,Long> {
+    private static final String QUERY_BY_SORT="select t from Topic t order by t.sort asc";
+
+    @Override
+    public List<Topic> getAll(){
+        return createQuery(QUERY_BY_SORT).list();
+    }
 }
