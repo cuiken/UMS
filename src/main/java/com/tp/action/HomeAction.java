@@ -243,12 +243,6 @@ public class HomeAction extends ActionSupport {
 		return json;
 	}
 
-	@Deprecated
-	public String game() throws Exception {
-
-		return dispatcher("game");
-	}
-
 	public String shelf() throws Exception {
 		HttpSession session = Struts2Utils.getSession();
 
@@ -279,38 +273,6 @@ public class HomeAction extends ActionSupport {
 		bars = json(getADs("diy"));
 		setEachDownloadURl(newestPage, session);
 		return "diy";
-	}
-
-	@Deprecated
-	public String star() throws Exception {
-
-		HttpSession session = Struts2Utils.getSession();
-
-		language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
-		Long storeId = chooseStoreId(session);
-		newestPage = fileManager.searchStoreInfoInShelf(newestPage, Shelf.Type.STAR.getValue(), storeId, language);
-		categoryName = Shelf.Type.STAR.getDisplayName();
-		return "star";
-	}
-
-	private String dispatcher(String type) throws Exception {
-		HttpServletRequest request = Struts2Utils.getRequest();
-		HttpServletResponse response = Struts2Utils.getResponse();
-		request.getRequestDispatcher("/home!shelf.action?sf=" + type).forward(request, response);
-		return null;
-	}
-
-	public String gostar() throws Exception {
-		return "gostar";
-	}
-
-	public String love() throws Exception {
-
-		return "love";
-	}
-
-	public String man() throws Exception {
-		return "man";
 	}
 
 	public String hottest() throws Exception {
