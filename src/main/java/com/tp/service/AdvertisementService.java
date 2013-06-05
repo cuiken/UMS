@@ -1,22 +1,23 @@
 package com.tp.service;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.tp.cache.MemcachedObjectType;
 import com.tp.cache.SpyMemcachedClient;
+import com.tp.dao.AdvertisementDao;
 import com.tp.dto.AdDTO;
+import com.tp.entity.Advertisement;
 import com.tp.mapper.BeanMapper;
 import com.tp.mapper.JaxbMapper;
+import com.tp.orm.Page;
+import com.tp.orm.PageRequest;
+import com.tp.orm.PropertyFilter;
 import com.tp.utils.Constants;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tp.dao.AdvertisementDao;
-import com.tp.entity.Advertisement;
-import com.tp.orm.Page;
-import com.tp.orm.PropertyFilter;
+import java.util.List;
 
 @Component
 @Transactional(readOnly = true)
@@ -62,6 +63,39 @@ public class AdvertisementService {
             dto.setDownloadUrl(Constants.getDomain()+"/image.action?path="+dto.getDownloadUrl());
         }
         return JaxbMapper.toXml(dtos, "ads", AdDTO.class, Constants.ENCODE_UTF_8);
+    }
+
+    public String getJsonByType(String type) {
+        Page<Advertisement> page=new Page<Advertisement>();
+        List<PropertyFilter> filters = Lists.newArrayList();
+        filters.add(new PropertyFilter("EQS_dtype", type));
+        filters.add(new PropertyFilter("EQS_store", Constants.ST_LOCK));
+        filters.add(new PropertyFilter("EQL_status", "1"));
+        if (!page.isOrderBySetted()) {
+            page.setOrderBy("sort");
+            page.setOrderDir(PageRequest.Sort.ASC);
+        }
+        page = searchAdvertisement(page, filters);
+
+        return toJson(page.getResult());
+    }
+
+    private String toJson(List<Advertisement> ads) {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("[");
+        for (Advertisement ad : ads) {
+            buffer.append("{");
+            buffer.append("\"pic\":\"/UMS/image.action?path=" + ad.getImgLink() + "\"");
+            buffer.append(",");
+            buffer.append("\"href\":\"" + ad.getLink() + "\"");
+            buffer.append(",");
+            buffer.append("\"ext\":" + true);
+            buffer.append("}");
+            buffer.append(",");
+        }
+        String json = StringUtils.substringBeforeLast(buffer.toString(), ",");
+        json += "]";
+        return json;
     }
 
     @Autowired

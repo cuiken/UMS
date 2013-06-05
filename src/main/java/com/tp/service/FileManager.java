@@ -1,10 +1,15 @@
 package com.tp.service;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import com.tp.dao.MarketDao;
+import com.tp.dto.HtmlDTO;
+import com.tp.entity.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,17 +20,13 @@ import com.tp.dao.FileInfoDao;
 import com.tp.dao.ThemeFileDao;
 import com.tp.dao.ThemeThirdURLDao;
 import com.tp.dto.FileDTO;
-import com.tp.entity.FileInfo;
-import com.tp.entity.FileMarketValue;
-import com.tp.entity.Market;
-import com.tp.entity.Shelf;
-import com.tp.entity.ThemeFile;
-import com.tp.entity.ThemeThirdURL;
 import com.tp.mapper.JsonMapper;
 import com.tp.orm.Page;
 import com.tp.orm.PropertyFilter;
 import com.tp.utils.Constants;
 import com.tp.utils.FileUtils;
+
+import javax.servlet.http.HttpSession;
 
 @Component
 @Transactional
@@ -34,6 +35,7 @@ public class FileManager {
 	private FileInfoDao fileInfoDao;
 	private ThemeFileDao themeFileDao;
 	private ThemeThirdURLDao thirdDao;
+    private MarketDao marketDao;
 
 	public void saveThirdURL(ThemeThirdURL entity) {
 		thirdDao.save(entity);
@@ -59,25 +61,12 @@ public class FileManager {
 		return fileInfoDao.searchByCategoryAndStore(page, cid, sid, lang);
 	}
 
-	public Page<FileInfo> searchByStore(final Page<FileInfo> page, Long sid, String language) {
-		return fileInfoDao.searchNewestByStore(page, sid, language);
-	}
-
-	public Page<FileInfo> searchDiyTemplate(final Page<FileInfo> page, Long sid, String language) {
-		return fileInfoDao.searchDiyTemplate(page, sid, language);
-	}
-
-	/**
-	 * 判断该条语言信息是否存在于商店中
-	 * @param fiId 
-	 * @return
-	 */
-	//	public boolean isInfoInStore(Long fiId) {
-	//		return !getStoreInfoByFiId(fiId).isEmpty();
-	//	}
-	//
-//	public List<FileInfo> getStoreInfoByFiId(Long fiId) {
-//		return fileInfoDao.findBy("fiId", fiId);
+//	public Page<FileInfo> searchByStore(final Page<FileInfo> page, Long sid, String language) {
+//		return fileInfoDao.searchNewestByStore(page, sid, language);
+//	}
+//
+//	public Page<FileInfo> searchDiyTemplate(final Page<FileInfo> page, Long sid, String language) {
+//		return fileInfoDao.searchDiyTemplate(page, sid, language);
 //	}
 
 	public boolean isFileInfoUnique(Long fid, String language) {
@@ -92,13 +81,13 @@ public class FileManager {
 		return themeFileDao.findPage(page, filters);
 	}
 
-	public Page<ThemeFile> searchThemeFile(final Page<ThemeFile> page, Long categoryId) {
-		return themeFileDao.searchFileByCategory(page, categoryId);
-	}
-
-	public Page<FileInfo> searchFileInfo(final Page<FileInfo> page, final List<PropertyFilter> filters) {
-		return fileInfoDao.findPage(page, filters);
-	}
+//	public Page<ThemeFile> searchThemeFile(final Page<ThemeFile> page, Long categoryId) {
+//		return themeFileDao.searchFileByCategory(page, categoryId);
+//	}
+//
+//	public Page<FileInfo> searchFileInfo(final Page<FileInfo> page, final List<PropertyFilter> filters) {
+//		return fileInfoDao.findPage(page, filters);
+//	}
 
 	public Page<FileInfo> searchStoreInfoInShelf(final Page<FileInfo> page, String shelf, Long sid, String language) {
 		return fileInfoDao.searchStoreInfoInShelf(page, shelf, sid, language);
@@ -229,6 +218,145 @@ public class FileManager {
 		return buffer.toString();
 	}
 
+    public String getHottestJson(List<Map<String, Object>> contents,String queryString){
+        List<HtmlDTO> dtos=Lists.newArrayList();
+        for (Map<String, Object> theme : contents) {
+            HtmlDTO dto=new HtmlDTO();
+            dto.setId((Integer)theme.get("f_id"));
+            dto.setIsnew((Integer) theme.get("isnew"));
+            dto.setIshot((Integer) theme.get("ishot"));
+            dto.setIconPath((String) theme.get("iconPath"));
+            dto.setTitle((String) theme.get("title"));
+            dto.setShortDescription((String) theme.get("shortDescription"));
+            dto.setQueryString(queryString);
+            dto.setResourceBundle(Constants.getResourceBundle());
+            dto.setUrl("file-download.action?inputPath=" + theme.get("apk_path") + "&title=" + theme.get("title")
+                    + "|" + theme.get("title"));
+            dtos.add(dto);
+        }
+        return list2Json(dtos);
+    }
+
+    public String getFileInfoPageJson(List<FileInfo> infos,HttpSession session) throws Exception{
+        String queryString = (String) session.getAttribute("queryString");
+        List<HtmlDTO> dtos=Lists.newArrayList();
+        for (FileInfo info : infos) {
+            ThemeFile theme=info.getTheme();
+            HtmlDTO dto=new HtmlDTO();
+            dto.setId(theme.getId().intValue());
+            dto.setIsnew(theme.getIsnew().intValue());
+            dto.setIshot(theme.getIshot().intValue());
+            dto.setIconPath(theme.getIconPath());
+            dto.setTitle(info.getTitle());
+            dto.setShortDescription(info.getShortDescription());
+            dto.setQueryString(queryString);
+            dto.setResourceBundle(Constants.getResourceBundle());
+            setDownloadType(session, info.getTheme().getCategories().get(0).getDescription(), info);
+            dto.setUrl(theme.getDownloadURL());
+            dtos.add(dto);
+        }
+        return list2Json(dtos);
+    }
+
+    private String list2Json(List<HtmlDTO> dtos){
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("{");
+        if (dtos.size() < 10) {
+            buffer.append("\"code\":900");
+        } else {
+            buffer.append("\"code\":200");
+        }
+        buffer.append(",\"data\":\"");
+        for(HtmlDTO dto : dtos){
+            loopHtml(buffer,dto);
+        }
+        buffer.append("\"}");
+        return buffer.toString();
+    }
+
+    private void loopHtml(StringBuilder buffer, HtmlDTO html) {
+
+        buffer.append("<li>");
+        buffer.append("<div class=\\\"icon\\\"><img src=\\\"/UMS/image.action?path=" + html.getIconPath()
+                + "\\\"></div>");
+        buffer.append(" <div class=\\\"y-split\\\"></div>");
+        buffer.append(" <div class=\\\"info\\\">" + "        <p class=\\\"title\\\">" + html.getTitle() + "</p>"
+                + "        <p class=\\\"txt\\\">" + html.getShortDescription() + "</p>"
+                + "        <div class=\\\"y-split right\\\"></div>" + "        <div class=\\\"down-btn\\\">"
+                + "        <a href=\\\"#\\\" onclick=\\\"goDownload('" + html.getId() + "','" + html.getUrl()
+                + "')\\\">" + "            <img src=\\\"static/images/2.0/down.png\\\">" + "            <span>"
+                + html.getResourceBundle().getString("home.down") + "</span>" + "        </a>" + "        </div>"
+                + "    </div>");
+        if (html.getIshot() == 1) {
+            buffer.append("<span class=\\\"icon_n\\\"></span>");
+        } else if (html.getIsnew() == 1) {
+            buffer.append("<span class=\\\"icon_n icon_n_new\\\"></span>");
+        }
+
+        buffer.append("<a href=\\\"home!details.action?id=" + html.getId() + "&" + html.getQueryString()
+                + "\\\" class=\\\"down-area\\\"></a>");
+        buffer.append("</li>");
+    }
+
+    public void setDownloadType(HttpSession session, String category, FileInfo fsi)
+            throws UnsupportedEncodingException {
+
+        String fromMarket = (String) session.getAttribute(Constants.PARA_FROM_MARKET);
+        String downType = (String) session.getAttribute(Constants.PARA_DOWNLOAD_METHOD);
+        StringBuilder httpBuffer = new StringBuilder();
+        if (category.contains("other")) {
+            httpBuffer.append("browerhttp://" + StringUtils.remove(Constants.getDomain(), "http://") + "/");
+        }
+        httpBuffer.append("file-download.action?id=");
+        httpBuffer.append(fsi.getTheme().getId());
+        httpBuffer.append("&inputPath=");
+        if (fsi.getTheme().getDtype().equals("1")) {
+            httpBuffer.append(URLEncoder.encode(fsi.getTheme().getUxPath(), "utf-8"));
+        } else {
+            httpBuffer.append(URLEncoder.encode(fsi.getTheme().getApkPath(), "utf-8"));
+        }
+
+        httpBuffer.append("&title=" + URLEncoder.encode(fsi.getTitle(), "utf-8"));
+        httpBuffer.append(URLEncoder.encode("|", "utf-8"))
+                .append(URLEncoder.encode(fsi.getTheme().getTitle(), "utf-8"));
+        httpBuffer.append("&");
+        if (downType.equals(DownloadType.MARKET.getValue())) {
+            marketDownload(fromMarket, httpBuffer.toString(), fsi);
+        } else {
+            fsi.getTheme().setDownloadURL(httpBuffer.toString());
+        }
+    }
+
+    private void marketDownload(String fromMarket, String http, FileInfo fsi) {
+        Market market = marketDao.findUniqueBy("pkName", fromMarket);
+        if (market == null || market.getMarketKey().isEmpty()) {
+            fsi.getTheme().setDownloadURL(http);
+        } else {
+            fileInMarket(market, http, fsi);
+        }
+    }
+
+    private void fileInMarket(Market market, String http, FileInfo fsi) {
+        List<ThemeFile> files = market.getThemes();
+        if (files.contains(fsi.getTheme())) {
+            String uri = market.getMarketKey() + fsi.getTheme().getMarketURL();
+            if (market.getPkName().equals(Constants.LENVOL_STORE)) {
+                uri += ("&versioncode=" + fsi.getTheme().getVersion());
+            }
+            if (market.getPkName().equals(Constants.OPPO_NEARME)) {
+                List<FileMarketValue> fvs = fsi.getTheme().getMarketValues();
+                for (FileMarketValue fm : fvs) {
+                    if (market.getId().equals(fm.getMarket().getId())) {
+                        uri += "&" + (fm.getKeyName() + "=" + fm.getKeyValue());
+                    }
+                }
+            }
+            fsi.getTheme().setDownloadURL(uri);
+        } else {
+            fsi.getTheme().setDownloadURL(http);
+        }
+    }
+
 	public ThemeFile setDownloadType(Market market, ThemeFile theme) {
 		List<ThemeFile> files = market.getThemes();
 		if (files.contains(theme)) {
@@ -296,4 +424,9 @@ public class FileManager {
 	public void setThirdDao(ThemeThirdURLDao thirdDao) {
 		this.thirdDao = thirdDao;
 	}
+
+    @Autowired
+    public void setMarketDao(MarketDao marketDao) {
+        this.marketDao = marketDao;
+    }
 }

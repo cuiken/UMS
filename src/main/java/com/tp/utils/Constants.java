@@ -1,6 +1,7 @@
 package com.tp.utils;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -97,6 +98,12 @@ public class Constants {
 		Locale local = ServletActionContext.getContext().getLocale();
 		return local.getLanguage();
 	}
+
+    public static ResourceBundle getResourceBundle(){
+        Locale locale = ServletActionContext.getContext().getLocale();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("localStrings", locale);
+        return resourceBundle;
+    }
 
 	public enum Operator {
 		/**
