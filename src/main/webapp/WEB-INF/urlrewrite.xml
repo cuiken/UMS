@@ -69,7 +69,12 @@
 		<from>^/log/redirect$</from>
 		<to type="forward">/log/log!redirect.action</to>	
 	</rule>
-	
+
+    <rule>
+        <from>^/log/coop</from>
+        <to type="forward">/log/log!coop.action</to>
+    </rule>
+
 	<rule>
 		<from>^/log/bc/([a-zA-Z0-9_]+)$</from>
 		<to type="forward">/log/log!poll.action?do=$1</to>	

@@ -42,6 +42,7 @@ public class LogService {
 	private LogForRedirectDao logRedirectDao;
 	private LogForPollDao logPollDao;
 	private LogCmccResultDao logCmccResultDao;
+    private LogForCoopDao logForCoopDao;
 
 	private LogCountUnzipDao countUnzipDao;
 	private LogCountGetClientDao countGetClientDao;
@@ -54,6 +55,10 @@ public class LogService {
 
 	private SpyMemcachedClient memcachedClient;
 	private JsonMapper mapper = JsonMapper.buildNormalMapper();
+
+    public void saveCoop(LogForCoop entity){
+        logForCoopDao.save(entity);
+    }
 
 	public void saveCmcc(LogForCmcc entity) {
 		logCmccDao.save(entity);
@@ -342,5 +347,10 @@ public class LogService {
     @Autowired
     public void setLogCountClientOriginDao(LogCountClientOriginDao logCountClientOriginDao) {
         this.logCountClientOriginDao = logCountClientOriginDao;
+    }
+
+    @Autowired
+    public void setLogForCoopDao(LogForCoopDao logForCoopDao) {
+        this.logForCoopDao = logForCoopDao;
     }
 }

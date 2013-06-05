@@ -25,6 +25,9 @@ import static com.tp.utils.Constants.PARA_URL;
 import java.net.URLDecoder;
 import java.util.Date;
 
+import com.tp.dto.LogCoopDTO;
+import com.tp.entity.log.*;
+import com.tp.mapper.JsonMapper;
 import com.tp.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -33,11 +36,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tp.dto.LogDTO;
 import com.tp.entity.ClientFile;
-import com.tp.entity.log.LogForContent;
-import com.tp.entity.log.LogForPoll;
-import com.tp.entity.log.LogForRedirect;
-import com.tp.entity.log.LogFromClient;
-import com.tp.entity.log.LogInHome;
 import com.tp.mapper.BeanMapper;
 import com.tp.service.ClientFileManager;
 import com.tp.service.LogService;
@@ -206,6 +204,15 @@ public class LogAction extends ActionSupport {
         redire.setLinkAddr(url);
         logService.saveRedirect(redire);
         Struts2Utils.getResponse().sendRedirect(url);
+        return null;
+    }
+
+    public String coop() throws Exception{
+        String json=Struts2Utils.getParameter("params");
+        JsonMapper mapper=JsonMapper.buildNormalMapper();
+        LogCoopDTO dto=mapper.fromJson(json,LogCoopDTO.class);
+        LogForCoop entity=BeanMapper.map(dto,LogForCoop.class);
+        logService.saveCoop(entity);
         return null;
     }
 

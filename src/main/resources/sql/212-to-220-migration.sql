@@ -37,3 +37,24 @@ create table f_file_topic(
   sort int,
   primary key(id)
 )ENGINE=InnoDB;
+
+create table log_f_coop(
+  id bigint auto_increment,
+  imei varchar(50),
+	imsi varchar(50),
+	resolution varchar(50),
+	operators varchar(35),
+	from_market varchar(255),
+	client_version varchar(35),
+	net_env varchar(35),
+	language varchar(35),
+	price decimal(3,1),
+	app_name varchar(100),
+	do_type varchar(35),
+	charge_type varchar(35),
+	client_type varchar(35),
+	deduct varchar(50),
+	create_time timestamp  not null default 0,
+	index ct_index(create_time),
+	primary key(id)
+);
