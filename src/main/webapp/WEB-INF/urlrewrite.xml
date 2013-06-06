@@ -89,6 +89,11 @@
         <from>^/poll2/xml/([a-zA-Z0-9_]+)$</from>
         <to type="forward">/poll/poll2!generateXml.action</to>
     </rule>
+
+    <rule>
+        <from>^/poll2/coop/xml$</from>
+        <to type="forward">/poll/poll2!coopXml.action</to>
+    </rule>
 	
 	<rule>
 		<from>^/nav/client$</from>

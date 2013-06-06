@@ -17,6 +17,7 @@ public class PollEnhancement extends IdEntity {
     private String dtype;
     private String store;
     private String contentName;
+    private String contentInfo;
     private String fm;
     private String appk;
     private String appUrl;
@@ -56,6 +57,14 @@ public class PollEnhancement extends IdEntity {
 
     public void setContentName(String contentName) {
         this.contentName = contentName;
+    }
+
+    public String getContentInfo() {
+        return contentInfo;
+    }
+
+    public void setContentInfo(String contentInfo) {
+        this.contentInfo = contentInfo;
     }
 
     public String getFm() {

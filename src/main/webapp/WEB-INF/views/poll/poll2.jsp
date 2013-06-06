@@ -17,6 +17,8 @@
                 $(".thumbnail_td img").addClass("ad");
             }else if(dtype==1){
                 $("#pollAD").addClass("active");
+            }else if(dtype==2){
+
             }
         });
 
@@ -27,6 +29,15 @@
         }
         function changeStatus(id){
             window.location="../poll/poll2!change.action?id="+id;
+        }
+
+        function goXml(){
+            var type='${param.filter_EQS_dtype}';
+            if(type=='2'){
+                window.location=" ../poll2/coop/xml";
+            }else{
+                window.location=" ../poll2/xml/lock";
+            }
         }
 
     </script>
@@ -46,13 +57,16 @@
         <li id="pollAD">
             <a href="poll2.action?filter_EQS_dtype=1">抽屉广告</a>
         </li>
+        <li id="pollCoop">
+            <a href="poll2.action?filter_EQS_dtype=2">厂商广告</a>
+        </li>
     </ul>
     <div id="filter" style="margin-bottom:5px;">
          <div class="pull-right">
             <shiro:hasPermission name="store:edit">
                 <a class="icon-plus" href="poll2!input.action?dtype=${param['filter_EQS_dtype']}">新增</a>
             </shiro:hasPermission>
-            &nbsp;<a href="../poll2/xml/lock"><i class="icon-rss"></i></a>
+            &nbsp;<a href="#" onclick="goXml();"><i class="icon-rss"></i></a>
         </div>
     </div>
     <table class="table table-hover">

@@ -25,6 +25,8 @@ public enum MemcachedObjectType {
 
     POLL2_XML("poll2_xml:", 0),
 
+    POLL_COOP("poll_coop:",0),
+
     AD_XML("ad_xml:", 0),
 
     THEME_SORT("theme_sort:", 60 * 60 * 12),

@@ -38,6 +38,7 @@ create table f_file_topic(
   primary key(id)
 )ENGINE=InnoDB;
 
+/*=========================================================================================================*/
 create table log_f_coop(
   id bigint auto_increment,
   imei varchar(50),
@@ -58,3 +59,13 @@ create table log_f_coop(
 	index ct_index(create_time),
 	primary key(id)
 );
+
+alter table f_polling_enhancement add column content_info varchar(100);
+
+create table f_coop(
+  id bigint auto_increment,
+  name varchar(50) not null,
+  value varchar(50) not null,
+  channel varchar(50),
+  primary key(id)
+)ENGINE=InnoDB;

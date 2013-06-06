@@ -95,11 +95,27 @@ public class Poll2Action extends CRUDActionSupport<PollEnhancement> {
         List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
         filters.add(new PropertyFilter("EQS_store", "lock"));
         filters.add(new PropertyFilter("EQL_status", "1"));
+        filters.add(new PropertyFilter("LTS_dtype","2"));
         if (!page.isOrderBySetted()) {
             page.setOrderBy("createTime,dtype");
             page.setOrderDir(PageRequest.Sort.ASC + "," + PageRequest.Sort.ASC);
         }
         String xml = pollEnhancementService.toXml(page, filters);
+        ServletUtils.setEtag(Struts2Utils.getResponse(), "W/\"" + Encodes.encodeMd5(xml) + "\"");
+        Struts2Utils.renderXml(xml);
+        return null;
+    }
+
+    public String coopXml() throws Exception{
+        List<PropertyFilter> filters = PropertyFilter.buildFromHttpRequest(Struts2Utils.getRequest());
+        filters.add(new PropertyFilter("EQS_store", "lock"));
+        filters.add(new PropertyFilter("EQL_status", "1"));
+        filters.add(new PropertyFilter("EQS_dtype","2"));
+        if (!page.isOrderBySetted()) {
+            page.setOrderBy("createTime");
+            page.setOrderDir(PageRequest.Sort.ASC);
+        }
+        String xml = pollEnhancementService.toCoopXml(page, filters);
         ServletUtils.setEtag(Struts2Utils.getResponse(), "W/\"" + Encodes.encodeMd5(xml) + "\"");
         Struts2Utils.renderXml(xml);
         return null;

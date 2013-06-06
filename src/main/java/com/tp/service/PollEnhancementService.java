@@ -6,6 +6,7 @@ import com.tp.dao.PollEnhancementDao;
 import com.tp.dao.log.LogAppUseDao;
 import com.tp.dto.LogAppUseDTO;
 import com.tp.dto.Poll2DTO;
+import com.tp.dto.PollCoopDTO;
 import com.tp.entity.PollEnhancement;
 import com.tp.entity.log.LogAppUse;
 import com.tp.mapper.BeanMapper;
@@ -44,7 +45,11 @@ public class PollEnhancementService {
     }
 
     public void save(PollEnhancement entity) {
-        spyMemcachedClient.delete(MemcachedObjectType.POLL2_XML.getPrefix());
+        if(entity.getDtype().equals("2")){
+            spyMemcachedClient.delete(MemcachedObjectType.POLL_COOP.getPrefix());
+        }else{
+            spyMemcachedClient.delete(MemcachedObjectType.POLL2_XML.getPrefix());
+        }
         pollEnhancementDao.save(entity);
     }
 
@@ -59,6 +64,17 @@ public class PollEnhancementService {
             List<PollEnhancement> polls = searchPage(page, filters).getResult();
             xml = convertListToXml(polls);
             spyMemcachedClient.set(key, MemcachedObjectType.POLL2_XML.getExpiredTime(), xml);
+        }
+        return xml;
+    }
+
+    public String toCoopXml(final Page<PollEnhancement> page, final List<PropertyFilter> filters){
+        String key = MemcachedObjectType.POLL_COOP.getPrefix();
+        String xml = spyMemcachedClient.get(key);
+        if (xml == null) {
+            List<PollEnhancement> polls = searchPage(page, filters).getResult();
+            xml = convertListToCoopXml(polls);
+            spyMemcachedClient.set(key, MemcachedObjectType.POLL_COOP.getExpiredTime(), xml);
         }
         return xml;
     }
@@ -81,6 +97,14 @@ public class PollEnhancementService {
             dto.setImageDownUrl(Constants.getDomain() + "/image.action?path=" + dto.getImageDownUrl());
         }
         return JaxbMapper.toXml(dtos, "service", Poll2DTO.class, Constants.ENCODE_UTF_8);
+    }
+
+    private String convertListToCoopXml(List<PollEnhancement> polls){
+        List<PollCoopDTO> dtos=BeanMapper.mapList(polls,PollCoopDTO.class);
+        for(PollCoopDTO dto:dtos){
+            dto.setImageDownUrl(Constants.getDomain() + "/image.action?path=" + dto.getImageDownUrl());
+        }
+        return JaxbMapper.toXml(dtos, "service", PollCoopDTO.class, Constants.ENCODE_UTF_8);
     }
 
     @Autowired

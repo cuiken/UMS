@@ -25,6 +25,7 @@
                 <li id="category-tab"><a href="${ctx}/category/category.action">解锁类别</a> </li>
                 <li id="ccategory-tab"><a href="${ctx}/category/client-type.action">客户端类别</a></li>
                 <li id="topic-tab"><a href="${ctx}/category/topic.action">专题管理</a></li>
+                <li id="coop-tab"><a href="${ctx}/category/coop.action">厂商管理</a></li>
             </shiro:hasPermission>
 
             <shiro:hasPermission name="store:view">
@@ -68,12 +69,12 @@
                 </shiro:hasPermission>
 
 
-            <shiro:hasPermission name="navigation:view">
-                <li class="nav-header"><i class="icon-leaf"></i>导航管理</li>
+            <%--<shiro:hasPermission name="navigation:view">--%>
+                <%--<li class="nav-header"><i class="icon-leaf"></i>导航管理</li>--%>
 
-                <li><a href="${ctx}/nav/board.action">导航相关</a></li>
+                <%--<li><a href="${ctx}/nav/board.action">导航相关</a></li>--%>
 
-            </shiro:hasPermission>
+            <%--</shiro:hasPermission>--%>
 
         </ul>
 

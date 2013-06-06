@@ -61,8 +61,11 @@
             <div class="controls">
                 <s:if test="dtype==1">
                     <input type="text" value="抽屉广告" disabled="disabled">
-                </s:if><s:else>
+                </s:if><s:elseif test="dtype==0">
                     <input type="text" value="上线通知" disabled="disabled">
+                </s:elseif>
+                <s:else>
+                    <input type="text" value="厂商广告" disabled="disabled">
                 </s:else>
             </div>
         </div>
@@ -70,6 +73,12 @@
             <label for="name" class="control-label">广播名称:</label>
             <div class="controls">
                 <input type="text" id="name" name="contentName" maxlength="50" value="${contentName}" class="required"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="contentInfo" class="control-label">推广语:</label>
+            <div class="controls">
+                <input type="text" id="contentInfo" name="contentInfo" maxlength="100" value="${contentInfo}" class="required"/>
             </div>
         </div>
         <div class="control-group">
