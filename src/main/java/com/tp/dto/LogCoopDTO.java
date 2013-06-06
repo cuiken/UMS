@@ -24,6 +24,8 @@ public class LogCoopDTO {
     private String price;
     private String charge;
     private String deduct;
+    private String model;
+    private String chargeTime;
 
     public String getImei() {
         return imei;
@@ -146,6 +148,22 @@ public class LogCoopDTO {
 
     public void setDeduct(String deduct) {
         this.deduct = deduct;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getChargeTime() {
+        return chargeTime;
+    }
+
+    public void setChargeTime(String chargeTime) {
+        this.chargeTime = chargeTime;
     }
 
     @Override

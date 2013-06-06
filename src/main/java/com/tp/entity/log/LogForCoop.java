@@ -27,8 +27,10 @@ public class LogForCoop extends IdEntity {
     private String fromMarket;
     private String clientVersion;
     private String clientType;
-    private BigDecimal price;
+    private String price;
     private String deduct;
+    private String chargeTime;
+    private String model;
     private String createTime;
 
     public String getImei() {
@@ -127,11 +129,11 @@ public class LogForCoop extends IdEntity {
         this.clientType = clientType;
     }
 
-    public BigDecimal getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -141,6 +143,22 @@ public class LogForCoop extends IdEntity {
 
     public void setDeduct(String deduct) {
         this.deduct = deduct;
+    }
+
+    public String getChargeTime() {
+        return chargeTime;
+    }
+
+    public void setChargeTime(String chargeTime) {
+        this.chargeTime = chargeTime;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public String getCreateTime() {

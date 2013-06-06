@@ -49,7 +49,7 @@ create table log_f_coop(
 	client_version varchar(35),
 	net_env varchar(35),
 	language varchar(35),
-	price decimal(3,1),
+	price varchar(35),
 	app_name varchar(100),
 	do_type varchar(35),
 	charge_type varchar(35),
@@ -69,3 +69,5 @@ create table f_coop(
   channel varchar(50),
   primary key(id)
 )ENGINE=InnoDB;
+
+alter table log_f_coop add column(model varchar(35),charge_time varchar(35));
