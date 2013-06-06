@@ -1,6 +1,6 @@
 <li>
     <div class="icon">
-        <img src="${ctx}/image.action?path=${theme.iconPath}">
+        <img src="${ctx}/files/${theme.iconPath}">
     </div>
     <div class="y-split"></div>
     <div class="info">

@@ -1,6 +1,6 @@
 <li>
     <div class="icon">
-        <img src="/UMS/image.action?path=${iconPath}">
+        <img src="${ctx}/files/${iconPath}">
     </div>
     <div class="y-split"></div>
     <div class="info">

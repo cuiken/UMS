@@ -211,7 +211,7 @@ public class HomeAction extends ActionSupport {
         buffer.append("[");
         for(Advertisement ad:ads){
             buffer.append("{");
-            buffer.append("\"pic\":\"/UMS/image.action?path="+ad.getImgLink()+"\"");
+            buffer.append("\"pic\":\"/UMS/files/"+ad.getImgLink()+"\"");
             buffer.append(",");
             buffer.append("\"href\":\""+ad.getLink()+"\"");
             buffer.append(",");
@@ -449,7 +449,7 @@ public class HomeAction extends ActionSupport {
     private void loopHtml(StringBuilder buffer,SpanHtml html){
 
         buffer.append("<li>");
-        buffer.append("<div class=\\\"icon\\\"><img src=\\\"/UMS/image.action?path="+html.getIconPath()+"\\\"></div>");
+        buffer.append("<div class=\\\"icon\\\"><img src=\\\"/UMS/files/"+html.getIconPath()+"\\\"></div>");
         buffer.append(" <div class=\\\"y-split\\\"></div>");
         buffer.append(" <div class=\\\"info\\\">" +
                 "        <p class=\\\"title\\\">"+html.getTitle()+"</p>" +
