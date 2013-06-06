@@ -18,7 +18,7 @@
             }else if(dtype==1){
                 $("#pollAD").addClass("active");
             }else if(dtype==2){
-
+                $("#pollCoop").addClass("active");
             }
         });
 
