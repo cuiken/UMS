@@ -21,7 +21,7 @@
                     <s:iterator value="topics">
                         <li onclick="location.href='home!topicList.action?topicId=${id}'">
                             <div class="topic-icon topic-preview">
-                                <img alt="${name}" src="${ctx}/image.action?path=${icon}">
+                                <img alt="${name}" src="${ctx}/files/${icon}">
                             </div>
                             <div class="topic-des">
                                 ${description}

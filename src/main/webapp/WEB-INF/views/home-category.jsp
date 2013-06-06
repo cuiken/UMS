@@ -24,7 +24,7 @@
 	<div class="category-preview">
 		<s:iterator value="categories">
 			<a href="${ctx}/home!more.action?cid=${id}&${queryString}">
-				<img alt="${name}" src="${ctx}/image.action?path=${icon}">
+				<img alt="${name}" src="${ctx}/files/${icon}">
 			</a>
 		</s:iterator>
 
