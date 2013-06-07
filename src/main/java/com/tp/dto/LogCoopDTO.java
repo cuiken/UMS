@@ -134,6 +134,7 @@ public class LogCoopDTO {
         this.price = price;
     }
 
+    @Mapping("chargeType")
     public String getCharge() {
         return charge;
     }

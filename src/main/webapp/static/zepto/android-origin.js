@@ -151,16 +151,16 @@ $(document).ready(function(){
         toggleInfo( $info, $toggleBtn, h )
     });
     function toggleInfo( $info, $toggleBtn, h ){
-        if( h > 103 ){
+        if( h > 86 ){
             hide();
-        }else if( h == 103 ){
+        }else if( h == 86 ){
             $info.height( "auto" );
             $toggleBtn.addClass("arr-d");
         }else{
             $toggleBtn.hide();
         }
         function hide(){
-            $info.height("103px");
+            $info.height("86px");
             $toggleBtn.removeClass("arr-d");
             $toggleBtn.show();
         }
