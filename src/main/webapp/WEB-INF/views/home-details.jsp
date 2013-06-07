@@ -15,6 +15,29 @@
     .more{
         padding: 0;
     }
+    footer{
+        background: #e1e1e1;
+        padding-bottom: 10px;
+    }
+    footer a{
+        display: block;
+    }
+    footer img{
+        width: 99%;
+        height: auto;
+    }
+
+    footer li{
+        text-align: center;
+    }
+    footer li span{
+        display: block;
+        margin: 10px 0;
+
+    }
+    footer ul:first-child span{
+        border-right: 1px solid #a1a1a1;
+    }
 </style>
 <body>
 <nav class="details">
@@ -127,6 +150,20 @@
         </span>
     </div>
 </section>
+<footer class="webkit-box">
+    <ul id="ad1" class="webkit-box1">
+        <li>
+            <a href="#"><img src="${ctx}/static/images/2.0/ad/360.jpg"></a>
+        </li>
+        <li>
+            <span>test</span>
+        </li>
+    </ul>
+    <ul id="ad2" class="webkit-box1">
+        <li><a href="#"><img src="${ctx}/static/images/2.0/ad/360.jpg"></a></li>
+        <li><span>test</span></li>
+    </ul>
+</footer>
 <script src="${ctx}/static/zepto/zepto.min.js"></script>
 <script src="${ctx}/static/zepto/android.js"></script>
 <script>
