@@ -34,18 +34,12 @@ public class HomeAction extends ActionSupport {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	private CategoryManager categoryManager;
-	//	private CategoryInfoManager categoryInfoManager;
 	private FileManager fileManager;
-//	private MarketManager marketManager;
 	private AdvertisementService advertisementService;
 	private TopicService topicService;
 
 	private LogCountContentDao countContentDao;
 	private LogJdbcDao logJdbcDao;
-
-//	private Page<FileInfo> hottestPage = new Page<FileInfo>(10);
-//	private Page<Advertisement> advertisementPage = new Page<Advertisement>();
-
 	private Page<FileInfo> newestPage = new Page<FileInfo>(10);
 	private Page<FileInfo> catePage = new Page<FileInfo>(10);
 
@@ -56,7 +50,6 @@ public class HomeAction extends ActionSupport {
 	private List<FileInfo> gameInfo;
 	private List<FileInfo> appInfo;
 
-	//	private List<CategoryInfo> cateInfos;
 	private Long categoryId;
 
 	private String categoryName;
@@ -92,7 +85,6 @@ public class HomeAction extends ActionSupport {
 
 		newestPage = fileManager.searchStoreInfoInShelf(newestPage, type, storeId, language);
 
-		setEachDownloadURl(newestPage, session);
         bars=advertisementService.getJsonByType("store");
 		return SUCCESS;
 	}
@@ -124,7 +116,6 @@ public class HomeAction extends ActionSupport {
 		title = topic.getName();
 		topicDescription = topic.getDescription();
 		newestPage = fileManager.searchTopicFile(newestPage, id, language);
-		setEachDownloadURl(newestPage, session);
 		return "topic-list";
 	}
 
@@ -164,7 +155,7 @@ public class HomeAction extends ActionSupport {
 		}
 
 		newestPage = fileManager.searchStoreInfoInShelf(newestPage, type, storeId, language);
-		setEachDownloadURl(newestPage, session);
+
 		return "cate";
 	}
 
@@ -213,7 +204,7 @@ public class HomeAction extends ActionSupport {
 		Long storeId = chooseStoreId(session);
 		newestPage = fileManager.searchStoreInfoInShelf(newestPage, "diy", storeId, language);
         bars=advertisementService.getJsonByType("diy");
-		setEachDownloadURl(newestPage, session);
+
 		return "diy";
 	}
 
@@ -269,7 +260,6 @@ public class HomeAction extends ActionSupport {
 			session.setAttribute(Constants.ID_LOCK, storeId);
 			return storeId;
 		}
-
 	}
 
 	/**
@@ -389,10 +379,10 @@ public class HomeAction extends ActionSupport {
 		if (subInfo.size() == 0) {
 			subInfo.addAll(fileInfos);
 		}
-		//        Collections.shuffle(subInfo);
+
 		subInfo = fileManager.shuffInfos(subInfo);
 		if (subInfo.size() > 1) {
-			//            subInfo= subInfo.subList(0,2);
+
 			for (FileInfo info : subInfo) {
 				fileManager.setDownloadType(session, info.getTheme().getCategories().get(0).getDescription(), info);
 			}
@@ -409,9 +399,6 @@ public class HomeAction extends ActionSupport {
 		Long storeId = chooseStoreId(session);
 		try {
 			categoryId = Long.valueOf(Struts2Utils.getParameter("cid"));
-
-			//		cateInfos = categoryInfoManager.getInfosBylanguage(language);
-
 			categoryName = categoryManager.getCategory(categoryId).getName();
 		} catch (Exception e) {
 			String userAgent = request.getHeader("User-Agent");
@@ -424,14 +411,13 @@ public class HomeAction extends ActionSupport {
 		}
 
 		catePage = fileManager.searchInfoByCategoryAndStore(catePage, categoryId, storeId, language);
-		setEachDownloadURl(catePage, session);
+
 		return "more";
 	}
 
 	public String categoryMore() throws Exception {
 
 		HttpSession session = Struts2Utils.getSession();
-		//		HttpServletRequest request = Struts2Utils.getRequest();
 		language = (String) session.getAttribute(Constants.PARA_LANGUAGE);
 		categoryId = Long.valueOf(Struts2Utils.getParameter("cid"));
 		Long storeId = chooseStoreId(session);
@@ -457,21 +443,6 @@ public class HomeAction extends ActionSupport {
 	public void setCategoryManager(CategoryManager categoryManager) {
 		this.categoryManager = categoryManager;
 	}
-
-//	@Autowired
-//	public void setMarketManager(MarketManager marketManager) {
-//		this.marketManager = marketManager;
-//	}
-
-	//
-	//	@Autowired
-	//	public void setCategoryInfoManager(CategoryInfoManager categoryInfoManager) {
-	//		this.categoryInfoManager = categoryInfoManager;
-	//	}
-
-//	public Page<FileInfo> getHottestPage() {
-//		return hottestPage;
-//	}
 
 	public Page<FileInfo> getNewestPage() {
 		return newestPage;
@@ -501,17 +472,9 @@ public class HomeAction extends ActionSupport {
 		this.info = info;
 	}
 
-//	public Page<Advertisement> getAdvertisementPage() {
-//		return advertisementPage;
-//	}
-
 	public String getTopicDescription() {
 		return topicDescription;
 	}
-
-	//	public List<CategoryInfo> getCateInfos() {
-	//		return cateInfos;
-	//	}
 
 	public String getTitle() {
 		return title;
