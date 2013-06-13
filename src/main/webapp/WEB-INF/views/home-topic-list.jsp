@@ -27,7 +27,7 @@
                 </s:iterator>
             </ul>
             <div class="footer">
-                <div class="J_scrollLoadMore load-btn click-state" data-api="home!topicListJson.action?topicId=${param.topicId}"></div>
+                <div class="J_scrollLoadMore load-btn click-state" data-api="home!topicList.action?topicId=${param.topicId}"></div>
                 <a href="#" class="go-top"></a>
             </div>
             <%@include file="home-banner.jsp"%>
