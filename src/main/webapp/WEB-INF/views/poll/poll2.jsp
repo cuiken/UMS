@@ -82,9 +82,9 @@
                     <s:if test="dtype==0">
                         N/n
                     </s:if>
-                    <s:elseif test="dtype==1">
+                    <s:else>
                         ${percent}
-                    </s:elseif>
+                    </s:else>
                 </td>
                 <td>${createTime}</td>
                 <td><shiro:hasPermission name="store:edit">
