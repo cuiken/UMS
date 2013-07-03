@@ -16,7 +16,7 @@
 		<quartz.version>2.1.6</quartz.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
 		<ehcache.version>2.5.2</ehcache.version>
-		<spymemcached.version>2.8.9</spymemcached.version>
+		<spymemcached.version>2.9.0</spymemcached.version>
 		<hibernate-validator.version>4.2.0.Final</hibernate-validator.version>
 		<jackson.version>2.1.0</jackson.version>
 		<slf4j.version>1.7.5</slf4j.version>
@@ -38,6 +38,13 @@
 	</properties>
 	<!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
 	<repositories>
+	<!-- 
+		<repository>
+			<id>nexus</id>
+			<name>Team Nexus Repository</name>
+			<url>http://localhost:8081/nexus/content/groups/public</url> 
+		</repository>
+		
 		<repository>
 			<id>central</id>
 			<name>Central Repository</name>
@@ -46,7 +53,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
+		
 		<repository>
 			<id>spy</id>
 			<name>Spy Repository</name>
@@ -55,6 +62,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		 -->
 	</repositories>
 	<build>
 		<plugins>
@@ -447,7 +455,7 @@
 
 		<!-- memcached -->
 		<dependency>
-			<groupId>spy</groupId>
+			<groupId>net.spy</groupId>
 			<artifactId>spymemcached</artifactId>
 			<version>${spymemcached.version}</version>
 		</dependency>

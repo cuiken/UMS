@@ -83,12 +83,12 @@ public class LogForCmccDao extends HibernateDao<LogForCmcc, Long> implements ICa
 			tx.rollback();
 			throw ex;
 		} finally {
-			if (session != null) {
-				try {
-					session.close();
-				} catch (Exception ex2) {
-				}
+
+			try {
+				session.close();
+			} catch (Exception ex2) {
 			}
+
 		}
 
 	}

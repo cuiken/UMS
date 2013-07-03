@@ -13,7 +13,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.tp.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
@@ -33,6 +32,7 @@ import com.tp.mapper.JsonMapper;
 import com.tp.service.LogService;
 import com.tp.utils.Constants;
 import com.tp.utils.Constants.Language;
+import com.tp.utils.DateUtil;
 import com.tp.utils.ServletUtils;
 import com.tp.utils.Struts2Utils;
 
@@ -53,7 +53,7 @@ public class HomeInterceptor extends AbstractInterceptor {
 		String method = invocation.getProxy().getMethod();
 		Map<String, Object> paramMap = invocation.getInvocationContext().getParameters();
 
-		if (action instanceof HomeAction || action instanceof LockerAction || action instanceof JplockerAction) {
+		if ((action instanceof HomeAction) || (action instanceof LockerAction) || (action instanceof JplockerAction)) {
 			saveLog(method, paramMap);
 			setParamInSession(method);
 			String language = (String) Struts2Utils.getSessionAttribute(Constants.PARA_LANGUAGE);
@@ -96,8 +96,8 @@ public class HomeInterceptor extends AbstractInterceptor {
 	private boolean isFirstDownload() {
 		Cookie[] cookies = Struts2Utils.getRequest().getCookies();
 		if (cookies != null) {
-			for (int i = 0; i < cookies.length; i++) {
-				if (cookies[i].getName().equals("downloadFlag")) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("downloadFlag")) {
 					return false;
 				}
 
@@ -120,7 +120,7 @@ public class HomeInterceptor extends AbstractInterceptor {
 		if (requestMethod.equals(METHOD_AD_XML)) {
 			return;
 		}
-		if (requestMethod.equals("execute") && requestParam.get("f") == null) {
+		if (requestMethod.equals("execute") && (requestParam.get("f") == null)) {
 			return;
 		}
 
@@ -131,7 +131,7 @@ public class HomeInterceptor extends AbstractInterceptor {
 		for (Entry<String, Object> e : keys) {
 			String k = e.getKey();
 			String v = ((String[]) e.getValue())[0];
-			if (v != null && !v.isEmpty()) {
+			if ((v != null) && !v.isEmpty()) {
 				v = new String(v.getBytes("iso-8859-1"), Constants.ENCODE_UTF_8);
 			}
 			if (k.equals(PARA_IMEI)) {
@@ -164,11 +164,12 @@ public class HomeInterceptor extends AbstractInterceptor {
 					+ userAgent);
 			return;
 		}
-		String appName=Struts2Utils.getParameter(PARA_APP_NAME);
-		if(appName==null)		
-			appName="";
-		else
-			appName=new String(appName.getBytes("iso-8859-1"), Constants.ENCODE_UTF_8);
+		String appName = Struts2Utils.getParameter(PARA_APP_NAME);
+		if (appName == null) {
+			appName = "";
+		} else {
+			appName = new String(appName.getBytes("iso-8859-1"), Constants.ENCODE_UTF_8);
+		}
 		log.setAppName(appName);
 		logService.saveLogInHome(log);
 
@@ -213,7 +214,7 @@ public class HomeInterceptor extends AbstractInterceptor {
 		return StringUtils.substring(str, 0, str.length() - 1);
 	}
 
-	private void setParamInSession(String method) throws Exception{
+	private void setParamInSession(String method) throws Exception {
 		HttpSession session = Struts2Utils.getSession();
 		String language = Struts2Utils.getParameter(PARA_LANGUAGE);
 		String fromMarket = Struts2Utils.getParameter(PARA_FROM_MARKET);
@@ -226,16 +227,16 @@ public class HomeInterceptor extends AbstractInterceptor {
 		String fromClient = Struts2Utils.getParameter(PARA_FROM);
 		String op = Struts2Utils.getParameter(PARA_OPERATORS);
 		String ct = Struts2Utils.getParameter(PARA_CLIENT_TYPE);
-		String app=Struts2Utils.getParameter(PARA_APP_NAME);
-        String g=Struts2Utils.getParameter("g");
+		String app = Struts2Utils.getParameter(PARA_APP_NAME);
+		String g = Struts2Utils.getParameter("g");
 		Map<String, Object> requestParams = Maps.newHashMap();
-        if(g!=null){
-            requestParams.put("g",g);
-        }
+		if (g != null) {
+			requestParams.put("g", g);
+		}
 		if (fromClient != null) {
 			requestParams.put(PARA_FROM, fromClient);
 		}
-		if(app!=null){
+		if (app != null) {
 			requestParams.put(PARA_APP_NAME, new String(app.getBytes("iso-8859-1"), Constants.ENCODE_UTF_8));
 		}
 		if (op != null) {
@@ -286,10 +287,10 @@ public class HomeInterceptor extends AbstractInterceptor {
 		}
 		if (downMethod != null) {
 			session.setAttribute(PARA_DOWNLOAD_METHOD, downMethod);
-		} else if (downMethod == null && session.getAttribute(PARA_DOWNLOAD_METHOD) == null) {
+		} else if (session.getAttribute(PARA_DOWNLOAD_METHOD) == null) {
 			session.setAttribute(PARA_DOWNLOAD_METHOD, DownloadType.HTTP.getValue());
 		}
-		requestParams.put(PARA_DOWNLOAD_METHOD, (String) session.getAttribute(PARA_DOWNLOAD_METHOD));
+		requestParams.put(PARA_DOWNLOAD_METHOD, session.getAttribute(PARA_DOWNLOAD_METHOD));
 
 		StringBuilder buffer = new StringBuilder();
 		for (Map.Entry<String, Object> entry : requestParams.entrySet()) {

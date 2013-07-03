@@ -68,7 +68,7 @@ public class PollingAction extends CRUDActionSupport<Polling> {
 
 	public String toXml() throws Exception {
 		String filter = Struts2Utils.getParameter("store");
-		String xml=pollingService.toXml(filter);
+		String xml = pollingService.toXml(filter);
 		ServletUtils.setEtag(Struts2Utils.getResponse(), "W/\"" + Encodes.encodeMd5(xml) + "\"");
 		Struts2Utils.renderXml(xml);
 		return null;
@@ -88,12 +88,13 @@ public class PollingAction extends CRUDActionSupport<Polling> {
 	}
 
 	public String change() throws Exception {
-		String id = Struts2Utils.getParameter("id");
-		Polling poll = pollingService.getPolling(Long.valueOf(id));
-		if (poll.getStatus() == 1L)
+		String pid = Struts2Utils.getParameter("id");
+		Polling poll = pollingService.getPolling(Long.valueOf(pid));
+		if (poll.getStatus() == 1L) {
 			poll.setStatus(0L);
-		else
+		} else {
 			poll.setStatus(1L);
+		}
 		pollingService.savePolling(poll);
 		return RELOAD;
 	}
@@ -181,8 +182,9 @@ public class PollingAction extends CRUDActionSupport<Polling> {
 	}
 
 	public String getStore() {
-		if (store == null || store.isEmpty())
+		if ((store == null) || store.isEmpty()) {
 			store = "lock";
+		}
 		return store;
 	}
 
