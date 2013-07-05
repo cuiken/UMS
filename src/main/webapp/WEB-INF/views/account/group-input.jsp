@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ include file="/common/taglibs.jsp" %>
+<%@ include file="/WEB-INF/layouts/taglibs.jsp"%>
 <html>
 <head>
 	<title>帐号管理</title>
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label for="groupList" class="control-label">权限列表:</label>
+				<label for="permissionList" class="control-label">权限列表:</label>
 				<div class="controls">
 					<s:checkboxlist id="permissionList" name="permissionList" list="allPermissions" listKey="value" listValue="displayName" theme="custom"></s:checkboxlist>
 				</div>

@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@include file="/common/taglibs.jsp"%>
+<%@ include file="/WEB-INF/layouts/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
 <head>
 <title>Polling Service</title>
-<script src="${ctx}/js/table.js"></script>
+<script src="${ctx}/static/zepto/table.js"></script>
 <script>
 			$(document).ready(function(){
 				$("#message").fadeOut(3000);
@@ -100,7 +100,7 @@
 				</s:iterator>
 			</tbody>
 		</table>
-		<%@include file="/common/page.jsp" %>
+		<%@include file="/WEB-INF/layouts/page.jsp" %>
 		<shiro:hasPermission name="store:edit">
 			<a class="btn" id="addpoll" href="#">添加广播</a>
 		</shiro:hasPermission>

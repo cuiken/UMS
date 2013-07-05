@@ -1,19 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@include file="/common/taglibs.jsp"%>
+<%@ include file="/WEB-INF/layouts/taglibs.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <title>文件上下架管理</title>
-<link rel="stylesheet"
-	href="${ctx}/js/jquery/themes/base/jquery.ui.all.css">
-<script src="${ctx}/js/jquery/ui/jquery.ui.core.js"></script>
-<script src="${ctx}/js/jquery/ui/jquery.ui.widget.js"></script>
-<script src="${ctx}/js/jquery/ui/jquery.ui.mouse.js"></script>
-<script src="${ctx}/js/jquery/ui/jquery.ui.draggable.js"></script>
-<script src="${ctx}/js/jquery/ui/jquery.ui.droppable.js"></script>
-<script src="${ctx}/js/jquery/ui/jquery.ui.sortable.js"></script>
-<script src="${ctx}/js/jquery/ui/jquery.ui.accordion.js"></script>
+    <link rel="stylesheet"
+          href="${ctx}/static/jquery-ui/themes/base/jquery.ui.all.css">
+    <script src="${ctx}/static/jquery-ui/ui/jquery.ui.core.js"></script>
+    <script src="${ctx}/static/jquery-ui/ui/jquery.ui.widget.js"></script>
+    <script src="${ctx}/static/jquery-ui/ui/jquery.ui.mouse.js"></script>
+    <script src="${ctx}/static/jquery-ui/ui/jquery.ui.draggable.js"></script>
+    <script src="${ctx}/static/jquery-ui/ui/jquery.ui.droppable.js"></script>
+    <script src="${ctx}/static/jquery-ui/ui/jquery.ui.sortable.js"></script>
+    <script src="${ctx}/static/jquery-ui/ui/jquery.ui.accordion.js"></script>
 
 <style>
 h1 {

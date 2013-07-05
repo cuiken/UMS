@@ -1,10 +1,10 @@
 b<%@ page contentType="text/html;charset=UTF-8"%>
-<%@include file="/common/taglibs.jsp" %>
+<%@ include file="/WEB-INF/layouts/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
 	<head>
 		<title>客户端安装日报</title>
-		<script src="${ctx}/js/table.js"></script>
+		<script src="${ctx}/static/zepto/table.js"></script>
 		<script>
 			$(function(){
 				$("#report-client-install-tab").addClass("active");
@@ -42,7 +42,7 @@ b<%@ page contentType="text/html;charset=UTF-8"%>
 				</tbody>
 			</table>		
 							
-			<%@include file="/common/page.jsp" %>
+			<%@include file="/WEB-INF/layouts/page.jsp" %>
 		
 		</form>
 		

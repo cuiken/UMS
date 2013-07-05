@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@include file="/common/taglibs.jsp" %>
+<%@ include file="/WEB-INF/layouts/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -28,14 +28,14 @@
 				<div class="control-group">
 					<label for="keyName" class="control-label">字段名:<font class="red">*</font></label>
 					<div class="controls">
-						<input type="text" name="keyName" value="${keyName}" size="25" class="required">
+						<input type="text" id="keyName" name="keyName" value="${keyName}" size="25" class="required">
 					</div>
 				</div>
 
 				<div class="control-group">
 					<label for="keyValue" class="control-label">字段值:<font class="red">*</font></label>
 					<div class="controls">
-						<input type="text" name="keyValue" value="${keyValue}" size="25" class="required">
+						<input type="text" id="keyValue" name="keyValue" value="${keyValue}" size="25" class="required">
 					</div>	
 				</div>
 				

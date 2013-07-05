@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@include file="/common/taglibs.jsp" %>
+<%@ include file="/WEB-INF/layouts/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -27,7 +27,7 @@
 				<div class="controls">
 
 					<s:if test="id==null">
-						<select name="language">
+						<select name="language" id="language">
 							<option value="zh">中文</option>
 							<option value="en">英文</option>
 							<option value="jp">日文</option>
@@ -41,13 +41,13 @@
 			<div class="control-group">
 				<label for="title" class="control-label">文件别名:<font class="red">*</font></label>
 				<div class="controls">
-					<input type="text" name="title" class="required" value="${title}" maxlength="25">
+					<input type="text" id="title" name="title" class="required" value="${title}" maxlength="25">
 				</div>	
 			</div>
 			<div class="control-group">
 				<label for="shortDescription" class="control-label">简要描述:<font class="red">*</font></label>
 				<div class="controls">
-					<input type="text" name="shortDescription" class="required" value="${shortDescription}" maxlength="50">
+					<input type="text" id="shortDescription" name="shortDescription" class="required" value="${shortDescription}" maxlength="50">
 				</div>	
 			</div>
 			<div class="control-group">

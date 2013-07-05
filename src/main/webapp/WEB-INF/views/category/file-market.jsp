@@ -5,7 +5,7 @@
 	<head>
 		<title>文件市场信息</title>
 		<script src="${ctx}/js/jquery/jquery-1.7.min.js"></script>
-		<script src="${ctx}/js/table.js"></script>
+		<script src="${ctx}/static/zepto/table.js"></script>
 		<script>
 			$(document).ready(function(){
 				$("#message").fadeOut(3000);

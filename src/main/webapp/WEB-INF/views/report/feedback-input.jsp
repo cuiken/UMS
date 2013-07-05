@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@ include file="/common/taglibs.jsp"%>
+<%@ include file="/WEB-INF/layouts/taglibs.jsp"%>
 <html>
 <head>
 <title>用户反馈管理</title>
@@ -37,16 +37,16 @@
 			</div>
 			
 			<div class="control-group">
-				<label for="loginName" class="control-label">反馈意见:</label>
+				<label for="content" class="control-label">反馈意见:</label>
 				<div class="controls">
-					<textarea rows="6" class="input-xxlarge disabled" disabled>${content}</textarea>
+					<textarea id="content" rows="6" class="input-xxlarge disabled" disabled>${content}</textarea>
 				</div>
 			</div>
 			
 			<div class="control-group">
-				<label for="email" class="control-label">链接参数:</label>
+				<label for="params" class="control-label">链接参数:</label>
 				<div class="controls">
-					<textarea rows="6" class="input-xxlarge disabled" disabled>${params}</textarea>
+					<textarea id="params" rows="6" class="input-xxlarge disabled" disabled>${params}</textarea>
 				</div>
 			</div>
 			<div class="control-group">

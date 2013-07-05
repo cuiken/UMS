@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@ include file="/common/taglibs.jsp"%>
+<%@ include file="/WEB-INF/layouts/taglibs.jsp"%>
 <html>
 <head>
 <title>帐号管理</title>
