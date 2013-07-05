@@ -16,16 +16,6 @@
 	</rule>
 	
 	<rule>
-		<from>^/store/([a-zA-Z0-9_]+)$</from>
-		<to type="forward">/store/locker.action?st=$1</to>
-	</rule>
-	
-	<rule>
-		<from>^/store/([a-zA-Z0-9_]+)/ad</from>
-		<to type="forward">/store/locker!adXml.action?st=$1</to>
-	</rule>
-	
-	<rule>
 		<from>^/service/([a-zA-Z0-9_]+)/([a-zA-Z0-9_]+)</from>
 		<to type="forward">/service/xml-service.action?st=$1&amp;l=$2</to>
 	</rule>

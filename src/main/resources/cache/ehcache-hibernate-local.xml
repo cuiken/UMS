@@ -48,8 +48,5 @@
 	<cache name="com.tp.entity.nav.Navigator.tags" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true" 
 		maxEntriesLocalDisk="1000"></cache>	
 		
-		
-	<cache name="SimplePageCachingFilter" maxElementsInMemory="10" maxElementsOnDisk="10" eternal="false"
-		overflowToDisk="true" diskSpoolBufferSizeMB="20" timeToIdleSeconds="120" timeToLiveSeconds="120"
-		memoryStoreEvictionPolicy="LFU" />
+
 </ehcache>

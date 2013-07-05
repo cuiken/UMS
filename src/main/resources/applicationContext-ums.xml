@@ -8,6 +8,6 @@
 	<import resource="email/applicationContext-email.xml" />
 	<import resource="jms/applicationContext-jms-simple.xml" />
 	<import resource="schedule/applicationContext-quartz-timer-cluster.xml" />
-	<import resource="applicationContext-shiro.xml" />
+	<import resource="security/applicationContext-shiro.xml" />
 
 </beans>

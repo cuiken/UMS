@@ -2,6 +2,8 @@ package com.tp.service.account;
 
 import java.util.List;
 
+import com.tp.utils.Digests;
+import com.tp.utils.Encodes;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
@@ -20,38 +22,46 @@ import com.tp.service.ServiceException;
 import com.tp.service.account.ShiroDbRealm.HashPassword;
 
 @Component
-@Transactional(readOnly = true)
+@Transactional
 public class AccountManager {
 
 	private static Logger logger = LoggerFactory.getLogger(AccountManager.class);
+
+    public static final String HASH_ALGORITHM = "SHA-1";
+    public static final int HASH_INTERATIONS = 1024;
+    private static final int SALT_SIZE = 8;
+
 	private UserDao userDao;
 	private GroupDao groupDao;
 	private NotifyMessageProducer notifyProducer; // JMS消息发送
-	private ShiroDbRealm shiroRealm;
 
 	//-- User Manager --//
 	public User getUser(Long id) {
 		return userDao.get(id);
 	}
 
-	@Transactional(readOnly = false)
+	@Transactional
 	public void saveUser(User user) {
 		if (isSupervisor(user)) {
 			logger.warn("操作员{}尝试修改超级管理员用户", SecurityUtils.getSubject().getPrincipal());
 			throw new ServiceException("不能修改超级管理员用户");
 		}
 
-		if (StringUtils.isNotBlank(user.getPlainPassword()) && shiroRealm != null) {
-			HashPassword hashPassword = shiroRealm.encrypt(user.getPlainPassword());
-			user.setSalt(hashPassword.salt);
-			user.setPassword(hashPassword.password);
+		if (StringUtils.isNotBlank(user.getPlainPassword())) {
+            entryptPassword(user);
 		}
 		userDao.save(user);
-		if (shiroRealm != null) {
-			shiroRealm.clearCachedAuthorizationInfo(user.getLoginName());
-		}
+
 		sendNotifyMessage(user);
 	}
+
+    private void entryptPassword(User user) {
+        byte[] salt = Digests.generateSalt(SALT_SIZE);
+        user.setSalt(Encodes.encodeHex(salt));
+
+        byte[] hashPassword = Digests.sha1(user.getPlainPassword().getBytes(), salt, HASH_INTERATIONS);
+        user.setPassword(Encodes.encodeHex(hashPassword));
+    }
 
 	/**
 	 * 判断是否超级管理员.
@@ -83,7 +93,7 @@ public class AccountManager {
 		return userDao.findUniqueBy("loginName", loginName);
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional
 	public boolean isLoginNameUnique(String newLoginName, String oldLoginName) {
 		return userDao.isPropertyUnique("loginName", newLoginName, oldLoginName);
 	}
@@ -97,16 +107,16 @@ public class AccountManager {
 		return groupDao.getAll();
 	}
 
-	@Transactional(readOnly = false)
+	@Transactional
 	public void saveGroup(Group entity) {
 		groupDao.save(entity);
-		shiroRealm.clearAllCachedAuthorizationInfo();
+
 	}
 
-	@Transactional(readOnly = false)
+	@Transactional
 	public void deleteGroup(Long id) {
 		groupDao.delete(id);
-		shiroRealm.clearAllCachedAuthorizationInfo();
+
 	}
 
 	@Autowired
@@ -117,11 +127,6 @@ public class AccountManager {
 	@Autowired
 	public void setGroupDao(GroupDao groupDao) {
 		this.groupDao = groupDao;
-	}
-
-	@Autowired(required = false)
-	public void setShiroRealm(ShiroDbRealm shiroRealm) {
-		this.shiroRealm = shiroRealm;
 	}
 
     @Autowired

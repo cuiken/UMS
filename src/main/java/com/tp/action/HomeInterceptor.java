@@ -53,7 +53,7 @@ public class HomeInterceptor extends AbstractInterceptor {
 		String method = invocation.getProxy().getMethod();
 		Map<String, Object> paramMap = invocation.getInvocationContext().getParameters();
 
-		if ((action instanceof HomeAction) || (action instanceof LockerAction) || (action instanceof JplockerAction)) {
+		if ((action instanceof HomeAction) || (action instanceof JplockerAction)) {
 			saveLog(method, paramMap);
 			setParamInSession(method);
 			String language = (String) Struts2Utils.getSessionAttribute(Constants.PARA_LANGUAGE);

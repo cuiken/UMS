@@ -12,7 +12,7 @@
 		<struts.version>2.3.12</struts.version>
 		<guava.version>14.0.1</guava.version>
 		<hibernate.version>3.6.10.Final</hibernate.version>
-		<shiro.version>1.2.1</shiro.version>
+		<shiro.version>1.2.2</shiro.version>
 		<quartz.version>2.1.6</quartz.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
 		<ehcache.version>2.5.2</ehcache.version>
@@ -418,20 +418,14 @@
 		<!-- SECURITY begin -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-core</artifactId>
-			<version>${shiro.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring</artifactId>
 			<version>${shiro.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-web</artifactId>
-			<version>${shiro.version}</version>
-		</dependency>
-
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
 		<!-- SECURITY end -->
 
 		<!-- TIMER -->
@@ -446,11 +440,6 @@
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache-core</artifactId>
 			<version>${ehcache.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache-web</artifactId>
-			<version>2.0.4</version>
 		</dependency>
 
 		<!-- memcached -->
