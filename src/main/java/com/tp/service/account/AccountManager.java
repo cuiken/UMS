@@ -1,7 +1,11 @@
 package com.tp.service.account;
 
-import java.util.List;
-
+import com.tp.dao.account.GroupDao;
+import com.tp.dao.account.UserDao;
+import com.tp.entity.account.Group;
+import com.tp.entity.account.User;
+import com.tp.jms.simple.NotifyMessageProducer;
+import com.tp.service.ServiceException;
 import com.tp.utils.Digests;
 import com.tp.utils.Encodes;
 import org.apache.commons.lang3.StringUtils;
@@ -12,14 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import com.tp.dao.account.GroupDao;
-import com.tp.dao.account.UserDao;
-import com.tp.entity.account.Group;
-import com.tp.entity.account.User;
-import com.tp.jms.simple.NotifyMessageProducer;
-import com.tp.service.ServiceException;
-import com.tp.service.account.ShiroDbRealm.HashPassword;
+import java.util.List;
 
 @Component
 @Transactional

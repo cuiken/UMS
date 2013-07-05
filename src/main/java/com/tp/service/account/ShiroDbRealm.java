@@ -105,9 +105,4 @@ public class ShiroDbRealm extends AuthorizingRealm {
             return name;
         }
     }
-
-    public static class HashPassword {
-        public String salt;
-        public String password;
-    }
 }
